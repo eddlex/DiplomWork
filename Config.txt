@@ -1,0 +1,17 @@
+/////////////FrontEnd//////////////
+Login - Diplom24
+Pass  - Diplom@123
+URL   - http://diplom24-001-site1.atempurl.com/
+
+//////////////////////////////////
+
+
+
+/////////////BackEnd//////////////
+Login				- diplomworkpoly
+Pass				- 123123Aa
+URL					- http://diplomworkpoly-001-site1.btempurl.com/
+DbConnectionString	- "Data Source=SQL5111.site4now.net;Initial Catalog=db_aa03dc_diplomwork;User Id=db_aa03dc_diplomwork_admin;Password=123123Aa"
+//////////////////////////////////
+
+
