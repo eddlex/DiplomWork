@@ -1,4 +1,4 @@
-namespace Front.Data
+namespace FrontEnd.Data
 {
     public class WeatherForecastService
     {
