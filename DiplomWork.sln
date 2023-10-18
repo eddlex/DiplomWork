@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackEnd", "BackEnd\BackEnd.
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{BC304DF3-2C08-44AC-9D79-0A686EEAEB3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{CD0244C1-8FF1-4CC0-970D-7993A13DF61C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{CD0244C1-8FF1-4CC0-970D-7993A13DF61C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{6ADE611E-5605-403E-9487-B4D13F082F9F}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\Downloads\BackEnd.PublishSettings = ..\..\..\Downloads\BackEnd.PublishSettings
+		BackEnd.PublishSettings = BackEnd.PublishSettings
 		Config.txt = Config.txt
-		..\..\..\Downloads\FrontEnd.PublishSettings = ..\..\..\Downloads\FrontEnd.PublishSettings
+		FrontEnd.PublishSettings = FrontEnd.PublishSettings
 	EndProjectSection
 EndProject
 Global
