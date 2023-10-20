@@ -1,3 +1,8 @@
+using BackEnd.Services.Configuration;
+using BackEnd.Services.Db;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddScoped<IDbService, DbService>();
+builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

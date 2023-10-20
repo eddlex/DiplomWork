@@ -4,8 +4,9 @@ namespace BackEnd.Services.Db
 {
     public interface IDbService
     {
-        public string ConnectionString { get => " "; }
-        public SqlConnection CreateConnection();
+        string ConnectionString { get; set; }
+        //void CreateConnection();
+        public SqlCommand CreateCommand();
 
     }
 }

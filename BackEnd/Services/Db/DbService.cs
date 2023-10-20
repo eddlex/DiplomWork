@@ -1,18 +1,16 @@
-﻿using System.Data.SqlClient;
+﻿using BackEnd.Services.Configuration;
 
 namespace BackEnd.Services.Db
 {
-    public class DbService : IDbService
+    public class DbService : DbServiceBase
     {
-        public string ConnectionString { get; set; }
+        private new readonly string ConectionString;
 
-        public SqlConnection CreateConnection()
+        public DbService(IConfigurationService configurationService) : base(configurationService)
         {
-            using (var connection = new SqlConnection(this.ConnectionString))
-            {
-                connection.Open();
-                return connection;
-            }
+            this.ConectionString =  this.ConnectionString;
         }
+
+
     }
 }
