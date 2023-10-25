@@ -1,7 +1,6 @@
 using BackEnd.Services.Configuration;
 using BackEnd.Services.Db;
-
-
+using BackEnd.Services.Form;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +14,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IDbService, DbService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
+builder.Services.AddScoped<IFormService, FormService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
