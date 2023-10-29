@@ -1,3 +1,4 @@
+using BackEnd.Models.Input;
 using BackEnd.Services.Form;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
@@ -22,18 +23,18 @@ namespace BackEnd.Controllers
         }
 
 
-        [ResponseType(typeof(List<BackEnd.Models.Form.Form>))]
+        [ResponseType(typeof(List<Form>))]
         [Route("{GroupId:int}")]
         [HttpGet]
-        public async Task<ActionResult<List<Models.Form.Form>>> GetForm(int GroupId)
+        public async Task<ActionResult<List<Form>>> GetForm(int GroupId)
         {
             return Ok(await this.formService.GetForms(GroupId));
         }
 
 
-        [ResponseType(typeof(List<BackEnd.Models.Form.Form>))]
+        [ResponseType(typeof(List<Form>))]
         [HttpGet]
-        public async Task<ActionResult<List<Models.Form.Form>>> GetForm()
+        public async Task<ActionResult<List<Form>>> GetForm()
         {
             return Ok(await this.formService.GetForms());
         }

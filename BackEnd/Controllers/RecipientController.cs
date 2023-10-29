@@ -1,4 +1,4 @@
-using BackEnd.Models;
+using BackEnd.Models.Input;
 using BackEnd.Services.Form;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;

@@ -1,4 +1,4 @@
-﻿namespace BackEnd.Models
+﻿namespace BackEnd.Models.Input
 {
     public class RecipientGroup
     {

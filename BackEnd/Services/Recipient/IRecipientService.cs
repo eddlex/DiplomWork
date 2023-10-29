@@ -1,4 +1,4 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Models.Input;
 using System.Data.SqlClient;
 
 namespace BackEnd.Services.Form
