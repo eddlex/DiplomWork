@@ -46,5 +46,28 @@ namespace BackEnd.Services.Form
             return (await cmd.ExecuteNonQueryAsync()) > 0;
         }
 
+
+        public async Task<bool> DelRecipientGroups(List<int> ides)
+        {
+            using var cmd = this.dbService.CreateCommand();
+            cmd.CommandText = "spDelRecipientGroups";
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            var dt = new DataTable("Ides");
+            dt.Columns.Add(new DataColumn("Id", typeof(int)));
+
+
+            foreach (var id in ides)
+            {
+                dt.Rows.Add(id);
+            }
+
+            var param = cmd.Parameters.Add("@Ides", SqlDbType.Structured);
+            param.TypeName = "dbo.Ides";
+            param.Value = dt;
+            return (await cmd.ExecuteNonQueryAsync()) > 0;
+        }
+
+
     }
 }

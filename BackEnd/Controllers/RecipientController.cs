@@ -39,9 +39,26 @@ namespace BackEnd.Controllers
         [ResponseType(typeof(bool))]
         [Route("Groups")]
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<ActionResult<bool>> AddRecipientGroups(List<RecipientGroup> groups)
+        public async Task<ActionResult<bool>> AddRecipientGroups(List<RecipientGroup> Groups)
         {
-            return Ok(await this.recipientService.AddRecipientGroups(groups));
+            return Ok(await this.recipientService.AddRecipientGroups(Groups));
+        }
+
+
+        [ResponseType(typeof(bool))]
+        [Route("Groups")]
+        [Microsoft.AspNetCore.Mvc.HttpDelete]
+        public async Task<ActionResult<bool>> DelRecipientGroups(List<int> Ides)
+        {
+            return Ok(await this.recipientService.DelRecipientGroups(Ides)); 
+        }
+
+        [ResponseType(typeof(bool))]
+        [Route("Groups/{Id:int}")]
+        [Microsoft.AspNetCore.Mvc.HttpDelete]
+        public async Task<ActionResult<bool>> DelRecipientGroups(int Id)
+        {
+            return Ok(await this.recipientService.DelRecipientGroups(new List<int> { Id }));
         }
 
 
