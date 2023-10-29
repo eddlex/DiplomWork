@@ -36,6 +36,13 @@ namespace BackEnd.Controllers
             return Ok(await this.recipientService.GetRecipientGroups());
         }
 
+        [ResponseType(typeof(bool))]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<ActionResult<bool>> AddRecipientGroups(List<RecipientGroup> groups)
+        {
+            return Ok(await this.recipientService.AddRecipientGroups(groups));
+        }
+
 
 
     }; 
