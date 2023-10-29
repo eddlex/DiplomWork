@@ -6,6 +6,9 @@
     [Description] NVARCHAR (MAX) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     FOREIGN KEY ([GroupId]) REFERENCES [dbo].[RecipientGroup] ([Id]),
-    UNIQUE NONCLUSTERED ([Mail] ASC)
+    UNIQUE NONCLUSTERED ([Mail] ASC),
+    CONSTRAINT [Recipient_pk] UNIQUE NONCLUSTERED ([Name] ASC)
 );
+
+
 

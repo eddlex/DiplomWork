@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IDbService, DbService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 builder.Services.AddScoped<IFormService, FormService>();
+builder.Services.AddScoped<IRecipientService, RecipientService>();
 
 var app = builder.Build();
 

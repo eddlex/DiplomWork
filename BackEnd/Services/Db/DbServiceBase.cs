@@ -15,25 +15,15 @@ namespace BackEnd.Services.Db
         public string ConnectionString { get => this.configurationService.ConnectionString; set => throw new NotImplementedException(); }
 
 
-        //public void CreateConnection()
-        //{
-        //    using (var connection = new SqlConnection(this.ConnectionString))
-        //    {
-        //        connection.Open();
-        //    }
-        //}
+
 
         public SqlCommand CreateCommand()
         {
-            using (var connection = new SqlConnection(this.ConnectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(string.Empty, connection))
-                {
-                    return command;
-                }
-            }
-
+            var connection = new SqlConnection(this.ConnectionString);
+            connection.Open();
+            var command = new SqlCommand(string.Empty, connection);
+            return command;
+                
         }
     }
 }

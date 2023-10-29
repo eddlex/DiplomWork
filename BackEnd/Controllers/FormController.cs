@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
 using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -22,30 +23,22 @@ namespace BackEnd.Controllers
 
 
         [ResponseType(typeof(List<BackEnd.Models.Form.Form>))]
-        [HttpPost(Name = nameof(FormController))]
-        public IHttpActionResult GetForm([FromBody] int GroupId)
+        [Route("{GroupId:int}")]
+        [HttpGet]
+        public async Task<ActionResult<List<Models.Form.Form>>> GetForm(int GroupId)
         {
-            return (IHttpActionResult)Ok(this.formService.GetForms(GroupId));
-        }
-
-        [HttpPut(Name = nameof(FormController))]
-        public void SetForm()
-        {
-              
+            return Ok(await this.formService.GetForms(GroupId));
         }
 
 
-        [Microsoft.AspNetCore.Mvc.HttpPatch(Name = nameof(FormController))]
-        public void PatchUserSmtpConfig()
+        [ResponseType(typeof(List<BackEnd.Models.Form.Form>))]
+        [HttpGet]
+        public async Task<ActionResult<List<Models.Form.Form>>> GetForm()
         {
-
+            return Ok(await this.formService.GetForms());
         }
 
-        [HttpDelete(Name = nameof(FormController))]
-        public void DeleteUserSmtpConfig()
-        {
 
-        }
 
     }; 
 }
