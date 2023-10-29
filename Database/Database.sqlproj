@@ -74,5 +74,7 @@
     <Build Include="dbo\Stored Procedures\spAddRecipientGroups.sql" />
     <Build Include="dbo\User Defined Types\StringTuple.sql" />
     <Build Include="dbo\User Defined Types\Ides.sql" />
+    <Build Include="dbo\Stored Procedures\spUpdateRecipientGroups.sql" />
+    <Build Include="dbo\User Defined Types\IntStringStringTriple.sql" />
   </ItemGroup>
 </Project>

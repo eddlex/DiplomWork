@@ -1,6 +1,7 @@
 using BackEnd.Models.Input;
 using BackEnd.Services.Form;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
@@ -19,19 +20,19 @@ namespace BackEnd.Controllers
         }
 
 
-        [ResponseType(typeof(List<RecipientGroup>))]
+        [ResponseType(typeof(List<RecipientGroupGet>))]
         [Route("Groups/{Id:int}")]
         [HttpGet]
-        public async Task<ActionResult<List<RecipientGroup>>> GetRecipientGroups(int Id)
+        public async Task<ActionResult<List<RecipientGroupGet>>> GetRecipientGroups(int Id)
         {
             return Ok(await this.recipientService.GetRecipientGroups(Id));
         }
 
 
-        [ResponseType(typeof(List<RecipientGroup>))]
+        [ResponseType(typeof(List<RecipientGroupGet>))]
         [Route("Groups")]
         [HttpGet]
-        public async Task<ActionResult<List<RecipientGroup>>> GetRecipientGroups()
+        public async Task<ActionResult<List<RecipientGroupGet>>> GetRecipientGroups()
         {
             return Ok(await this.recipientService.GetRecipientGroups());
         } 
@@ -39,7 +40,7 @@ namespace BackEnd.Controllers
         [ResponseType(typeof(bool))]
         [Route("Groups")]
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<ActionResult<bool>> AddRecipientGroups(List<RecipientGroup> Groups)
+        public async Task<ActionResult<bool>> AddRecipientGroups(List<RecipientGroupGet> Groups)
         {
             return Ok(await this.recipientService.AddRecipientGroups(Groups));
         }
@@ -61,6 +62,16 @@ namespace BackEnd.Controllers
             return Ok(await this.recipientService.DelRecipientGroups(new List<int> { Id }));
         }
 
+
+
+
+        [ResponseType(typeof(bool))]
+        [Route("Groups")]
+        [Microsoft.AspNetCore.Mvc.HttpPut]
+        public async Task<ActionResult<bool>> UpdateRecipientGroups(List<RecipientGroupPut> groups)
+        {
+            return Ok(await this.recipientService.UpdateRecipientGroups(groups));
+        }
 
 
     }; 

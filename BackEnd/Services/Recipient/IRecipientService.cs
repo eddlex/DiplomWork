@@ -5,7 +5,8 @@ namespace BackEnd.Services.Form
 {
     public interface IRecipientService
     {
-        Task<List<RecipientGroup>> GetRecipientGroups(int? Id = null);
+        Task<List<RecipientGroupGet>> GetRecipientGroups(int? Id = null);
         Task<bool> DelRecipientGroups(List<int> ides);
+        Task<bool> UpdateRecipientGroups(List<RecipientGroupPut> groups);
     }
 }
