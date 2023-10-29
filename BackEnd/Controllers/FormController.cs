@@ -23,18 +23,18 @@ namespace BackEnd.Controllers
         }
 
 
-        [ResponseType(typeof(List<Form>))]
+        [ResponseType(typeof(List<Models.Output.Form>))]
         [Route("{GroupId:int}")]
         [HttpGet]
-        public async Task<ActionResult<List<Form>>> GetForm(int GroupId)
+        public async Task<ActionResult<List<Models.Output.Form>>> GetForm(int GroupId)
         {
             return Ok(await this.formService.GetForms(GroupId));
         }
 
 
-        [ResponseType(typeof(List<Form>))]
+        [ResponseType(typeof(List<Models.Output.Form>))]
         [HttpGet]
-        public async Task<ActionResult<List<Form>>> GetForm()
+        public async Task<ActionResult<List<Models.Output.Form>>> GetForm()
         {
             return Ok(await this.formService.GetForms());
         }

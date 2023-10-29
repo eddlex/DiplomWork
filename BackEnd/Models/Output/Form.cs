@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
-namespace BackEnd.Models.Input
+namespace BackEnd.Models.Output
 {
     public class Form
     {

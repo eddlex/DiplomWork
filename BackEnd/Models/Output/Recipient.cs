@@ -1,4 +1,4 @@
-﻿namespace BackEnd.Models.Input
+﻿namespace BackEnd.Models.Output
 {
     public class Recipient
     {

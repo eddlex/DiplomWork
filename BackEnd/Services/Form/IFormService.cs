@@ -4,6 +4,6 @@ namespace BackEnd.Services.Form
 {
     public interface IFormService
     {
-        Task<List<Models.Input.Form>> GetForms(int? GroupId = null);
+        Task<List<Models.Output.Form>> GetForms(int? GroupId = null);
     }
 }

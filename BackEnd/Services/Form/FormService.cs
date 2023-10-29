@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using BackEnd.Models.Input;
+using BackEnd.Models.Output;
 
 namespace BackEnd.Services.Form
 {
@@ -15,7 +16,7 @@ namespace BackEnd.Services.Form
             this.dbService = (DbService)dbService;
         }
 
-        public async Task<List<Models.Input.Form>> GetForms(int? GroupId = null)
+        public async Task<List<Models.Output    .Form>> GetForms(int? GroupId = null)
         {
             var cmd = this.dbService.CreateCommand();
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -24,14 +25,14 @@ namespace BackEnd.Services.Form
             cmd.Parameters.AddWithValue("GroupId", GroupId);
 
             using var reader  = await cmd.ExecuteReaderAsync();
-            var result = new List<Models.Input.Form>();
+            var result = new List<Models.Output.Form>();
             if (reader.HasRows) 
             {
 
                 var dicOrdinals = new Dictionary<string, int>()
                 {
-                    { nameof(Models.Input.Form.Id),  reader.GetOrdinal(nameof(Models.Input.Form.Id))},
-                    { nameof(Models.Input.Form.GroupId), reader.GetOrdinal(nameof(Models.Input.Form.GroupId))},
+                    { nameof(Models.Output.Form.Id),  reader.GetOrdinal(nameof(Models.Output.Form.Id))},
+                    { nameof(Models.Output.Form.GroupId), reader.GetOrdinal(nameof(Models.Output.Form.GroupId))},
                     { "Row" +  nameof(FormRow.Id),  reader.GetOrdinal("Row" +  nameof(FormRow.Id))},
                     { "Row" +  nameof(FormRow.Name),  reader.GetOrdinal("Row" +  nameof(FormRow.Name))},
                     { "Row" +  nameof(FormRow.Value),  reader.GetOrdinal("Row" +  nameof(FormRow.Value))},
@@ -39,14 +40,14 @@ namespace BackEnd.Services.Form
       
                 while (reader.Read())
                 {
-                    var formId = reader.GetInt32(dicOrdinals[nameof(Models.Input.Form.Id)]);
+                    var formId = reader.GetInt32(dicOrdinals[nameof(Models.Output.Form.Id)]);
                    
                     if (!result.Any(p => p.Id == formId))
                     {
-                        result.Add(new Models.Input.Form()
+                        result.Add(new Models.Output.Form()
                         {
                             Id = formId,
-                            GroupId = reader.GetInt32(dicOrdinals[nameof(Models.Input.Form.GroupId)]),
+                            GroupId = reader.GetInt32(dicOrdinals[nameof(Models.Output.Form.GroupId)]),
                             Rows = new()
                         });
                     }
