@@ -76,5 +76,7 @@
     <Build Include="dbo\User Defined Types\Ides.sql" />
     <Build Include="dbo\Stored Procedures\spUpdateRecipientGroups.sql" />
     <Build Include="dbo\User Defined Types\IntStringStringTriple.sql" />
+    <Build Include="dbo\Tables\UsersInfo.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
   </ItemGroup>
 </Project>
