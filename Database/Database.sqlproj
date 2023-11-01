@@ -83,5 +83,6 @@
     <Build Include="dbo\Tables\University.sql" />
     <Build Include="dbo\Stored Procedures\spDelUniversity.sql" />
     <Build Include="dbo\Stored Procedures\spAddUniversity.sql" />
+    <Build Include="dbo\Stored Procedures\spGetUniversities.sql" />
   </ItemGroup>
 </Project>

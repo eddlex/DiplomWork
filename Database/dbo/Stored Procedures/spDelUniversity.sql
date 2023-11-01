@@ -13,6 +13,12 @@ BEGIN
                 UPDATE University
                 SET Id = Id / 2
                 WHERE  @Id < Id
+
+                SELECT 1
+            END
+            ELSE
+            BEGIN
+                SELECT 0
             END
         COMMIT;
     END TRY

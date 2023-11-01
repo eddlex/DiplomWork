@@ -1,4 +1,5 @@
 using BackEnd.Services.Form;
+using BackEnd.Services.University;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEnd.Controllers
@@ -7,16 +8,16 @@ namespace BackEnd.Controllers
     [Route("[controller]")]
     public class UniversityController : ControllerBase
     {
-        private readonly FormService universityService;
-        public UniversityController(IFormService formService)
+        private readonly UniversityService universityService;
+        public UniversityController(IUniversityService universityService)
         {
-            this.universityService = (FormService)formService;
+            this.universityService = (UniversityService)universityService;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Models.Output.University>>> GetUniversities()
         {
-            return Ok();
+            return Ok(await this.universityService.GetUniversities());
         }
 
 
