@@ -1,11 +1,7 @@
 ﻿using BackEnd.Services.Db;
 using System.Data;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Data.SqlClient;
 using Dapper;
 using BackEnd.Models.Input;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BackEnd.Services.Form
 {

@@ -11,16 +11,5 @@ namespace BackEnd.Services.Db
         {
             this.ConectionString =  this.ConnectionString;
         }
-
-
-        public SqlConnection CreateConnection()
-        {
-            var connection = new SqlConnection(this.ConnectionString);
-            
-            connection.Open();
-            return connection;
-          
-        }
-
     }
 }

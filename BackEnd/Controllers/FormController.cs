@@ -1,14 +1,6 @@
-using BackEnd.Models.Input;
 using BackEnd.Services.Form;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Http;
-using System.Web.Http.Description;
-using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
-using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
-using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
-using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
-using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
-using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+
 
 namespace BackEnd.Controllers
 {
@@ -22,8 +14,6 @@ namespace BackEnd.Controllers
             this.formService = (FormService)formService;
         }
 
-
-        [ResponseType(typeof(List<Models.Output.Form>))]
         [Route("{GroupId:int}")]
         [HttpGet]
         public async Task<ActionResult<List<Models.Output.Form>>> GetForm(int GroupId)
@@ -31,15 +21,11 @@ namespace BackEnd.Controllers
             return Ok(await this.formService.GetForms(GroupId));
         }
 
-
-        [ResponseType(typeof(List<Models.Output.Form>))]
         [HttpGet]
         public async Task<ActionResult<List<Models.Output.Form>>> GetForm()
         {
             return Ok(await this.formService.GetForms());
         }
-
-
 
     }; 
 }

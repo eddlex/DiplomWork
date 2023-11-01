@@ -5,8 +5,8 @@ namespace BackEnd.Services.Db
     public interface IDbService
     {
         string ConnectionString { get; set; }
-        //void CreateConnection();
         public SqlCommand CreateCommand();
+        SqlConnection CreateConnection();
 
     }
 }

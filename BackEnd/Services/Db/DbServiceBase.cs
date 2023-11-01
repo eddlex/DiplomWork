@@ -12,10 +12,8 @@ namespace BackEnd.Services.Db
         {
             this.configurationService = configurationService;
         }
+
         public string ConnectionString { get => this.configurationService.ConnectionString; set => throw new NotImplementedException(); }
-
-
-
 
         public SqlCommand CreateCommand()
         {
@@ -24,6 +22,15 @@ namespace BackEnd.Services.Db
             var command = new SqlCommand(string.Empty, connection);
             return command;
                 
+        }
+
+        public SqlConnection CreateConnection()
+        {
+            var connection = new SqlConnection(this.ConnectionString);
+
+            connection.Open();
+            return connection;
+
         }
     }
 }
