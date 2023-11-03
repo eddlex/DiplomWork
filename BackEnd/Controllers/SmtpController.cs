@@ -27,9 +27,9 @@ namespace BackEnd.Controllers
 
         [Route("Smtp/{ConfigId:int}")]
         [HttpPut]
-        public async Task<ActionResult<bool>> UpdateSMTPConfig(SMTPConfig config)
+        public async Task<ActionResult<bool>> UpdateSMTPConfig(int ConfigId, SMTPConfig config)
         {
-            return Ok(await this.configService.UpdateSMTPConfig(config));
+            return Ok(await this.configService.UpdateSMTPConfig(ConfigId,config));
         }
 
         [Route("Smtp/{ConfigId:int}")]

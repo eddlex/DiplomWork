@@ -10,3 +10,6 @@ CREATE TABLE [dbo].[SmtpConfigurations] (
     [EnableSSL] BIT NOT NULL
 FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([Id])
 )
+
+
+select * from SmtpConfigurations where Id = 1

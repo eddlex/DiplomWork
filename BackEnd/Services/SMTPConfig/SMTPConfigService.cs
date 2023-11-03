@@ -38,18 +38,18 @@ namespace BackEnd.Services.SMTPConfig
             return result;
         }
 
-        public async Task<bool> UpdateSMTPConfig(SMTPConfig config)
+        public async Task<bool> UpdateSMTPConfig(int ConfigId, SMTPConfig config)
         {
             using var cmd = this.dbService.CreateCommand();
             cmd.CommandText = "spUpdateAllSmtpConfiguration";
             cmd.CommandType = CommandType.StoredProcedure;
      
-            cmd.Parameters.AddWithValue("ConfigId", config.Id);
-            cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
-            cmd.Parameters.AddWithValue("Port", config.Port);
-            cmd.Parameters.AddWithValue("Username", config.Username);
-            cmd.Parameters.AddWithValue("Password", config.Password);
-            cmd.Parameters.AddWithValue("EnableSSL", config.EnableSSL);
+            cmd.Parameters.AddWithValue("ConfigId", ConfigId);
+            cmd.Parameters.AddWithValue("NewSmtpServer", config.SmtpServer);
+            cmd.Parameters.AddWithValue("NewPort", config.Port);
+            cmd.Parameters.AddWithValue("NewUsername", config.Username);
+            cmd.Parameters.AddWithValue("NewPassword", config.Password);
+            cmd.Parameters.AddWithValue("NewEnableSSL", config.EnableSSL);
 
             return (await cmd.ExecuteNonQueryAsync()) > 0;
         }
