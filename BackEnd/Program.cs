@@ -1,6 +1,7 @@
 using BackEnd.Services.Configuration;
 using BackEnd.Services.Db;
 using BackEnd.Services.Form;
+using BackEnd.Services.Notification;
 using BackEnd.Services.SMTPConfig;
 using BackEnd.Services.University;
 
@@ -20,6 +21,7 @@ builder.Services.AddScoped<IFormService, FormService>();
 builder.Services.AddScoped<IRecipientService, RecipientService>();
 builder.Services.AddScoped<IUniversityService, UniversityService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
+builder.Services.AddScoped<INotificationsService, NotificationsService>();
 
 var app = builder.Build();
 
