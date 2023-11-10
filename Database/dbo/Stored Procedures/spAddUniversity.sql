@@ -6,10 +6,13 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-            DECLARE @Id BIGINT = POWER(2, (SELECT COUNT(*) - 1 FROM University))
+            --DECLARE @Id BIGINT = POWER(2, (SELECT COUNT(*) - 1 FROM University))
 
-            INSERT INTO  University (Id, Name, Description)
-            VALUES (@Id, @Name, @Description)
+--             INSERT INTO  University (Id, Name, Description)
+--             VALUES (@Id, @Name, @Description)
+               INSERT INTO  University (Name, Description)
+               VALUES (@Name, @Description)
+
         COMMIT;
     END TRY
     BEGIN CATCH

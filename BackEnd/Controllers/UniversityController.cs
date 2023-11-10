@@ -1,4 +1,3 @@
-using BackEnd.Services.Form;
 using BackEnd.Services.University;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,14 +20,18 @@ namespace BackEnd.Controllers
         }
 
 
-      //  [ResponseType(typeof(List<Models.Output.Form>))]
         [HttpPost]
-        public async Task<ActionResult<List<Models.Output.Form>>> GetForm()
+        public async Task<ActionResult<List<Models.Output.University>>> AddUniversities(Models.Input.UniversityPost university)
         {
-            return Ok();
+            return Ok(await this.universityService.AddUniversities(university));
         }
 
 
+        [HttpDelete]
+        public async Task<ActionResult<bool>> DelUniversities(int id)
+        {
+            return Ok(await this.universityService.DelUniversities(id));
+        }
 
     }; 
 }

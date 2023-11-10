@@ -1,6 +1,4 @@
---Creating sp to delete config by ID
-go
-CREATE PROCEDURE [dbo].[spDeleteSmtpConfigurations]
+﻿CREATE PROCEDURE [dbo].[spDeleteSmtpConfigurations]
     @ConfigId INT
 AS
 BEGIN
@@ -16,4 +14,3 @@ BEGIN
         ROLLBACK
     END CATCH
 END
-

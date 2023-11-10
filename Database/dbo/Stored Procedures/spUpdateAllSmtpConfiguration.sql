@@ -1,6 +1,4 @@
---Creating sp to update config by ID
-go
-CREATE PROCEDURE [dbo].[spUpdateAllSmtpConfiguration]
+﻿CREATE PROCEDURE [dbo].[spUpdateAllSmtpConfiguration]
     @ConfigId INT,
     @NewSmtpServer NVARCHAR(255),
     @NewPort INT,

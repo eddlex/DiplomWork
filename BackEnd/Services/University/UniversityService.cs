@@ -31,5 +31,21 @@ namespace BackEnd.Services.University
 
             return Convert.ToBoolean(await cmd.ExecuteNonQueryAsync());
         }
+
+
+
+        public async Task<bool> AddUniversities(UniversityPost university)
+        {
+            using var cmd = this.dbService.CreateCommand();
+            cmd.CommandText = "spAddUniversity";
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Name", university.Name);
+            cmd.Parameters.AddWithValue("@Description", university.Description);
+
+            return Convert.ToBoolean(await cmd.ExecuteNonQueryAsync());
+        }
+
+
     }
 }
