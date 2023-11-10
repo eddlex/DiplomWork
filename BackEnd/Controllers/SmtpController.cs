@@ -15,21 +15,20 @@ namespace BackEnd.Controllers
         }
 
 
-        [Route("{ConfigId:int}")]
+        [Route("{id:int}")]
         [HttpGet]
         public async Task<ActionResult<SmtpConfig>> GetSmtpConfig(int id)
         {
             return Ok(await this.configService.GetSmtpConfig(id));
         }
 
-        [Route("{ConfigId:int}")]
         [HttpPut]
         public async Task<ActionResult<bool>> UpdateSmtpConfig(SmtpConfig config)
         {
             return Ok(await this.configService.UpdateSmtpConfig(config));
         }
 
-        [Route("{ConfigId:int}")]
+        [Route("{id:int}")]
         [HttpDelete]
         public async Task<ActionResult<bool>> DelSmtpConfig(int id)
         {

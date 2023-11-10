@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spGetSmtpConfigurations]
-	@ConfigId INT
+	@Id INT
 AS
 BEGIN
     SELECT
@@ -11,5 +11,5 @@ BEGIN
     FROM
         SmtpConfigurations
 	WHERE
-		Id = @ConfigId
+		Id = @Id
 END

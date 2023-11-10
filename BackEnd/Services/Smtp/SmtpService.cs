@@ -13,13 +13,16 @@ namespace BackEnd.Services.SMTPConfig
 
         public async Task<SmtpConfig> GetSmtpConfig(int id)
         {
-            var cmd = this.dbService.CreateCommand();
+            using var cmd = this.dbService.CreateCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "spGetSmtpConfigurations";
 
             cmd.Parameters.AddWithValue("Id", id);
 
             using var reader = await cmd.ExecuteReaderAsync();
+
+
+            
             var result = new SmtpConfig();
 
             if (await reader.ReadAsync())
@@ -43,6 +46,7 @@ namespace BackEnd.Services.SMTPConfig
             cmd.CommandType = CommandType.StoredProcedure;
      
             cmd.Parameters.AddWithValue("Id", config.Id);
+            cmd.Parameters.AddWithValue("UniversityId", config.UniversityId);
             cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
             cmd.Parameters.AddWithValue("Port", config.Port);
             cmd.Parameters.AddWithValue("Username", config.Username);
@@ -52,13 +56,13 @@ namespace BackEnd.Services.SMTPConfig
             return (await cmd.ExecuteNonQueryAsync()) > 0;
         }
 
-        public async Task<bool> DelSmtpConfig(int ConfigId)
+        public async Task<bool> DelSmtpConfig(int id)
         {
             using var cmd = this.dbService.CreateCommand();
             cmd.CommandText = "spDeleteSmtpConfigurations";
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("Id", ConfigId);
+            cmd.Parameters.AddWithValue("Id", id);
 
             return (await cmd.ExecuteNonQueryAsync()) > 0;
         }

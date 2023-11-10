@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spDeleteSmtpConfigurations]
-    @ConfigId INT
+    @Id INT
 AS
 BEGIN
 	BEGIN TRY
@@ -7,7 +7,7 @@ BEGIN
 			DELETE FROM
 				SmtpConfigurations
 			WHERE
-				Id = @ConfigId
+				Id = @Id
         COMMIT
     END TRY
     BEGIN CATCH
