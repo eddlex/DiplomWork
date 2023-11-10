@@ -21,7 +21,20 @@ namespace BackEnd.Services.University
 
         }
 
-        public async Task<bool> DelUniversities(int id)
+        public async Task<bool> AddUniversity(UniversityPost university)
+        {
+            using var cmd = this.dbService.CreateCommand();
+            cmd.CommandText = "spAddUniversity";
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Name", university.Name);
+            cmd.Parameters.AddWithValue("@Description", university.Description);
+
+            return Convert.ToBoolean(await cmd.ExecuteNonQueryAsync());
+        }
+
+
+        public async Task<bool> DelUniversity(int id)
         {
             using var cmd = this.dbService.CreateCommand();
             cmd.CommandText = "spDelUniversity";
@@ -34,17 +47,6 @@ namespace BackEnd.Services.University
 
 
 
-        public async Task<bool> AddUniversities(UniversityPost university)
-        {
-            using var cmd = this.dbService.CreateCommand();
-            cmd.CommandText = "spAddUniversity";
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@Name", university.Name);
-            cmd.Parameters.AddWithValue("@Description", university.Description);
-
-            return Convert.ToBoolean(await cmd.ExecuteNonQueryAsync());
-        }
 
 
     }

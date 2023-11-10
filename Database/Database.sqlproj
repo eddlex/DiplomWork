@@ -85,8 +85,8 @@
     <Build Include="dbo\Stored Procedures\spAddUniversity.sql" />
     <Build Include="dbo\Stored Procedures\spGetUniversities.sql" />
     <Build Include="dbo\Tables\SmtpConfigurations.sql" />
-    <Build Include="dbo\Stored Procedures\spUpdateAllSmtpConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spGetSmtpConfigurations.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteSmtpConfigurations.sql" />
+    <Build Include="dbo\Stored Procedures\spUpdateSmtpConfiguration.sql" />
   </ItemGroup>
 </Project>

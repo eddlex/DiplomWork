@@ -1,6 +1,3 @@
-using BackEnd.Models;
-using BackEnd.Models.Input;
-using BackEnd.Services.Configuration;
 using BackEnd.Services.SMTPConfig;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,33 +7,33 @@ namespace BackEnd.Controllers
     [Route("[controller]")]
     public class SmtpController : ControllerBase
     {
-        private readonly SMTPConfigService configService;
+        private readonly SmtpService configService;
 
-        public SmtpController(ISMTPConfigService configService)
+        public SmtpController(ISmtpService configService)
         {
-            this.configService = (SMTPConfigService)configService;
+            this.configService = (SmtpService)configService;
         }
 
 
-        [Route("Smtp/{ConfigId:int}")]
+        [Route("{ConfigId:int}")]
         [HttpGet]
-        public async Task<ActionResult<SMTPConfig>> GetConfig(int ConfigId)
+        public async Task<ActionResult<SmtpConfig>> GetSmtpConfig(int id)
         {
-            return Ok(await this.configService.GetConfig(ConfigId));
+            return Ok(await this.configService.GetSmtpConfig(id));
         }
 
-        [Route("Smtp/{ConfigId:int}")]
+        [Route("{ConfigId:int}")]
         [HttpPut]
-        public async Task<ActionResult<bool>> UpdateSMTPConfig(int ConfigId, SMTPConfig config)
+        public async Task<ActionResult<bool>> UpdateSmtpConfig(SmtpConfig config)
         {
-            return Ok(await this.configService.UpdateSMTPConfig(ConfigId,config));
+            return Ok(await this.configService.UpdateSmtpConfig(config));
         }
 
-        [Route("Smtp/{ConfigId:int}")]
+        [Route("{ConfigId:int}")]
         [HttpDelete]
-        public async Task<ActionResult<bool>> DelSMTPConfig(int ConfigId)
+        public async Task<ActionResult<bool>> DelSmtpConfig(int id)
         {
-            return Ok(await this.configService.DelSMTPConfig(ConfigId));
+            return Ok(await this.configService.DelSmtpConfig(id));
         }
     }; 
 }

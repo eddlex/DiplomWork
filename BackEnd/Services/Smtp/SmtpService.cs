@@ -1,28 +1,26 @@
-﻿using BackEnd.Models.Input;
-using BackEnd.Models.Output;
-using BackEnd.Services.Db;
+﻿using BackEnd.Services.Db;
 using System.Data;
 
 namespace BackEnd.Services.SMTPConfig
 {
-    public class SMTPConfigService : ISMTPConfigService
+    public class SmtpService : ISmtpService
     {
         private readonly DbService dbService;
-        public SMTPConfigService(IDbService dbService)
+        public SmtpService(IDbService dbService)
         {
             this.dbService = (DbService)dbService;
         }
 
-        public async Task<SMTPConfig> GetConfig(int ConfigId)
+        public async Task<SmtpConfig> GetSmtpConfig(int id)
         {
             var cmd = this.dbService.CreateCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "spGetSmtpConfigurations";
 
-            cmd.Parameters.AddWithValue("ConfigId", ConfigId);
+            cmd.Parameters.AddWithValue("Id", id);
 
             using var reader = await cmd.ExecuteReaderAsync();
-            var result = new SMTPConfig();
+            var result = new SmtpConfig();
 
             if (await reader.ReadAsync())
             {
@@ -38,37 +36,38 @@ namespace BackEnd.Services.SMTPConfig
             return result;
         }
 
-        public async Task<bool> UpdateSMTPConfig(int ConfigId, SMTPConfig config)
+        public async Task<bool> UpdateSmtpConfig(SmtpConfig config)
         {
             using var cmd = this.dbService.CreateCommand();
-            cmd.CommandText = "spUpdateAllSmtpConfiguration";
+            cmd.CommandText = "spUpdateSmtpConfiguration";
             cmd.CommandType = CommandType.StoredProcedure;
      
-            cmd.Parameters.AddWithValue("ConfigId", ConfigId);
-            cmd.Parameters.AddWithValue("NewSmtpServer", config.SmtpServer);
-            cmd.Parameters.AddWithValue("NewPort", config.Port);
-            cmd.Parameters.AddWithValue("NewUsername", config.Username);
-            cmd.Parameters.AddWithValue("NewPassword", config.Password);
-            cmd.Parameters.AddWithValue("NewEnableSSL", config.EnableSSL);
+            cmd.Parameters.AddWithValue("Id", config.Id);
+            cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
+            cmd.Parameters.AddWithValue("Port", config.Port);
+            cmd.Parameters.AddWithValue("Username", config.Username);
+            cmd.Parameters.AddWithValue("Password", config.Password);
+            cmd.Parameters.AddWithValue("EnableSSL", config.EnableSSL);
 
             return (await cmd.ExecuteNonQueryAsync()) > 0;
         }
 
-        public async Task<bool> DelSMTPConfig(int ConfigId)
+        public async Task<bool> DelSmtpConfig(int ConfigId)
         {
             using var cmd = this.dbService.CreateCommand();
             cmd.CommandText = "spDeleteSmtpConfigurations";
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("ConfigId", ConfigId);
+            cmd.Parameters.AddWithValue("Id", ConfigId);
 
             return (await cmd.ExecuteNonQueryAsync()) > 0;
         }
     }
 
-    public class SMTPConfig
+    public class SmtpConfig
     {
-        public int Id { get; }
+        public int Id { get; set; }
+        public int UniversityId { get; }
         public string? SmtpServer { get; set; }
         public int Port { get; set; }
         public string? Username { get; set; }

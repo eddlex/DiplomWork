@@ -19,7 +19,7 @@ builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 builder.Services.AddScoped<IFormService, FormService>();
 builder.Services.AddScoped<IRecipientService, RecipientService>();
 builder.Services.AddScoped<IUniversityService, UniversityService>();
-builder.Services.AddScoped<ISMTPConfigService, SMTPConfigService>();
+builder.Services.AddScoped<ISmtpService, SmtpService>();
 
 var app = builder.Build();
 

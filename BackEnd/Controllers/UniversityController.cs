@@ -21,16 +21,16 @@ namespace BackEnd.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<List<Models.Output.University>>> AddUniversities(Models.Input.UniversityPost university)
+        public async Task<ActionResult<List<Models.Output.University>>> AddUniversity(Models.Input.UniversityPost university)
         {
-            return Ok(await this.universityService.AddUniversities(university));
+            return Ok(await this.universityService.AddUniversity(university));
         }
 
 
         [HttpDelete]
-        public async Task<ActionResult<bool>> DelUniversities(int id)
+        public async Task<ActionResult<bool>> DelUniversity(int id)
         {
-            return Ok(await this.universityService.DelUniversities(id));
+            return Ok(await this.universityService.DelUniversity(id));
         }
 
     }; 
