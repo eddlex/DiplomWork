@@ -1,6 +1,4 @@
-﻿
-
-namespace BackEnd.Services.Notification
+﻿namespace BackEnd.Services.Interfaces
 {
     public interface INotificationsService
     {

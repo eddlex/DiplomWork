@@ -1,9 +1,10 @@
 ﻿using BackEnd.Models.Input;
 using BackEnd.Services.Db;
+using BackEnd.Services.Interfaces;
 using Dapper;
 using System.Data;
 
-namespace BackEnd.Services.University
+namespace BackEnd.Services.Services
 {
     public class UniversityService : IUniversityService
     {
@@ -15,7 +16,7 @@ namespace BackEnd.Services.University
 
         public async Task<List<Models.Output.University>> GetUniversities()
         {
-            using var connection = this.dbService.CreateConnection();
+            using var connection = dbService.CreateConnection();
 
             return (await connection.QueryAsync<Models.Output.University>("spGetUniversities", commandType: CommandType.StoredProcedure)).ToList();
 
@@ -23,7 +24,7 @@ namespace BackEnd.Services.University
 
         public async Task<bool> AddUniversity(UniversityPost university)
         {
-            using var cmd = this.dbService.CreateCommand();
+            using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spAddUniversity";
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -36,7 +37,7 @@ namespace BackEnd.Services.University
 
         public async Task<bool> DelUniversity(int id)
         {
-            using var cmd = this.dbService.CreateCommand();
+            using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spDelUniversity";
             cmd.CommandType = CommandType.StoredProcedure;
 

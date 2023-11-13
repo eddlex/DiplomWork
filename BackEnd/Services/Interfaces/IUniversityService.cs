@@ -1,6 +1,6 @@
 ﻿using BackEnd.Models.Input;
 
-namespace BackEnd.Services.University
+namespace BackEnd.Services.Interfaces
 {
     public interface IUniversityService
     {

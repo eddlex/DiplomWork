@@ -1,4 +1,6 @@
-﻿namespace BackEnd.Services.SMTPConfig
+﻿using BackEnd.Services.Services;
+
+namespace BackEnd.Services.Interfaces
 {
     public interface ISmtpService
     {

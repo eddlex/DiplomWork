@@ -1,12 +1,9 @@
 ﻿using BackEnd.Services.Db;
-using BackEnd.Models;
 using System.Data;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using BackEnd.Models.Input;
 using BackEnd.Models.Output;
+using BackEnd.Services.Interfaces;
 
-namespace BackEnd.Services.Form
+namespace BackEnd.Services.Services
 {
     public class FormService : IFormService
     {
@@ -16,38 +13,38 @@ namespace BackEnd.Services.Form
             this.dbService = (DbService)dbService;
         }
 
-        public async Task<List<Models.Output    .Form>> GetForms(int? GroupId = null)
+        public async Task<List<Form>> GetForms(int? GroupId = null)
         {
-            var cmd = this.dbService.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            var cmd = dbService.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "spGetForms";
 
             cmd.Parameters.AddWithValue("GroupId", GroupId);
 
-            using var reader  = await cmd.ExecuteReaderAsync();
-            var result = new List<Models.Output.Form>();
-            if (reader.HasRows) 
+            using var reader = await cmd.ExecuteReaderAsync();
+            var result = new List<Form>();
+            if (reader.HasRows)
             {
 
                 var dicOrdinals = new Dictionary<string, int>()
                 {
-                    { nameof(Models.Output.Form.Id),  reader.GetOrdinal(nameof(Models.Output.Form.Id))},
-                    { nameof(Models.Output.Form.GroupId), reader.GetOrdinal(nameof(Models.Output.Form.GroupId))},
+                    { nameof(Form.Id),  reader.GetOrdinal(nameof(Form.Id))},
+                    { nameof(Form.GroupId), reader.GetOrdinal(nameof(Form.GroupId))},
                     { "Row" +  nameof(FormRow.Id),  reader.GetOrdinal("Row" +  nameof(FormRow.Id))},
                     { "Row" +  nameof(FormRow.Name),  reader.GetOrdinal("Row" +  nameof(FormRow.Name))},
                     { "Row" +  nameof(FormRow.Value),  reader.GetOrdinal("Row" +  nameof(FormRow.Value))},
                 };
-      
+
                 while (reader.Read())
                 {
-                    var formId = reader.GetInt32(dicOrdinals[nameof(Models.Output.Form.Id)]);
-                   
+                    var formId = reader.GetInt32(dicOrdinals[nameof(Form.Id)]);
+
                     if (!result.Any(p => p.Id == formId))
                     {
-                        result.Add(new Models.Output.Form()
+                        result.Add(new Form()
                         {
                             Id = formId,
-                            GroupId = reader.GetInt32(dicOrdinals[nameof(Models.Output.Form.GroupId)]),
+                            GroupId = reader.GetInt32(dicOrdinals[nameof(Form.GroupId)]),
                             Rows = new()
                         });
                     }
@@ -59,12 +56,12 @@ namespace BackEnd.Services.Form
                         Id = reader.GetInt32(dicOrdinals["Row" + nameof(FormRow.Id)]),
                         Name = reader.GetString(dicOrdinals["Row" + nameof(FormRow.Name)]),
                         Value = reader.GetInt32(dicOrdinals["Row" + nameof(FormRow.Value)])
-                    }); 
+                    });
                 }
             }
             return result;
         }
 
-        
+
     }
 }

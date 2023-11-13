@@ -3,9 +3,9 @@ using System.Net;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using System.Text;
-using BackEnd.Services.SMTPConfig;
+using BackEnd.Services.Interfaces;
 
-namespace BackEnd.Services.Notification
+namespace BackEnd.Services.Services
 {
     public class NotificationsService : INotificationsService
     {
@@ -50,7 +50,7 @@ namespace BackEnd.Services.Notification
                 Body = "This is a test email sent from C#.",
                 BodyEncoding = Encoding.UTF8,
                 SubjectEncoding = Encoding.UTF8,
-        };
+            };
 
             // Create a new SmtpClient
             SmtpClient smtpClient = new SmtpClient(smtpServer)
@@ -61,7 +61,7 @@ namespace BackEnd.Services.Notification
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false
 
-        };
+            };
 
             // Send the email
             await smtpClient.SendMailAsync(mailMessage);

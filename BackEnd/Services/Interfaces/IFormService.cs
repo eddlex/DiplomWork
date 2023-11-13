@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace BackEnd.Services.Form
+namespace BackEnd.Services.Interfaces
 {
     public interface IFormService
     {

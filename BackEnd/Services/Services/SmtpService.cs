@@ -1,7 +1,8 @@
 ﻿using BackEnd.Services.Db;
+using BackEnd.Services.Interfaces;
 using System.Data;
 
-namespace BackEnd.Services.SMTPConfig
+namespace BackEnd.Services.Services
 {
     public class SmtpService : ISmtpService
     {
@@ -13,7 +14,7 @@ namespace BackEnd.Services.SMTPConfig
 
         public async Task<SmtpConfig> GetSmtpConfig(int id)
         {
-            using var cmd = this.dbService.CreateCommand();
+            using var cmd = dbService.CreateCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "spGetSmtpConfigurations";
 
@@ -22,7 +23,7 @@ namespace BackEnd.Services.SMTPConfig
             using var reader = await cmd.ExecuteReaderAsync();
 
 
-            
+
             var result = new SmtpConfig();
 
             if (await reader.ReadAsync())
@@ -41,10 +42,10 @@ namespace BackEnd.Services.SMTPConfig
 
         public async Task<bool> UpdateSmtpConfig(SmtpConfig config)
         {
-            using var cmd = this.dbService.CreateCommand();
+            using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spUpdateSmtpConfiguration";
             cmd.CommandType = CommandType.StoredProcedure;
-     
+
             cmd.Parameters.AddWithValue("Id", config.Id);
             cmd.Parameters.AddWithValue("UniversityId", config.UniversityId);
             cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
@@ -53,18 +54,18 @@ namespace BackEnd.Services.SMTPConfig
             cmd.Parameters.AddWithValue("Password", config.Password);
             cmd.Parameters.AddWithValue("EnableSSL", config.EnableSSL);
 
-            return (await cmd.ExecuteNonQueryAsync()) > 0;
+            return await cmd.ExecuteNonQueryAsync() > 0;
         }
 
         public async Task<bool> DelSmtpConfig(int id)
         {
-            using var cmd = this.dbService.CreateCommand();
+            using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spDeleteSmtpConfigurations";
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("Id", id);
 
-            return (await cmd.ExecuteNonQueryAsync()) > 0;
+            return await cmd.ExecuteNonQueryAsync() > 0;
         }
     }
 

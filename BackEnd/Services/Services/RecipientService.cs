@@ -2,8 +2,9 @@
 using System.Data;
 using Dapper;
 using BackEnd.Models.Input;
+using BackEnd.Services.Interfaces;
 
-namespace BackEnd.Services.Form
+namespace BackEnd.Services.Services
 {
     public class RecipientService : IRecipientService
     {
@@ -15,18 +16,18 @@ namespace BackEnd.Services.Form
 
         public async Task<List<RecipientGroupGet>> GetRecipientGroups(int? Id = null)
         {
-            using var connection = this.dbService.CreateConnection();
+            using var connection = dbService.CreateConnection();
 
-            return  (await connection.QueryAsync<RecipientGroupGet>("spGetRecipientGroups", new { Id = Id }, commandType: CommandType.StoredProcedure)).ToList();  
+            return (await connection.QueryAsync<RecipientGroupGet>("spGetRecipientGroups", new { Id }, commandType: CommandType.StoredProcedure)).ToList();
         }
 
 
         public async Task<bool> AddRecipientGroups(List<RecipientGroupGet> groups)
-        {    
-            using var cmd = this.dbService.CreateCommand();
+        {
+            using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spAddRecipientGroups";
             cmd.CommandType = CommandType.StoredProcedure;
-            
+
             var dt = new DataTable("Items");
             dt.Columns.Add(new DataColumn("Item1", typeof(string)));
             dt.Columns.Add(new DataColumn("Item2", typeof(string)));
@@ -39,13 +40,13 @@ namespace BackEnd.Services.Form
             var param = cmd.Parameters.Add("@Items", SqlDbType.Structured);
             param.TypeName = "dbo.StringTuple";
             param.Value = dt;
-            return (await cmd.ExecuteNonQueryAsync()) > 0;
+            return await cmd.ExecuteNonQueryAsync() > 0;
         }
 
 
         public async Task<bool> DelRecipientGroups(List<int> ides)
         {
-            using var cmd = this.dbService.CreateCommand();
+            using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spDelRecipientGroups";
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -61,12 +62,12 @@ namespace BackEnd.Services.Form
             var param = cmd.Parameters.Add("@Ides", SqlDbType.Structured);
             param.TypeName = "dbo.Ides";
             param.Value = dt;
-            return (await cmd.ExecuteNonQueryAsync()) > 0;
+            return await cmd.ExecuteNonQueryAsync() > 0;
         }
 
         public async Task<bool> UpdateRecipientGroups(List<RecipientGroupPut> groups)
         {
-            using var cmd = this.dbService.CreateCommand();
+            using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spUpdateRecipientGroups";
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -84,7 +85,7 @@ namespace BackEnd.Services.Form
             var param = cmd.Parameters.Add("@Groups", SqlDbType.Structured);
             param.TypeName = "dbo.IntStringStringTriple";
             param.Value = dt;
-            return (await cmd.ExecuteNonQueryAsync()) > 0;
+            return await cmd.ExecuteNonQueryAsync() > 0;
         }
 
 

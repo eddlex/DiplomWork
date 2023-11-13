@@ -1,4 +1,6 @@
-using BackEnd.Services.University;
+using BackEnd.Services.Interfaces;
+using BackEnd.Services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEnd.Controllers
@@ -13,6 +15,7 @@ namespace BackEnd.Controllers
             this.universityService = (UniversityService)universityService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<Models.Output.University>>> GetUniversities()
         {
