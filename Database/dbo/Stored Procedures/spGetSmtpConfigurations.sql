@@ -11,5 +11,5 @@ BEGIN
     FROM
         SmtpConfigurations
 	WHERE
-		Id = @Id
+		Id = @Id OR @Id = 0
 END

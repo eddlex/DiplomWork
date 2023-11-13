@@ -7,5 +7,6 @@ namespace BackEnd.Services.Configuration
         string ConnectionString { get; }
 
         string GeConnectionString();
+        JwtConfiguration GetJwt();
     }
 }

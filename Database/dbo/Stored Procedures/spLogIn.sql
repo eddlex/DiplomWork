@@ -6,16 +6,20 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        IF EXISTS(SELECT *
-                  FROM Users u
-                  WHERE @LogIn In (u.Username, u.Phone, u.Email) AND u.Password = HASHBYTES('SHA2_512', @Password + u.Salt))
-        BEGIN
-            SELECT  1
-        END
-        ELSE
-        BEGIN
-            SELECT 0
-        END
+        SELECT u.Id,
+               u.UserName,
+               u.Email,
+               u.Phone,
+               u.UniversityId,
+               uf.FirstName,
+               uf.LastName,
+               uf.BirthDate,
+               uf.EmailIsVerified,
+               uf.PhoneIsVerified
+        FROM Users u JOIN UserInfo uf on u.Id = uf.UserId
+        WHERE @LogIn In (u.Username, u.Phone, u.Email)
+            AND u.Password = HASHBYTES('SHA2_512', @Password + u.Salt)
+
         COMMIT;
     END TRY
     BEGIN CATCH
