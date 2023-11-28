@@ -3,6 +3,8 @@ using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using BackEnd.Models.Input;
+using BackEnd.Models.Output;
 
 namespace BackEnd.Controllers
 {
@@ -17,25 +19,27 @@ namespace BackEnd.Controllers
             this.configService = (SmtpService)configService;
         }
 
-        
+
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<SmtpConfig>> GetSmtpConfig()
         {
-            return Ok(await this.configService.GetSmtpConfig(User.ParseToken().UniversityId));
+            return Ok(await this.configService.GetSmtpConfig(User.ParseToken().PermissionId, User.ParseToken().UserId));
         }
 
+        [Authorize]
         [HttpPut]
-        public async Task<ActionResult<bool>> UpdateSmtpConfig(SmtpConfig config)
+        public async Task<ActionResult<bool>> UpdateSmtpConfig(SmtpConfigPut config)
         {
-            return Ok(await this.configService.UpdateSmtpConfig(config));
+            return Ok(await this.configService.UpdateSmtpConfig(User.ParseToken().PermissionId, config));
         }
 
+        [Authorize]
         [Route("{id:int}")]
         [HttpDelete]
         public async Task<ActionResult<bool>> DelSmtpConfig(int id)
         {
-            return Ok(await this.configService.DelSmtpConfig(id));
+            return Ok(await this.configService.DelSmtpConfig(User.ParseToken().PermissionId, id));
         }
 
 
@@ -58,5 +62,5 @@ namespace BackEnd.Controllers
         //{
         //    return Ok(await this.configService.DelSmtpConfig(id));
         //}
-    }; 
+    };
 }

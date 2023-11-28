@@ -1,6 +1,10 @@
 ﻿using BackEnd.Services.Db;
 using BackEnd.Services.Interfaces;
+using Dapper;
 using System.Data;
+using BackEnd.Models.Input;
+using BackEnd.Models.Output;
+using static BackEnd.Helpers.Enums;
 
 namespace BackEnd.Services.Services
 {
@@ -12,71 +16,79 @@ namespace BackEnd.Services.Services
             this.dbService = (DbService)dbService;
         }
 
-        public async Task<SmtpConfig> GetSmtpConfig(int id)
+        //public Task<int> GetPermission(int PermissionId)
+        //{
+        //    using var connection = dbService.CreateConnection();
+
+        //    return connection.ExecuteScalarAsync<int>("spGetPermission", new { PermissionId }, commandType: CommandType.StoredProcedure);
+
+        //} 
+        public async Task<SmtpConfig> GetSmtpConfig(int PermissionId, int id)
         {
-            using var cmd = dbService.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "spGetSmtpConfigurations";
+            using var connection = dbService.CreateConnection();
 
-            cmd.Parameters.AddWithValue("Id", id);
+            var perm = await connection.ExecuteScalarAsync<int>("spGetPermission", new { PermissionId }, commandType: CommandType.StoredProcedure);
 
-            using var reader = await cmd.ExecuteReaderAsync();
-
-
-
-            var result = new SmtpConfig();
-
-            if (await reader.ReadAsync())
+            if (perm != null && perm >= 1)
             {
-                result.SmtpServer = reader["SmtpServer"].ToString();
-                result.Port = Convert.ToInt32(reader["Port"]);
-                result.Username = reader["Username"].ToString();
-                result.Password = reader["Password"].ToString();
-                result.EnableSSL = (bool)reader["EnableSSL"];
-
-                reader.Close();
+                return (SmtpConfig)await connection.QueryAsync<SmtpConfig>("spGetSmtpConfigurations", new { id }, commandType: CommandType.StoredProcedure);
             }
-
-            return result;
+            return null;
         }
 
-        public async Task<bool> UpdateSmtpConfig(SmtpConfig config)
+
+        public async Task<bool> UpdateSmtpConfig(int PermissionId, SmtpConfigPut config)
         {
-            using var cmd = dbService.CreateCommand();
-            cmd.CommandText = "spUpdateSmtpConfiguration";
-            cmd.CommandType = CommandType.StoredProcedure;
+            using var connection = dbService.CreateConnection();
+            var perm = await connection.ExecuteScalarAsync<int>("spGetPermission", new { PermissionId }, commandType: CommandType.StoredProcedure);
 
-            cmd.Parameters.AddWithValue("Id", config.Id);
-            cmd.Parameters.AddWithValue("UniversityId", config.UniversityId);
-            cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
-            cmd.Parameters.AddWithValue("Port", config.Port);
-            cmd.Parameters.AddWithValue("Username", config.Username);
-            cmd.Parameters.AddWithValue("Password", config.Password);
-            cmd.Parameters.AddWithValue("EnableSSL", config.EnableSSL);
+            if (perm != null && perm >= 3)
+            {
+                using var cmd = dbService.CreateCommand();
+                cmd.CommandText = "spUpdateSmtpConfiguration";
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return await cmd.ExecuteNonQueryAsync() > 0;
+                cmd.Parameters.AddWithValue("Id", config.Id);
+                cmd.Parameters.AddWithValue("UniversityId", config.UniversityId);
+                cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
+                cmd.Parameters.AddWithValue("Port", config.Port);
+                cmd.Parameters.AddWithValue("Username", config.Username);
+                cmd.Parameters.AddWithValue("Password", config.Password);
+                cmd.Parameters.AddWithValue("EnableSSL", config.EnableSSL);
+
+                return await cmd.ExecuteNonQueryAsync() > 0;
+            }
+            return false;
         }
 
-        public async Task<bool> DelSmtpConfig(int id)
+        public async Task<bool> DelSmtpConfig(int PermissionId, int id)
         {
-            using var cmd = dbService.CreateCommand();
-            cmd.CommandText = "spDeleteSmtpConfigurations";
-            cmd.CommandType = CommandType.StoredProcedure;
+            using var connection = dbService.CreateConnection();
 
-            cmd.Parameters.AddWithValue("Id", id);
+            var perm = await connection.ExecuteScalarAsync<int>("spGetPermission", new { PermissionId }, commandType: CommandType.StoredProcedure);
 
-            return await cmd.ExecuteNonQueryAsync() > 0;
+            if (perm != null && perm == 7)
+            {
+                using var cmd = dbService.CreateCommand();
+                cmd.CommandText = "spDeleteSmtpConfigurations";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("Id", id);
+
+                return await cmd.ExecuteNonQueryAsync() > 0;
+            }
+            return false;
         }
     }
 
-    public class SmtpConfig
-    {
-        public int Id { get; set; }
-        public int UniversityId { get; }
-        public string? SmtpServer { get; set; }
-        public int Port { get; set; }
-        public string? Username { get; set; }
-        public string? Password { get; set; }
-        public bool? EnableSSL { get; set; }
-    }
+    //public class SmtpConfig
+    //{
+    //    public int Id { get; set; }
+    //    public int UniversityId { get; }
+    //    public string? SmtpServer { get; set; }
+    //    public int Port { get; set; }
+    //    public string? Username { get; set; }
+    //    public string? Password { get; set; }
+    //    public bool? EnableSSL { get; set; }
+    //}
 }
