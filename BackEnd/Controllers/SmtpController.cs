@@ -24,7 +24,7 @@ namespace BackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<SmtpConfig>> GetSmtpConfig()
         {
-            return Ok(await this.configService.GetSmtpConfig(User.ParseToken().PermissionId, User.ParseToken().UserId));
+            return Ok(await this.configService.GetSmtpConfig(User.ParseToken().UserId));
         }
 
         [Authorize]

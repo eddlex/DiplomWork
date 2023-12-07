@@ -15,8 +15,9 @@ BEGIN
                uf.LastName,
                uf.BirthDate,
                uf.EmailIsVerified,
-               uf.PhoneIsVerified
-        FROM Users u JOIN UserInfo uf on u.Id = uf.UserId
+               uf.PhoneIsVerified,
+               u.PermissionId
+        FROM Users u JOIN UsersInfo uf on u.Id = uf.UserId
         WHERE @LogIn In (u.Username, u.Phone, u.Email)
             AND u.Password = HASHBYTES('SHA2_512', @Password + u.Salt)
 

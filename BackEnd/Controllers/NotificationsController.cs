@@ -1,5 +1,7 @@
+using BackEnd.Helpers;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -14,13 +16,16 @@ namespace BackEnd.Controllers
         public NotificationsController(INotificationsService notificationsService)
         {
             this.notificationsService = (NotificationsService)notificationsService;
+            this.notificationsService.Token = this.User.ParseToken();
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult<bool>> Send()
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<bool>> SendForms(int groupId)
         {
-            await notificationsService.SendMessage();
+            this.notificationsService.Token = User.ParseToken();
+            await notificationsService.SendForms(groupId);
             return Ok(true);
         }
 

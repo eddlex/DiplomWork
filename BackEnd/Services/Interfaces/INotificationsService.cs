@@ -3,6 +3,6 @@
     public interface INotificationsService
     {
         Task SendPhoneVerificationCode(int ClientId);
-        Task SendMessage();
+        Task SendForms(int groupId);
     }
 }

@@ -8,6 +8,6 @@ namespace BackEnd.Services.Interfaces
     {
         Task<bool> DelSmtpConfig(int PermissionId, int ConfigId);
         Task<bool> UpdateSmtpConfig(int PermissionId, SmtpConfigPut config);
-        Task<SmtpConfig> GetSmtpConfig(int PermissionId, int id);
+        Task<List<SmtpConfig>> GetSmtpConfig(int universityId);
     }
 }

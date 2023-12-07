@@ -16,27 +16,6 @@ namespace BackEnd.Services.Services
             this.dbService = (DbService)dbService;
         }
 
-        //public Task<int> GetPermission(int PermissionId)
-        //{
-        //    using var connection = dbService.CreateConnection();
-
-        //    return connection.ExecuteScalarAsync<int>("spGetPermission", new { PermissionId }, commandType: CommandType.StoredProcedure);
-
-        //} 
-        public async Task<SmtpConfig> GetSmtpConfig(int PermissionId, int id)
-        {
-            using var connection = dbService.CreateConnection();
-
-            var perm = await connection.ExecuteScalarAsync<int>("spGetPermission", new { PermissionId }, commandType: CommandType.StoredProcedure);
-
-            if (perm != null && perm >= 1)
-            {
-                return (SmtpConfig)await connection.QueryAsync<SmtpConfig>("spGetSmtpConfigurations", new { id }, commandType: CommandType.StoredProcedure);
-            }
-            return null;
-        }
-
-
         public async Task<bool> UpdateSmtpConfig(int PermissionId, SmtpConfigPut config)
         {
             using var connection = dbService.CreateConnection();
@@ -78,6 +57,14 @@ namespace BackEnd.Services.Services
                 return await cmd.ExecuteNonQueryAsync() > 0;
             }
             return false;
+        }
+
+        public async Task<List<SmtpConfig>> GetSmtpConfig(int universityId)
+        {
+            using var connection = dbService.CreateConnection();
+
+            return (List<SmtpConfig>)(await connection.QueryAsync<SmtpConfig>("spGetSmtpConfigurations", new { id = universityId }, commandType: CommandType.StoredProcedure));
+
         }
     }
 

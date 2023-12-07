@@ -3,6 +3,7 @@ using System.Data;
 using Dapper;
 using BackEnd.Models.Input;
 using BackEnd.Services.Interfaces;
+using BackEnd.Models.Output;
 
 namespace BackEnd.Services.Services
 {
@@ -12,6 +13,14 @@ namespace BackEnd.Services.Services
         public RecipientService(IDbService dbService)
         {
             this.dbService = (DbService)dbService;
+        }
+
+
+        public async Task<List<Recipient>> GetRecipientsByGroupId(int groupId, int universityId)
+        {
+            using var connection = dbService.CreateConnection();
+
+            return (await connection.QueryAsync<Recipient>("spGetRecipientsByGroupId", new { GroupId = groupId, UniversityId = universityId }, commandType: CommandType.StoredProcedure)).ToList();
         }
 
         public async Task<List<RecipientGroupGet>> GetRecipientGroups(int? Id = null)

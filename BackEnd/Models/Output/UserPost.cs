@@ -14,6 +14,7 @@ namespace BackEnd.Models.Output
         public DateTime? BirthDate { get; set; }
         public bool EmailIsVerified { get; set; }
         public bool PhoneIsVerified { get; set; }
+        public int PermissionId { get; set; }
 
     }
 }
