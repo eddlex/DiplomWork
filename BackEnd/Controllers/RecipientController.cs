@@ -1,3 +1,4 @@
+using BackEnd.Helpers;
 using BackEnd.Models.Input;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
@@ -56,5 +57,14 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.recipientService.UpdateRecipientGroups(groups));
         }
+
+        [Route("MailBody")]
+        [HttpGet]
+        public async Task<ActionResult<bool>> GetMailBody()
+        {
+            this.recipientService.Token = User.ParseToken();
+            return Ok(await this.recipientService.GetMailBody());
+        }
+
     }; 
 }

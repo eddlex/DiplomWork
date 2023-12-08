@@ -92,5 +92,9 @@
     <Build Include="dbo\Stored Procedures\spGetRecipientsByGroupId.sql" />
     <Build Include="dbo\Tables\UsersInfo.sql" />
     <Build Include="dbo\Tables\MailBody.sql" />
+    <Build Include="dbo\Stored Procedures\spUpdateMailBody.sql" />
+    <Build Include="dbo\Stored Procedures\spGetMailBody.sql" />
+    <Build Include="dbo\Stored Procedures\spDelMailBody.sql" />
+    <Build Include="dbo\Stored Procedures\spAddMailBody.sql" />
   </ItemGroup>
 </Project>

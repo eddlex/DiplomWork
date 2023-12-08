@@ -10,6 +10,9 @@ namespace BackEnd.Services.Services
     public class RecipientService : IRecipientService
     {
         private readonly DbService dbService;
+
+        public (int UserId, int UniversityId, int PermissionId) Token { get; set; } = (-1, -1, -1);
+
         public RecipientService(IDbService dbService)
         {
             this.dbService = (DbService)dbService;
@@ -97,6 +100,41 @@ namespace BackEnd.Services.Services
             return await cmd.ExecuteNonQueryAsync() > 0;
         }
 
+
+        public async Task<List<MailBody>> GetMailBody()
+        {
+            using var connection = dbService.CreateConnection();
+
+            return (await connection.QueryAsync<MailBody>("spGetMailBody",
+                                                           new { Token.UniversityId },
+                                                           commandType: CommandType.StoredProcedure)).ToList();
+        }
+
+
+        public async Task<bool> DelMailBody(int id)
+        {
+            using var cmd = dbService.CreateCommand();
+            cmd.CommandText = "spDelMailBody";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("Id", id);
+
+            return await cmd.ExecuteNonQueryAsync() > 0;
+        }
+
+
+        public async Task<bool> UpdateMailBody(MailBodyPut input)
+        {
+            using var cmd = dbService.CreateCommand();
+            cmd.CommandText = "spUpdateMailBody";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("Id", input.Id);
+            cmd.Parameters.AddWithValue("Name", input.Name);
+            cmd.Parameters.AddWithValue("Subject", input.Subject);
+            cmd.Parameters.AddWithValue("Body", input.Body);
+            cmd.Parameters.AddWithValue("UniversityId", input.UniversityId);
+
+            return await cmd.ExecuteNonQueryAsync() > 0;
+        }
 
     }
 }
