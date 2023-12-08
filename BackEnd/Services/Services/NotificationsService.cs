@@ -13,7 +13,7 @@ namespace BackEnd.Services.Services
     {
         private readonly SmtpService smtpService;
         private readonly RecipientService recipientService;
-        public (int UserId, int UniversityId, int PermissionId) Token { get; set; }
+        public (int UserId, int UniversityId, int PermissionId) Token { get; set; } = (-1, -1, -1);
 
         public NotificationsService(ISmtpService smtpService, IRecipientService recipientService)
         {
@@ -35,28 +35,28 @@ namespace BackEnd.Services.Services
         }
 
 
-        public async Task SendForms(int groupId)
+        public async Task<bool> SendForms(int groupId)
         {
             var smtpConfig = (await this.smtpService.GetSmtpConfig(Token.UniversityId)).FirstOrDefault();
 
-            if (smtpConfig is not null)
+            if (smtpConfig != null)
             {
                 var to = await this.recipientService.GetRecipientsByGroupId(groupId, Token.UniversityId);
-                if (to is not null)
+                if (to != null && to.Count > 0)
                 {
                     // Create a new SmtpClient
                     var smtpClient = new SmtpClient(smtpConfig.SmtpServer)
                     {
                         Port = smtpConfig.Port,
-                        Credentials = new NetworkCredential(smtpConfig.Username, smtpConfig.Password),
-                        EnableSsl = smtpConfig.EnableSSL ?? false,
+                        Credentials = new NetworkCredential(smtpConfig.UserName, smtpConfig.Password),
+                        EnableSsl = smtpConfig.EnableSSL,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false
                     };
 
                     foreach (var item in to)
                     {
-                        var mailMessage = new MailMessage(smtpConfig.Username, item.Mail)
+                        var mailMessage = new MailMessage(smtpConfig.UserName, item.Mail)
                         {
                             Subject = "Test Email",
                             Body = "This is a test email sent from C#.",
@@ -68,9 +68,10 @@ namespace BackEnd.Services.Services
                         // Send the email
                         await smtpClient.SendMailAsync(mailMessage);
                     }
+                    return true;
                 }
-               
             }
+            return false;
         }
     }
 }

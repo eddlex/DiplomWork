@@ -91,5 +91,6 @@
     <Build Include="dbo\Stored Procedures\spGetPermission.sql" />
     <Build Include="dbo\Stored Procedures\spGetRecipientsByGroupId.sql" />
     <Build Include="dbo\Tables\UsersInfo.sql" />
+    <Build Include="dbo\Tables\MailBody.sql" />
   </ItemGroup>
 </Project>

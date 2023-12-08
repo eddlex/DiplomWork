@@ -1,15 +1,15 @@
 ﻿CREATE PROCEDURE [dbo].[spGetSmtpConfigurations]
-	@Id INT
+	@UniversityId INT
 AS
 BEGIN
     SELECT
         [SmtpServer],
         [Port],
-        [Username],
+        [UserName],
         [Password],
         [EnableSSL]
     FROM
         SmtpConfigurations
 	WHERE
-		UniversityId = @Id OR @Id = 0
+		(UniversityId = @UniversityId OR @UniversityId = 0)
 END

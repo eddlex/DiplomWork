@@ -16,17 +16,16 @@ namespace BackEnd.Controllers
         public NotificationsController(INotificationsService notificationsService)
         {
             this.notificationsService = (NotificationsService)notificationsService;
-            this.notificationsService.Token = this.User.ParseToken();
         }
 
 
         [HttpPost]
         [Authorize]
+        [Route("SendForms")]
         public async Task<ActionResult<bool>> SendForms(int groupId)
         {
             this.notificationsService.Token = User.ParseToken();
-            await notificationsService.SendForms(groupId);
-            return Ok(true);
+            return Ok(await notificationsService.SendForms(groupId));
         }
 
     }; 

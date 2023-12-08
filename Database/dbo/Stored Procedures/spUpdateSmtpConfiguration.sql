@@ -3,7 +3,7 @@
     @UniversityId INT,
     @SmtpServer NVARCHAR(255),
     @Port INT,
-    @Username NVARCHAR(100),
+    @UserName NVARCHAR(100),
     @Password NVARCHAR(100),
     @EnableSSL BIT
 AS
@@ -15,7 +15,7 @@ BEGIN
 				[SmtpServer] = @SmtpServer,
 				[UniversityId] = @UniversityId,
 				[Port] = @Port,
-				[Username] = @Username,
+				[UserName] = @UserName,
 				[Password] = @Password,
 				[EnableSSL] = @EnableSSL
 			WHERE

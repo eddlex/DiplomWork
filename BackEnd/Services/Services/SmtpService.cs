@@ -31,7 +31,7 @@ namespace BackEnd.Services.Services
                 cmd.Parameters.AddWithValue("UniversityId", config.UniversityId);
                 cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
                 cmd.Parameters.AddWithValue("Port", config.Port);
-                cmd.Parameters.AddWithValue("Username", config.Username);
+                cmd.Parameters.AddWithValue("UserName", config.UserName);
                 cmd.Parameters.AddWithValue("Password", config.Password);
                 cmd.Parameters.AddWithValue("EnableSSL", config.EnableSSL);
 
@@ -63,7 +63,7 @@ namespace BackEnd.Services.Services
         {
             using var connection = dbService.CreateConnection();
 
-            return (List<SmtpConfig>)(await connection.QueryAsync<SmtpConfig>("spGetSmtpConfigurations", new { id = universityId }, commandType: CommandType.StoredProcedure));
+            return (List<SmtpConfig>)(await connection.QueryAsync<SmtpConfig>("spGetSmtpConfigurations", new { UniversityId = universityId }, commandType: CommandType.StoredProcedure));
 
         }
     }

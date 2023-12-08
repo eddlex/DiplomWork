@@ -3,6 +3,6 @@
     public interface INotificationsService
     {
         Task SendPhoneVerificationCode(int ClientId);
-        Task SendForms(int groupId);
+        Task<bool> SendForms(int groupId);
     }
 }
