@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackEnd", "BackEnd\BackEnd.
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{BC304DF3-2C08-44AC-9D79-0A686EEAEB3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{CD0244C1-8FF1-4CC0-970D-7993A13DF61C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{6ADE611E-5605-403E-9487-B4D13F082F9F}"
 	ProjectSection(SolutionItems) = preProject
 		BackEnd.PublishSettings = BackEnd.PublishSettings
@@ -32,10 +30,6 @@ Global
 		{BC304DF3-2C08-44AC-9D79-0A686EEAEB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC304DF3-2C08-44AC-9D79-0A686EEAEB3B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC304DF3-2C08-44AC-9D79-0A686EEAEB3B}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{CD0244C1-8FF1-4CC0-970D-7993A13DF61C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD0244C1-8FF1-4CC0-970D-7993A13DF61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD0244C1-8FF1-4CC0-970D-7993A13DF61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD0244C1-8FF1-4CC0-970D-7993A13DF61C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
