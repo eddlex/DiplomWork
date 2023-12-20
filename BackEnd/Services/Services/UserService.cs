@@ -9,6 +9,7 @@ using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using UserPost = BackEnd.Models.Output.UserPost;
 
 namespace BackEnd.Services.Services
 {
@@ -23,7 +24,7 @@ namespace BackEnd.Services.Services
             this.configurationService = (ConfigurationService)configurationService;
         }
 
-        public async Task<Models.Output.UserPost> LogIn(Models.Input.UserPost user)
+        public async Task<UserPost?> LogIn(Models.Input.UserPost user)
         {
             using var connection = dbService.CreateConnection();
 

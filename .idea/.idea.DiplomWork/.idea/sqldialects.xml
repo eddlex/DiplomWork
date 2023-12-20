@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddMailBody.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipientGroups.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddUniversity.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelMailBody.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelRecipientGroups.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelUniversity.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteSmtpConfigurations.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetForms.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetMailBody.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetPermission.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientGroups.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientsByGroupId.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSmtpConfigurations.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetUniversities.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spLogIn.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spRegister.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateMailBody.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateRecipientGroups.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateSmtpConfiguration.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Form.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/FormRow.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/MailBody.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Permission.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Recipient.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/RecipientGroup.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/SmtpConfigurations.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/University.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Users.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/UsersInfo.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" dialect="TSQL" />
+  </component>
+</project>

@@ -16,9 +16,9 @@ namespace BackEnd.Controllers
             this.userService = (UserService)userService;
         }
 
-        [HttpPost("Token")]
+        [HttpPost("Authorize")]
       //  [AllowAnonymous]
-        public async Task<IActionResult> Token(UserPost user)
+        public async Task<IActionResult> Authorize(UserPost user)
         {
             return Ok(await userService.GenerateToken(user));
         }
