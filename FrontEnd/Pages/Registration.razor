@@ -1,0 +1,157 @@
+﻿@page "/Registration"
+
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@using FrontEnd.Model;
+
+
+<style>
+    body {
+        background-color: black;
+        margin: 0px 0 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-width: 40vh;
+    }
+
+    .paper-container {
+        padding: 100% 0;
+        margin: 0;
+    }
+</style>
+
+
+<!-- <MudPaper Class="d-flex align-center flex-grow-1 gap-4" Elevation="0"> -->
+<!-- <MudContainer  MaxWidth="MaxWidth.Small" Class="my-20" Justify="Justify.Center" AlignItems="AlignItems.Center" Style="background-color: black;">
+    <MudItem  xs="15" sm="5"> -->
+<!-- <div style="background-color: black;"> -->
+<!-- <MudCard> -->
+<MudCardContent>
+
+    <div class="paper-container">
+        <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10">
+            <h1> Sign up </h1>
+            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                <MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!"
+                @bind-Value="model.UserName" />
+                <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
+                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" 
+                @bind-Value="model.UserEmail" />
+                <MudTextField T="string"
+                              Label="Password" HelperText="Choose a strong password" @ref="pwField1"
+                              InputType="@PasswordInput"
+                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
+                              RequiredError="Password is required!"
+                              Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" 
+                @bind-Value="model.Password" />
+
+                <MudTextField T="string"
+                              Label="Password" HelperText="Repeat the password" InputType="@PasswordInput2"
+                              Validation="@(new Func<string, string>(PasswordMatch))"
+                              RequiredError="Password is required!"
+                              Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon2" OnAdornmentClick="ButtonTestclick2" />
+
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>form.Validate())"
+                           Class="my-5">Sign up</MudButton>
+                <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(()=>form.ResetAsync())"
+                           Class="mx-5">Reset</MudButton>
+
+                <!-- <div class="d-flex">
+                    <MudRadioGroup T="string" Required="true" RequiredError="Account type is required!">
+                        <MudRadio Option="@("Personal")">Personal</MudRadio>
+                        <MudRadio Option="@("Professional")">Professional</MudRadio>
+                    </MudRadioGroup>
+                </div>
+                <div class="d-flex align-center justify-space-between">
+                    <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Label="I agree!" />
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Register</MudButton>
+                </div> -->
+            </MudForm>
+        </MudPaper>
+    </div>
+    <!-- <MudPaper Class="pa-4 mt-4">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>form.Validate())">Validate</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(()=>form.ResetAsync())" Class="mx-2">Reset</MudButton>
+    @* <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton> *@
+    </MudPaper> -->
+
+</MudCardContent>
+<!-- </MudCard> -->
+<!-- </div> -->
+<!-- </MudItem>
+</MudContainer> -->
+<!-- </MudPaper> -->
+@code {
+    bool success;
+    string[] errors = { };
+    MudTextField<string> pwField1;
+    MudForm form;
+    RegistrationPost model = new RegistrationPost();
+
+
+    private IEnumerable<string> PasswordStrength(string pw)
+    {
+        if (string.IsNullOrWhiteSpace(pw))
+        {
+            yield return "Password is required!";
+            yield break;
+        }
+        if (pw.Length < 8)
+            yield return "Password must be at least of length 8";
+        if (!Regex.IsMatch(pw, @"[A-Z]"))
+            yield return "Password must contain at least one capital letter";
+        if (!Regex.IsMatch(pw, @"[a-z]"))
+            yield return "Password must contain at least one lowercase letter";
+        if (!Regex.IsMatch(pw, @"[0-9]"))
+            yield return "Password must contain at least one digit";
+    }
+
+    private string PasswordMatch(string arg)
+    {
+        if (pwField1.Value != arg)
+            return "Passwords don't match";
+        return null;
+    }
+
+    //public string Password { get; set;} = "superstrong123";
+
+    bool isShow, isShow2;
+    InputType PasswordInput = InputType.Password;
+    InputType PasswordInput2 = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+    string PasswordInputIcon2 = Icons.Material.Filled.VisibilityOff;
+
+    void ButtonTestclick()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+    void ButtonTestclick2()
+    {
+        @if (isShow2)
+        {
+            isShow2 = false;
+            PasswordInputIcon2 = Icons.Material.Filled.VisibilityOff;
+            PasswordInput2 = InputType.Password;
+        }
+        else
+        {
+            isShow2 = true;
+            PasswordInputIcon2 = Icons.Material.Filled.Visibility;
+            PasswordInput2 = InputType.Text;
+        }
+    }
+
+}

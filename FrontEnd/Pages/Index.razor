@@ -1,12 +1,33 @@
 ﻿@page "/"
 @using Microsoft.JSInterop.WebAssembly
 
+<style>
+    .custom-button {
+        background-color: #6622BF; /* Set the desired background color */
+        color: #FFFFFF; /* Set the text color */
+        border: 1px solid #2E1350; /* Set the border color */
+        padding: 10px 20px; /* Adjust padding as needed */
+        border-radius: 5px; /* Add rounded corners if desired */
+        cursor: pointer;
+    }
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
+    .custom-button:hover {
+        background-color: #501E91; /* Set the background color on hover */
+        border-color: #2E1350; /* Set the border color on hover */
+    }
+</style>
+
+
+<div class="container d-flex justify-content-center align-items-center vh-100" style="background-color: black;">
     <div class="card p-4">
-        <h3 class="text-center mb-4">Login</h3>
+        <h3 class="text-center mb-4">Start page</h3>
+        <div class="signup-link">
+            @* <p><a href="/Login">Go to login page</a></p> *@
+            <p><button type="button" onclick="window.location.href='/Login'" class="custom-button">Go to login page</button></p>
 
-        <EditForm Model="@_model" OnSubmit="Authorize">
+        </div>
+
+        @* <EditForm Model="@_model" OnSubmit="Authorize">
             <DataAnnotationsValidator />
 
             <div class="form-group">
@@ -23,7 +44,7 @@
 
             <button type="submit" class="btn btn-primary btn-block">Login</button>
             
-        </EditForm>
+        </EditForm> *@
     </div>
 </div>
 

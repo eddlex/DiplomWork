@@ -1,0 +1,51 @@
+﻿@page "/ResetPass"
+
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@using FrontEnd.Model;
+
+
+<style>
+    body {
+        background-color: black;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-width: 40vh;
+    }
+
+    .paper-container {
+        padding: 100% 0;
+        margin: 0;
+    }
+</style>
+
+
+<MudCardContent>
+    <div class="paper-container">
+        <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10">
+            <h1> Reset </h1>
+            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
+                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"
+                @bind-Value="model.UserEmail" />
+                
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>form.Validate())"
+                           Class="my-5">Send email</MudButton>
+                <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(()=>form.ResetAsync())"
+                           Class="mx-5">Clear</MudButton>
+
+            </MudForm>
+        </MudPaper>
+    </div>
+</MudCardContent>
+
+
+@code {
+    bool success;
+    string[] errors = { };
+    MudForm form;
+    ResetPassPost model = new ResetPassPost();
+}

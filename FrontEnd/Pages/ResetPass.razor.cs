@@ -7,7 +7,7 @@ using Microsoft.JSInterop;
 
 namespace FrontEnd.Pages;
 
-public partial class Index
+public partial class ResetPass
 {
     //[Inject]
     //private IAuthorizationService Authorization { get; set; }
