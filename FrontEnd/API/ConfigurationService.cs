@@ -2,10 +2,10 @@
 
 namespace FrontEnd.API;
 
-public class ConfigurationService :IConfigurationService
+public static class ConfigurationService //:IConfigurationService
 {
-    public string WWW { get => $"https://localhost:{PORT}/"; set => WWW = value; }
-    public string PORT { get => "7154"; set => PORT = value; } 
-    
-    
+    public static string URL { get => $"https://localhost:{PORT}/"; /*set => URL = value;*/ }
+    public static string PORT { get => "7154"; /*set => PORT = value; */} 
 }
+
+

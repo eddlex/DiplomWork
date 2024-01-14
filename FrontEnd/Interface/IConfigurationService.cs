@@ -1,9 +1,8 @@
 ﻿namespace FrontEnd.Interface;
 
-public interface IConfigurationService
-{
-    public string WWW { get; set; }
-    public string PORT { get; set; }
-    
-
-}
+// public interface IConfigurationService
+// {
+//     public static string URL { get; set; }
+//     public static string PORT { get; set; }
+//     
+// }

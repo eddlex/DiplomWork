@@ -124,4 +124,8 @@
       <_ContentIncludedByDefault Remove="wwwroot\scss\bootstrap\scss\_variables.scss" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Helpers\Error.cs" />
+    </ItemGroup>
+
 </Project>

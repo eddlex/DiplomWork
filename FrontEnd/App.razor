@@ -1,4 +1,6 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@using System.Data
+@inherits LayoutComponentBase
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
         <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
@@ -10,3 +12,34 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+
+<ErrorBoundary>
+
+</ErrorBoundary>
+
+@code {
+    
+    [Inject]
+    private ISnackbar? Snackbar { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+    }
+
+    private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) => Drow(((Exception)e.ExceptionObject).Message);
+    
+    
+    public void Drow(string message)
+    {
+        if (Snackbar == null)
+            return;
+        
+        Snackbar.Configuration.SnackbarVariant = Variant.Filled;   
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomEnd;
+        Snackbar.Configuration.ShowCloseIcon = true;
+        Snackbar.Add($"Error {message}", Severity.Error);
+    }
+}
