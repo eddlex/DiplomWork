@@ -5,6 +5,9 @@
 @using FrontEnd.Model;
 
 
+
+
+
 <style>
     body {
         background-color: black;
@@ -22,41 +25,57 @@
     }
 </style>
 
+@inject NavigationManager navMeneger
+<AuthorizeView>
+    <Authorized>
+        <p>AAAAA</p>
+    </Authorized>
+    <NotAuthorized>
+        <MudCardContent>
+            <div class="paper-container">
+                <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10">
+                    <h1> Sign in </h1>
+                    <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                        <MudTextField T="string" Label="UserName" Required="true" RequiredError="UserName is required!"
+                                      Validation="@(new StringLengthAttribute(20) {ErrorMessage = "The UserName is invalid"})"
+                        @bind-Value="model.LogIn" />
+                        <MudTextField T="string"
+                                      Label="Password" @ref="pwField1"
+                                      InputType="@PasswordInput"
+                                      Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
+                                      RequiredError="Password is required!"
+                                      Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
+                                      style="margin-bottom: 10px;"
+                        @bind-Value="model.Password" />
+        
+                        <div class="signup-link">
+                            <p>Forgot password? <a href="/ResetPass">Reset</a></p>
+                        </div>
+        
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Authorize(); })"
+                                   Class="my-5">Sign in</MudButton>
+                        <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(()=>form.ResetAsync())"
+                                   Class="mx-5">Reset</MudButton>
+        
+                        <div class="signup-link">
+                            <p>Don't have an account? <a href="/Registration">Sign Up</a></p>
+                        </div>
+        
+                    </MudForm>
+                </MudPaper>
+            </div>
+        </MudCardContent>
+    </NotAuthorized>
+    
+    
+    
 
-<MudCardContent>
-    <div class="paper-container">
-        <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10">
-            <h1> Sign in </h1>
-            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                <MudTextField T="string" Label="UserName" Required="true" RequiredError="UserName is required!"
-                              Validation="@(new StringLengthAttribute(20) {ErrorMessage = "The UserName is invalid"})"
-                @bind-Value="model.LogIn" />
-                <MudTextField T="string"
-                              Label="Password" @ref="pwField1"
-                              InputType="@PasswordInput"
-                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                              RequiredError="Password is required!"
-                              Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
-                              style="margin-bottom: 10px;"
-                @bind-Value="model.Password" />
+    
+    
+</AuthorizeView>
 
-                <div class="signup-link">
-                    <p>Forgot password? <a href="/ResetPass">Reset</a></p>
-                </div>
 
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Authorize(); })"
-                           Class="my-5">Sign in</MudButton>
-                <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(()=>form.ResetAsync())"
-                           Class="mx-5">Reset</MudButton>
 
-                <div class="signup-link">
-                    <p>Don't have an account? <a href="/Registration">Sign Up</a></p>
-                </div>
-
-            </MudForm>
-        </MudPaper>
-    </div>
-</MudCardContent>
 
 
 @code {
@@ -95,4 +114,5 @@
             PasswordInput = InputType.Text;
         }
     }
+    
 }

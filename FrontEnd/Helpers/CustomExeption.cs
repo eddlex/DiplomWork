@@ -5,4 +5,8 @@ public class AlertException : Exception
     {
     }
     
+    public AlertException(string msg) : base(msg)
+    {
+    }
+    
 } 
