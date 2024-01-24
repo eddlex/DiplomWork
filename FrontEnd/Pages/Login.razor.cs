@@ -29,45 +29,26 @@ public partial class Login
         if (model.Password.Length < 5  || model.LogIn.Length < 5) 
             return;
 
-        var token =  await this.Authorization.AuthorizeClient(model);
-
+        if (await this.Authorization.AuthorizeClient(model))
+        {
+            navMeneger.NavigateTo("/AdminPage");
+        }
         
-        await AuthenticationState;
+    
         
-        //var aaa = await authentcationState;
-        navMeneger.NavigateTo("/Login");
+        
 
-        // await JSRuntime.InvokeVoidAsync("alert", s);
-        //await js.Alert(s);
+   
 
     }
     
     
-    [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationState { get; set; }
+   
 
-    public ClaimsPrincipal AuthenticatedUser { get; set; }
-    //public AccessToken AccessToken { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        
-        
-        
-        //var accessTokenResult = await AuthorizationService();
-       //
-       //
-       //  if (!accessTokenResult.TryGetToken(out var token))
-       //  {
-       //      throw new InvalidOperationException(
-       //          "Failed to provision the access token.");
-       //  }
-
-        //AccessToken = token;
-
-       // AuthenticatedUser = state.User;
-    }
-    
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     await base.OnInitializedAsync();
+    // }
+    //
 
 }

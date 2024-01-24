@@ -27,19 +27,22 @@ public class AuthorizationService :  HttpService, IAuthorizationService
 
 
     }
-
+    
     public UserSession? GetClientSession(int userId)
     {
         return this.Sessions.FirstOrDefault(s => s.UserId == userId);
     }
-    public async Task<string> AuthorizeClient(AuthorizationPost input)
+    public async Task<bool> AuthorizeClient(AuthorizationPost input)
     {
        // var token = await Execute<string, AuthorizationPost>(HttpMethod.Post, "Security/Authorize", input);
-       var s = new UserSession(1, 1, 1, "11111");
-       await AuthenticationStateProvider.UpdateAuthenticationStateAsync(s);
-       //var a =  await this.AuthenticationStateProvider.GetToken();
+
+        var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxIiwiVW5pdmVyc2l0eUlkIjoiMiIsIlBlcm1pc3Npb25JZCI6M30.qedLD2ghRWYta_TSv7-GV37InOOvcLyYg-r-VSzVZsGqLTAzendRKJPvx3G86JIttYTi9p4p11bvZtXeYernXQ";
+  
+        if (string.IsNullOrWhiteSpace(token))
+            throw new AlertException(Constants.Errors.TokenNotFound);
+
+        return await AuthenticationStateProvider.UpdateAuthenticationStateAsync(new UserSession(token));
        
-       return "aaaa";
     }
 
 

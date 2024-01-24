@@ -44,7 +44,7 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
         
     }
 
-    public async Task UpdateAuthenticationStateAsync(UserSession? userSession)
+    public async Task<bool> UpdateAuthenticationStateAsync(UserSession? userSession)
     {
         // ClaimsPrincipal claimsPrincipal;
         if (userSession is not null)
@@ -88,7 +88,7 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
             )
         );
         NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
-        
+        return true;
     }
 
 

@@ -4,6 +4,7 @@ public static class Constants
     public sealed class Errors
     {
         public static readonly Errors SomethingWrong = new Errors(nameof(SomethingWrong), 0, "Something Wrong");
+        public static readonly Errors TokenNotFound = new Errors(nameof(TokenNotFound), 1, "Token Not Found");
         
         public string Text { get; private set; }
         public string UniqueName { get; private set; }

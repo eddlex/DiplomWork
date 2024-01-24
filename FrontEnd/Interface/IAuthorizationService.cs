@@ -4,6 +4,6 @@ namespace FrontEnd.Interface;
 
 public interface IAuthorizationService
 {
-    public Task<string> AuthorizeClient(AuthorizationPost input);
+    public Task<bool> AuthorizeClient(AuthorizationPost input);
     
 }
