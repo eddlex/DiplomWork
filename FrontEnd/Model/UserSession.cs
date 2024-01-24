@@ -1,10 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
+
 
 namespace FrontEnd.Model;
 
 public class UserSession
 {
+    [JsonConstructor]
     public UserSession(int userId, int universityId, int permissionId, string token)
     {
         this.UserId = userId;

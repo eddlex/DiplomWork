@@ -1,6 +1,6 @@
 ﻿@page "/AdminPage"
 @using Microsoft.JSInterop.WebAssembly
-
+@attribute [Authorize(Roles = "Admin")]
 <style>
     body {
         background-color: black;
@@ -23,60 +23,64 @@
     }
 </style>
 
-<MudThemeProvider />
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <MudThemeProvider />
+        <div class="body">
+            <MudLayout style="background-color: #212121; color: white;" Elevation="5">
+                <MudAppBar Elevation="5">
+                    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                    <MudText Typo="Typo.h5" Class="ml-3">Admin panel</MudText>
+                    <MudSpacer />
+                    <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" />
+                </MudAppBar>
 
-<div class="body">
-    <MudLayout style="background-color: #212121; color: white;" Elevation="5">
-        <MudAppBar Elevation="5">
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-            <MudText Typo="Typo.h5" Class="ml-3">Admin panel</MudText>
-            <MudSpacer />
-            <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" />
-        </MudAppBar>
+                <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Color="Color.Inherit">
+                    <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2" Bordered="true">
+                        <MudNavLink Href="/" Match="NavLinkMatch.All">Users</MudNavLink>
+                        <MudNavLink Href="/unis" Match="NavLinkMatch.Prefix">Universities</MudNavLink>
+                        <MudNavGroup Title="Surveys" Expanded="false">
+                            <MudNavLink Href="/allsurveys" Match="NavLinkMatch.Prefix">All</MudNavLink>
+                            <MudNavLink Href="/students" Match="NavLinkMatch.Prefix">Among students</MudNavLink>
+                            <MudNavLink Href="/companies" Match="NavLinkMatch.Prefix">Among companies</MudNavLink>
+                            <MudNavLink Href="/lecturers" Match="NavLinkMatch.Prefix">Among lecturers</MudNavLink>
+                        </MudNavGroup>
+                        <MudNavLink Href="/subjects" Match="NavLinkMatch.Prefix">Subjects</MudNavLink>
 
-        <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Color="Color.Inherit">
-            <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2" Bordered="true">
-                <MudNavLink Href="/" Match="NavLinkMatch.All">Users</MudNavLink>
-                <MudNavLink Href="/unis" Match="NavLinkMatch.Prefix">Universities</MudNavLink>
-                <MudNavGroup Title="Surveys" Expanded="false">
-                    <MudNavLink Href="/allsurveys" Match="NavLinkMatch.Prefix">All</MudNavLink>
-                    <MudNavLink Href="/students" Match="NavLinkMatch.Prefix">Among students</MudNavLink>
-                    <MudNavLink Href="/companies" Match="NavLinkMatch.Prefix">Among companies</MudNavLink>
-                    <MudNavLink Href="/lecturers" Match="NavLinkMatch.Prefix">Among lecturers</MudNavLink>
-                </MudNavGroup>
-                <MudNavLink Href="/subjects" Match="NavLinkMatch.Prefix">Subjects</MudNavLink>
+                        <MudNavGroup Title="Settings" Expanded="false">
+                            <!-- <MudNavLink Href="/users"  Match="NavLinkMatch.Prefix">Users</MudNavLink> -->
+                            <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
+                        </MudNavGroup>
+                        <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
+                    </MudNavMenu>
+                </MudDrawer>
+                <MudMainContent style="background-color: black; color: white;" Elevation="5">
+                    <div style="height: 16px;"></div>
+                    <MudText Typo="Typo.h4" Class="ml-3">Schedule</MudText>
+                    <MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Selector == dropzone)"
+                                      ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
+                        <ChildContent>
+                            @for (int i = 1; i < 5; i++)
+                            {
+                                var dropzone = i.ToString();
+                                <MudPaper Class="ma-4 flex-grow-1 custom-paper" style="background-color: rgba(89,74,226,1); color: white;">
+                                    <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
+                                        <MudListSubheader class="custom-subheader">Grade @dropzone</MudListSubheader>
+                                        <MudDropZone T="DropItem" Identifier="@dropzone" Class="flex-grow-1" AllowReorder="true" />
+                                    </MudList>
+                                </MudPaper>
+                            }
+                        </ChildContent>
+                        @* <ItemRenderer> *@
+                        @*     <MudListItem Text="@context.Name" /> *@
+                        @* </ItemRenderer> *@
+                    </MudDropContainer>
+                </MudMainContent>
+            </MudLayout>
+        </div>
+    </Authorized>
+</AuthorizeView>
 
-                <MudNavGroup Title="Settings" Expanded="false">
-                    <!-- <MudNavLink Href="/users"  Match="NavLinkMatch.Prefix">Users</MudNavLink> -->
-                    <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
-                </MudNavGroup>
-                <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
-            </MudNavMenu>
-        </MudDrawer>
-        <MudMainContent style="background-color: black; color: white;" Elevation="5">
-            <div style="height: 16px;"></div>
-            <MudText Typo="Typo.h4" Class="ml-3">Schedule</MudText>
-            <MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Selector == dropzone)"
-                              ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
-                <ChildContent>
-                    @for (int i = 1; i < 5; i++)
-                    {
-                        var dropzone = i.ToString();
-                        <MudPaper Class="ma-4 flex-grow-1 custom-paper" style="background-color: rgba(89,74,226,1); color: white;">
-                            <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
-                                <MudListSubheader class="custom-subheader">Grade @dropzone</MudListSubheader>
-                                <MudDropZone T="DropItem" Identifier="@dropzone" Class="flex-grow-1" AllowReorder="true" />
-                            </MudList>
-                        </MudPaper>
-                    }
-                </ChildContent>
-                <ItemRenderer>
-                    <MudListItem Text="@context.Name" />
-                </ItemRenderer>
-            </MudDropContainer>
-        </MudMainContent>
-    </MudLayout>
-</div>
 @code {
     bool _drawerOpen = true;
 

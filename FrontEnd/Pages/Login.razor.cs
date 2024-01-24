@@ -10,45 +10,50 @@ using Microsoft.JSInterop;
 using MudBlazor;
 
 
-namespace FrontEnd.Pages;
 
-public partial class Login
+
+namespace FrontEnd.Pages
 {
-    [Inject]
-    private IAuthorizationService Authorization { get; set; }
-    
-    
-    [Inject]
-    private ISnackbar Snackbar { get; set; }
-    
-    
-    
-    private async void Authorize()
+    public partial class Login
     {
-        //throw new Exception("hello");
-        if (model.Password.Length < 5  || model.LogIn.Length < 5) 
-            return;
-
-        if (await this.Authorization.AuthorizeClient(model))
+        [Inject]
+        private IAuthorizationService Authorization { get; set; }
+    
+    
+        [Inject]
+        private ISnackbar Snackbar { get; set; }
+    
+       
+    
+        private async void Authorize()
         {
-            navMeneger.NavigateTo("/AdminPage");
-        }
+            //throw new Exception("hello");
+            if (model.Password.Length < 5  || model.LogIn.Length < 5) 
+                return;
+
+            if (await this.Authorization.AuthorizeClient(model))
+            { 
+                
+              //  await AuthStateProvider.GetAuthenticationStateAsync();
+                navMeneger.NavigateTo("/AdminPage");
+            }
         
     
         
         
 
    
+
+        }
+    
+    
+   
+
+        // protected override async Task OnInitializedAsync()
+        // {
+        //     await base.OnInitializedAsync();
+        // }
+        //
 
     }
-    
-    
-   
-
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     await base.OnInitializedAsync();
-    // }
-    //
-
 }

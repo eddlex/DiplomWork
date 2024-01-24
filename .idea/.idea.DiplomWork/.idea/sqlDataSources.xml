@@ -13,11 +13,11 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Recipient.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Form.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/FormRow.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/UsersInfo.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Users.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/University.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/SmtpConfigurations.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Permission.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/UsersInfo.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/MailBody.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetForms.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientGroups.sql" />

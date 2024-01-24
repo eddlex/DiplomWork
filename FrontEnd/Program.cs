@@ -38,7 +38,6 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationProvider>();
 
 
-
 //builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 //builder.Services.AddScoped<IHttpService, HttpService>();

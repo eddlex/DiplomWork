@@ -9,7 +9,7 @@ namespace FrontEnd.API;
 public class CustomAuthenticationProvider : AuthenticationStateProvider
 {
     private readonly ISessionStorageService sessionStorageService;
-    private ClaimsPrincipal anonymous = new(new ClaimsIdentity());
+
 
     public CustomAuthenticationProvider(ISessionStorageService sessionStorageService)
     {
@@ -20,9 +20,9 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
     {
         try
         {
-            var userSession = await sessionStorageService.GetItem<UserSession>("UserSession");
+            var userSession = await sessionStorageService.GetItem("UserSession");
             if (userSession == null)
-                return new AuthenticationState(anonymous);
+                return new AuthenticationState(new(new ClaimsIdentity()));
             var claimsPrincipal = new ClaimsPrincipal(
                 new ClaimsIdentity(
                     new List<Claim>
@@ -34,60 +34,43 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
                         
                     })
             );
-            
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
              return new AuthenticationState(claimsPrincipal);
         }
-        catch
+        catch(Exception ex)
         {
-            return new AuthenticationState(anonymous);
+           // throw new AlertException(ex.Message);
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))));
+            return new AuthenticationState(new(new ClaimsIdentity()));
         }
         
     }
 
     public async Task<bool> UpdateAuthenticationStateAsync(UserSession? userSession)
     {
-        // ClaimsPrincipal claimsPrincipal;
         if (userSession is not null)
         {
-        //     claimsPrincipal = new ClaimsPrincipal(
-        //         new ClaimsIdentity(
-        //             new List<Claim>
-        //             {
-        //                 new Claim("UserId", userSession.UserId.ToString()),
-        //                 new Claim("PermissionId", userSession.PermissionId.ToString()),
-        //                 new Claim("UniversityId", userSession.UniversityId.ToString())
-        //             }
-        //         )
-        //     );
-        //     
-        //    var claims = new List<Claim>
-        //             {
-        //                 new Claim("UserId", userSession.UserId.ToString()),
-        //                 new Claim("PermissionId", userSession.PermissionId.ToString()),
-        //                 new Claim("UniversityId", userSession.UniversityId.ToString())
-        //             };
-                
-           //await sessionStorageService.SaveItem<ClaimsPrincipal>("UserSession", claimsPrincipal);
-           await sessionStorageService.SaveItem("UserSession", userSession);
+            await sessionStorageService.SaveItem("UserSession", userSession);
+            var claimsPrincipal = new ClaimsPrincipal(
+                new ClaimsIdentity(
+                    new List<Claim>
+                    {
+                        new Claim("UserId", userSession.UserId.ToString()),
+                        new Claim("PermissionId", userSession.PermissionId.ToString()),
+                        new Claim("UniversityId", userSession.UniversityId.ToString()),
+                        new Claim("Token", userSession.Token),
+                        new Claim(ClaimTypes.Role, "Admin")
+                    }
+                )
+            );
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
         }
         else
         {
-          // claimsPrincipal = anonymous;
-           await sessionStorageService.RemoveItemAsync("UserSession");
+            await sessionStorageService.RemoveItemAsync("UserSession");
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal())));
         }
         
-        var claimsPrincipal = new ClaimsPrincipal(
-            new ClaimsIdentity(
-                new List<Claim>
-                {
-                    new Claim("UserId", userSession.UserId.ToString()),
-                    new Claim("PermissionId", userSession.PermissionId.ToString()),
-                    new Claim("UniversityId", userSession.UniversityId.ToString()),
-                    new Claim("Token", userSession.Token)
-                }
-            )
-        );
-        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
         return true;
     }
 
@@ -97,7 +80,7 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
         try
         {
           //  var userSession = await sessionStorageService.GetItem<UserSession>("UserSession");
-            var userSession = await sessionStorageService.GetItem<UserSession>("UserSession");
+            var userSession = await sessionStorageService.GetItem("UserSession");
             
             return userSession?.Token?? string.Empty;
         }

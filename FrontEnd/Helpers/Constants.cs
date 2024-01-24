@@ -5,6 +5,7 @@ public static class Constants
     {
         public static readonly Errors SomethingWrong = new Errors(nameof(SomethingWrong), 0, "Something Wrong");
         public static readonly Errors TokenNotFound = new Errors(nameof(TokenNotFound), 1, "Token Not Found");
+        public static readonly Errors WrongPassordOrUserName = new Errors(nameof(TokenNotFound), 2, "UserName or password is wrong");
         
         public string Text { get; private set; }
         public string UniqueName { get; private set; }
