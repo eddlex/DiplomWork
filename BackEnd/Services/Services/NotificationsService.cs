@@ -13,7 +13,7 @@ namespace BackEnd.Services.Services
     {
         private readonly SmtpService smtpService;
         private readonly RecipientService recipientService;
-        public (int UserId, int UniversityId, int PermissionId) Token { get; set; } = (-1, -1, -1);
+        public (int UserId, int UniversityId, int RoleId) Token { get; set; } = (-1, -1, -1);
 
         public NotificationsService(ISmtpService smtpService, IRecipientService recipientService)
         {

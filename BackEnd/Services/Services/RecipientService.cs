@@ -11,7 +11,7 @@ namespace BackEnd.Services.Services
     {
         private readonly DbService dbService;
 
-        public (int UserId, int UniversityId, int PermissionId) Token { get; set; } = (-1, -1, -1);
+        public (int UserId, int UniversityId, int RoleId) Token { get; set; } = (-1, -1, -1);
 
         public RecipientService(IDbService dbService)
         {

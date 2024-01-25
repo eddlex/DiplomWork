@@ -52,7 +52,7 @@ namespace BackEnd.Services.Services
                     {
                         new Claim("UserId", userDb.Id.ToString()),
                         new Claim("UniversityId", userDb.UniversityId.ToString()),
-                        new Claim("PermissionId", userDb.PermissionId.ToString()),
+                        new Claim(ClaimTypes.Role, userDb.RoleId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             }),
 

@@ -9,13 +9,13 @@ namespace BackEnd.Helpers
     public static class Extensions
     {
 
-        public static (int UserId, int UniversityId, int PermissionId) ParseToken(this ClaimsPrincipal user)
+        public static (int UserId, int UniversityId, int RoleId) ParseToken(this ClaimsPrincipal user)
         {
             try
             {
                 return (Convert.ToInt32(user.Claims.FirstOrDefault(claim => claim.Type == "UserId")?.Value),
                         Convert.ToInt32(user.Claims.FirstOrDefault(claim => claim.Type == "UniversityId")?.Value),
-                        Convert.ToInt32(user.Claims.FirstOrDefault(claim => claim.Type == "PermissionId")?.Value));
+                        Convert.ToInt32(user.Claims.FirstOrDefault(claim => claim.Type == "RoleId")?.Value));
             }
             catch (Exception ex)
             {

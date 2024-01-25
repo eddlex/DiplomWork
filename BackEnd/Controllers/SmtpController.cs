@@ -31,7 +31,7 @@ namespace BackEnd.Controllers
         [HttpPut]
         public async Task<ActionResult<bool>> UpdateSmtpConfig(SmtpConfigPut config)
         {
-            return Ok(await this.configService.UpdateSmtpConfig(User.ParseToken().PermissionId, config));
+            return Ok(await this.configService.UpdateSmtpConfig(User.ParseToken().RoleId, config));
         }
 
         [Authorize]
@@ -39,7 +39,7 @@ namespace BackEnd.Controllers
         [HttpDelete]
         public async Task<ActionResult<bool>> DelSmtpConfig(int id)
         {
-            return Ok(await this.configService.DelSmtpConfig(User.ParseToken().PermissionId, id));
+            return Ok(await this.configService.DelSmtpConfig(User.ParseToken().RoleId, id));
         }
 
 
