@@ -59,7 +59,6 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
-    <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="dbo\User Defined Types\" />
   </ItemGroup>
@@ -72,11 +71,12 @@
     <Build Include="dbo\Stored Procedures\spGetRecipientGroups.sql" />
     <Build Include="dbo\Stored Procedures\spDelRecipientGroups.sql" />
     <Build Include="dbo\Stored Procedures\spAddRecipientGroups.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
     <Build Include="dbo\User Defined Types\StringTuple.sql" />
     <Build Include="dbo\User Defined Types\Ides.sql" />
     <Build Include="dbo\Stored Procedures\spUpdateRecipientGroups.sql" />
     <Build Include="dbo\User Defined Types\IntStringStringTriple.sql" />
-    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Stored Procedures\spRegister.sql" />
     <Build Include="dbo\Stored Procedures\spLogIn.sql" />
     <Build Include="dbo\Tables\University.sql" />
@@ -90,7 +90,7 @@
     <Build Include="dbo\Tables\Permission.sql" />
     <Build Include="dbo\Stored Procedures\spGetPermission.sql" />
     <Build Include="dbo\Stored Procedures\spGetRecipientsByGroupId.sql" />
-    <Build Include="dbo\Tables\UsersInfo.sql" />
+    <Build Include="dbo\Tables\UserInfo.sql" />
     <Build Include="dbo\Tables\MailBody.sql" />
     <Build Include="dbo\Stored Procedures\spUpdateMailBody.sql" />
     <Build Include="dbo\Stored Procedures\spGetMailBody.sql" />

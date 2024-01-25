@@ -19,6 +19,7 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Permission.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/UsersInfo.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/MailBody.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Role.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetForms.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientGroups.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelRecipientGroups.sql" />
