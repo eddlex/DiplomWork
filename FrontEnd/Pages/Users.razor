@@ -1,0 +1,212 @@
+﻿@page "/Users"
+@using System.Collections.Generic;
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+<style>
+    body {
+        background-color: black;
+        opacity: 0.8;
+    }
+
+    .custom-elevation {
+        box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.75);
+    }
+
+    .custom-paper {
+        background-color: #651FFF;
+        color: white;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Add 3D box-shadow effect */
+    }
+
+    .custom-subheader {
+        color: white; /* Set your desired text color */
+        font-size: 20px;
+    }
+</style>
+
+<MudThemeProvider />
+
+<div class="body">
+    <MudLayout style="background-color: #212121; color: white;" Elevation="5">
+        <MudAppBar Elevation="5">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <MudText Typo="Typo.h5" Class="ml-3">Admin panel</MudText>
+            <MudSpacer />
+            <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => Logout())" />
+        </MudAppBar>
+
+        <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Color="Color.Inherit">
+            <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2" Bordered="true">
+                <MudNavLink Href="/Users" Match="NavLinkMatch.All">Users</MudNavLink>
+                <MudNavLink Href="/unis" Match="NavLinkMatch.Prefix">Universities</MudNavLink>
+                <MudNavLink Href="/surveys" Match="NavLinkMatch.Prefix">Surveys</MudNavLink>
+                @* <MudNavGroup Title="Surveys" Expanded="false">
+                <MudNavLink Href="/allsurveys" Match="NavLinkMatch.Prefix">All</MudNavLink>
+                <MudNavLink Href="/students" Match="NavLinkMatch.Prefix">Among students</MudNavLink>
+                <MudNavLink Href="/companies" Match="NavLinkMatch.Prefix">Among companies</MudNavLink>
+                <MudNavLink Href="/lecturers" Match="NavLinkMatch.Prefix">Among lecturers</MudNavLink>
+                </MudNavGroup> *@
+                <MudNavLink Href="/subjects" Match="NavLinkMatch.Prefix">Subjects</MudNavLink>
+
+                <MudNavGroup Title="Settings" Expanded="false">
+                    <!-- <MudNavLink Href="/users"  Match="NavLinkMatch.Prefix">Users</MudNavLink> -->
+                    <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
+                </MudNavGroup>
+                <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
+            </MudNavMenu>
+        </MudDrawer>
+        <MudMainContent style="background-color: black; color: white;" Elevation="5">
+            <div style="height: 16px;"></div>
+
+
+            <MudDataGrid T="Element" MultiSelection="true" Items="@Elements.Take(3)" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+                         Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged" ReadOnly="false"
+                         EditMode="DataGridEditMode.Form"
+                         StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
+                         Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">Users</MudText>
+                    <MudSpacer />
+                    <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                                  AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                </ToolBarContent>
+                <Columns>
+                    <SelectColumn T="Element" />
+                    <PropertyColumn Property="x => x.UserId" Title="UserId" Sortable="false" Filterable="false" IsEditable="false" />
+                    <PropertyColumn Property="x => x.Name" SortBy="@_sortBy" />
+                    <PropertyColumn Property="x => x.UserName" />
+                    <PropertyColumn Property="x => x.Email" />
+                    <PropertyColumn Property="x => x.Phone" />
+                    <PropertyColumn Property="x => x.UniversityId" Title="University" />
+                    <PropertyColumn Property="x => x.Role" />
+                    <PropertyColumn Property="x => x.CreationDate" Title="Creation date" />
+                    <PropertyColumn Property="x => x.UpdateDate" Title="Update date" />
+
+                    <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end" Sortable="false" Filterable="false">
+                        <CellTemplate>
+                            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton>
+                            <MudSpacer />
+                            <MudIconButton Icon="@Icons.Material.Filled.Pin" Size="Size.Small" Color="Color.Primary" OnClick="@(() => ChangePass(context.Item))"> </MudIconButton>
+                            <MudSpacer />
+                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteUser(context.Item))"> </MudIconButton>
+                        </CellTemplate>
+                    </TemplateColumn>
+                </Columns>
+
+                <PagerContent>
+                    <MudDataGridPager T="Element" />
+                </PagerContent>
+            </MudDataGrid>
+
+
+        </MudMainContent>
+    </MudLayout>
+</div>
+
+@code {
+    bool _drawerOpen = false;
+
+    private IEnumerable<Element> Elements = new List<Element>();
+    private bool _isCellEditMode;
+    private bool _editTriggerRowClick;
+    private string _searchString;
+    private bool _sortNameByLength;
+    private List<string> _events = new();
+
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private void Logout()
+    {
+        // NavigationManager.NavigateTo("/logout");
+    }
+
+    private void ChangePass(Element item)
+    {
+
+    }
+
+    private void DeleteUser(Element item)
+    {
+        //Remove from list
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Element e = new Element();
+        e.UserName = "name";
+
+        Element e1 = new Element();
+        e1.UserName = "anun";
+
+        ((List<Element>)Elements).Add(e);
+        ((List<Element>)Elements).Add(e1);
+        //Elements = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
+    }
+
+    // custom sort by name length
+    private Func<Element, object> _sortBy => x =>
+    {
+        if (_sortNameByLength)
+            return x.Name.Length;
+        else
+            return x.Name;
+    };
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<Element, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Email.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.UserName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        // if ($"{x.Phone} {x.Email} {x.Name}".Contains(_searchString))
+        //     return true;
+
+        return false;
+    };
+
+
+    // events
+    void RowClicked(DataGridRowClickEventArgs<Element> args)
+    {
+        System.Text.Json.JsonSerializer.Serialize(args.Item);
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<Element> args)
+    {
+        //args.RowIndex
+        System.Text.Json.JsonSerializer.Serialize(args.Item);
+    }
+
+    void SelectedItemsChanged(HashSet<Element> items)
+    {
+        System.Text.Json.JsonSerializer.Serialize(items);
+    }
+
+    void StartedEditingItem(Element item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+
+    void CanceledEditingItem(Element item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+
+    void CommittedItemChanges(Element item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+}
