@@ -23,6 +23,16 @@
         color: white; /* Set your desired text color */
         font-size: 20px;
     }
+
+/*     .right-corner {
+        position: absolute;
+        bottom: 7px;
+        right: 2px;
+        background-color: #fafafa;
+        font-size: 10px;
+        color: black;
+    } */
+
 </style>
 
 <MudThemeProvider />
@@ -56,13 +66,13 @@
                 <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
             </MudNavMenu>
         </MudDrawer>
-        <MudMainContent style="background-color: black; color: white;" Elevation="5">
-            <div style="height: 16px;"></div>
-            <div style="height: 700px;">
 
+        <MudMainContent style="background-color: black; color: white;" Elevation="5">
+            <div style="height: 15px;"></div>
+            <div style="height: 90vh;">
                 <MudDataGrid T="Element" Items="@Elements" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
                              RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Selectable="false" MultiSelection="false"
-                             ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="5"
+                             ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="10"
                              StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
                              Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
                              ColumnResizeMode="ResizeMode.Container" Style="height:100%" autoPageSize="true">
@@ -72,10 +82,11 @@
                     <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                                   AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 </ToolBarContent>
+
                 <Columns>
-                    <PropertyColumn Property="x => x.UserId" Title="UserId" Sortable="false" Filterable="false" IsEditable="false" />
+                    <PropertyColumn Property="x => x.UserId" Title="User Id" Sortable="false" Filterable="false" IsEditable="false" />
                     <PropertyColumn Property="x => x.Name" SortBy="@_sortBy" />
-                    <PropertyColumn Property="x => x.UserName" />
+                    <PropertyColumn Property="x => x.UserName" Title="User name" />
                     <PropertyColumn Property="x => x.Email" />
                     <PropertyColumn Property="x => x.Phone" />
                     <PropertyColumn Property="x => x.UniversityId" Title="University" />
@@ -83,7 +94,8 @@
                     <PropertyColumn Property="x => x.CreationDate" Title="Creation date" />
                     <PropertyColumn Property="x => x.UpdateDate" Title="Update date" />
 
-                    <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end" Sortable="false" Filterable="false">
+                    <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
+                                        Sortable="false" Filterable="false" StickyRight="true">
                         <CellTemplate>
                             <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton>
                             <MudSpacer />
@@ -95,12 +107,12 @@
                 </Columns>
 
                 <PagerContent>
-                    <MudDataGridPager T="Element" />
+                    @* <div class="right-corner" > *@
+                        <MudDataGridPager T="Element" />
+                    @* </div> *@
                 </PagerContent>
             </MudDataGrid>
             </div>
-
-
         </MudMainContent>
     </MudLayout>
 </div>
