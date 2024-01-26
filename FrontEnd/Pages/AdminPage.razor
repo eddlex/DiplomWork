@@ -1,6 +1,6 @@
 ﻿@page "/AdminPage"
 @using Microsoft.JSInterop.WebAssembly
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "0,1,2")]
 <style>
     body {
         background-color: black;
@@ -23,7 +23,7 @@
     }
 </style>
 
-<AuthorizeView Roles="Admin">
+<AuthorizeView Roles="0,1,2">
     <Authorized>
         <MudThemeProvider />
         <div class="body">

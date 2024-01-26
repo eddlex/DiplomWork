@@ -28,14 +28,14 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
                     new List<Claim>
                     {
                         new Claim("UserId", userSession.UserId.ToString()),
-                        new Claim("PermissionId", userSession.PermissionId.ToString()),
+                        new Claim(ClaimTypes.Role, userSession.RoleId.ToString()),
                         new Claim("UniversityId", userSession.UniversityId.ToString()),
                         new Claim("Token", userSession.Token)
                         
                     })
             );
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
-             return new AuthenticationState(claimsPrincipal);
+            return new AuthenticationState(claimsPrincipal);
         }
         catch(Exception ex)
         {
@@ -56,10 +56,9 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
                     new List<Claim>
                     {
                         new Claim("UserId", userSession.UserId.ToString()),
-                        new Claim("PermissionId", userSession.PermissionId.ToString()),
                         new Claim("UniversityId", userSession.UniversityId.ToString()),
-                        new Claim("Token", userSession.Token),
-                        new Claim(ClaimTypes.Role, "Admin")
+                        new Claim(ClaimTypes.Role, userSession.RoleId.ToString()),
+                        new Claim("Token", userSession.Token)
                     }
                 )
             );
