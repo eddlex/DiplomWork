@@ -36,7 +36,8 @@ public class HttpService : IHttpService
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonSerializer.Deserialize<T1>(await response.Content.ReadAsStringAsync());
+                var s = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<T1>(s);
             }
             
             throw new AlertException(Constants.Errors.SomethingWrong);

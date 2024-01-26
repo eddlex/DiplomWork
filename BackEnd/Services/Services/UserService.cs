@@ -9,6 +9,7 @@ using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using UserPost = BackEnd.Models.Output.UserPost;
 
 namespace BackEnd.Services.Services
@@ -26,7 +27,7 @@ namespace BackEnd.Services.Services
 
         public async Task<UserPost?> LogIn(Models.Input.UserPost user)
         {
-            using var connection = dbService.CreateConnection();
+            await using var connection = dbService.CreateConnection();
 
             return (await connection.QueryAsync<Models.Output.UserPost>("spLogIn", new {user.LogIn, user.Password}, commandType: CommandType.StoredProcedure)).FirstOrDefault();
 
