@@ -58,21 +58,21 @@
         </MudDrawer>
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div style="height: 16px;"></div>
+            <div style="height: 700px;">
 
-
-            <MudDataGrid T="Element" MultiSelection="true" Items="@Elements.Take(3)" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
-                         Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged" ReadOnly="false"
-                         EditMode="DataGridEditMode.Form"
-                         StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
-                         Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)">
+                <MudDataGrid T="Element" Items="@Elements" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+                             RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Selectable="false" MultiSelection="false"
+                             ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="5"
+                             StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
+                             Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
+                             ColumnResizeMode="ResizeMode.Container" Style="height:100%" autoPageSize="true">
                 <ToolBarContent>
-                    <MudText Typo="Typo.h6">Users</MudText>
+                    <MudText Typo="Typo.h4">Users</MudText>
                     <MudSpacer />
                     <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                                   AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 </ToolBarContent>
                 <Columns>
-                    <SelectColumn T="Element" />
                     <PropertyColumn Property="x => x.UserId" Title="UserId" Sortable="false" Filterable="false" IsEditable="false" />
                     <PropertyColumn Property="x => x.Name" SortBy="@_sortBy" />
                     <PropertyColumn Property="x => x.UserName" />
@@ -98,6 +98,7 @@
                     <MudDataGridPager T="Element" />
                 </PagerContent>
             </MudDataGrid>
+            </div>
 
 
         </MudMainContent>
@@ -105,7 +106,7 @@
 </div>
 
 @code {
-    bool _drawerOpen = false;
+    bool _drawerOpen = true;
 
     private IEnumerable<Element> Elements = new List<Element>();
     private bool _isCellEditMode;
