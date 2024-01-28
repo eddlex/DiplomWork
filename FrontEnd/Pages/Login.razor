@@ -1,12 +1,6 @@
-﻿@page "/"
+﻿@page "/a"
 
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
 @using FrontEnd.Model;
-
-
-
-
 
 <style>
     body {
@@ -27,9 +21,6 @@
 
 @inject NavigationManager navMeneger
 <AuthorizeView>
-    <Authorized>
-        <p>AAAAA</p>
-    </Authorized>
     <NotAuthorized>
         <MudCardContent>
             <div class="paper-container">
@@ -66,19 +57,8 @@
             </div>
         </MudCardContent>
     </NotAuthorized>
-    
-    
-    
-
-    
-    
 </AuthorizeView>
 
-
-
-
-
-@inject AuthenticationStateProvider AuthStateProvider
 @code {
     bool success;
     string[] errors = { };

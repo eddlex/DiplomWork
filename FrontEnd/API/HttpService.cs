@@ -1,6 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
+using MudBlazor;
 
 namespace FrontEnd.API;
 
@@ -33,18 +35,21 @@ public class HttpService : IHttpService
 
             var response = await this.HttpClient.SendAsync(request);
 
-
+           
             if (response.IsSuccessStatusCode)
             {
-                var s = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T1>(s);
+                var result = await response.Content.ReadAsStringAsync();
+                
+                return JsonSerializer.Deserialize<T1>(result);
             }
             
             throw new AlertException(Constants.Errors.SomethingWrong);
         }
         catch (Exception ex)
         {
-            throw new AlertException(Constants.Errors.SomethingWrong);
+            throw new AlertException(ex.Message);
+            
+            
         }
     }
 }

@@ -79,8 +79,8 @@
                 <ToolBarContent>
                     <MudText Typo="Typo.h4">Users</MudText>
                     <MudSpacer />
-                    <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
-                                  AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
+                    @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
                 </ToolBarContent>
 
                 <Columns>
@@ -123,7 +123,7 @@
     private IEnumerable<Element> Elements = new List<Element>();
     private bool _isCellEditMode;
     private bool _editTriggerRowClick;
-    private string _searchString;
+    public string _searchString;
     private bool _sortNameByLength;
     private List<string> _events = new();
 

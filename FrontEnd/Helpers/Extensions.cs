@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 using Blazored.SessionStorage;
 using FrontEnd.Model;
@@ -31,5 +32,27 @@ public static class Extensions
          
         
          
+    }
+    
+    
+    public static void ComputeSHA512Hash(this string input)
+    {
+        using (var sha512 = SHA512.Create())
+        {
+            // Convert the input string to bytes
+            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+
+            // Compute the hash
+            byte[] hashBytes = sha512.ComputeHash(inputBytes);
+
+            // Convert the hash bytes to a string representation
+            StringBuilder hashStringBuilder = new StringBuilder();
+            foreach (byte b in hashBytes)
+            {
+                hashStringBuilder.Append(b.ToString("X2"));
+            }
+
+            input = hashStringBuilder.ToString();
+        }
     }
 }
