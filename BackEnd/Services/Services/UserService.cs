@@ -9,6 +9,7 @@ using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using BackEnd.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using UserPost = BackEnd.Models.Output.UserPost;
 
@@ -32,9 +33,15 @@ namespace BackEnd.Services.Services
             return (await connection.QueryAsync<Models.Output.UserPost>("spLogIn", new {user.LogIn, user.Password}, commandType: CommandType.StoredProcedure)).FirstOrDefault();
 
         }
+    
+        public async Task<bool> Register(Models.Input.RegistrationPost user)
+        {
+            var result = (await dbService.QueryAsync<bool>("spRegister", new {user.UserName, user.Email, user.Password})).FirstOrDefault();
+            return result;
+        }
+        
 
-
-        public async Task<IResult> GenerateToken(Models.Input.UserPost user)
+        public async Task<string> GenerateToken(Models.Input.UserPost user)
         {
             var userDb = await LogIn(user);
             if (userDb != null)
@@ -67,11 +74,13 @@ namespace BackEnd.Services.Services
 
                 var jwtToken = jwtTokenHandler.WriteToken(token);
 
-                return Results.Ok(jwtToken);
+                //return Results.Ok(jwtToken);
+                return jwtToken;
             }
             else
             {
-                return Results.Unauthorized();
+                //return Results.Unauthorized();
+                return "";
             }
         
         }
