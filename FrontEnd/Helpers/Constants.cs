@@ -11,6 +11,8 @@ public static class Constants
         _errors.Add(Errors.SomethingWrong.Code, Errors.SomethingWrong);
         _errors.Add(Errors.TokenNotFound.Code, Errors.TokenNotFound);
         _errors.Add(Errors.WrongPasswordOrUserName.Code, Errors.WrongPasswordOrUserName);
+        _errors.Add(Errors.BackEnd.Code, Errors.BackEnd);
+        
     }
     public sealed class Errors
     {
@@ -20,6 +22,7 @@ public static class Constants
         public static readonly Errors SomethingWrong = new Errors(nameof(SomethingWrong), 50003, "Something Wrong");
         public static readonly Errors TokenNotFound = new Errors(nameof(TokenNotFound), 50004, "Token Not Found");
         public static readonly Errors WrongPasswordOrUserName = new Errors(nameof(WrongPasswordOrUserName), 50005, "UserName or password is wrong");
+        public static readonly Errors BackEnd = new Errors(nameof(BackEnd), 50006, "Api call error");
         
         public string Text { get; private set; }
         public string UniqueName { get; private set; }

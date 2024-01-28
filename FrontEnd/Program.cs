@@ -10,9 +10,6 @@ using Microsoft.AspNetCore.Components.Authorization;
 // using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using MudBlazor.Services;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

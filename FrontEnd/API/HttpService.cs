@@ -19,6 +19,7 @@ public class HttpService : IHttpService
         try
         {
             // Create HttpRequestMessage
+            
             var request = new HttpRequestMessage
             {
                 Method = method,
@@ -33,6 +34,7 @@ public class HttpService : IHttpService
                 request.Content = new StringContent(JsonSerializer.Serialize(requestBody), System.Text.Encoding.UTF8, "application/json");
             }
 
+            var s = request.RequestUri;
             var response = await this.HttpClient.SendAsync(request);
 
            
@@ -43,7 +45,7 @@ public class HttpService : IHttpService
                 return JsonSerializer.Deserialize<T1>(result);
             }
             
-            throw new AlertException(Constants.Errors.SomethingWrong);
+            throw new AlertException(Constants.Errors.BackEnd);
         }
         catch (Exception ex)
         {

@@ -16,15 +16,7 @@ public partial class Registration
     private NavigationManager? NavigationManager { get; set; }
     
      private RegistrationPost model = new();
- 
-    // public Registration(IUserService userService, NavigationManager navigationManager)
-    // {
-    //     this.UserService = (UserService)userService;
-    //     this.NavigationManager = navigationManager;
-    //    
-    // }
-    
-    
+     
     private async void Register()
     {
          var result = await this.UserService?.RegisterUser(model);
