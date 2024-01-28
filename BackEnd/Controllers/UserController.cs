@@ -17,7 +17,7 @@ namespace BackEnd.Controllers
         }
 
         [Route("Register")]
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<List<Models.Output.Form>>> Register(RegistrationPost input)
         {
             return Ok(await this.userService.Register(input));

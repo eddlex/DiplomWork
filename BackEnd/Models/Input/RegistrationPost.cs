@@ -7,7 +7,7 @@ namespace BackEnd.Models.Input
         [Required]
         [MaxLength(20)]
         [MinLength((5))]
-        public string LogIn { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [EmailAddress]

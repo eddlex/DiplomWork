@@ -1,6 +1,17 @@
 namespace FrontEnd.Helpers;
 public static class Constants
 {
+    private static Dictionary<int, Errors>? _errors;
+
+    static Constants()
+    {
+        _errors ??= new();
+        _errors.Add(Errors.UserNameExists.Code, Errors.UserNameExists);
+        _errors.Add(Errors.EmailNameExists.Code, Errors.EmailNameExists);
+        _errors.Add(Errors.SomethingWrong.Code, Errors.SomethingWrong);
+        _errors.Add(Errors.TokenNotFound.Code, Errors.TokenNotFound);
+        _errors.Add(Errors.WrongPasswordOrUserName.Code, Errors.WrongPasswordOrUserName);
+    }
     public sealed class Errors
     {
         public static readonly Errors UserNameExists = new Errors(nameof(UserNameExists), 50001, "UserName already exists");
@@ -8,18 +19,17 @@ public static class Constants
         
         public static readonly Errors SomethingWrong = new Errors(nameof(SomethingWrong), 50003, "Something Wrong");
         public static readonly Errors TokenNotFound = new Errors(nameof(TokenNotFound), 50004, "Token Not Found");
-        public static readonly Errors WrongPasswordOrUserName = new Errors(nameof(TokenNotFound), 50004, "UserName or password is wrong");
+        public static readonly Errors WrongPasswordOrUserName = new Errors(nameof(WrongPasswordOrUserName), 50005, "UserName or password is wrong");
         
         public string Text { get; private set; }
         public string UniqueName { get; private set; }
-        private int Code { get; }
-
-
-
-        private static Dictionary<int, Errors> _errors = new();
+        public int Code { get; }
+        
+        
 
         public static AlertException CreateException(int code)
         {
+            
             return new AlertException(_errors[code].Text);
         }
         
@@ -33,7 +43,6 @@ public static class Constants
             this.UniqueName = uniqueName;
             this.Code = code;
             this.Text = text;
-            _errors.Add(this.Code, this);
         }
     }
     

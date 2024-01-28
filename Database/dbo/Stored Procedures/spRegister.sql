@@ -1,9 +1,7 @@
 ﻿CREATE or alter  PROCEDURE spRegister
     @UserName  VARCHAR (50),
     @Email     VARCHAR (50),
-    @Phone     VARCHAR (50),
     @Password NVARCHAR (500),
-    @UniversityId INT
 AS
 BEGIN
     BEGIN TRY
@@ -11,7 +9,7 @@ BEGIN
 
             DECLARE @Salt  NVARCHAR(MAX) = (SELECT ABS(CHECKSUM(NEWID())))
             INSERT INTO [User] (Username, Email, Phone, Password, Salt, UniversityId)
-            VALUES (@UserName, @Email, @Phone, HASHBYTES('SHA2_512', @Password + @Salt) , @Salt, @UniversityId)
+            VALUES (@UserName, @Email, '', HASHBYTES('SHA2_512', @Password + @Salt) , @Salt, 0)
 
 --          INSERT INTO UsersInfo (UserId)
 --             VALUES (@@IDENTITY)
