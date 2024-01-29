@@ -1,7 +1,7 @@
 ﻿@page "/"
 
 @using FrontEnd.Model;
-
+@inject IJSRuntime js
 <style>
     body {
         background-color: black;
@@ -27,31 +27,34 @@
                 <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10">
                     <h1> Sign in </h1>
                     <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                        <MudTextField T="string" Label="UserName" Required="true" RequiredError="UserName is required!"
+                        <MudTextField T="string" id="username"
+                                      Label="UserName"
+                                      Required="true" RequiredError="User name is required!"
                                       Validation="@(new StringLengthAttribute(20) {ErrorMessage = "The UserName is invalid"})"
-                        @bind-Value="model.LogIn" />
-                        <MudTextField T="string"
+                        @bind-Value="model.LogIn" @onkeydown="@(args => { HandleEnterKeyPress(args, "pass"); })" />
+                        <MudTextField T="string" id="pass"
                                       Label="Password" @ref="pwField1"
                                       InputType="@PasswordInput"
-                                      Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                                      RequiredError="Password is required!"
-                                      Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
+                                      Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))"
+                                      Required="true" RequiredError="Password is required!"
+                                      Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="VisibilityButtonClick"
                                       style="margin-bottom: 10px;"
-                        @bind-Value="model.Password" />
-        
+                        @bind-Value="model.Password" @onkeydown="@(args => { HandleEnterKeyPress(args, "loginButton"); })" />
+
                         <div class="signup-link">
                             <p>Forgot password? <a href="/ResetPass">Reset</a></p>
                         </div>
-        
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Authorize(); })"
+
+                        <MudButton id=loginButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true"
+                                   OnClick="@(() => { form.Validate(); Authorize(); })" @onkeydown="@(args => { HandleEnterKeyPress(args, ""); })"
                                    Class="my-5">Sign in</MudButton>
                         <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(()=>form.ResetAsync())"
                                    Class="mx-5">Clear</MudButton>
-        
+
                         <div class="signup-link">
                             <p>Don't have an account? <a href="/Registration">Sign Up</a></p>
                         </div>
-        
+
                     </MudForm>
                 </MudPaper>
             </div>
@@ -59,12 +62,13 @@
     </NotAuthorized>
 </AuthorizeView>
 
+
 @code {
     bool success;
     string[] errors = { };
     MudTextField<string> pwField1;
     MudForm form;
-    AuthorizationPost model = new ();
+    AuthorizationPost model = new();
 
     private IEnumerable<string> PasswordStrength(string pw)
     {
@@ -80,7 +84,7 @@
     InputType PasswordInput = InputType.Password;
     string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
 
-    void ButtonTestclick()
+    void VisibilityButtonClick()
     {
         @if (isShow)
         {
@@ -95,5 +99,19 @@
             PasswordInput = InputType.Text;
         }
     }
-    
+
+    private async void HandleEnterKeyPress(KeyboardEventArgs args, string fieldId)
+    {
+
+        if (args.Code == "Enter" || args.Code == "NumpadEnter")
+        {
+            if (fieldId != "")
+                await js.InvokeVoidAsync("setFocus", fieldId);
+            else
+            {
+                await form.Validate();
+                Authorize();
+            }
+        }
+    }
 }
