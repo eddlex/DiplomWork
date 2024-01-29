@@ -1,47 +1,34 @@
 namespace FrontEnd.Helpers;
 public static class Constants
 {
-    private static Dictionary<int, Errors>? _errors;
+    public static Dictionary<int, Error>? Errors { get; set; }
 
     static Constants()
     {
-        _errors ??= new();
-        _errors.Add(Errors.UserNameExists.Code, Errors.UserNameExists);
-        _errors.Add(Errors.EmailNameExists.Code, Errors.EmailNameExists);
-        _errors.Add(Errors.SomethingWrong.Code, Errors.SomethingWrong);
-        _errors.Add(Errors.TokenNotFound.Code, Errors.TokenNotFound);
-        _errors.Add(Errors.WrongPasswordOrUserName.Code, Errors.WrongPasswordOrUserName);
-        _errors.Add(Errors.BackEnd.Code, Errors.BackEnd);
+        Errors ??= new();
+        Errors.Add(Error.UserNameExists.Code, Error.UserNameExists);
+        Errors.Add(Error.EmailNameExists.Code, Error.EmailNameExists);
+        Errors.Add(Error.SomethingWrong.Code, Error.SomethingWrong);
+        Errors.Add(Error.TokenNotFound.Code, Error.TokenNotFound);
+        Errors.Add(Error.WrongPasswordOrUserName.Code, Error.WrongPasswordOrUserName);
+        Errors.Add(Error.BackEnd.Code, Error.BackEnd);
         
     }
-    public sealed class Errors
+    public sealed class Error
     {
-        public static readonly Errors UserNameExists = new Errors(nameof(UserNameExists), 50001, "UserName already exists");
-        public static readonly Errors EmailNameExists = new Errors(nameof(UserNameExists), 50002, "Email already exists");
+        public static readonly Error UserNameExists = new Error(nameof(UserNameExists), 50001, "UserName already exists");
+        public static readonly Error EmailNameExists = new Error(nameof(EmailNameExists), 50002, "Email already exists");
         
-        public static readonly Errors SomethingWrong = new Errors(nameof(SomethingWrong), 50003, "Something Wrong");
-        public static readonly Errors TokenNotFound = new Errors(nameof(TokenNotFound), 50004, "Token Not Found");
-        public static readonly Errors WrongPasswordOrUserName = new Errors(nameof(WrongPasswordOrUserName), 50005, "UserName or password is wrong");
-        public static readonly Errors BackEnd = new Errors(nameof(BackEnd), 50006, "Api call error");
+        public static readonly Error SomethingWrong = new Error(nameof(SomethingWrong), 50003, "Something Wrong");
+        public static readonly Error TokenNotFound = new Error(nameof(TokenNotFound), 50004, "Token Not Found");
+        public static readonly Error WrongPasswordOrUserName = new Error(nameof(WrongPasswordOrUserName), 50005, "UserName or password is wrong");
+        public static readonly Error BackEnd = new Error(nameof(BackEnd), 50006, "Api call error");
         
         public string Text { get; private set; }
         public string UniqueName { get; private set; }
         public int Code { get; }
         
-        
-
-        public static AlertException CreateException(int code)
-        {
-            
-            return new AlertException(_errors[code].Text);
-        }
-        
-        public static AlertException CreateException(string message)
-        {
-            return new AlertException(message);
-        }
-        
-        private Errors(string uniqueName, int code, string text) 
+        private Error(string uniqueName, int code, string text) 
         {
             this.UniqueName = uniqueName;
             this.Code = code;

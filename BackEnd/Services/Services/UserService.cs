@@ -1,5 +1,4 @@
-﻿using BackEnd.Models.Input;
-using BackEnd.Models.Output;
+﻿
 using BackEnd.Services.Configuration;
 using BackEnd.Services.Db;
 using BackEnd.Services.Interfaces;
@@ -10,7 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BackEnd.Helpers;
-using Microsoft.AspNetCore.Mvc;
+using FrontEnd.Helpers;
+using Exception = FrontEnd.Helpers.Exception;
 using UserPost = BackEnd.Models.Output.UserPost;
 
 namespace BackEnd.Services.Services
@@ -71,18 +71,11 @@ namespace BackEnd.Services.Services
                 };
 
                 var token = jwtTokenHandler.CreateToken(tokenDescriptor);
-
                 var jwtToken = jwtTokenHandler.WriteToken(token);
-
-                //return Results.Ok(jwtToken);
                 return jwtToken;
             }
-            else
-            {
-                //return Results.Unauthorized();
-                return "";
-            }
-        
+            
+            throw Exception.Create(Constants.Error.WrongPasswordOrUserName);
         }
 
     }

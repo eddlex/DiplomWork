@@ -13,9 +13,10 @@ public class UserService : HttpService , IUserService
     
     public async Task<bool> RegisterUser(RegistrationPost input)
     {
-        input.Password.ComputeSHA512Hash();
+        input.Password = input.Password.ComputeSHA512Hash();
         var result = await Execute<bool, RegistrationPost>(HttpMethod.Post, "User/Register", input);
         
-        return result;
+        return true;
+      //  return result;
     }
 }

@@ -1,7 +1,7 @@
-﻿CREATE or alter  PROCEDURE spRegister
+﻿CREATE   PROCEDURE spRegister
     @UserName  VARCHAR (50),
     @Email     VARCHAR (50),
-    @Password NVARCHAR (500),
+    @Password NVARCHAR (500)
 AS
 BEGIN
     BEGIN TRY

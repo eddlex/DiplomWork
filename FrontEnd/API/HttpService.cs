@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Text.Json;
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
-using MudBlazor;
+using Exception = System.Exception;
 
 namespace FrontEnd.API;
 
@@ -18,15 +19,12 @@ public class HttpService : IHttpService
     {
         try
         {
-            // Create HttpRequestMessage
-            
             var request = new HttpRequestMessage
             {
                 Method = method,
                 RequestUri = new Uri(ConfigurationService.URL + apiUrl)
             };
 
-         
             request.Headers.Add("Accept", "application/json");
 
             if (requestBody != null)
@@ -34,24 +32,27 @@ public class HttpService : IHttpService
                 request.Content = new StringContent(JsonSerializer.Serialize(requestBody), System.Text.Encoding.UTF8, "application/json");
             }
 
-            var s = request.RequestUri;
             var response = await this.HttpClient.SendAsync(request);
-
-           
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
-                
+
                 return JsonSerializer.Deserialize<T1>(result);
             }
-            
-            throw new AlertException(Constants.Errors.BackEnd);
+            else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                var parsedJson = JsonSerializer.Deserialize<Dictionary<string, string>>(await response.Content.ReadAsStringAsync());
+                if (parsedJson != null && parsedJson.TryGetValue("ErrorMessage", out var extractedValue))
+                {
+                    throw new AlertException(extractedValue);
+                }
+            }
+          
+            throw new AlertException(Constants.Error.BackEnd);
         }
         catch (Exception ex)
         {
             throw new AlertException(ex.Message);
-            
-            
         }
     }
 }

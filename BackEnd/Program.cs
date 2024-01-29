@@ -1,15 +1,13 @@
-using BackEnd.Models.Input;
 using BackEnd.Services.Configuration;
 using BackEnd.Services.Db;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
+using BackEnd.Helpers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -194,7 +192,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
-
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 

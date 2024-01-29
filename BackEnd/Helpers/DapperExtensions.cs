@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.SqlClient;
 using BackEnd.Services.Db;
 using Dapper;
-using FrontEnd.Helpers;
+using Exception = FrontEnd.Helpers.Exception;
 
 namespace BackEnd.Helpers;
 
@@ -19,11 +19,12 @@ public static class DapperExtensions
         }
         catch (SqlException e)
         {
-            throw Constants.Errors.CreateException(e.Number);
+            throw Exception.Create(e);
+           
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
-            throw Constants.Errors.CreateException(e.Message);
+            throw Exception.Create(e.Message);
         }
     }
 }

@@ -19,8 +19,14 @@ public partial class Registration
      
     private async void Register()
     {
-         var result = await this.UserService?.RegisterUser(model);
-         if (result)
-             this.NavigationManager?.NavigateTo("/");
+        if (this.UserService is null)
+        {
+            return;
+        }
+        
+        if (await this.UserService.RegisterUser(model))
+        {
+            this.NavigationManager?.NavigateTo("/");
+        }
     }
 }

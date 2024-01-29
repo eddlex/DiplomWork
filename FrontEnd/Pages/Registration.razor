@@ -1,5 +1,5 @@
-﻿@page "/"
-@* @page "/Registration" *@
+﻿
+@page "/Registration"
 
 @using System.Text.RegularExpressions
 
@@ -40,7 +40,7 @@
                                       @bind-Value="model.UserName"/>
                         <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
                                       Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })"
-                                      @bind-Value="model.UserEmail"/>
+                                      @bind-Value="model.Email"/>
                         <MudTextField T="string"
                                       Label="Password" HelperText="Choose a strong password" @ref="pwField1"
                                       InputType="@PasswordInput"

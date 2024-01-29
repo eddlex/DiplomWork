@@ -35,7 +35,7 @@ public static class Extensions
     }
     
     
-    public static void ComputeSHA512Hash(this string input)
+    public static string ComputeSHA512Hash(this string input)
     {
         using (var sha512 = SHA512.Create())
         {
@@ -52,7 +52,7 @@ public static class Extensions
                 hashStringBuilder.Append(b.ToString("X2"));
             }
 
-            input = hashStringBuilder.ToString();
+            return hashStringBuilder.ToString();
         }
     }
 }

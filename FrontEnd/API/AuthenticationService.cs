@@ -3,6 +3,7 @@ using Blazored.SessionStorage;
 using FrontEnd.Helpers;
 using FrontEnd.Model;
 using Microsoft.AspNetCore.Components.Authorization;
+using Exception = System.Exception;
 
 namespace FrontEnd.API;
 
@@ -74,21 +75,21 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
     }
 
 
-    public async Task<string> GetToken()
-    {
-        try
-        {
-          //  var userSession = await sessionStorageService.GetItem<UserSession>("UserSession");
-            var userSession = await sessionStorageService.GetItem("UserSession");
-            
-            return userSession?.Token?? string.Empty;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-
-        }
-    }
+    // public async Task<string> GetToken()
+    // {
+    //     try
+    //     {
+    //       //  var userSession = await sessionStorageService.GetItem<UserSession>("UserSession");
+    //         var userSession = await sessionStorageService.GetItem("UserSession");
+    //         
+    //         return userSession?.Token?? string.Empty;
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         throw new Exception(ex.Message);
+    //
+    //     }
+    // }
     
     
 }

@@ -16,13 +16,11 @@ namespace BackEnd.Controllers
             this.userService = (UserService)userService;
         }
 
-        [Route("Register")]
-        [HttpPost]
-        public async Task<ActionResult<List<Models.Output.Form>>> Register(RegistrationPost input)
+        [HttpPost("Register")]
+        public async Task<ActionResult<bool>> Register(RegistrationPost input)
         {
             return Ok(await this.userService.Register(input));
         }
         
-
     }; 
 }
