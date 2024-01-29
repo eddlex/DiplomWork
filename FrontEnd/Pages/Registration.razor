@@ -37,30 +37,30 @@
                     <h1> Sign up </h1>
                     <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
                         <MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!"
-                                      @bind-Value="model.UserName"/>
+                                      @bind-Value="Model.UserName"/>
                         <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
                                       Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })"
-                                      @bind-Value="model.Email"/>
+                                      @bind-Value="Model.Email"/>
                         <MudTextField T="string"
                                       Label="Password" HelperText="Choose a strong password" @ref="pwField1"
                                       InputType="@PasswordInput"
                                       Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
                                       RequiredError="Password is required!"
                                       Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
-                                      @bind-Value="model.Password"/>
+                                      @bind-Value="Model.Password"/>
 
        
                         
-                        <MudSelect Dense="true" T="string" Label="University" Variant="Variant.Text" bind-Value="model.UniversityId">
-                            @if (university != null)
+                        <MudSelect Dense="true" T="string" Label="University" Variant="Variant.Text" bind-Value="Model.UniversityId">
+                            @if (University != null)
                             {
-                                foreach (var (key, value) in university)
+                                foreach (var (key, value) in University)
                                 {
                                     <MudSelectItem Value="@key" Label="@value" />
                                 }
                             }
                         </MudSelect>
-                        <p>You selected key: @model.UniversityId</p>
+                        <p>You selected key: @Model.UniversityId</p>
 
                         <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Register(); })"
                                    Class="my-5">Sign up</MudButton>

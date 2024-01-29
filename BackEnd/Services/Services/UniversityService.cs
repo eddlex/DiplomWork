@@ -3,6 +3,10 @@ using BackEnd.Services.Db;
 using BackEnd.Services.Interfaces;
 using Dapper;
 using System.Data;
+using BackEnd.Helpers;
+using BackEnd.Models.Output;
+using FrontEnd.Helpers;
+using Exception = FrontEnd.Helpers.Exception;
 
 namespace BackEnd.Services.Services
 {
@@ -14,12 +18,14 @@ namespace BackEnd.Services.Services
             this.dbService = (DbService)dbService;
         }
 
-        public async Task<List<Models.Output.University>> GetUniversities()
+        public async Task<List<University?>> GetUniversities()
         {
-            using var connection = dbService.CreateConnection();
-
-            return (await connection.QueryAsync<Models.Output.University>("spGetUniversities", commandType: CommandType.StoredProcedure)).ToList();
-
+            var universities = (await dbService.QueryAsync<Models.Output.University>("spGetUniversities", null)).ToList();
+          
+            if (universities == null || !universities.Any())
+                throw Exception.Create(Constants.Error.NotExistAnyUniversity);
+            
+            return universities;
         }
 
         public async Task<bool> AddUniversity(UniversityPost university)

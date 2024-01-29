@@ -17,10 +17,8 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Models.Output.University>>> GetUniversities()
+        public async Task<ActionResult<List<Models.Output.University>>> Universities()
         {
-
-
             return Ok(await this.universityService.GetUniversities());
         }
 
