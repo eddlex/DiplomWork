@@ -58,7 +58,11 @@
                         <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Register(); })"
                                    Class="my-5">Sign up</MudButton>
                         <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(() => form.ResetAsync())"
-                                   Class="mx-5">Reset</MudButton>
+                                   Class="mx-5">Clear</MudButton>
+
+                        <div class="signup-link">
+                            <p>Already have an account? <a href="/a">Sign In</a></p>
+                        </div>
 
                         <!-- <div class="d-flex">
                         <MudRadioGroup T="string" Required="true" RequiredError="Account type is required!">
