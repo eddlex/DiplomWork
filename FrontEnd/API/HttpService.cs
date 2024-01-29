@@ -1,9 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Text.Json;
+﻿using System.Net;
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
+using Newtonsoft.Json;
 using Exception = System.Exception;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace FrontEnd.API;
 
@@ -36,8 +36,10 @@ public class HttpService : IHttpService
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
-
-                return JsonSerializer.Deserialize<T1>(result);
+               
+              
+                var r  = JsonConvert.DeserializeObject<T1>(result);
+                return r;
             }
             else if (response.StatusCode == HttpStatusCode.BadRequest)
             {
