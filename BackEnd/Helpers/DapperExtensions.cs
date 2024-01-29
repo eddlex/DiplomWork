@@ -24,7 +24,7 @@ public static class DapperExtensions
         }
         catch (System.Exception e)
         {
-            throw Exception.Create(e.Message);
+            throw Exception.Create(e);
         }
     }
 }

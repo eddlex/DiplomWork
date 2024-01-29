@@ -38,6 +38,11 @@ public static class Exception
         }
         return new AlertException(e);
     }
+    
+    public static AlertException Create(System.Exception e)
+    {
+        return new AlertException(e);
+    }
         
     public static AlertException Create(string message)
     {
