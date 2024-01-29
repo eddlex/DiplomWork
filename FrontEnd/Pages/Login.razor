@@ -46,7 +46,7 @@
                         </div>
 
                         <MudButton id=loginButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true"
-                                   OnClick="@(() => { form.Validate(); Authorize(); })" @onkeydown="@(args => { HandleEnterKeyPress(args, ""); })"
+                                   OnClick="@(() => { form.Validate(); Authorize(); })" @onkeydown="@(args => { HandleEnterKeyPress(args); })"
                                    Class="my-5">Sign in</MudButton>
                         <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(()=>form.ResetAsync())"
                                    Class="mx-5">Clear</MudButton>
@@ -105,13 +105,18 @@
 
         if (args.Code == "Enter" || args.Code == "NumpadEnter")
         {
-            if (fieldId != "")
-                await js.InvokeVoidAsync("setFocus", fieldId);
-            else
-            {
-                await form.Validate();
-                Authorize();
-            }
+            await js.InvokeVoidAsync("setFocus", fieldId);
+        }
+    }
+
+    private async void HandleEnterKeyPress(KeyboardEventArgs args)
+    {
+
+        if (args.Code == "Enter" || args.Code == "NumpadEnter")
+        {
+            await form.Validate();
+            Authorize();
+
         }
     }
 }
