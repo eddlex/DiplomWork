@@ -29,4 +29,17 @@ public partial class Registration
             this.NavigationManager?.NavigateTo("/");
         }
     }
+
+    
+    private Dictionary<int, string>? university ;
+    protected override  Task OnInitializedAsync()
+    {
+        // Fetch data from the database or any data source
+        university = new();
+        university.Add(0, "TT");
+        university.Add(1, "TT1");
+        university.Add(2, "TT3");
+        
+        return Task.CompletedTask;
+    }
 }

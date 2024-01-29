@@ -49,11 +49,18 @@
                                       Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
                                       @bind-Value="model.Password"/>
 
-                        <MudTextField T="string"
-                                      Label="Password" HelperText="Repeat the password" InputType="@PasswordInput2"
-                                      Validation="@(new Func<string, string>(PasswordMatch))"
-                                      RequiredError="Password is required!"
-                                      Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon2" OnAdornmentClick="ButtonTestclick2"/>
+       
+                        
+                        <MudSelect Dense="true" T="string" Label="University" Variant="Variant.Text" bind-Value="model.UniversityId">
+                            @if (university != null)
+                            {
+                                foreach (var (key, value) in university)
+                                {
+                                    <MudSelectItem Value="@key" Label="@value" />
+                                }
+                            }
+                        </MudSelect>
+                        <p>You selected key: @model.UniversityId</p>
 
                         <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Register(); })"
                                    Class="my-5">Sign up</MudButton>
@@ -113,21 +120,12 @@
         if (!Regex.IsMatch(pw, @"[0-9]"))
             yield return "Password must contain at least one digit";
     }
-
-    private string PasswordMatch(string arg)
-    {
-        if (pwField1.Value != arg)
-            return "Passwords don't match";
-        return null;
-    }
-
+    
     //public string Password { get; set;} = "superstrong123";
 
     bool isShow, isShow2;
     InputType PasswordInput = InputType.Password;
-    InputType PasswordInput2 = InputType.Password;
     string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-    string PasswordInputIcon2 = Icons.Material.Filled.VisibilityOff;
 
     void ButtonTestclick()
     {
@@ -144,20 +142,6 @@
             PasswordInput = InputType.Text;
         }
     }
-    void ButtonTestclick2()
-    {
-        @if (isShow2)
-        {
-            isShow2 = false;
-            PasswordInputIcon2 = Icons.Material.Filled.VisibilityOff;
-            PasswordInput2 = InputType.Password;
-        }
-        else
-        {
-            isShow2 = true;
-            PasswordInputIcon2 = Icons.Material.Filled.Visibility;
-            PasswordInput2 = InputType.Text;
-        }
-    }
+
 
 }

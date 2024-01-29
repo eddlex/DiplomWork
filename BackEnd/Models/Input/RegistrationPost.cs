@@ -18,6 +18,9 @@ namespace BackEnd.Models.Input
         // [MinLength(128)]
         public string Password { get; set; }
         
+        [Required]
+        public int UniversityId { get; set; }
+        
         
 
     }
