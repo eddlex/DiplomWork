@@ -22,9 +22,10 @@
 
 <AuthorizeView>
     <NotAuthorized>
+        <MudCard Class="pa-5 align-content-center " style="background-color: #E0E0E0;" Elevation="10" Outlined="true">
         <MudCardContent>
-            <div class="paper-container">
-                <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10">
+            @* <div class="paper-container">
+                <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10"> *@
                     <h1> Sign in </h1>
                     <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
                         <MudTextField T="string" id="username"
@@ -56,9 +57,10 @@
                         </div>
 
                     </MudForm>
-                </MudPaper>
-            </div>
+@*                 </MudPaper>
+            </div> *@
         </MudCardContent>
+        </MudCard>
     </NotAuthorized>
 </AuthorizeView>
 
