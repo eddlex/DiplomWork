@@ -1,165 +1,210 @@
-﻿
-@page "/Registration"
+﻿@page "/Registration"
 
 @using System.Text.RegularExpressions
-
-
+@using Microsoft.AspNetCore.Components
+@using System.Globalization
 
 <style>
-    body {
-        background-color: black;
-        margin: 0px 0 30px;
-        display: flex; 
-        align-items: center;
-        justify-content: center; 
-        min-height: 100vh;
-        min-width: 50vh;
-        /* position: relative; */
-    }
-
-    .paper-container {
-        padding: 100% 0;
-        margin: 0;
-    }
-
-    .select-container {
-        position: relative;
-        top: 100%;
-    }
+	body {
+		background-color: black;
+		margin: 0px 0 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+		min-width: 50vh;
+		/* position: relative; */
+	}
 </style>
+
+
+
 
 
 <!-- <MudPaper Class="d-flex align-center flex-grow-1 gap-4" Elevation="0"> -->
 <!-- <MudContainer  MaxWidth="MaxWidth.Small" Class="my-20" Justify="Justify.Center" AlignItems="AlignItems.Center" Style="background-color: black;">
-    <MudItem  xs="15" sm="5"> -->
+	<MudItem  xs="15" sm="5"> -->
 <!-- <div style="background-color: black;"> -->
 <!-- <MudCard> -->
-
 @* <AuthorizeView> *@
 @*     <NotAuthorized> *@
-        @* <MudCardContent> *@
-            @* <div class="paper-container"> *@
-                    @* <MudPaper Class="pa-5 align-content-center select-container" style="background-color: #E0E0E0;" Elevation="10"> *@
-                    <MudCard Class="pa-5 align-content-center " style="background-color: #E0E0E0;" Elevation="10" Outlined="true">
-                        <MudCardContent>
-                        <h1> Sign up </h1>
-                            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors" Class="select-container">
-                        
-                                <MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!"
-                                              @bind-Value="Model.UserName"/>
-                                <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-                                              Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })"
-                                              @bind-Value="Model.Email"/>
-                                <MudTextField T="string"
-                                              Label="Password" HelperText="Choose a strong password" @ref="pwField1"
-                                              InputType="@PasswordInput"
-                                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                                              RequiredError="Password is required!"
-                                              Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
-                                              @bind-Value="Model.Password"/>
+@* <MudCardContent> *@
+@* <div class="paper-container"> *@
+@* <MudPaper Class="pa-5 align-content-center select-container" style="background-color: #E0E0E0;" Elevation="10"> *@
+<MudCard Class="pa-5 align-content-center " style="background-color: #E0E0E0;" Elevation="10" Outlined="true">
+	<MudCardContent>
+		<h1> Sign up </h1>
+		<MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors" Class="select-container">
 
-                                <MudSelect Dense="true" T="string" Label="University" Variant="Variant.Text"
-                                            AnchorOrigin="Origin.BottomCenter"  TransformOrigin="Origin.TopLeft"
-                                            Required="true" PopoverClass="select-container"
-                                            bind-Value="Model.UniversityId" PopperPlacement="Placement.Bottom">
-                                        @if (University != null)
-                                        {
-                                            foreach (var (key, value) in University)
-                                            {
-                                                <MudSelectItem Value="@value" Label="@key" />
-                                            }
-                                            <MudSelectItem Value="hello" Label="key" />
-                                        }
-                                </MudSelect>
-                        
-                                @* <p>You selected key: @Model.UniversityId</p> *@
+			<MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!"
+			@bind-Value="Model.UserName" />
+			<MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
+						  Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })"
+			@bind-Value="Model.Email" />
+			<MudTextField T="string"
+						  Label="Password" HelperText="Choose a strong password" @ref="pwField1"
+						  InputType="@PasswordInput"
+						  Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
+						  RequiredError="Password is required!"
+						  Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
+			@bind-Value="Model.Password" />
 
-                                <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Register(); })"
-                                           Class="my-5">Sign up</MudButton>
-                                <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(() => form.ResetAsync())"
-                                           Class="mx-5">Clear</MudButton>
+			@* <MudSelect Dense="true" T="string" Label="University" Variant="Variant.Text"
+			AnchorOrigin="Origin.BottomCenter"  TransformOrigin="Origin.TopLeft"
+			Required="true" PopoverClass="select-container"
+			bind-Value="Model.UniversityId">
+			@if (University != null)
+			{
+			foreach (var (key, value) in University)
+			{
+			<MudSelectItem Value="@value" Label="@key" />
+			}
+			<MudSelectItem Value="hello" Label="key" />
+			} *@
 
-                                <div class="signup-link">
-                                    <p>Already have an account? <a href="/">Sign In</a></p>
-                                </div>
+			
+			@{
+				Dictionary<int, string> University = new Dictionary<int, string>();
+				University.Add(1, "NPUA");
+				University.Add(2, "YSU");
+				University.Add(3,"ASUE" );
+				University.Add(4,"AUA" );
+				University.Add(5,"RAU" );				
+			}
+		
+				<div style="margin-top: 10px; margin-bottom: 30px;">
 
-                                <!-- <div class="d-flex">
-                                <MudRadioGroup T="string" Required="true" RequiredError="Account type is required!">
-                                    <MudRadio Option="@("Personal")">Personal</MudRadio>
-                                    <MudRadio Option="@("Professional")">Professional</MudRadio>
-                                </MudRadioGroup>
-                            </div>
-                            <div class="d-flex align-center justify-space-between">
-                                <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Label="I agree!" />
-                                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Register</MudButton>
-                            </div> -->
-                            </MudForm>
-                        </MudCardContent>                  
-                    </MudCard>
+				<select class="mangust" required style="position:absolute"
+				@bind="@Model.UserName"> 
+					@* change to uniId *@
+					<option style="color: #bdbdbd;">University* </option>
+					@foreach (var item in University)
+					{
+						//if (@item.Key == 0)
+						// {
+						// 	<option value="@item.Key" selected>@item.Value</option>
+						// }
+						// else
+						//{
 
-                @* </MudPaper> *@
-            @* </div> *@
-            <!-- <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>form.Validate())">Validate</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(()=>form.ResetAsync())" Class="mx-2">Reset</MudButton>
-        @* <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton> *@
-        </MudPaper> -->
-        @* </MudCardContent> *@
-@*     </NotAuthorized> *@
-@* </AuthorizeView> *@
-<!-- </MudCard> -->
-<!-- </div> -->
-<!-- </MudItem>
-</MudContainer> -->
-<!-- </MudPaper> -->
+						<option value="@item.Key" >@item.Value </option>
+						// }
+
+					}
+					
+				</select>
+				</div>
+	
+			
+
+
+			@*  <div class="d-flex">
+			<MudTextField T="string" Label="Username" Required="true" RequiredError="University is required!"
+			@bind-Value="@Model.UniversityId" ReadOnly="true"> </MudTextField>
+			<MudSpacer />
+			<MudIconButton OnClick="OpenDialog"  Icon="@Icons.Material.Outlined.Edit"
+			Size="@Size.Small" ></MudIconButton>
+
+
+			<MudDialog @bind-IsVisible="visible">
+
+			<DialogContent>
+
+			<MudList Clickable="true" Dense="true" DisableGutters="false" SelectedValue="@UniID">
+			@foreach (var (key, value) in Universities)
+			{
+			<MudListItem Text="@value" Value="@key" OnClick="@(()=>{UniID=key; visible=false;})" />
+			}
+
+			</MudList>
+
+			</DialogContent>
+
+			</MudDialog>
+			</div> *@
+
+			@* <p>You selected key: @Model.UniversityId</p> *@
+
+			<MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Register(); })"
+					   Class="my-5">Sign up</MudButton>
+			<MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(() => form.ResetAsync())"
+					   Class="mx-5">Clear</MudButton>
+
+			<div class="signup-link">
+				<p>Already have an account? <a href="/">Sign In</a></p>
+			</div>
+
+			<!-- <div class="d-flex">
+				<MudRadioGroup T="string" Required="true" RequiredError="Account type is required!">
+					<MudRadio Option="@("Personal")">Personal</MudRadio>
+					<MudRadio Option="@("Professional")">Professional</MudRadio>
+				</MudRadioGroup>
+			</div>
+			<div class="d-flex align-center justify-space-between">
+				<MudCheckBox T="bool" Required="true" RequiredError="You must agree" Label="I agree!" />
+				<MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Register</MudButton>
+			</div> -->
+		</MudForm>
+	</MudCardContent>
+</MudCard>
+
+
 @code {
-    public string hello = "cf";
-    public string key = "cfhi";
+	bool success;
+	string[] errors = { };
+	MudTextField<string> pwField1;
+	MudForm form;
 
-    bool success;
-    string[] errors = { };
-    MudTextField<string> pwField1;
-    MudForm form;
-    
 
-    private IEnumerable<string> PasswordStrength(string pw)
-    {
-        if (string.IsNullOrWhiteSpace(pw))
-        {
-            yield return "Password is required!";
-            yield break;
-        }
-        if (pw.Length < 8)
-            yield return "Password must be at least of length 8";
-        if (!Regex.IsMatch(pw, @"[A-Z]"))
-            yield return "Password must contain at least one capital letter";
-        if (!Regex.IsMatch(pw, @"[a-z]"))
-            yield return "Password must contain at least one lowercase letter";
-        if (!Regex.IsMatch(pw, @"[0-9]"))
-            yield return "Password must contain at least one digit";
-    }
-    
-    //public string Password { get; set;} = "superstrong123";
+	private IEnumerable<string> PasswordStrength(string pw)
+	{
 
-    bool isShow, isShow2;
-    InputType PasswordInput = InputType.Password;
-    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+		if (string.IsNullOrWhiteSpace(pw))
+		{
+			yield return "Password is required!";
+			yield break;
+		}
+		if (pw.Length < 8)
+			yield return "Password must be at least of length 8";
+		if (!Regex.IsMatch(pw, @"[A-Z]"))
+			yield return "Password must contain at least one capital letter";
+		if (!Regex.IsMatch(pw, @"[a-z]"))
+			yield return "Password must contain at least one lowercase letter";
+		if (!Regex.IsMatch(pw, @"[0-9]"))
+			yield return "Password must contain at least one digit";
+	}
 
-    void ButtonTestclick()
-    {
-        @if (isShow)
-        {
-            isShow = false;
-            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-            PasswordInput = InputType.Password;
-        }
-        else
-        {
-            isShow = true;
-            PasswordInputIcon = Icons.Material.Filled.Visibility;
-            PasswordInput = InputType.Text;
-        }
-    }
+	//public string Password { get; set;} = "superstrong123";
 
+	bool isShow, isShow2;
+	InputType PasswordInput = InputType.Password;
+	string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+	void ButtonTestclick()
+	{
+		@if (isShow)
+		{
+			isShow = false;
+			PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+			PasswordInput = InputType.Password;
+		}
+		else
+		{
+			isShow = true;
+			PasswordInputIcon = Icons.Material.Filled.Visibility;
+			PasswordInput = InputType.Text;
+		}
+	}
+
+	// private int SelectedUniversityId { get; set; }
+
+	// // Define the method to handle dropdown selection change
+	// private void OnUniversitySelectionChange(ChangeEventArgs e)
+	// {
+	// 	if (int.TryParse(e.Value.ToString(), out int selectedId))
+	// 	{
+	// 		SelectedUniversityId = selectedId;
+	// 	}
+	// }
 
 }
