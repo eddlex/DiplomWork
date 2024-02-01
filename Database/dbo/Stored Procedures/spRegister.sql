@@ -31,9 +31,8 @@ BEGIN
             END
         ELSE
             BEGIN
-                DECLARE @errorCode INT = ERROR_NUMBER();
                 DECLARE @errorMessage NVARCHAR(MAX) = ERROR_MESSAGE();
-                THROW @errorCode, @errorMessage, 1;
+                THROW 500000, @errorMessage, 1;
             END
 
     END CATCH;

@@ -15,7 +15,7 @@ namespace FrontEnd.Pages
         {
             if (this.Authorization != null && await Authorization.AuthorizeClient(model))
             { 
-                this.NavigationManager?.NavigateTo("/");
+                this.NavigationManager?.NavigateTo("/AdminPage");
             }
         }
     }
