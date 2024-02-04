@@ -10,8 +10,7 @@ namespace FrontEnd.API;
 public class CustomAuthenticationProvider : AuthenticationStateProvider
 {
     private readonly ISessionStorageService sessionStorageService;
-
-
+    
     public CustomAuthenticationProvider(ISessionStorageService sessionStorageService)
     {
         this.sessionStorageService = sessionStorageService;
@@ -75,21 +74,21 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
     }
 
 
-    // public async Task<string> GetToken()
-    // {
-    //     try
-    //     {
-    //       //  var userSession = await sessionStorageService.GetItem<UserSession>("UserSession");
-    //         var userSession = await sessionStorageService.GetItem("UserSession");
-    //         
-    //         return userSession?.Token?? string.Empty;
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         throw new Exception(ex.Message);
-    //
-    //     }
-    // }
+    public async Task<UserSession?> GetSession()
+    {
+        try
+        {
+          //  var userSession = await sessionStorageService.GetItem<UserSession>("UserSession");
+            var userSession = await sessionStorageService.GetItem("UserSession");
+
+            return userSession;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+    
+        }
+    }
     
     
 }
