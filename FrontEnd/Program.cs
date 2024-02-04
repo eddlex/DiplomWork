@@ -25,7 +25,7 @@ builder.Services.AddMudServices();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddSingleton<ISnackbar, SnackbarService>();
-builder.Services.AddScoped<HttpClient>();
+builder.Services.AddScoped<HttpClient, HttpClient>();
 
 
 

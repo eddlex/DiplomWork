@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
+using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
 using Exception = System.Exception;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -9,10 +10,12 @@ namespace FrontEnd.API;
 
 public class HttpService : IHttpService
 {
-    private HttpClient HttpClient { get; set; }
-    public HttpService(HttpClient httpClient)
+    private readonly HttpClient httpClient;
+    private readonly CustomAuthenticationProvider authenticationStateProvider;
+    public HttpService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider)
     {
-        this.HttpClient = httpClient;
+        this.httpClient = httpClient;
+        this.authenticationStateProvider = (CustomAuthenticationProvider)authenticationStateProvider;
     }
 
     public async Task<T1?> Execute<T1, T2>(HttpMethod method, string apiUrl, T2? requestBody = default)
@@ -25,6 +28,12 @@ public class HttpService : IHttpService
                 RequestUri = new Uri(ConfigurationService.URL + apiUrl)
             };
 
+            var session = await this.authenticationStateProvider.GetSession();
+            if (session != null && string.IsNullOrWhiteSpace(session.Token))
+            {
+                request.Headers.Authorization = new("Bearer", session.Token);
+            }
+            
             request.Headers.Add("Accept", "application/json");
 
             if (requestBody != null)
@@ -32,7 +41,7 @@ public class HttpService : IHttpService
                 request.Content = new StringContent(JsonSerializer.Serialize(requestBody), System.Text.Encoding.UTF8, "application/json");
             }
 
-            var response = await this.HttpClient.SendAsync(request);
+            var response = await this.httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();

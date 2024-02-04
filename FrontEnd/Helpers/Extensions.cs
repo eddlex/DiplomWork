@@ -25,6 +25,8 @@ public static class Extensions
          //var item = await sessionStorageService.GetItemAsync<Object>(key)
          
          var base64Json = await sessionStorageService.GetItemAsStringAsync(key);
+         if (base64Json == null)
+             return null;
          var itemJsonBytes = Convert.FromBase64String(base64Json);
          var itemJson = Encoding.UTF8.GetString(itemJsonBytes);
          var item = JsonSerializer.Deserialize<UserSession>(itemJson);
