@@ -29,7 +29,7 @@ public class HttpService : IHttpService
             };
 
             var session = await this.authenticationStateProvider.GetSession();
-            if (session != null && string.IsNullOrWhiteSpace(session.Token))
+            if (session != null && !string.IsNullOrWhiteSpace(session.Token))
             {
                 request.Headers.Authorization = new("Bearer", session.Token);
             }

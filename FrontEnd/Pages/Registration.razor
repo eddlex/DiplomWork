@@ -63,21 +63,21 @@
 			} *@
 
 			
-			@{
-				Dictionary<int, string> University = new Dictionary<int, string>();
-				University.Add(1, "NPUA");
-				University.Add(2, "YSU");
-				University.Add(3,"ASUE" );
-				University.Add(4,"AUA" );
-				University.Add(5,"RAU" );				
-			}
+			@* @{ *@
+			@* 	Dictionary<int, string> University = new Dictionary<int, string>(); *@
+			@* 	University.Add(1, "NPUA"); *@
+			@* 	University.Add(2, "YSU"); *@
+			@* 	University.Add(3,"ASUE" ); *@
+			@* 	University.Add(4,"AUA" ); *@
+			@* 	University.Add(5,"RAU" );				 *@
+			@* } *@
 		
 				<div style="margin-top: 10px; margin-bottom: 30px;">
 
 				<select class="mangust" required style="position:absolute"
-				@bind="@Model.UserName"> 
+				@bind="@Model.UniversityId"> 
 					@* change to uniId *@
-					<option style="color: #bdbdbd;">University* </option>
+					<option style="color: #bdbdbd;" disabled selected> University*</option>
 					@foreach (var item in University)
 					{
 						//if (@item.Key == 0)

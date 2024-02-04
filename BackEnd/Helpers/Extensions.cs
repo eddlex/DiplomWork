@@ -15,7 +15,7 @@ namespace BackEnd.Helpers
             {
                 return (Convert.ToInt32(user.Claims.FirstOrDefault(claim => claim.Type == "UserId")?.Value),
                         Convert.ToInt32(user.Claims.FirstOrDefault(claim => claim.Type == "UniversityId")?.Value),
-                        Convert.ToInt32(user.Claims.FirstOrDefault(claim => claim.Type == "RoleId")?.Value));
+                        Convert.ToInt32(user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value));
             }
             catch (Exception ex)
             {

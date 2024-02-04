@@ -7,16 +7,15 @@ using Microsoft.JSInterop;
 
 namespace FrontEnd.Pages;
 
-public class Element
+public partial class Users
 {
-    public int UserId { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public string UserName { get; set; }
-    public string Password { get; set; }
-    public string UniversityId { get; set; }
-    public string Phone { get; set; }
-    public string Role { get; set; }
-    public DateTime CreationDate { get; set; }
-    public DateTime UpdateDate { get; set; }
+    [Inject]
+    private IUserService? UserService { get; set; } 
+    private List<User?> GridUsers { get; set;}
+
+    protected override async Task OnInitializedAsync()
+    {
+         this.GridUsers = await this.UserService.GetUsers();
+    }
+
 }

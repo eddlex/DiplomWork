@@ -120,7 +120,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();
@@ -193,6 +193,7 @@ app.UseAuthorization();
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
+
 
 app.MapControllers();
 

@@ -1,3 +1,4 @@
+using System.Data.SqlClient;
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using FrontEnd.Model;
@@ -19,15 +20,16 @@ public class UserService :  IUserService
     
     public async Task<bool> RegisterUser(RegistrationPost input)
     {
-        input.Password = input.Password.ComputeSHA512Hash();
+        var inputBl = input.Copy();
+        inputBl.Password = inputBl.Password.ComputeSHA512Hash();
         var result = await this.httpService.Execute<bool, RegistrationPost>(HttpMethod.Post, "User/Register", input);
         
         return true;
-      //  return result;
     }
 
-    public Task<List<User?>> GetUsers()
+    public async Task<List<User?>> GetUsers()
     {
-        throw new NotImplementedException();
+        var result = await this.httpService.Execute<List<User>, object>(HttpMethod.Get, "User");
+        return result;
     }
 }

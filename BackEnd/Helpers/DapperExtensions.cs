@@ -10,7 +10,7 @@ public static class DapperExtensions
 {
     public static async Task<IEnumerable<T?>> QueryAsync<T>(this DbService dbService,
                                               string procedureName,
-                                              object? param)
+                                              object? param = default)
     {
         try
         {

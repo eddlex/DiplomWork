@@ -57,4 +57,13 @@ public static class Extensions
             return hashStringBuilder.ToString();
         }
     }
+
+    public static T Copy<T>(this T item)
+    {
+        if (item is ICloneable cloneableItem)
+        {
+            return (T)cloneableItem.Clone();
+        }
+        throw new InvalidOperationException($"Type {typeof(T)} does not implement ICloneable.");
+    }
 }

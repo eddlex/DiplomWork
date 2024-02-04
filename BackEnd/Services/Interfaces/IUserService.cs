@@ -1,4 +1,5 @@
-﻿using BackEnd.Models.Input;
+﻿using BackEnd.Models.Output;
+using UserPost = BackEnd.Models.Input.UserPost;
 
 namespace BackEnd.Services.Interfaces
 {
@@ -7,6 +8,8 @@ namespace BackEnd.Services.Interfaces
         Task<Models.Output.UserPost?> LogIn(Models.Input.UserPost user);
        // Task<IResult> GenerateToken(UserPost user);
         Task<string> GenerateToken(UserPost user);
+
+        public Task<List<UserGet?>> GetUsers();
     }
 
 

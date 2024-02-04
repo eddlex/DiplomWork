@@ -20,7 +20,7 @@ namespace BackEnd.Services.Services
 
         public async Task<List<University?>> GetUniversities()
         {
-            var universities = (await dbService.QueryAsync<Models.Output.University>("spGetUniversities", null)).ToList();
+            var universities = (await dbService.QueryAsync<University>("spGetUniversities")).ToList();
           
             if (universities == null || !universities.Any())
                 throw Exception.Create(Constants.Error.NotExistAnyUniversity);

@@ -1,6 +1,7 @@
 ﻿@page "/Users"
 @using System.Collections.Generic;
 @using System.Net.Http.Json
+@using FrontEnd.Model
 @inject HttpClient httpClient
 
 <style>
@@ -70,7 +71,7 @@
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div style="height: 15px;"></div>
             <div style="height: 90vh;">
-                <MudDataGrid T="Element" Items="@Elements" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+                <MudDataGrid T="User" Items="@GridUsers" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
                              RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Selectable="false" MultiSelection="false"
                              ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="10"
                              StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
@@ -84,13 +85,11 @@
                 </ToolBarContent>
 
                 <Columns>
-                    <PropertyColumn Property="x => x.UserId" Title="User Id" Sortable="false" Filterable="false" IsEditable="false" />
-                    <PropertyColumn Property="x => x.Name" SortBy="@_sortBy" />
+                    <PropertyColumn Property="x => x.Id" Title="User Id" Sortable="false" Filterable="false" IsEditable="false" />
                     <PropertyColumn Property="x => x.UserName" Title="User name" />
                     <PropertyColumn Property="x => x.Email" />
-                    <PropertyColumn Property="x => x.Phone" />
                     <PropertyColumn Property="x => x.UniversityId" Title="University" />
-                    <PropertyColumn Property="x => x.Role" />
+                    <PropertyColumn Property="x => x.RoleId" />
                     <PropertyColumn Property="x => x.CreationDate" Title="Creation date" />
                     <PropertyColumn Property="x => x.UpdateDate" Title="Update date" />
 
@@ -108,7 +107,7 @@
 
                 <PagerContent>
                     @* <div class="right-corner" > *@
-                        <MudDataGridPager T="Element" />
+                        <MudDataGridPager T="User" />
                     @* </div> *@
                 </PagerContent>
             </MudDataGrid>
@@ -120,7 +119,7 @@
 @code {
     bool _drawerOpen = true;
 
-    private IEnumerable<Element> Elements = new List<Element>();
+    
     private bool _isCellEditMode;
     private bool _editTriggerRowClick;
     public string _searchString;
@@ -138,49 +137,26 @@
         // NavigationManager.NavigateTo("/logout");
     }
 
-    private void ChangePass(Element item)
+    private void ChangePass(User item)
     {
 
     }
 
-    private void DeleteUser(Element item)
+    private void DeleteUser(User item)
     {
-        //Remove from list
+        
     }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Element e = new Element();
-        e.UserName = "name";
-
-        Element e1 = new Element();
-        e1.UserName = "anun";
-
-        ((List<Element>)Elements).Add(e);
-        ((List<Element>)Elements).Add(e1);
-        //Elements = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
-    }
-
-    // custom sort by name length
-    private Func<Element, object> _sortBy => x =>
-    {
-        if (_sortNameByLength)
-            return x.Name.Length;
-        else
-            return x.Name;
-    };
+    
+    
     // quick filter - filter globally across multiple columns with the same input
-    private Func<Element, bool> _quickFilter => x =>
+    private Func<User, bool> _quickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
 
         if (x.Email.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-
-        if (x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-
+        
         if (x.UserName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
@@ -192,33 +168,33 @@
 
 
     // events
-    void RowClicked(DataGridRowClickEventArgs<Element> args)
+    void RowClicked(DataGridRowClickEventArgs<User> args)
     {
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
 
-    void RowRightClicked(DataGridRowClickEventArgs<Element> args)
+    void RowRightClicked(DataGridRowClickEventArgs<User> args)
     {
         //args.RowIndex
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
 
-    void SelectedItemsChanged(HashSet<Element> items)
+    void SelectedItemsChanged(HashSet<User> items)
     {
         System.Text.Json.JsonSerializer.Serialize(items);
     }
 
-    void StartedEditingItem(Element item)
+    void StartedEditingItem(User item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    void CanceledEditingItem(Element item)
+    void CanceledEditingItem(User item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    void CommittedItemChanges(Element item)
+    void CommittedItemChanges(User item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
