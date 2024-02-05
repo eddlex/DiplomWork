@@ -20,6 +20,7 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateMailBody.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateRecipientGroups.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateSmtpConfiguration.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Department.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Form.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/FormRow.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/MailBody.sql" dialect="TSQL" />
@@ -28,7 +29,6 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/RecipientGroup.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Role.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/SmtpConfigurations.sql" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/University.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/User.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/UserInfo.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" dialect="TSQL" />

@@ -23,7 +23,7 @@ builder.Services.AddScoped<IDbService, DbService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 builder.Services.AddScoped<IFormService, FormService>();
 builder.Services.AddScoped<IRecipientService, RecipientService>();
-builder.Services.AddScoped<IUniversityService, UniversityService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
 builder.Services.AddScoped<INotificationsService, NotificationsService>();
 builder.Services.AddScoped<IUserService, UserService>();

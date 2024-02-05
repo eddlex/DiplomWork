@@ -12,7 +12,7 @@ public static class Constants
         Errors.Add(Error.TokenNotFound.Code, Error.TokenNotFound);
         Errors.Add(Error.WrongPasswordOrUserName.Code, Error.WrongPasswordOrUserName);
         Errors.Add(Error.BackEnd.Code, Error.BackEnd);
-        Errors.Add(Error.NotExistAnyUniversity.Code, Error.NotExistAnyUniversity);
+        Errors.Add(Error.NotExistAnyDepartment.Code, Error.NotExistAnyDepartment);
         
     }
     public sealed class Error
@@ -24,7 +24,7 @@ public static class Constants
         public static readonly Error TokenNotFound = new Error(nameof(TokenNotFound), 50004, "Token Not Found");
         public static readonly Error WrongPasswordOrUserName = new Error(nameof(WrongPasswordOrUserName), 50005, "UserName or password is wrong");
         public static readonly Error BackEnd = new Error(nameof(BackEnd), 50006, "Api call error");
-        public static readonly Error NotExistAnyUniversity = new Error(nameof(NotExistAnyUniversity), 50007, "Not found any university!");
+        public static readonly Error NotExistAnyDepartment = new Error(nameof(NotExistAnyDepartment), 50007, "Not found any department!");
         
         public string Text { get; private set; }
         public string UniqueName { get; private set; }

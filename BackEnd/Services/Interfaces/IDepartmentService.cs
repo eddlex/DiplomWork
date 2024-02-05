@@ -3,10 +3,10 @@ using BackEnd.Models.Output;
 
 namespace BackEnd.Services.Interfaces
 {
-    public interface IUniversityService
+    public interface IDepartmentService
     {
-        Task<List<University?>> GetUniversities();
-        Task<bool> AddUniversity(UniversityPost university);
+        Task<List<Department?>> GetDepartments();
+        Task<bool> AddUniversity(DepartmentPost department);
         Task<bool> DelUniversity(int id);
     }
 }

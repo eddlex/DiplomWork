@@ -10,32 +10,32 @@ using Exception = FrontEnd.Helpers.Exception;
 
 namespace BackEnd.Services.Services
 {
-    public class UniversityService : IUniversityService
+    public class DepartmentService : IDepartmentService
     {
         private readonly DbService dbService;
-        public UniversityService(IDbService dbService)
+        public DepartmentService(IDbService dbService)
         {
             this.dbService = (DbService)dbService;
         }
 
-        public async Task<List<University?>> GetUniversities()
+        public async Task<List<Department?>> GetDepartments()
         {
-            var universities = (await dbService.QueryAsync<University>("spGetUniversities")).ToList();
+            var departments = (await dbService.QueryAsync<Department>("spGetDepartments")).ToList();
           
-            if (universities == null || !universities.Any())
-                throw Exception.Create(Constants.Error.NotExistAnyUniversity);
+            if (departments == null || !departments.Any())
+                throw Exception.Create(Constants.Error.NotExistAnyDepartment);
             
-            return universities;
+            return departments;
         }
 
-        public async Task<bool> AddUniversity(UniversityPost university)
+        public async Task<bool> AddUniversity(DepartmentPost department)
         {
             using var cmd = dbService.CreateCommand();
-            cmd.CommandText = "spAddUniversity";
+            cmd.CommandText = "spAddDepartment";
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Name", university.Name);
-            cmd.Parameters.AddWithValue("@Description", university.Description);
+            cmd.Parameters.AddWithValue("@Name", department.Name);
+            cmd.Parameters.AddWithValue("@Description", department.Description);
 
             return Convert.ToBoolean(await cmd.ExecuteNonQueryAsync());
         }

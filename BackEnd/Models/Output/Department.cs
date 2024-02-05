@@ -1,6 +1,6 @@
 ﻿namespace BackEnd.Models.Output
 {
-    public class University
+    public class Department
     {
         public int Id { get; set; }
         public string Name { get; set; }

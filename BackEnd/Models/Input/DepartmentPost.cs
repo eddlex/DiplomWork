@@ -2,7 +2,7 @@
 
 namespace BackEnd.Models.Input
 {
-    public class UniversityPost
+    public class DepartmentPost
     {
         [Required]
         [MaxLength(100)]
