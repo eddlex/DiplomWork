@@ -17,6 +17,16 @@
         padding: 100% 0;
         margin: 0;
     }
+
+    .forgot-password-link {
+        /* Your default styling for the link */
+        color: blue; /* Change it to whatever your default color is */
+    }
+
+    .forgot-password-link.red {
+        /* Styling when the link needs to be red */
+        color: red;
+    }
 </style>
 
 
@@ -42,8 +52,11 @@
                                       style="margin-bottom: 10px;"
                         @bind-Value="model.Password" @onkeydown="@(args => { HandleEnterKeyPress(args, "loginButton"); })" />
 
-                        <div class="signup-link">
-                            <p>Forgot password? <a href="/ResetPass">Reset</a></p>
+                        <div class="signup-link" style="margin-top: 10px; margin-bottom: 5px;">
+                            @* <p>Forgot password? <a href="/ResetPass">Reset</a></p> *@                        
+
+                        <p style=@((failedAttempts >= 3) ? "color: red" : "")>Forgot password? <a id="forgotPasswordLink" href="/ResetPass">Reset</a></p> 
+
                         </div>
 
                         <MudButton id=loginButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true"
