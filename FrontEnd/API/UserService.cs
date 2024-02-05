@@ -20,8 +20,8 @@ public class UserService :  IUserService
     
     public async Task<bool> RegisterUser(RegistrationPost input)
     {
-        var inputBl = input.Copy();
-        inputBl.Password = inputBl.Password.ComputeSHA512Hash();
+        
+        input.Password = input.Password.ComputeSHA512Hash();
         var result = await this.httpService.Execute<bool, RegistrationPost>(HttpMethod.Post, "User/Register", input);
         
         return true;

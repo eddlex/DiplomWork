@@ -32,15 +32,12 @@ namespace BackEnd.Services.Services
 
         public async Task<UserPost?> LogIn(Models.Input.UserPost user)
         {
-            await using var connection = dbService.CreateConnection();
-
-            return (await connection.QueryAsync<UserPost>("spLogIn", new {user.LogIn, user.Password}, commandType: CommandType.StoredProcedure)).FirstOrDefault();
-
+            return (await dbService.QueryAsync<UserPost>("spLogIn", new {user.LogIn, user.Password})).FirstOrDefault();
         }
     
         public async Task<bool> Register(Models.Input.RegistrationPost user)
         {
-            var result = (await dbService.QueryAsync<bool>("spRegister", new {user.UserName, user.Email, user.Password, user.UniversityId})).FirstOrDefault();
+            var result = (await dbService.QueryAsync<bool>("spRegister", new {user.UserName, user.Email, user.Password, UniversityId = user.DepartmentId})).FirstOrDefault();
             return result;
         }
         
@@ -63,7 +60,7 @@ namespace BackEnd.Services.Services
                     Subject = new ClaimsIdentity(new[]
                     {
                         new Claim("UserId", userDb.Id.ToString()),
-                        new Claim("UniversityId", userDb.UniversityId.ToString()),
+                        new Claim("DepartmentId", userDb.DepartmentId.ToString()),
                         new Claim(ClaimTypes.Role, userDb.RoleId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             }),

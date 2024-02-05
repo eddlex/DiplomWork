@@ -58,12 +58,12 @@ public static class Extensions
         }
     }
 
-    public static T Copy<T>(this T item)
-    {
-        if (item is ICloneable cloneableItem)
-        {
-            return (T)cloneableItem.Clone();
-        }
-        throw new InvalidOperationException($"Type {typeof(T)} does not implement ICloneable.");
-    }
+    // public static T Copy<T>(this T item)
+    // {
+    //     if (item is ICloneable cloneableItem)
+    //     {
+    //         return (T)cloneableItem.Clone();
+    //     }
+    //     throw new InvalidOperationException($"Type {typeof(T)} does not implement ICloneable.");
+    // }
 }

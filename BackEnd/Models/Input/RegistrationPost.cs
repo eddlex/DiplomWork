@@ -19,7 +19,7 @@ namespace BackEnd.Models.Input
         public string Password { get; set; }
         
         [Required]
-        public int UniversityId { get; set; }
+        public int DepartmentId { get; set; }
         
         
 

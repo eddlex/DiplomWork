@@ -28,7 +28,7 @@ namespace BackEnd.Services.Services
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("Id", config.Id);
-                cmd.Parameters.AddWithValue("UniversityId", config.UniversityId);
+                cmd.Parameters.AddWithValue("DepartmentId", config.UniversityId);
                 cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
                 cmd.Parameters.AddWithValue("Port", config.Port);
                 cmd.Parameters.AddWithValue("UserName", config.UserName);
@@ -71,7 +71,7 @@ namespace BackEnd.Services.Services
     //public class SmtpConfig
     //{
     //    public int Id { get; set; }
-    //    public int UniversityId { get; }
+    //    public int DepatmentId { get; }
     //    public string? SmtpServer { get; set; }
     //    public int Port { get; set; }
     //    public string? Username { get; set; }

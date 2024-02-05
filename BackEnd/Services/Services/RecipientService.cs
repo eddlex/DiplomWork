@@ -131,7 +131,7 @@ namespace BackEnd.Services.Services
             cmd.Parameters.AddWithValue("Name", input.Name);
             cmd.Parameters.AddWithValue("Subject", input.Subject);
             cmd.Parameters.AddWithValue("Body", input.Body);
-            cmd.Parameters.AddWithValue("UniversityId", input.UniversityId);
+            cmd.Parameters.AddWithValue("DepartmentId", input.UniversityId);
 
             return await cmd.ExecuteNonQueryAsync() > 0;
         }

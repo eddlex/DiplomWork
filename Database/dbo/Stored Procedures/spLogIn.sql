@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE spLogIn
+﻿CREATE  PROCEDURE spLogIn
     @LogIn  VARCHAR (50),
     @Password NVARCHAR (500)
 AS
@@ -10,7 +10,7 @@ BEGIN
                u.UserName,
                u.Email,
                u.Phone,
-               u.UniversityId,
+               u.DepartmentId,
                uf.FirstName,
                uf.LastName,
                uf.BirthDate,
@@ -18,9 +18,8 @@ BEGIN
                uf.PhoneIsVerified,
                u.RoleId
         FROM [User] u JOIN UserInfo uf on u.Id = uf.UserId
-        WHERE @LogIn In (u.Username, u.Phone, u.Email)
+        WHERE @LogIn In (u.Username)
             AND u.Password = HASHBYTES('SHA2_512', @Password + u.Salt)
-
         COMMIT;
     END TRY
     BEGIN CATCH
