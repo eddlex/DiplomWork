@@ -28,9 +28,9 @@ namespace BackEnd.Services.Services
             return departments;
         }
 
-        public async Task<bool> AddUniversity(DepartmentPost department)
+        public async Task<bool> AddDepartment(DepartmentPost department)
         {
-            using var cmd = dbService.CreateCommand();
+            await using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spAddDepartment";
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -41,10 +41,10 @@ namespace BackEnd.Services.Services
         }
 
 
-        public async Task<bool> DelUniversity(int id)
+        public async Task<bool> DelDepartment(int id)
         {
             using var cmd = dbService.CreateCommand();
-            cmd.CommandText = "spDelUniversity";
+            cmd.CommandText = "spDelDepartment";
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@Id", id);

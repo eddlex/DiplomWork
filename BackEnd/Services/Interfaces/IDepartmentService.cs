@@ -6,7 +6,7 @@ namespace BackEnd.Services.Interfaces
     public interface IDepartmentService
     {
         Task<List<Department?>> GetDepartments();
-        Task<bool> AddUniversity(DepartmentPost department);
-        Task<bool> DelUniversity(int id);
+        Task<bool> AddDepartment(DepartmentPost department);
+        Task<bool> DelDepartment(int id);
     }
 }

@@ -17,23 +17,23 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Models.Output.Department>>> Universities()
+        public async Task<ActionResult<List<Models.Output.Department>>> Department()
         {
             return Ok(await this.departmentService.GetDepartments());
         }
 
 
         [HttpPost]
-        public async Task<ActionResult<List<Models.Output.Department>>> AddUniversity(Models.Input.DepartmentPost department)
+        public async Task<ActionResult<List<Models.Output.Department>>> Department(Models.Input.DepartmentPost department)
         {
-            return Ok(await this.departmentService.AddUniversity(department));
+            return Ok(await this.departmentService.AddDepartment(department));
         }
 
 
         [HttpDelete]
         public async Task<ActionResult<bool>> DelUniversity(int id)
         {
-            return Ok(await this.departmentService.DelUniversity(id));
+            return Ok(await this.departmentService.DelDepartment(id));
         }
 
     }; 
