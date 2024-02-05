@@ -1,6 +1,6 @@
-﻿CREATE    PROCEDURE  spGetRecipientsByGroupId
-@GroupId INT,
-@UniversityId INT
+﻿CREATE  PROCEDURE  spGetRecipients
+@RoleId INT,
+@DepartmentId INT
 AS
 BEGIN
     SELECT Id           [Id],
@@ -8,7 +8,7 @@ BEGIN
            Mail         [Mail],
            Name         [Name],
            Description  [Description],
-           UniversityId [UniversityId]
+           DepartmentId [DepartmentId]
     FROM Recipient
-    WHERE  GroupId = @GroupId AND UniversityId = @UniversityId
+    WHERE  @RoleId = 2 OR (@RoleId IN (0, 1) AND DepartmentId = @DepartmentId)
 END

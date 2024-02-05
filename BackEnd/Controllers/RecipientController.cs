@@ -1,5 +1,6 @@
 using BackEnd.Helpers;
 using BackEnd.Models.Input;
+using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,14 @@ namespace BackEnd.Controllers
         {
             this.recipientService = (RecipientService)recipientService;
         }
+        
+        [HttpGet]
+        public async Task<ActionResult<List<Recipient>>> Recipient()
+        {
+            return Ok(await this.recipientService.GetRecipients());
+        }
+        
+        
 
         [Route("Groups/{Id:int}")]
         [HttpGet]
