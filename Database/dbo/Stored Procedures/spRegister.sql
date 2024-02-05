@@ -2,15 +2,15 @@
     @UserName  VARCHAR (50),
     @Email     VARCHAR (50),
     @Password NVARCHAR (500),
-    @UniversityId INT
+    @DepartmentId INT
 AS
 BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
         DECLARE @Salt  NVARCHAR(MAX) = (SELECT ABS(CHECKSUM(NEWID())))
-        INSERT INTO [User] (Username, Email, Phone, Password, Salt, UniversityId)
-        VALUES (@UserName, @Email, '', HASHBYTES('SHA2_512', @Password + @Salt) , @Salt,  @UniversityId)
+        INSERT INTO [User] (Username, Email, Phone, Password, Salt, DepartmentId)
+        VALUES (@UserName, @Email, '', HASHBYTES('SHA2_512', @Password + @Salt) , @Salt,  @DepartmentId)
 
         INSERT INTO UserInfo (UserId)
         VALUES (@@IDENTITY)

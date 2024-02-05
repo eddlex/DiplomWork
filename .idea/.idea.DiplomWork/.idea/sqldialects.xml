@@ -8,13 +8,13 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelRecipientGroups.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelUniversity.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteSmtpConfigurations.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetDepartments.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetForms.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetMailBody.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetPermission.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientGroups.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientsByGroupId.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSmtpConfigurations.sql" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetUniversities.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spLogIn.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spRegister.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateMailBody.sql" dialect="TSQL" />

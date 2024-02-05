@@ -4,10 +4,10 @@
     [Mail]         VARCHAR (50)   NOT NULL,
     [Name]         NVARCHAR (50)  NOT NULL,
     [Description]  NVARCHAR (MAX) NULL,
-    [UniversityId] INT            NULL,
+    [DepartmentId] INT            NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     FOREIGN KEY ([GroupId]) REFERENCES [dbo].[RecipientGroup] ([Id]),
-    CONSTRAINT [Recipient__University_fk] FOREIGN KEY ([UniversityId]) REFERENCES [dbo].[University] ([Id]),
+    CONSTRAINT [Recipient__Department_fk] FOREIGN KEY ([DepartmentId]) REFERENCES [dbo].[Department] ([Id]),
     UNIQUE NONCLUSTERED ([Mail] ASC),
     CONSTRAINT [Recipient_pk] UNIQUE NONCLUSTERED ([Name] ASC)
 );
