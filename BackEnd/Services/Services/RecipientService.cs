@@ -1,5 +1,6 @@
 ﻿using BackEnd.Services.Db;
 using System.Data;
+using BackEnd.Helpers;
 using Dapper;
 using BackEnd.Models.Input;
 using BackEnd.Services.Interfaces;
@@ -11,19 +12,21 @@ namespace BackEnd.Services.Services
     {
         private readonly DbService dbService;
 
-        public (int UserId, int DepartmentId, int RoleId) Token { get; set; } = (-1, -1, -1);
+        public (int UserId, int DepartmentId, int RoleId) Token { get; set; }
 
-        public RecipientService(IDbService dbService)
+        public RecipientService(IDbService dbService,
+                                IHttpContextAccessor httpContextAccessor)
         {
             this.dbService = (DbService)dbService;
+            if (httpContextAccessor.HttpContext != null)
+                this.Token = httpContextAccessor.HttpContext.User.ParseToken();
         }
 
 
-        public async Task<List<Recipient>> GetRecipientsByGroupId(int groupId, int universityId)
+        public async Task<List<Recipient>> GetRecipients()
         {
-            using var connection = dbService.CreateConnection();
-
-            return (await connection.QueryAsync<Recipient>("spGetRecipientsByGroupId", new { GroupId = groupId, UniversityId = universityId }, commandType: CommandType.StoredProcedure)).ToList();
+            var res = (await dbService.QueryAsync<Recipient>("spGetRecipients", new { Token.RoleId, Token.DepartmentId })).ToList();
+            return res;
         }
 
         public async Task<List<RecipientGroupGet>> GetRecipientGroups(int? Id = null)

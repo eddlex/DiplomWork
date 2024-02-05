@@ -41,7 +41,7 @@ namespace BackEnd.Services.Services
 
             if (smtpConfig != null)
             {
-                var to = await this.recipientService.GetRecipientsByGroupId(groupId, Token.DepartmentId);
+                var to = await this.recipientService.GetRecipients();
                 if (to != null && to.Count > 0)
                 {
                     // Create a new SmtpClient

@@ -1,5 +1,6 @@
 ﻿using BackEnd.Models.Input;
 using System.Data.SqlClient;
+using BackEnd.Models.Output;
 
 namespace BackEnd.Services.Interfaces
 {
@@ -8,5 +9,7 @@ namespace BackEnd.Services.Interfaces
         Task<List<RecipientGroupGet>> GetRecipientGroups(int? Id = null);
         Task<bool> DelRecipientGroups(List<int> ides);
         Task<bool> UpdateRecipientGroups(List<RecipientGroupPut> groups);
+
+        Task<List<Recipient>> GetRecipients();
     }
 }
