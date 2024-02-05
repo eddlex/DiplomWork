@@ -103,21 +103,48 @@
                     </TemplateColumn>
                 </Columns>
 
+                @* <MudButton OnClick="@OpenPopover" Color="@Color.Primary" Class="add-item-btn">Add Recipient</MudButton>
+                <AddRecipientPopover @bind-IsOpen="@IsPopoverOpen" OnAddRecipient="@HandleRecipientAdded" />
+
+                <PagerContent>
+                     <div class="right-corner" > 
+                        <MudDataGridPager T="Recipient" />
+                     </div> 
+                </PagerContent> *@
+            </MudDataGrid>
+            </div>
+            <MudButton OnClick="@OpenPopover" Color="@Color.Primary" Class="add-item-btn">Add Recipient</MudButton>
+                <AddRecipientPopover @bind-IsOpen="@IsPopoverOpen" OnAddRecipient="@HandleRecipientAdded" />
+
                 <PagerContent>
                     @* <div class="right-corner" > *@
                         <MudDataGridPager T="Recipient" />
                     @* </div> *@
                 </PagerContent>
-            </MudDataGrid>
-            </div>
+
         </MudMainContent>
     </MudLayout>
 </div>
 
 @code {
-    bool _drawerOpen = true;
+    bool IsPopoverOpen { get; set; }
 
-    
+    void OpenPopover()
+    {
+        IsPopoverOpen = true;
+    }
+
+    void HandleRecipientAdded(bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            // Logic to handle the new recipient added successfully
+            // For example, you can update the recipient list or perform other operations
+            // You might want to use a service to handle this logic.
+        }
+    }
+
+    bool _drawerOpen = true;    
     private bool _isCellEditMode;
     private bool _editTriggerRowClick;
     public string _searchString;

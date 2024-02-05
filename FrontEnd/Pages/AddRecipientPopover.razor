@@ -1,0 +1,51 @@
+﻿@page "/Recipients"
+@using System.Collections.Generic;
+@using System.Net.Http.Json
+@using FrontEnd.Model
+@inject HttpClient httpClient
+
+
+<MudDialog Visible="@IsOpen" MaxWidth="sm">
+    @* <DialogTitle>Add Recipient</DialogTitle> *@
+    <DialogContent>
+        <MudTextField @bind-Value="@newRecipient.Id" Label="Id" Required="true"/>
+        <MudTextField @bind-Value="@newRecipient.GroupId" Label="GroupId" Required="true" />
+        <MudTextField @bind-Value="@newRecipient.Mail" Label="Email" Required="true" />
+        <MudTextField @bind-Value="@newRecipient.Name" Label="Name" Required="true" />
+        <MudTextField @bind-Value="@newRecipient.Description" Label="Description" />
+        <MudTextField @bind-Value="@newRecipient.UniversityId" Label="University Id" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@AddRecipient">Add</MudButton>
+        <MudButton Color="Color.Secondary" OnClick="@ClosePopover">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    bool IsOpen { get; set; }
+    Recipient newRecipient = new Recipient();
+
+    [Parameter]
+    public EventCallback<bool> OnAddRecipient { get; set; }
+
+    void AddRecipient()
+    {
+        // Perform validation if needed
+        // If validation passes, proceed to commit the recipient
+        // var newRecipient = new Recipient
+        // {
+        //     Name = recipientName,
+        //     Email = recipientEmail
+        // };
+
+        // Invoke the callback to notify the parent component
+        OnAddRecipient.InvokeAsync(true);
+        // Close the popover
+        ClosePopover();
+    }
+
+    void ClosePopover()
+    {
+        IsOpen = false;
+    }
+}
