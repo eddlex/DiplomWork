@@ -13,7 +13,7 @@ public partial class Registration
     [Inject] 
     private IUserService? UserService { get; set; } 
     [Inject] 
-    private IUniversityService? UniversityService { get; set; } 
+    private IDepartmentService? DepartmentService { get; set; } 
     [Inject]
     private NavigationManager? NavigationManager { get; set; }
 
@@ -21,7 +21,7 @@ public partial class Registration
      
     private async void Register()
     {
-        if (this.UserService is null || this.UniversityService == null)
+        if (this.UserService is null || this.DepartmentService == null)
         {
             return;
         }
@@ -33,17 +33,17 @@ public partial class Registration
     }
 
 
-    private Dictionary<int, string>? University { get; set; } = new();
+    private Dictionary<int, string>? Departments { get; set; } = new();
     protected override async  Task OnInitializedAsync()
     {
-        if (this.UniversityService != null)
+        if (this.DepartmentService != null)
         {
-            var result = await this.UniversityService.GetUniversities();
+            var result = await this.DepartmentService.GetDepartments();
             if (result != null)
             {
                 foreach (var e in result)
                 {
-                    University?.Add(e.Id, e.Name);
+                    Departments?.Add(e.Id, e.Name);
                 }
             }
         }
