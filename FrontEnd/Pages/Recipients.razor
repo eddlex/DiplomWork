@@ -1,4 +1,4 @@
-﻿@page "/Users"
+﻿@page "/Recipients"
 @using System.Collections.Generic;
 @using System.Net.Http.Json
 @using FrontEnd.Model
@@ -72,43 +72,40 @@
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div style="height: 15px;"></div>
             <div style="height: 90vh;">
-                <MudDataGrid T="User" Items="@GridUsers" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+                <MudDataGrid T="Recipient" Items="@RecipientsGrid" SortMode="SortMode.Multiple" Filterable="true" 
                              RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Selectable="false" MultiSelection="false"
                              ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="10"
                              StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
                              Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
                              ColumnResizeMode="ResizeMode.Container" Style="height:100%" autoPageSize="true">
                 <ToolBarContent>
-                    <MudText Typo="Typo.h4">Users</MudText>
+                        <MudText Typo="Typo.h4">Recipients</MudText>
                     <MudSpacer />
                     @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
                     @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
                 </ToolBarContent>
 
                 <Columns>
-                    <PropertyColumn Property="x => x.Id" Title="User Id" Sortable="false" Filterable="false" IsEditable="false" />
-                    <PropertyColumn Property="x => x.UserName" Title="User name" />
-                    <PropertyColumn Property="x => x.Email" />
-                    <PropertyColumn Property="x => x.UniversityId" Title="University" />
-                    <PropertyColumn Property="x => x.RoleId" />
-                    <PropertyColumn Property="x => x.CreationDate" Title="Creation date" />
-                    <PropertyColumn Property="x => x.UpdateDate" Title="Update date" />
+                    <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
+                        <PropertyColumn Property="x => x.GroupId" Title="Group Id" />
+                        <PropertyColumn Property="x => x.Mail" />
+                        <PropertyColumn Property="x => x.Name" Title="University" />
+                        <PropertyColumn Property="x => x.Description" />
+                        <PropertyColumn Property="x => x.UniversityId" Title="University Id" />
 
                     <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
                         <CellTemplate>
                             <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton>
                             <MudSpacer />
-                            <MudIconButton Icon="@Icons.Material.Filled.Pin" Size="Size.Small" Color="Color.Primary" OnClick="@(() => ChangePass(context.Item))"> </MudIconButton>
-                            <MudSpacer />
-                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteUser(context.Item))"> </MudIconButton>
+                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRecipient(context.Item))"> </MudIconButton>
                         </CellTemplate>
                     </TemplateColumn>
                 </Columns>
 
                 <PagerContent>
                     @* <div class="right-corner" > *@
-                        <MudDataGridPager T="User" />
+                        <MudDataGridPager T="Recipient" />
                     @* </div> *@
                 </PagerContent>
             </MudDataGrid>
@@ -138,64 +135,59 @@
         // NavigationManager.NavigateTo("/logout");
     }
 
-    private void ChangePass(User item)
-    {
-
-    }
-
-    private void DeleteUser(User item)
+    private void DeleteRecipient(Recipient item)
     {
         
     }
     
     
-    // quick filter - filter globally across multiple columns with the same input
-    private Func<User, bool> _quickFilter => x =>
-    {
-        if (string.IsNullOrWhiteSpace(_searchString))
-            return true;
+    // // quick filter - filter globally across multiple columns with the same input
+    // private Func<Recipient, bool> _quickFilter => x =>
+    // {
+    //     if (string.IsNullOrWhiteSpace(_searchString))
+    //         return true;
 
-        if (x.Email.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
+    //     if (x.Mail.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+    //         return true;
         
-        if (x.UserName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
+    //     if (x.UserName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+    //         return true;
 
-        // if ($"{x.Phone} {x.Email} {x.Name}".Contains(_searchString))
-        //     return true;
+    //     // if ($"{x.Phone} {x.Email} {x.Name}".Contains(_searchString))
+    //     //     return true;
 
-        return false;
-    };
+    //     return false;
+    // };
 
 
     // events
-    void RowClicked(DataGridRowClickEventArgs<User> args)
+    void RowClicked(DataGridRowClickEventArgs<Recipient> args)
     {
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
 
-    void RowRightClicked(DataGridRowClickEventArgs<User> args)
+    void RowRightClicked(DataGridRowClickEventArgs<Recipient> args)
     {
         //args.RowIndex
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
 
-    void SelectedItemsChanged(HashSet<User> items)
+    void SelectedItemsChanged(HashSet<Recipient> items)
     {
         System.Text.Json.JsonSerializer.Serialize(items);
     }
 
-    void StartedEditingItem(User item)
+    void StartedEditingItem(Recipient item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    void CanceledEditingItem(User item)
+    void CanceledEditingItem(Recipient item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    void CommittedItemChanges(User item)
+    void CommittedItemChanges(Recipient item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
