@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE  spGetUsers
+﻿CREATE  PROCEDURE  spGetUsers
 @RoleId INT,
-@UniversityId INT
+@DepartmentId INT
 AS
 BEGIN
    BEGIN TRY
@@ -8,12 +8,12 @@ BEGIN
         SELECT Id,
                UserName,
                Email,
-               UniversityId,
+               DepartmentId,
                RoleId,
                CreationDate,
                UpdateDate
         FROM [User] u
-        WHERE (@RoleId in (0, 1) AND u.UniversityId = @UniversityId) OR @RoleId = 2
+        WHERE (@RoleId in (0, 1) AND u.DepartmentId = @DepartmentId) OR @RoleId = 2
     COMMIT;
 END TRY
 BEGIN CATCH

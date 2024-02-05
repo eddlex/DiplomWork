@@ -11,7 +11,7 @@ public partial class Users
 {
     [Inject]
     private IUserService? UserService { get; set; } 
-    private List<User?> GridUsers { get; set;}
+    private List<User?>? GridUsers { get; set;}
 
     protected override async Task OnInitializedAsync()
     {

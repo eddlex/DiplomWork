@@ -52,7 +52,7 @@
 			@* <MudSelect Dense="true" T="string" Label="University" Variant="Variant.Text"
 			AnchorOrigin="Origin.BottomCenter"  TransformOrigin="Origin.TopLeft"
 			Required="true" PopoverClass="select-container"
-			bind-Value="Model.UniversityId">
+			bind-Value="Model.DepartmentId">
 			@if (University != null)
 			{
 			foreach (var (key, value) in University)
@@ -100,7 +100,7 @@
 
 			@*  <div class="d-flex">
 			<MudTextField T="string" Label="Username" Required="true" RequiredError="University is required!"
-			@bind-Value="@Model.UniversityId" ReadOnly="true"> </MudTextField>
+			@bind-Value="@Model.DepartmentId" ReadOnly="true"> </MudTextField>
 			<MudSpacer />
 			<MudIconButton OnClick="OpenDialog"  Icon="@Icons.Material.Outlined.Edit"
 			Size="@Size.Small" ></MudIconButton>
@@ -123,7 +123,7 @@
 			</MudDialog>
 			</div> *@
 
-			@* <p>You selected key: @Model.UniversityId</p> *@
+			@* <p>You selected key: @Model.DepartmentId</p> *@
 
 			<MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Register(); })"
 					   Class="my-5">Sign up</MudButton>

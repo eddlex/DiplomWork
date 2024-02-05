@@ -1,15 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
+﻿using System.Security.Claims;
 
 namespace BackEnd.Helpers
 {
     public static class Extensions
     {
 
-        public static (int UserId, int UniversityId, int RoleId) ParseToken(this ClaimsPrincipal user)
+        public static (int UserId, int DepartmentId, int RoleId) ParseToken(this ClaimsPrincipal user)
         {
             try
             {

@@ -7,10 +7,10 @@ namespace FrontEnd.Model;
 public class UserSession
 {
     [JsonConstructor]
-    public UserSession(int userId, int universityId, int roleId, string token)
+    public UserSession(int userId, int departmentId, int roleId, string token)
     {
         this.UserId = userId;
-        this.UniversityId = universityId;
+        this.DepartmentId = departmentId;
         this.RoleId = roleId;
         this.Token = token;
     }
@@ -22,7 +22,7 @@ public class UserSession
     }
     
     public int UserId { get; set; }
-    public int UniversityId { get; set; }
+    public int DepartmentId { get; set; }
     public int RoleId { get; set; }
     public string Token { get; set; }
     
@@ -47,7 +47,7 @@ public class UserSession
         var jsonPayload = System.Text.Encoding.UTF8.GetString(payloadBytes);
         var jwtPayload = JwtPayload.Deserialize(jsonPayload);
         this.UserId = Convert.ToInt32(jwtPayload.Claims.FirstOrDefault(p => p.Type == nameof(UserId))?.Value);
-        this.UniversityId = Convert.ToInt32(jwtPayload.Claims.FirstOrDefault(p => p.Type == nameof(UniversityId))?.Value);
+        this.DepartmentId = Convert.ToInt32(jwtPayload.Claims.FirstOrDefault(p => p.Type == nameof(DepartmentId))?.Value);
         this.RoleId = Convert.ToInt32(jwtPayload.Claims.FirstOrDefault(p => p.Type == "Role")?.Value);
     }
 }

@@ -13,7 +13,7 @@ namespace BackEnd.Services.Services
     {
         private readonly SmtpService smtpService;
         private readonly RecipientService recipientService;
-        public (int UserId, int UniversityId, int RoleId) Token { get; set; } = (-1, -1, -1);
+        public (int UserId, int DepartmentId, int RoleId) Token { get; set; } = (-1, -1, -1);
 
         public NotificationsService(ISmtpService smtpService, IRecipientService recipientService)
         {
@@ -37,11 +37,11 @@ namespace BackEnd.Services.Services
 
         public async Task<bool> SendForms(int groupId)
         {
-            var smtpConfig = (await this.smtpService.GetSmtpConfig(Token.UniversityId)).FirstOrDefault();
+            var smtpConfig = (await this.smtpService.GetSmtpConfig(Token.DepartmentId)).FirstOrDefault();
 
             if (smtpConfig != null)
             {
-                var to = await this.recipientService.GetRecipientsByGroupId(groupId, Token.UniversityId);
+                var to = await this.recipientService.GetRecipientsByGroupId(groupId, Token.DepartmentId);
                 if (to != null && to.Count > 0)
                 {
                     // Create a new SmtpClient

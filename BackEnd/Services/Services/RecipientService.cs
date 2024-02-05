@@ -11,7 +11,7 @@ namespace BackEnd.Services.Services
     {
         private readonly DbService dbService;
 
-        public (int UserId, int UniversityId, int RoleId) Token { get; set; } = (-1, -1, -1);
+        public (int UserId, int DepartmentId, int RoleId) Token { get; set; } = (-1, -1, -1);
 
         public RecipientService(IDbService dbService)
         {
@@ -106,7 +106,7 @@ namespace BackEnd.Services.Services
             using var connection = dbService.CreateConnection();
 
             return (await connection.QueryAsync<MailBody>("spGetMailBody",
-                                                           new { Token.UniversityId },
+                                                           new { Token.DepartmentId },
                                                            commandType: CommandType.StoredProcedure)).ToList();
         }
 

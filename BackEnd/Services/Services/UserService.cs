@@ -20,7 +20,7 @@ namespace BackEnd.Services.Services
     {
         private readonly DbService dbService; 
         private readonly ConfigurationService configurationService;
-        private  readonly (int UserId, int UniversityId, int RoleId)? token;
+        private  readonly (int UserId, int DepartmentId, int RoleId)? token;
         public UserService(IDbService dbService,
                            IConfigurationService configurationService,
                            IHttpContextAccessor httpContextAccessor)
@@ -86,7 +86,7 @@ namespace BackEnd.Services.Services
             
             var param = new BaseParam()
             { 
-               UniversityId = this.token.Value.UniversityId,
+               DepartmentId = this.token.Value.DepartmentId,
                RoleId = this.token.Value.RoleId,
             };
             var users = (await dbService.QueryAsync<UserGet>("spGetUsers", param)).ToList();

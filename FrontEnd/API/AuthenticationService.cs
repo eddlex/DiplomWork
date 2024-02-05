@@ -29,7 +29,7 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
                     {
                         new Claim("UserId", userSession.UserId.ToString()),
                         new Claim(ClaimTypes.Role, userSession.RoleId.ToString()),
-                        new Claim("UniversityId", userSession.UniversityId.ToString()),
+                        new Claim("DepartmentId", userSession.DepartmentId.ToString()),
                         new Claim("Token", userSession.Token)
                         
                     })
@@ -56,7 +56,7 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
                     new List<Claim>
                     {
                         new Claim("UserId", userSession.UserId.ToString()),
-                        new Claim("UniversityId", userSession.UniversityId.ToString()),
+                        new Claim("DepartmentId", userSession.DepartmentId.ToString()),
                         new Claim(ClaimTypes.Role, userSession.RoleId.ToString()),
                         new Claim("Token", userSession.Token)
                     }
