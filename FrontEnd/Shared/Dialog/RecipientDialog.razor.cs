@@ -1,13 +1,8 @@
-﻿
-using FrontEnd.Interface;
-using FrontEnd.Model;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-
+﻿/*using FrontEnd.Model;
 
 namespace FrontEnd.Pages;
 
-public partial class Recipients
+public partial class RecipientDialog
 {
     //[Inject]
     //private IUserService? UserService { get; set; } 
@@ -18,4 +13,4 @@ public partial class Recipients
     //     this.GridUsers = await this.UserService.GetUsers();
     //}
     private List<Recipient> RecipientsGrid = new List<Recipient>();
-}
+}*/
