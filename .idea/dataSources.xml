@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:jtds:sqlserver://SQL5111.site4now.net/db_aa03dc_diplomwork</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="db_aa3177_backend2@SQL8006.site4now.net" uuid="7f2d7824-b371-446b-aeed-c02eee505bf1">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://SQL8006.site4now.net;database=db_aa3177_backend2</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
