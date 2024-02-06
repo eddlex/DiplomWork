@@ -83,12 +83,8 @@
                              Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
                              ColumnResizeMode="ResizeMode.Container" Style="height:100%" >
                     <ToolBarContent>
-                        <MudText Typo="Typo.h4">Recipients</MudText> 
-                        <MudSpacer />
-                        <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Add" 
-                        style="object-position: right;">
-                            Add recipient
-                        </MudButton>
+                        <MudText Typo="Typo.h4" class="mr-2">Recipients</MudText>
+                        <MudIconButton @onclick="OpenDialog" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                         <MudSpacer />
                         @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
                         @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
