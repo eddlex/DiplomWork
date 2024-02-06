@@ -1,10 +1,11 @@
-﻿@page "/Recipients"
+﻿@*
+
 @using System.Collections.Generic;
 @using System.Net.Http.Json
 @using FrontEnd.Model
 
 <MudDialog Visible="@IsOpen" MaxWidth="sm">
-    @* <DialogTitle>Add Recipient</DialogTitle> *@
+    $1$ <DialogTitle>Add Recipient</DialogTitle> #1#
     <DialogContent>
         <MudTextField @bind-Value="@newRecipient.Id" Label="Id" Required="true"/>
         <MudTextField @bind-Value="@newRecipient.GroupId" Label="GroupId" Required="true" />
@@ -48,3 +49,4 @@
         IsOpen = false;
     }
 }
+*@

@@ -72,7 +72,7 @@
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div style="height: 15px;"></div>
             <div style="height: 90vh;">
-                <MudDataGrid T="Recipient" Items="@RecipientsGrid" SortMode="SortMode.Multiple" Filterable="true" 
+                <MudDataGrid T="Recipient" Items="@GridRecipient" SortMode="SortMode.Multiple" Filterable="true" 
                              RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Selectable="false" MultiSelection="false"
                              ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="10"
                              StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
