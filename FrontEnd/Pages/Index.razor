@@ -1,52 +1,21 @@
 ﻿@page "/index"
-@using Microsoft.JSInterop.WebAssembly
+@using FrontEnd.Model
+@using FrontEnd.Shared.Dialog
 
-<style>
-    .custom-button {
-        background-color: #6622BF; /* Set the desired background color */
-        color: #FFFFFF; /* Set the text color */
-        border: 1px solid #2E1350; /* Set the border color */
-        padding: 10px 20px; /* Adjust padding as needed */
-        border-radius: 5px; /* Add rounded corners if desired */
-        cursor: pointer;
+
+
+@inject IDialogService DialogService
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OpenDialog">Open Dialog</MudButton>
+
+
+@code
+{
+    
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center };
+        DialogService.Show<DialogComponent<Recipient>>("Add New Game", options);           
     }
-
-    .custom-button:hover {
-        background-color: #501E91; /* Set the background color on hover */
-        border-color: #2E1350; /* Set the border color on hover */
-    }
-</style>
-
-
-<div class="container d-flex justify-content-center align-items-center vh-100" style="background-color: black;">
-    <div class="card p-4">
-        <h3 class="text-center mb-4">Start page</h3>
-        <div class="signup-link">
-            @* <p><a href="/Login">Go to login page</a></p> *@
-            <p><button type="button" onclick="window.location.href='/Login'" class="custom-button">Go to login page</button></p>
-
-        </div>
-
-        @* <EditForm Model="@_model" OnSubmit="Authorize">
-            <DataAnnotationsValidator />
-
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <InputText id="username" @bind-Value="@_model.LogIn" class="form-control" />
-                <ValidationMessage For="@(() => _model.LogIn)" />
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <InputText id="password" @bind-Value="@_model.Password" type="password" class="form-control" />
-                <ValidationMessage For="@(() => _model.Password)" />
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-            
-        </EditForm> *@
-    </div>
-</div>
-
-
-
+    
+}
