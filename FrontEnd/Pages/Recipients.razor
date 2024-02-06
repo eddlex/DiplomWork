@@ -116,7 +116,6 @@
                 </MudDataGrid>
             </div>
 
-            <div style="height: 10px;"></div>
             <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
                 Add recipient
             </MudButton>
@@ -127,9 +126,8 @@
 @code {
     private void OpenDialog()
     {
-        DialogOptions closeOnEscapeKey = new DialogOptions() { CloseOnEscapeKey = true };
-
-        DialogService.Show<RecipientDialog>("Add recipient", closeOnEscapeKey);
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center };
+        DialogService.Show<DialogComponent<Recipient>>("Add recipient", options);
     }
 
     bool _drawerOpen = true;
