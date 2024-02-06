@@ -1,13 +1,17 @@
-﻿@*
-
-@using System.Collections.Generic;
-@using System.Net.Http.Json
+﻿@inject ISnackbar Snackbar
 @using FrontEnd.Model
+@using FrontEnd.Pages
 
-<MudDialog Visible="@IsOpen" MaxWidth="sm">
-    $1$ <DialogTitle>Add Recipient</DialogTitle> #1#
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+            Add recipient
+        </MudText>
+    </TitleContent>
+
     <DialogContent>
-        <MudTextField @bind-Value="@newRecipient.Id" Label="Id" Required="true"/>
+        <MudTextField @bind-Value="@newRecipient.Id" Label="Id" Required="true" />
         <MudTextField @bind-Value="@newRecipient.GroupId" Label="GroupId" Required="true" />
         <MudTextField @bind-Value="@newRecipient.Mail" Label="Email" Required="true" />
         <MudTextField @bind-Value="@newRecipient.Name" Label="Name" Required="true" />
@@ -15,38 +19,24 @@
         <MudTextField @bind-Value="@newRecipient.UniversityId" Label="University Id" />
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="@AddRecipient">Add</MudButton>
-        <MudButton Color="Color.Secondary" OnClick="@ClosePopover">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="AddRecipient">Add Recipient</MudButton>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
     </DialogActions>
-    
 </MudDialog>
 
 @code {
-    bool IsOpen { get; set; }
     Recipient newRecipient = new Recipient();
 
-    /*[Parameter]
-    public EventCallback<bool> OnAddRecipient { get; set; }*/
-    
-    void AddRecipient()
-    {   
-        // Perform validation if needed
-        // If validation passes, proceed to commit the recipient
-        // var newRecipient = new Recipient
-        // {
-        //     Name = recipientName,
-        //     Email = recipientEmail
-        // };
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-        // Invoke the callback to notify the parent component
-       // OnAddRecipient.InvokeAsync(true);
-        // Close the popover
-        ClosePopover();
+    private void AddRecipient()
+    {
+        //GridRecipient.Add(newRecipient);
+        MudDialog.Cancel();
     }
 
-    void ClosePopover()
+    private void Cancel()
     {
-        IsOpen = false;
+        MudDialog.Cancel();
     }
 }
-*@

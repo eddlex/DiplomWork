@@ -3,6 +3,10 @@
 @using System.Net.Http.Json
 @using FrontEnd.Model
 @inject HttpClient httpClient
+@inject IDialogService DialogService
+@using FrontEnd.Shared
+@using FrontEnd.Shared.Dialog;
+
 
 <style>
     body {
@@ -25,14 +29,14 @@
         font-size: 20px;
     }
 
-/*     .right-corner {
-        position: absolute;
-        bottom: 7px;
-        right: 2px;
-        background-color: #fafafa;
-        font-size: 10px;
-        color: black;
-    } */
+    /*     .right-corner {
+            position: absolute;
+            bottom: 7px;
+            right: 2px;
+            background-color: #fafafa;
+            font-size: 10px;
+            color: black;
+        } */
 
 </style>
 
@@ -70,81 +74,65 @@
         </MudDrawer>
 
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
-            <div style="height: 15px;"></div>
-            <div style="height: 90vh;">
-                <MudDataGrid T="Recipient" Items="@GridRecipient" SortMode="SortMode.Multiple" Filterable="true" 
+            <div style="height: 10px;"></div>
+            <div style="height: 85vh;">
+                <MudDataGrid T="Recipient" Items="@GridRecipient" SortMode="SortMode.Multiple" Filterable="true"
                              RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Selectable="false" MultiSelection="false"
                              ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="10"
                              StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
                              Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
                              ColumnResizeMode="ResizeMode.Container" Style="height:100%" autoPageSize="true">
-                <ToolBarContent>
+                    <ToolBarContent>
                         <MudText Typo="Typo.h4">Recipients</MudText>
-                    <MudSpacer />
-                    @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
-                    @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
-                </ToolBarContent>
+                        <MudSpacer />
+                        @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
+                        @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
+                    </ToolBarContent>
 
-                <Columns>
-                    <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
+                    <Columns>
+                        <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
                         <PropertyColumn Property="x => x.GroupId" Title="Group Id" />
                         <PropertyColumn Property="x => x.Mail" />
                         <PropertyColumn Property="x => x.Name" Title="University" />
                         <PropertyColumn Property="x => x.Description" />
                         <PropertyColumn Property="x => x.UniversityId" Title="University Id" />
 
-                    <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
+                        <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
-                        <CellTemplate>
-                            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton>
-                            <MudSpacer />
-                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRecipient(context.Item))"> </MudIconButton>
-                        </CellTemplate>
-                    </TemplateColumn>
-                </Columns>
+                            <CellTemplate>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton>
+                                <MudSpacer />
+                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRecipient(context.Item))"> </MudIconButton>
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
 
-                @* <MudButton OnClick="@OpenPopover" Color="@Color.Primary" Class="add-item-btn">Add Recipient</MudButton>
-                <RecipientDialog @bind-IsOpen="@IsPopoverOpen" OnAddRecipient="@HandleRecipientAdded" />
+                    <PagerContent>
+                        <div class="right-corner">
+                            <MudDataGridPager T="Recipient" />
+                        </div>
+                    </PagerContent>
 
-                <PagerContent>
-                     <div class="right-corner" > 
-                        <MudDataGridPager T="Recipient" />
-                     </div> 
-                </PagerContent> *@
-            </MudDataGrid>
+                </MudDataGrid>
             </div>
-            <MudButton OnClick="@OpenPopover" Color="@Color.Primary" Class="add-item-btn">Add Recipient</MudButton>
-                @*<RecipientDialog @bind-value="@IsPopoverOpen" OnAddRecipient="@HandleRecipientAdded" />
 
-                <PagerContent>
-                    $1$ <div class="right-corner" > #1#
-                        <MudDataGridPager T="Recipient" />
-                    $1$ </div> #1#
-                </PagerContent>*@
-
+            <div style="height: 10px;"></div>
+            <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
+                Add recipient
+            </MudButton>
         </MudMainContent>
     </MudLayout>
 </div>
 
 @code {
-    bool IsPopoverOpen { get; set; }
-
-    void OpenPopover()
+    private void OpenDialog()
     {
-        IsPopoverOpen = true;
+        DialogOptions closeOnEscapeKey = new DialogOptions() { CloseOnEscapeKey = true };
+
+        DialogService.Show<RecipientDialog>("Add recipient", closeOnEscapeKey);
     }
 
-    void HandleRecipientAdded(bool isSuccess)
-    {
-        if (isSuccess)
-        {
-            // Logic to handle the new recipient added successfully
-            // For example, you can update the recipient list or perform other operations
-            // You might want to use a service to handle this logic.
-        }
-    }
-
-    bool _drawerOpen = true;    
+    bool _drawerOpen = true;
     private bool _isCellEditMode;
     private bool _editTriggerRowClick;
     public string _searchString;
@@ -164,10 +152,10 @@
 
     private void DeleteRecipient(Recipient item)
     {
-        
+
     }
-    
-    
+
+
     // // quick filter - filter globally across multiple columns with the same input
     // private Func<Recipient, bool> _quickFilter => x =>
     // {
@@ -176,7 +164,7 @@
 
     //     if (x.Mail.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
     //         return true;
-        
+
     //     if (x.UserName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
     //         return true;
 
