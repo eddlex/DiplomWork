@@ -1,12 +1,12 @@
 ﻿CREATE    PROCEDURE spGetMailBody
-@UniversityId INT
+@DepartmentId INT
 AS
 BEGIN
     SELECT Id           [Id],
            Name         [Name],
            Subject      [Subject],
            Body         [Body],
-           UniversityId [UniversityId]
+           DepartmentId [DepartmentId]
     FROM MailBody WITH (NOLOCK)
-    WHERE (@UniversityId = 0 OR UniversityId = @UniversityId)
+    WHERE (@DepartmentId = 0 OR DepartmentId = @DepartmentId)
 END

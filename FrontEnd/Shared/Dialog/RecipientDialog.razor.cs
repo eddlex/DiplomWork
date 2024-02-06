@@ -7,7 +7,7 @@ using Microsoft.JSInterop;
 
 namespace FrontEnd.Pages;
 
-public partial class AddRecipientPopover
+public partial class RecipientDialog
 {
     //[Inject]
     //private IUserService? UserService { get; set; } 

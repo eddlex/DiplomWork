@@ -6,7 +6,7 @@ BEGIN
         BEGIN TRANSACTION;
 
             DELETE u
-            FROM University u
+            FROM DepartmentId u
             WHERE u.Id = @Id
             IF(@@ROWCOUNT IS NOT NULL AND  @@ROWCOUNT != 0)
             BEGIN

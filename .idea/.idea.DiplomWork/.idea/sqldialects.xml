@@ -15,6 +15,7 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientGroups.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipients.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSmtpConfigurations.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetUsers.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spLogIn.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spRegister.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateMailBody.sql" dialect="TSQL" />

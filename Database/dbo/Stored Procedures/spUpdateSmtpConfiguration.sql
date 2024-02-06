@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spUpdateSmtpConfiguration]
     @Id INT,
-    @UniversityId INT,
+    @DepartmentId INT,
     @SmtpServer NVARCHAR(255),
     @Port INT,
     @UserName NVARCHAR(100),
@@ -13,7 +13,7 @@ BEGIN
 			UPDATE SmtpConfigurations
 			SET
 				[SmtpServer] = @SmtpServer,
-				[UniversityId] = @UniversityId,
+				[DepartmentId] = @DepartmentId,
 				[Port] = @Port,
 				[UserName] = @UserName,
 				[Password] = @Password,

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spGetSmtpConfigurations]
-	@UniversityId INT
+@DepartmentId INT
 AS
 BEGIN
     SELECT
@@ -11,5 +11,5 @@ BEGIN
     FROM
         SmtpConfigurations
 	WHERE
-		(UniversityId = @UniversityId OR @UniversityId = 0)
+		(DepartmentId = @DepartmentId OR @DepartmentId = 0)
 END

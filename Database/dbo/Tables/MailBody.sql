@@ -3,9 +3,9 @@
     [Name]         NVARCHAR (100) NOT NULL,
     [Subject]      NVARCHAR (150) NULL,
     [Body]         NVARCHAR (MAX) NULL,
-    [UniversityId] INT            NULL,
+    [DepartmentId] INT            NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
-    FOREIGN KEY ([UniversityId]) REFERENCES [dbo].[University] ([Id]),
+    FOREIGN KEY ([DepartmentId]) REFERENCES [dbo].[Department] ([Id]),
     UNIQUE NONCLUSTERED ([Name] ASC)
 );
 

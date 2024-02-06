@@ -18,16 +18,17 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spLogIn.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelUniversity.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddUniversity.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetUniversities.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSmtpConfigurations.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteSmtpConfigurations.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateSmtpConfiguration.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetPermission.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientsByGroupId.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateMailBody.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetMailBody.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelMailBody.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddMailBody.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetUsers.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetDepartments.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipients.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" />
@@ -37,11 +38,11 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/FormRow.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Role.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/User.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/University.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/SmtpConfigurations.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Permission.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/UserInfo.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/MailBody.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Department.sql" />
             </array>
           </option>
           <option name="remarks" value="Database Project" />

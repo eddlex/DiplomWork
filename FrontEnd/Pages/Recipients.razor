@@ -104,7 +104,7 @@
                 </Columns>
 
                 @* <MudButton OnClick="@OpenPopover" Color="@Color.Primary" Class="add-item-btn">Add Recipient</MudButton>
-                <AddRecipientPopover @bind-IsOpen="@IsPopoverOpen" OnAddRecipient="@HandleRecipientAdded" />
+                <RecipientDialog @bind-IsOpen="@IsPopoverOpen" OnAddRecipient="@HandleRecipientAdded" />
 
                 <PagerContent>
                      <div class="right-corner" > 
@@ -114,13 +114,13 @@
             </MudDataGrid>
             </div>
             <MudButton OnClick="@OpenPopover" Color="@Color.Primary" Class="add-item-btn">Add Recipient</MudButton>
-                <AddRecipientPopover @bind-IsOpen="@IsPopoverOpen" OnAddRecipient="@HandleRecipientAdded" />
+                @*<RecipientDialog @bind-value="@IsPopoverOpen" OnAddRecipient="@HandleRecipientAdded" />
 
                 <PagerContent>
-                    @* <div class="right-corner" > *@
+                    $1$ <div class="right-corner" > #1#
                         <MudDataGridPager T="Recipient" />
-                    @* </div> *@
-                </PagerContent>
+                    $1$ </div> #1#
+                </PagerContent>*@
 
         </MudMainContent>
     </MudLayout>
