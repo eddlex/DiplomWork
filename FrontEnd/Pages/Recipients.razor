@@ -46,7 +46,7 @@
     <MudLayout style="background-color: #212121; color: white;" Elevation="5">
         <MudAppBar Elevation="5">
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-            <MudText Typo="Typo.h5" Class="ml-3">Admin panel</MudText>
+            <MudText Typo="Typo.h5" Class="ml-3">Admin panel</MudText>          
             <MudSpacer />
             <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => Logout())" />
         </MudAppBar>
@@ -75,15 +75,20 @@
 
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div style="height: 10px;"></div>
-            <div style="height: 85vh;">
+            <div style="height: 88vh; width: 83vw; margin: 0 auto;">
                 <MudDataGrid T="Recipient" Items="@GridRecipient" SortMode="SortMode.Multiple" Filterable="true"
                              RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Selectable="false" MultiSelection="false"
                              ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="10"
                              StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
                              Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
-                             ColumnResizeMode="ResizeMode.Container" Style="height:100%" autoPageSize="true">
+                             ColumnResizeMode="ResizeMode.Container" Style="height:100%" >
                     <ToolBarContent>
-                        <MudText Typo="Typo.h4">Recipients</MudText>
+                        <MudText Typo="Typo.h4">Recipients</MudText> 
+                        <MudSpacer />
+                        <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Add" 
+                        style="object-position: right;">
+                            Add recipient
+                        </MudButton>
                         <MudSpacer />
                         @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
                         @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
@@ -116,9 +121,9 @@
                 </MudDataGrid>
             </div>
 
-            <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
+            @* <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
                 Add recipient
-            </MudButton>
+            </MudButton> *@
         </MudMainContent>
     </MudLayout>
 </div>
