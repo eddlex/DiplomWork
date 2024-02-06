@@ -1,0 +1,48 @@
+﻿@typeparam T
+<EditForm Model="@Type">
+    <DataAnnotationsValidator/>
+    <MudDialog Style="width:400px;">
+        <DialogContent>
+            <MudCard>
+                <MudCardContent>
+                    
+                 
+                    @foreach (var p in Property)
+                    {
+                        <MudTextField @bind-Value="@Property[p.Key]" Label="@p.Key" Required="true"/>
+                    }
+                            
+                    @* <MudTextField Label="@model.Name" HelperText="Game Title" *@
+                    @*               @bind-Value="model.Name" *@
+                    @*               Required="true" RequiredError="User name is required!"/> *@
+                    
+                    
+                </MudCardContent>
+                <MudCardActions>
+                    @*<MudButton OnClick="Cancel">Cancel</MudButton>*@
+                    <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Save</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </DialogContent>
+    </MudDialog>
+</EditForm>
+
+@code
+{
+    [Parameter]
+    public T? Type { get; set; }
+    Dictionary<string, object?>? Property { get; set; } = new();
+    
+    protected override void OnInitialized()
+    {
+        this.Type = (T?)Activator.CreateInstance(typeof(T));
+        foreach (var i in typeof(T).GetProperties())
+        {
+            this.Property?.Add(i.Name, i.GetValue(this.Type));
+        }
+        
+        base.OnInitialized();
+    }
+
+
+}
