@@ -1,26 +1,41 @@
-﻿@typeparam T
-<EditForm Model="@Type">
+﻿@using System.Reflection
+@using FrontEnd.API
+@using FrontEnd.Helpers
+@using FrontEnd.Model
+@using Exception = FrontEnd.Helpers.Exception
+@typeparam T
+<EditForm Model="@ObjectType"> 
     <DataAnnotationsValidator/>
     <MudDialog Style="width:400px;">
         <DialogContent>
             <MudCard>
                 <MudCardContent>
                     
-                 
-                    @foreach (var p in Property)
+                     @* @foreach (var prop in this.object.Getobject().GetProperties()) *@
+                     @foreach (var p in Property)
                     {
-                        <MudTextField @bind-Value="@Property[p.Key]" Label="@p.Key" Required="true"/>
+                        // <MudTextField Value="@Property[p.Key]" Label="@p.Key" Immediate="true" TextChanged="OnValueChangeHandler"/>
+                        <MudTextField Value="@Property[p.Key]"
+                                      Label="@p.Key"
+                                      bind-Value="@Property[p.Key]"
+                                      Converter="@converter" 
+                                      TextChanged="(string newValue) => SetPropValue(p.Key, newValue)" />
+                       // <MudTextField bind-Value="@Property[p.Key]" Label="@p.Key" Converter="converter"/>
+                         //<MudTextField  @bind="Property[p.Key]" Label="@p.Key" @bind:event="oninput" />
+                    
                     }
-                            
-                    @* <MudTextField Label="@model.Name" HelperText="Game Title" *@
-                    @*               @bind-Value="model.Name" *@
-                    @*               Required="true" RequiredError="User name is required!"/> *@
-                    
-                    
+                        @* <MudTextField T="string" bind-Value="@TEST" Label="TEST" Inputobject="Inputobject.Text" /> *@
+ 
+                    @* <MudTextField Label="ssss" HelperText="Game Title"  *@
+                    @*               @bind-Value="a" Converter="@converter" *@
+                    @*               Required="true" RequiredError="User name is required!" Len/> *@
+
+
+                
                 </MudCardContent>
                 <MudCardActions>
                     @*<MudButton OnClick="Cancel">Cancel</MudButton>*@
-                    <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Save</MudButton>
+                    <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit" OnClick="@Save">Save</MudButton>
                 </MudCardActions>
             </MudCard>
         </DialogContent>
@@ -29,18 +44,90 @@
 
 @code
 {
+
+    
     [Parameter]
-    public T? Type { get; set; }
+    public T? ObjectType { get; set; }
     Dictionary<string, object?>? Property { get; set; } = new();
+
+    [CascadingParameter] 
+    MudDialogInstance MudDialog { get; set; }
+    
+    
+    // [Parameter]
+    // public string  TEST { get; set; }
+    
     
     protected override void OnInitialized()
     {
-        this.Type = (T?)Activator.CreateInstance(typeof(T));
+        
+        this.ObjectType ??= (T?)Activator.CreateInstance(typeof(T));
         foreach (var i in typeof(T).GetProperties())
         {
-            this.Property?.Add(i.Name, i.GetValue(this.Type));
+            this.Property?.Add(i.Name, i.GetValue(this.ObjectType));
         }
-        
         base.OnInitialized();
+    }
+    
+    
+
+    Converter<object> converter = new Converter<object>
+    {
+        SetFunc = value => DefaultSetFunc(value),
+        GetFunc = (name) => DefaultGetFunc(name),
+    };
+    
+    
+    
+    private static object? DefaultGetFunc(string? name) => (object?)name;
+    private static string? DefaultSetFunc(object? value) => value?.ToString();
+    
+    
+    
+    
+    private T GetValueFromPropertyName(string propertyName)
+    {
+        // Use reflection to get the value of the property with the given name
+        PropertyInfo prop = typeof(T).GetProperty(propertyName);
+        return (T)prop.GetValue(this);
+    }
+
+    private string SetValueToPropertyName(string propertyName, T value)
+    {
+        // Use reflection to set the value of the property with the given name
+        PropertyInfo prop = typeof(T).GetProperty(propertyName);
+        prop.SetValue(this, value);
+        return value.ToString();
+    }
+
+    
+    private void SetPropValue<T1>(string name, T1 newValue)
+    {
+        var properties = this.ObjectType?.GetType().GetProperties();
+        var prop = properties?.Where(p => p.Name == name).FirstOrDefault();
+
+        if (prop == default)
+            throw Exception.Create("Reflection Error [SetPropValue]");
+        
+        var convertedValue = Convert.ChangeType(newValue, prop.PropertyType);
+        prop?.SetValue(this.ObjectType, convertedValue);
+        
+        if (this.Property != null && prop?.Name != default)
+                this.Property[prop.Name] = convertedValue;
+    }
+    
+    
+    
+    private void Save()
+    { 
+        var s = this.ObjectType;
+        MudDialog.Close(DialogResult.Ok(s));
+    }
+    
+    
+    protected async Task OnValueChangeHandler(object newValue)
+    {
+        var ty = newValue.GetType().BaseType;
+        var d = newValue;
     }
 }

@@ -6,6 +6,7 @@
 @inject IDialogService DialogService
 @using FrontEnd.Shared
 @using FrontEnd.Shared.Dialog;
+@using MudBlazor.Extensions
 
 
 <style>
@@ -129,11 +130,9 @@
 </div>
 
 @code {
-    private void OpenDialog()
-    {
-        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center };
-        DialogService.Show<DialogComponent<Recipient>>("Add recipient", options);
-    }
+    
+    
+    
 
     bool _drawerOpen = true;
     private bool _isCellEditMode;
@@ -148,34 +147,22 @@
         _drawerOpen = !_drawerOpen;
     }
 
-    private void Logout()
-    {
-        // NavigationManager.NavigateTo("/logout");
-    }
+  
 
     private void DeleteRecipient(Recipient item)
     {
 
     }
+    
+    
+    
+    private void Logout()
+    {
+        // NavigationManager.NavigateTo("/logout");
+    }
 
 
-    // // quick filter - filter globally across multiple columns with the same input
-    // private Func<Recipient, bool> _quickFilter => x =>
-    // {
-    //     if (string.IsNullOrWhiteSpace(_searchString))
-    //         return true;
-
-    //     if (x.Mail.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-    //         return true;
-
-    //     if (x.UserName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-    //         return true;
-
-    //     // if ($"{x.Phone} {x.Email} {x.Name}".Contains(_searchString))
-    //     //     return true;
-
-    //     return false;
-    // };
+ 
 
 
     // events
