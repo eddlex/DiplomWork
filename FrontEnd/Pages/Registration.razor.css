@@ -1,7 +1,7 @@
 ﻿.mangust {
     background-color: #E0E0E0;
     height: auto;
-    width: 226px;
+    width: 100px;
     border: none; /* Remove any existing borders */
     border-bottom: 1px solid #bdbdbd; /* Add a bottom border for underline effect */
     padding: 5px; /* Add padding for spacing inside the select */

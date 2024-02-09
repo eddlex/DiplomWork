@@ -26,7 +26,6 @@
 
 
 
-
 <!-- <MudPaper Class="d-flex align-center flex-grow-1 gap-4" Elevation="0"> -->
 <!-- <MudContainer  MaxWidth="MaxWidth.Small" Class="my-20" Justify="Justify.Center" AlignItems="AlignItems.Center" Style="background-color: black;">
 	<MudItem  xs="15" sm="5"> -->
@@ -40,7 +39,7 @@
 <MudCard Class="pa-5 align-content-center " style="background-color: #E0E0E0;" Elevation="10" Outlined="true">
 	<MudCardContent>
 		<h1> Sign up </h1>
-		<MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors" Class="select-container">
+		<MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors" Class="select-container" id="signForm">
 
 			<MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!"
 			@bind-Value="Model.UserName" />
@@ -55,6 +54,8 @@
 						  Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
 			@bind-Value="Model.Password" />
 
+			@* <MudTextField @bind-Value="Departments" Label="Department" Required="true" RequiredError="Department is required!" /> *@
+
 			@* <MudSelect Dense="true" T="string" Label="University" Variant="Variant.Text"
 			AnchorOrigin="Origin.BottomCenter"  TransformOrigin="Origin.TopLeft"
 			Required="true" PopoverClass="select-container"
@@ -68,24 +69,19 @@
 			<MudSelectItem Value="hello" Label="key" />
 			} *@
 
-			
-			@* @{ *@
-			@* 	Dictionary<int, string> University = new Dictionary<int, string>(); *@
-			@* 	University.Add(1, "NPUA"); *@
-			@* 	University.Add(2, "YSU"); *@
-			@* 	University.Add(3,"ASUE" ); *@
-			@* 	University.Add(4,"AUA" ); *@
-			@* 	University.Add(5,"RAU" );				 *@
-			@* } *@
-		
 			<div style="margin-top: 10px; margin-bottom: 30px;">
 
 				@* <select class="mangust" required style="position:absolute" @bind="@Model.UniversityId" *@
 				@*         id="color" title="If you want a shirt then select a color">  *@
-						<select id="color"  class="mangust" title="If you want a shirt then select a color" required>
-                                  <option class="none"  value="" disabled selected>Department*</option>
-                                 
+
+
+				<label>Department</label>
+				<select id="color" class="mangust" form="signForm" required @bind="@Model.DepartmentId">
+                                  @* <option class="none" value="" disabled selected>Department*</option> *@
 					
+					<option></option>
+
+
 					@foreach (var item in Departments)
 					{
 						//if (@item.Key == 0)
@@ -152,37 +148,7 @@
 	</MudCardContent>
 </MudCard>
 
-			@* <MudSelect T="Pizza" Label="Pizza" Variant="Variant.Filled" An> *@
-   @*                                  <MudSelectItem Value="@(new Pizza("Cardinale"))" /> *@
-   @*                                  <MudSelectItem Value="@(new Pizza("Diavolo"))" /> *@
-   @*                                  <MudSelectItem Value="@(new Pizza("Margarita"))" /> *@
-   @*                                  <MudSelectItem Value="@(new Pizza("Spinaci"))" /> *@
-   @*                              </MudSelect> *@
-@code 
-{
-	
-	public class Pizza
-	{
-		public Pizza(string name)
-		{
-			Name = name;
-		}
-
-		public readonly string Name;
-
-		// Note: this is important so the MudSelect can compare pizzas
-		public override bool Equals(object o)
-		{
-			var other = o as Pizza;
-			return other?.Name == Name;
-		}
-
-		// Note: this is important too!
-		public override int GetHashCode() => Name?.GetHashCode() ?? 0;
-
-		// Implement this for the Pizza to display correctly in MudSelect
-		public override string ToString() => Name;
-	}
+@code{
 	bool success;
 	string[] errors = { };
 	MudTextField<string> pwField1;

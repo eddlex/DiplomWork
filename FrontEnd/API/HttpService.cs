@@ -2,6 +2,7 @@
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using Exception = System.Exception;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -12,10 +13,14 @@ public class HttpService : IHttpService
 {
     private readonly HttpClient httpClient;
     private readonly CustomAuthenticationProvider authenticationStateProvider;
+
+    public int failedAttempts = 0;
+    //IJSRuntime js;
     public HttpService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider)
     {
         this.httpClient = httpClient;
         this.authenticationStateProvider = (CustomAuthenticationProvider)authenticationStateProvider;
+        //this.js = IJSRuntime;
     }
 
     public async Task<T1?> Execute<T1, T2>(HttpMethod method, string apiUrl, T2? requestBody = default)
@@ -38,8 +43,9 @@ public class HttpService : IHttpService
 
             if (requestBody != null)
             {
+
                 request.Content = new StringContent(JsonSerializer.Serialize(requestBody), System.Text.Encoding.UTF8, "application/json");
-            }
+			}
 
             var response = await this.httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
@@ -63,6 +69,9 @@ public class HttpService : IHttpService
         }
         catch (Exception ex)
         {
+            //if (++failedAttempts >= 3 && ex.Message == "UserName or password is wrong")
+            //    await js.InvokeVoidAsync("setLinkRed");
+            //return false;
             throw new AlertException(ex.Message);
         }
     }

@@ -37,7 +37,7 @@ namespace BackEnd.Services.Services
     
         public async Task<bool> Register(Models.Input.RegistrationPost user)
         {
-            var result = (await dbService.QueryAsync<bool>("spRegister", new {user.UserName, user.Email, user.Password, UniversityId = user.DepartmentId})).FirstOrDefault();
+            var result = (await dbService.QueryAsync<bool>("spRegister", new {user.UserName, user.Email, user.Password, user.DepartmentId})).FirstOrDefault();
             return result;
         }
         
