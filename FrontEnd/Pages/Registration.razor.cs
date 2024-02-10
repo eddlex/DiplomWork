@@ -22,11 +22,11 @@ public partial class Registration
     private async void Register()
     {
         if (this.UserService is null || this.DepartmentService == null)
-        {
             return;
-        }
+
+        await form.Validate();
         
-        if (await this.UserService.RegisterUser(Model))
+        if (form.IsValid && await this.UserService.RegisterUser(Model))
         {
             this.NavigationManager?.NavigateTo("/");
         }

@@ -134,4 +134,8 @@
       <Compile Remove="Helpers\Error.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Shared\SelectComponent.css" />
+    </ItemGroup>
+
 </Project>
