@@ -1,0 +1,68 @@
+<MudDialog Style="width:400px; height: 100px; position:absolute;  "
+           Class="test" 
+            >
+	<DialogContent >
+		
+	<MudItem>1</MudItem>
+	<MudItem>2</MudItem>
+	<MudItem>3</MudItem>
+	<MudItem>4</MudItem>
+	<MudItem>5</MudItem>
+	<MudItem>6</MudItem>
+<MudButton OnClick="OnSubmit"> SSSS</MudButton>
+
+
+
+
+	</DialogContent>
+</MudDialog>
+
+<style>
+.mud-dialog-title
+{
+	display: none;
+	z-index: 2;
+	
+}
+.test
+{
+	left: @X.ToString()px ; 
+	top: @Y.ToString()px;
+        overflow: auto;
+    
+}
+.Test
+{
+position: absolute;
+}
+</style>
+
+@code {
+        [Parameter]
+        public string DialogClass { get; set; }
+
+        [Parameter]
+        public string DialogTitle { get; set; }
+
+        [Parameter]
+        public List<string> Options { get; set; }
+
+        [Parameter]
+        public string SelectedOption { get; set; }
+
+        [Parameter]
+        public int Y { get; set; } // New parameter for top position
+
+        [Parameter]
+        public int X { get; set; } // New parameter for left position
+
+        [Parameter]
+        public EventCallback<string> OnSubmitCallback { get; set; }
+
+        private async Task OnSubmit()
+        {
+            await OnSubmitCallback.InvokeAsync(SelectedOption);
+        }
+    
+
+}

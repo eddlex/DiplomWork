@@ -25,7 +25,8 @@ public partial class Registration
         {
             return;
         }
-        
+
+        var s = this.TEST;
         if (await this.UserService.RegisterUser(Model))
         {
             this.NavigationManager?.NavigateTo("/");

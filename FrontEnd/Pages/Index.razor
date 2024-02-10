@@ -1,20 +1,138 @@
 ﻿@page "/index"
 @using FrontEnd.Model
 @using FrontEnd.Shared.Dialog
-
-
-
-@inject IDialogService DialogService
-
-<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OpenDialog">Open Dialog</MudButton>
-
-
-@code
-{
-    
-    private void OpenDialog()
-    {
-        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, Position = DialogPosition.Center };
-        DialogService.Show<DialogComponent<Recipient>>("Add New Game", options);           
-    }
-}
+<MudContainer Fixed="true" Class="mt-8">
+    <MudPaper Elevation="3" >
+        <MudGrid Spacing="10">
+            <!-- MudCard -->
+            <MudItem xs="12" md="6" lg="4">
+                <MudCard Elevation="6" Class="rounded-t-lg ma-4">
+                    <MudCardHeader Class="pa-2">
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">MudCard Example</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudGrid>
+                            <MudItem xs="12">
+                                <MudSelect Label="Primary Leg Covering"
+                                           Variant="Variant.Outlined"
+                                           Margin="Margin.Dense"
+                                           Direction="Direction.Right"
+                                           OffsetY="true"
+                                           T="SampleValue"
+                                           @bind-Value="MudCardValue1"
+                                           ToStringFunc="SampleDisplayConverter">
+                                    @foreach (var bt in SampleValues)
+                                    {
+                                        <MudSelectItem Value="@bt">@bt.Description</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                            <MudItem xs="12">
+                                <MudSelect Label="Secondary Leg Covering"
+                                           Variant="Variant.Outlined"
+                                           Margin="Margin.Dense"
+                                           Direction="Direction.Right"
+                                           OffsetY="true"
+                                           T="SampleValue"
+                                           @bind-Value="MudCardValue2"
+                                           ToStringFunc="SampleDisplayConverter">
+                                    @foreach (var bt in SampleValues)
+                                    {
+                                        <MudSelectItem Value="@bt">@bt.Description</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudPaper Class="mx-auto">
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Update</MudButton>
+                        </MudPaper>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+            <!-- Div -->
+            <MudItem xs="12" md="6" lg="4">
+                <div class="mud-elevation-6 my-4">
+                    <div class="rounded-t-lg mud-theme-primary pa-4">
+                        <MudText Typo="Typo.h6">Styled Divs Example</MudText>
+                    </div>
+                    <div class="pa-4">
+                        <MudGrid>
+                            <MudItem xs="12">
+                                <MudSelect Label="Primary Leg Covering"
+                                           Variant="Variant.Outlined"
+                                           Margin="Margin.Dense"
+                                           Direction="Direction.Right"
+                                           OffsetY="true"
+                                           T="SampleValue"
+                                           @bind-Value="DivValue1"
+                                           ToStringFunc="SampleDisplayConverter">
+                                    @foreach (var bt in SampleValues)
+                                    {
+                                        <MudSelectItem Value="@bt">@bt.Description</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                            <MudItem xs="12">
+                                <MudSelect Label="Secondary Leg Covering"
+                                           Variant="Variant.Outlined"
+                                           Margin="Margin.Dense"
+                                           Direction="Direction.Right"
+                                           OffsetY="true"
+                                           T="SampleValue"
+                                           @bind-Value="DivValue2"
+                                           ToStringFunc="SampleDisplayConverter">
+                                    @foreach (var bt in SampleValues)
+                                    {
+                                        <MudSelectItem Value="@bt">@bt.Description</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        </MudGrid>
+                    </div>
+                    <div class="pa-2" style="display:flex;">
+                        <div class="mx-auto">
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Update</MudButton>
+                        </div>
+                    </div>
+                </div>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+</MudContainer>
+@* *@
+@* *@
+@* @inject IDialogService DialogService *@
+@* @inject IJSRuntime JSRuntime *@
+@*  <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowDialog">Open Dialog</MudButton>  *@
+@* *@
+@* *@
+@* *@
+@* @code *@
+@* { *@
+@*    *@
+@* *@
+@*     ElementReference elementRef; *@
+@* *@
+@*     public void ShowDialog(MouseEventArgs e) *@
+@*     { *@
+@*         *@
+@*          *@
+@*         var parameters = new DialogParameters(); *@
+@* *@
+@*          *@
+@*         // Calculate the position of the left button relative to the clicked element *@
+@*        *@
+@*          *@
+@*         parameters.Add("Y", (int)e.ClientY); *@
+@*         parameters.Add("X", (int)e.ClientX); *@
+@*         DialogService.Show<EnumComponent>( "", parameters);            *@
+@*     } *@
+@*      *@
+@*      *@
+@*      *@
+@*      *@
+@* } *@

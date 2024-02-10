@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Components
+@using System.Globalization;
+
+
+@* <MudSelect MaxHeight="150" *@
+@*             *@
+@*            PopoverClass="text" *@
+@*            Required="true" *@
+@*            @bind-Value="enumValue" *@
+@*            Label="Select Department" *@
+@*            AdornmentColor="Color.Secondary"> *@
+@*      *@
+@*     *@
+@*     @foreach (Drink item in Enum.GetValues(typeof(Drink))) *@
+@*     { *@
+@*         <MudSelectItem Value="@item">@item</MudSelectItem> *@
+@*     } *@
+@*      *@
+@* </MudSelect> *@
+
+
+<style>
+.text{
+    margin: 350px 0 0 35px;
+    max-width: 432px;
+    
+}
+</style>
+
+
+@code {
+    private string stringValue { get; set; }
+    private Drink enumValue { get; set; } = Drink.HotWater;
+    public enum Drink { Tea, SparklingWater, SoftDrink, Cider, Beer, Wine, Moonshine, Wodka, Cola, GreeTea, FruitJuice, Lemonade, HotWater, SpringWater, IceWater,  }
+    private CultureInfo cultureValue { get; set; }
+    private Func<CultureInfo, string> convertFunc = ci => ci?.DisplayName;
+}
+
+
+<MudSelect T="string"
+           Label="Select an option"
+           @bind-Value="selectedOption"
+           MaxHeight="150"  PopoverClass="text">
+           
+  
+    @foreach (var option in options)
+    {
+        <MudSelectItem Value="@option">@option</MudSelectItem>
+    }
+</MudSelect>
+
+@code {
+    private string selectedOption { get; set; }
+
+    private List<string> options = new List<string> { "Option 1", "Option 2", "Option 3" };
+}
