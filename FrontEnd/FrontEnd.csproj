@@ -135,7 +135,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Shared\SelectComponent.css" />
+      <Folder Include="wwwroot\img\" />
     </ItemGroup>
 
 </Project>

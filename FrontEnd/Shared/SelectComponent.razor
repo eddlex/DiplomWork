@@ -1,87 +1,112 @@
+@using MudBlazor.Extensions
+@using FrontEnd.Pages
+@using FrontEnd.Helpers
+@using System.Runtime.CompilerServices
 @inject IJSRuntime Js
 
 <div class="container">
-      <h2>Video Category</h2>
-
       <div class="select-box">
-        <div class="options-container">
-          <div class="option">
-            <input
-              type="radio"
-              class="radio"
-              id="automobiles"
-              name="category"
-            />
-            <label for="automobiles">Automobiles</label>
-          </div>
+        <div class="options-container @(ClassName)">
+          
+          @foreach (var (name, code) in Enum.Values)
+          {
+            <div class="option" @onclick="() => ClickOption(name)">
+              <input type="radio" class="radio" id="@name" name="category"/>
+              <label for="@name" class="SelectValue">@name</label>
+            </div>
+          }
+          </div> 
 
-          <div class="option">
-            <input type="radio" class="radio" id="film" name="category" />
-            <label for="film">Film & Animation</label>
-          </div>
-
-          <div class="option">
-            <input type="radio" class="radio" id="science" name="category" />
-            <label for="science">Science & Technology</label>
-          </div>
-
-          <div class="option">
-            <input type="radio" class="radio" id="art" name="category" />
-            <label for="art">Art</label>
-          </div>
-
-          <div class="option">
-            <input type="radio" class="radio" id="music" name="category" />
-            <label for="music">Music</label>
-          </div>
-
-          <div class="option">
-            <input type="radio" class="radio" id="travel" name="category" />
-            <label for="travel">Travel & Events</label>
-          </div>
-
-          <div class="option">
-            <input type="radio" class="radio" id="sports" name="category"/>
-            <label for="sports">Sports</label>
-          </div>
-
-          <div class="option">
-            <input type="radio" class="radio" id="news" name="category" />
-            <label for="news">News & Politics</label>
-          </div>
-
-          <div class="option">
-            <input type="radio" class="radio" id="tutorials" name="category" />
-            <label for="tutorials">Tutorials</label>
-          </div>
-        </div>
-
-        <p class="selected" @bin="Value">
-          Select Video Category
+        <p class="selected" @onclick="Click">
+          @Title
         </p>
 
-        <div class="search-box">
-          <input type="text" placeholder="Start Typing..." />
+        <div class="search-box" >
+          <input type="text" placeholder="Find..." 
+                 @ref="search"
+                 @bind="@SearchBoxValue"
+                 @onkeyup="SearchOption"
+                 id ="search"/>
         </div>
       </div>
     </div>
     
 
-<MudButton OnClick="@S">Click me</MudButton>
-
 @code
 {
-  [Parameter] public Dictionary<string, int>? Enum { get; set; }
+  [Parameter] public Select? Enum { get; set; }
+
+  public string? Title { get; set; }
+
   
-  public string Value { get; set; }
-  protected override void OnAfterRender(bool firstRender)
+  
+  [Parameter]
+  public EventCallback<int> OnSelectChanged { get; set; }
+  
+  [Parameter]
+  public int SelectedEnum { get; set; }
+
+  
+  private ElementReference search;
+  private string? SearchBoxValue { get; set; }
+ 
+  
+  private bool toggle = true;
+  static string? CurrentSelectedDepartment { get; set; }
+  private async Task ClickOption(string e)
   {
-    this.Js.InvokeVoidAsync("AddScriptSelectComponent", DotNetObjectReference.Create(this)).GetAwaiter();
+    CurrentSelectedDepartment = e;
+    Title = CurrentSelectedDepartment;
+    await Click();
+    
   }
 
-  public void S()
+  
+  private void SearchOption()
   {
-    var s = Value;
+    Js.InvokeVoidAsync("SearchOption", SearchBoxValue).GetAwaiter();
+  }
+  
+  private async Task Click()
+  {
+    switch (toggle)
+    {
+      case true:
+        ClassName = "active";
+        toggle = false;
+        await Js.InvokeVoidAsync("SetFocusToElement", search);
+        break;
+      case false:
+        ClassName = "";
+        toggle = true;
+        break;
+    }
+    
+    if (this.Enum != null && 
+        this.Title != null && 
+        this.Enum.Values != null &&
+        this.Enum.Values.TryGetValue(this.Title, out var code))
+    {
+      SelectedEnum = code;
+      await OnSelectChanged.InvokeAsync(SelectedEnum);
+    }
+    SearchBoxValue = string.Empty;
+    SearchOption();
+  }
+  
+  private string ClassName { get; set; } = string.Empty;
+  
+  
+  protected override void OnParametersSet()
+  {
+    base.OnParametersSet();
+    this.Title = CurrentSelectedDepartment ?? Title;
+  }
+
+  protected override Task OnInitializedAsync()
+  {
+    this.Title = this.Enum?.Title;
+    return base.OnInitializedAsync();
   }
 
 }
@@ -106,15 +131,16 @@ h2 {
 }
 
 .container {
-  margin-top: 100px;
-  padding: 32px;
+  margin-top: 10px;
+  padding: 0 0 ;
 }
 
 .select-box {
   position: relative;
   display: flex;
-  width: 400px;
+  /*width: 400px;*/
   flex-direction: column;
+  width: auto;
 }
 
 .select-box .options-container {
@@ -130,19 +156,23 @@ h2 {
   order: 1;
 }
 
+.options-container
+{
+  margin-top: 5px;
+}
 .selected {
   background: #2f3640;
   border-radius: 8px;
-  margin-bottom: 8px;
+  /*margin-bottom: 8px;*/
   color: #f5f6fa;
   position: relative;
-
   order: 0;
+  text-align: left;
 }
 
 .selected::after {
   content: "";
-  /*background: url("img/arrow-down.svg");*/
+  background: url("img/arrow-down.svg");
   background-size: contain;
   background-repeat: no-repeat;
 
@@ -156,7 +186,7 @@ h2 {
 }
 
 .select-box .options-container.active {
-  max-height: 240px;
+  max-height: 140px;
   opacity: 1;
   overflow-y: scroll;
   margin-top: 54px;
@@ -178,11 +208,17 @@ h2 {
   border-radius: 0 8px 8px 0;
 }
 
-.select-box .option,
-.selected {
+.select-box .option
+{
   padding: 12px 24px;
   cursor: pointer;
 }
+
+.selected {
+  padding: 12px 12px 12px 0;
+  cursor: pointer;
+}
+    
 
 .select-box .option:hover {
   background: #414b57;

@@ -1,14 +1,11 @@
-﻿using FrontEnd.API;
+﻿using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using FrontEnd.Model;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using MudBlazor;
-
 
 namespace FrontEnd.Pages;
 
-public partial class Registration
+public partial class Registration 
 {
     [Inject] 
     private IUserService? UserService { get; set; } 
@@ -26,16 +23,22 @@ public partial class Registration
 
         await form.Validate();
         
-        if (form.IsValid && await this.UserService.RegisterUser(Model))
+        if (form.IsValid)
         {
-            this.NavigationManager?.NavigateTo("/");
+            
+            if (await this.UserService.RegisterUser(Model))
+            {
+                this.NavigationManager?.NavigateTo("/");
+            }
         }
     }
 
 
-    private Dictionary<int, string>? Departments { get; set; } = new();
+    private Select Departments { get; set; } = new("Select Department",
+                                                nameof(RegistrationPost.DepartmentId));
     protected override async  Task OnInitializedAsync()
     {
+        this.Model.Suscribe(this.Departments);
         if (this.DepartmentService != null)
         {
             var result = await this.DepartmentService.GetDepartments();
@@ -43,7 +46,7 @@ public partial class Registration
             {
                 foreach (var e in result)
                 {
-                    Departments?.Add(e.Id, e.Name);
+                    Departments?.Add(e.Name, e.Id);
                 }
             }
         }

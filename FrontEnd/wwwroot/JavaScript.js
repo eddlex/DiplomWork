@@ -9,46 +9,33 @@ function setLinkRed() {
     document.getElementById('forgotPasswordLink').style.color = 'red';
 }
 
+let s = true
 
-
-function AddScriptSelectComponent()
+function SearchOption()
 {
-    const selected = document.querySelector(".selected");
-    const optionsContainer = document.querySelector(".options-container");
-    const searchBox = document.querySelector(".search-box input");
-    const optionsList = document.querySelectorAll(".option");
+    const optionsList = document.getElementsByClassName("SelectValue");
+    const optionsDiv = document.getElementsByClassName("option");
 
-    selected.addEventListener("click", () => {
-        optionsContainer.classList.toggle("active");
+    
+    optionName = document.getElementById("search").value.trim().toLowerCase()
 
-        searchBox.value = "";
-        filterList("");
+    for (let i in optionsList)
+    {
+        var op = optionsList[i].innerText.toLowerCase();
 
-        if (optionsContainer.classList.contains("active")) {
-            searchBox.focus();
+        if (op.indexOf(optionName) !== -1) 
+        {
+            optionsDiv[i].style.display = "block";
+        } else
+        {
+            optionsDiv[i].style.display = "none";
         }
-    });
-
-    optionsList.forEach(o => {
-        o.addEventListener("click", () => {
-            selected.innerHTML = o.querySelector("label").innerHTML;
-            optionsContainer.classList.remove("active");
-        });
-    });
-
-    searchBox.addEventListener("keyup", function(e) {
-        filterList(e.target.value);
-    });
-
-    const filterList = searchTerm => {
-        searchTerm = searchTerm.toLowerCase();
-        optionsList.forEach(option => {
-            let label = option.firstElementChild.nextElementSibling.innerText.toLowerCase();
-            if (label.indexOf(searchTerm) != -1) {
-                option.style.display = "block";
-            } else {
-                option.style.display = "none";
-            }
-        });
-    };
+    }
 }
+
+
+window.SetFocusToElement = (element) => {
+    element.focus();
+};
+
+
