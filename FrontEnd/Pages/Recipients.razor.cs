@@ -1,6 +1,7 @@
 ﻿
 using FrontEnd.Interface;
 using FrontEnd.Model;
+using FrontEnd.Model.DTO;
 using FrontEnd.Shared.Dialog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -16,13 +17,31 @@ public partial class Recipients
     private IRecipientService? RecipientService { get; set; } 
 
 
-    private List<Recipient>? GridRecipient { get; set; }
+    private List<RecipientDto>? RecipientDto { get; set; }
 
 
-    protected override async  Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         if (this.RecipientService != null)
-            this.GridRecipient = await this.RecipientService.GetRecipient();
+        {
+           var recipientBl = await this.RecipientService.GetRecipient();
+           if (recipientBl is { Count: > 0 })
+           {
+               this.RecipientDto = new();
+               recipientBl.ForEach(e => this.RecipientDto.Add(new RecipientDto()
+               {
+                   Id = e.Id,
+                   Name = e.Name,
+                   Description = e.Description,
+                   Department = e.DepartmentId.ToString(),
+                   Group = e.GroupId.ToString(),
+                   Mail = e.Mail
+               }));
+           }
+           
+           
+           
+        } 
     }
     
     

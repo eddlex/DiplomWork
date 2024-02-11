@@ -15,6 +15,11 @@ public class DepartmentService :  IDepartmentService
     {
        return await this.httpService.Execute<List<Department>, object>(HttpMethod.Get, "Department");
     }
+    
+    public async Task<List<Department>?> GetDepartmentsByUser()
+    {
+        return await this.httpService.Execute<List<Department>, object>(HttpMethod.Get, "DepartmentsByUser");
+    }
 }
 
 
