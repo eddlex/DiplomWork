@@ -23,8 +23,11 @@ public class HttpService : IHttpService
         this.authenticationStateProvider = (CustomAuthenticationProvider)authenticationStateProvider;
         //this.js = IJSRuntime;
     }
-    
-    public  UserSession? Session  => this.authenticationStateProvider.GetSession().GetAwaiter().GetResult(); 
+
+    public async Task<UserSession?> GetSession()
+    {
+        return await this.authenticationStateProvider.GetSession(); 
+    }
      
 
 

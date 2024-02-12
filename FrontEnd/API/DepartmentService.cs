@@ -26,7 +26,7 @@ public class DepartmentService :  IDepartmentService
     
     public async Task<List<Department>?> GetDepartmentsByRole()
     {
-        var session = this.httpService.Session ?? throw Helpers.Exception.Create(Constants.Error.SessionNotFound);
+        var session = await this.httpService.GetSession() ?? throw Helpers.Exception.Create(Constants.Error.SessionNotFound);
         var departments = await GetDepartments();
         
         if (session.RoleId != 2 )

@@ -15,6 +15,9 @@ public partial class Recipients
 {
     [Inject]
     private IRecipientService? RecipientService { get; set; } 
+    
+    [Inject]
+    private IDepartmentService? DepartmentService { get; set; } 
 
 
     private List<RecipientDto>? RecipientDto { get; set; }
@@ -22,9 +25,11 @@ public partial class Recipients
 
     protected override async Task OnInitializedAsync()
     {
-        if (this.RecipientService != null)
+        if (this.RecipientService != null && 
+            this.DepartmentService != null)
         {
            var recipientBl = await this.RecipientService.GetRecipient();
+           var departments = await this.DepartmentService.GetDepartments();
            if (recipientBl is { Count: > 0 })
            {
                this.RecipientDto = new();
@@ -33,7 +38,7 @@ public partial class Recipients
                    Id = e.Id,
                    Name = e.Name,
                    Description = e.Description,
-                   Department = e.DepartmentId.ToString(),
+                   Department = departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
                    Group = e.GroupId.ToString(),
                    Mail = e.Mail
                }));

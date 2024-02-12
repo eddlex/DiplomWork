@@ -1,12 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Text.Json.Serialization;
+using System.Security.Claims;
+using Newtonsoft.Json;
 
 
 namespace FrontEnd.Model;
 
 public class UserSession
 {
-    [JsonConstructor]
+    [System.Text.Json.Serialization.JsonConstructor]
     public UserSession(int userId, int departmentId, int roleId, string token)
     {
         this.UserId = userId;
@@ -48,6 +49,6 @@ public class UserSession
         var jwtPayload = JwtPayload.Deserialize(jsonPayload);
         this.UserId = Convert.ToInt32(jwtPayload.Claims.FirstOrDefault(p => p.Type == nameof(UserId))?.Value);
         this.DepartmentId = Convert.ToInt32(jwtPayload.Claims.FirstOrDefault(p => p.Type == nameof(DepartmentId))?.Value);
-        this.RoleId = Convert.ToInt32(jwtPayload.Claims.FirstOrDefault(p => p.Type == "Role")?.Value);
+        this.RoleId = Convert.ToInt32(jwtPayload.Claims.FirstOrDefault(p => p.Type == "role" )?.Value);
     }
 }
