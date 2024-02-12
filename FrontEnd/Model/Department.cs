@@ -1,8 +1,15 @@
-﻿namespace FrontEnd.Model;
+﻿using System.ComponentModel.DataAnnotations;
+using FrontEnd.Helpers;
+
+namespace FrontEnd.Model;
 
 public class Department
 {
+    [CustomAttributes.EnumValue]
     public int Id { get; set; }
+    
+    
+    [CustomAttributes.EnumKey]
     public string Name { get; set; }
     public string Description { get; set; }
     
@@ -13,3 +20,4 @@ public class Department
         this.Description = description;
     }
 }
+

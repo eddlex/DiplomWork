@@ -1,6 +1,9 @@
 ﻿
+using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using FrontEnd.Model;
+using FrontEnd.Model.BL;
+using FrontEnd.Model.Dialog;
 using FrontEnd.Model.DTO;
 using FrontEnd.Shared.Dialog;
 using Microsoft.AspNetCore.Components;
@@ -21,26 +24,30 @@ public partial class Recipients
 
 
     private List<RecipientDto>? RecipientDto { get; set; }
-
+    private List<Recipient>? RecipientBl { get; set; }
+    private List<Department>? Departments { get; set; }
+    private List<RecipientGroup>? RecipientsGroups { get; set; }
+    
+    
 
     protected override async Task OnInitializedAsync()
     {
         if (this.RecipientService != null && 
             this.DepartmentService != null)
         {
-           var recipientBl = await this.RecipientService.GetRecipient();
-           var recipientsGroups = await this.RecipientService.GetRecipientsGroups();
-           var departments = await this.DepartmentService.GetDepartments();
-           if (recipientBl is { Count: > 0 })
+           this.RecipientBl = await this.RecipientService.GetRecipient();
+           this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
+           this.Departments = await this.DepartmentService.GetDepartments();
+           if (this.RecipientBl is { Count: > 0 })
            {
                this.RecipientDto = new();
-               recipientBl.ForEach(e => this.RecipientDto.Add(new RecipientDto()
+               this.RecipientBl.ForEach(e => this.RecipientDto.Add(new RecipientDto()
                {
                    Id = e.Id,
                    Name = e.Name,
                    Description = e.Description,
-                   Department = departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
-                   Group = recipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name,
+                   Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
+                   Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name,
                    Mail = e.Mail
                }));
            }
@@ -62,14 +69,17 @@ public partial class Recipients
         
          var parameters = new DialogParameters<Recipient>();
 
-         var r = new Recipient()
+         var r = new RecipientDialog()
          {
-            Id = 10
+            Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
+            Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups)
          };
+         
+         
          parameters.Add("ObjectType", r);
          
        //var result = await(await DialogService.ShowAsync<DialogComponent<Recipient>>("Add Recipient", parameters, options)).Result;
-        var result = await(await DialogService.ShowAsync<DialogComponent<Recipient>>("Add Recipient", parameters, options)).Result;
+        var result = await(await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Add Recipient", parameters, options)).Result;
         if (!result.Canceled)
         {
             var recipient = result.Data.As<Recipient>();

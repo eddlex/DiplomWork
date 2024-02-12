@@ -4,6 +4,7 @@
 @using System.Runtime.CompilerServices
 @inject IJSRuntime Js
 
+@typeparam T
 <div class="container">
       <div class="select-box">
         <div class="options-container @(ClassName)">
@@ -34,7 +35,7 @@
 
 @code
 {
-  [Parameter] public Select? Enum { get; set; }
+  [Parameter] public Select<T>? Enum { get; set; }
 
   public string? Title { get; set; }
 

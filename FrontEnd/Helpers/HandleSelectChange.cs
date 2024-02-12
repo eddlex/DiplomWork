@@ -2,7 +2,7 @@ namespace FrontEnd.Helpers;
 
 public abstract class HandleSelectChange
 {
-    public void Suscribe(Select secondElement)
+    public void Suscribe<T>(Select<T> secondElement)
     {
         secondElement.PropertyChanged += (string propertyName, int newValue) =>
         {

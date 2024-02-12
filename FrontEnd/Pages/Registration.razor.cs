@@ -18,37 +18,33 @@ public partial class Registration
      
     private async void Register()
     {
-        if (this.UserService is null || this.DepartmentService == null)
-            return;
-
         await form.Validate();
+        if (this.UserService is null || this.DepartmentService == null || !form.IsValid)
+            return;
         
-        if (form.IsValid)
+        if (await this.UserService.RegisterUser(Model))
         {
-            
-            if (await this.UserService.RegisterUser(Model))
-            {
-                this.NavigationManager?.NavigateTo("/");
-            }
+            this.NavigationManager?.NavigateTo("/");
         }
     }
 
 
-    private Select Departments { get; set; } = new("Select Department",
-                                                nameof(RegistrationPost.DepartmentId));
+    private Select<Department>? Departments { get; set; }
     protected override async  Task OnInitializedAsync()
     {
-        this.Model.Suscribe(this.Departments);
-        if (this.DepartmentService != null)
+        if (this.DepartmentService != null) 
         {
-            var result = await this.DepartmentService.GetDepartments();
-            if (result != null)
-            {
-                foreach (var e in result)
-                {
-                    Departments?.Add(e.Name, e.Id);
-                }
-            }
+            this.Departments =  new("Select Department",
+                                                          nameof(RegistrationPost.DepartmentId),
+                                                          await this.DepartmentService.GetDepartments());
+          
+            this.Model.Suscribe(this.Departments);
+           
         }
     }
+
+  
+        
 }
+    
+  
