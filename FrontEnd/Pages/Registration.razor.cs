@@ -29,20 +29,16 @@ public partial class Registration
     }
 
 
-    private Select<Department>? Departments { get; set; }
+    private Select<Department>? Departments { get; set; } = new("Select Department", nameof(RegistrationPost.DepartmentId));
     protected override async  Task OnInitializedAsync()
     {
         if (this.DepartmentService != null) 
         {
-            this.Departments =  new("Select Department",
-                                                          nameof(RegistrationPost.DepartmentId),
-                                                          await this.DepartmentService.GetDepartments());
-          
+            this.Departments?.ConvertListToEnum(await this.DepartmentService.GetDepartments());
             this.Model.Suscribe(this.Departments);
-           
         }
-    }
-
+    } 
+    
   
         
 }

@@ -54,9 +54,8 @@ public class Select<T>
     { 
         this.SelectedValue = code;
     }
-    
-    
-    private void ConvertListToEnum(List<T>? list)
+
+    public void ConvertListToEnum(List<T>? list)
     {
         
         var keyProperty = typeof(T).GetProperties()
@@ -67,7 +66,7 @@ public class Select<T>
 
         if (keyProperty == null || valueProperty == null)
         {
-            throw new InvalidOperationException("Key and/or value attributes not found on type.");
+            throw Exception.Create("Reflaction Error");
         }
 
         foreach (T item in list)
