@@ -29,11 +29,9 @@ namespace BackEnd.Services.Services
             return res;
         }
 
-        public async Task<List<RecipientGroupGet>> GetRecipientGroups(int? Id = null)
+        public async Task<List<RecipientGroupGet?>> GetRecipientGroups(int? Id = null)
         {
-            using var connection = dbService.CreateConnection();
-
-            return (await connection.QueryAsync<RecipientGroupGet>("spGetRecipientGroups", new { Id }, commandType: CommandType.StoredProcedure)).ToList();
+            return (await dbService.QueryAsync<RecipientGroupGet>("spGetRecipientGroups", new { Id, Token.RoleId, Token.DepartmentId })).ToList();
         }
 
 

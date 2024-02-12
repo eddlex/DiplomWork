@@ -17,14 +17,19 @@ namespace BackEnd.Controllers
             this.recipientService = (RecipientService)recipientService;
         }
         
-        [HttpGet]
+        [HttpGet]     //tested
         public async Task<ActionResult<List<Recipient>>> Recipient()
         {
             return Ok(await this.recipientService.GetRecipients());
         }
         
-        
-
+        [Route("Groups")]
+        [HttpGet]
+        public async Task<ActionResult<List<RecipientGroupGet>>> GetRecipientGroups()
+        {
+            return Ok(await this.recipientService.GetRecipientGroups());
+        } 
+        /*
         [Route("Groups/{Id:int}")]
         [HttpGet]
         public async Task<ActionResult<List<RecipientGroupGet>>> GetRecipientGroups(int Id)
@@ -32,12 +37,7 @@ namespace BackEnd.Controllers
             return Ok(await this.recipientService.GetRecipientGroups(Id));
         }
 
-        [Route("Groups")]
-        [HttpGet]
-        public async Task<ActionResult<List<RecipientGroupGet>>> GetRecipientGroups()
-        {
-            return Ok(await this.recipientService.GetRecipientGroups());
-        } 
+        
 
         [Route("Groups")]
         [HttpPost]
@@ -73,7 +73,7 @@ namespace BackEnd.Controllers
         {
             this.recipientService.Token = User.ParseToken();
             return Ok(await this.recipientService.GetMailBody());
-        }
+        }*/
 
     }; 
 }

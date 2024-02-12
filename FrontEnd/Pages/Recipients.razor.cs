@@ -29,6 +29,7 @@ public partial class Recipients
             this.DepartmentService != null)
         {
            var recipientBl = await this.RecipientService.GetRecipient();
+           var recipientsGroups = await this.RecipientService.GetRecipientsGroups();
            var departments = await this.DepartmentService.GetDepartments();
            if (recipientBl is { Count: > 0 })
            {
@@ -39,7 +40,7 @@ public partial class Recipients
                    Name = e.Name,
                    Description = e.Description,
                    Department = departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
-                   Group = e.GroupId.ToString(),
+                   Group = recipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name,
                    Mail = e.Mail
                }));
            }
