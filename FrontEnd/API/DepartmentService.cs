@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using FrontEnd.Model;
 
@@ -13,12 +15,25 @@ public class DepartmentService :  IDepartmentService
     }
     public async Task<List<Department>?> GetDepartments()
     {
-       return await this.httpService.Execute<List<Department>, object>(HttpMethod.Get, "Department");
+       var departments =  await this.httpService.Execute<List<Department>, object>(HttpMethod.Get, "Department");
+       if (departments is null or { Count: 0 })
+       {
+           throw Helpers.Exception.Create(Constants.Error.NotExistAnyDepartment);
+       }
+
+       return departments;
     }
     
-    public async Task<List<Department>?> GetDepartmentsByUser()
+    public async Task<List<Department>?> GetDepartmentsByRole()
     {
-        return await this.httpService.Execute<List<Department>, object>(HttpMethod.Get, "DepartmentsByUser");
+        var session = this.httpService.Session ?? throw Helpers.Exception.Create(Constants.Error.SessionNotFound);
+        var departments = await GetDepartments();
+        
+        if (session.RoleId != 2 )
+        {
+            departments = departments?.Where(p=> p.Id == session?.DepartmentId).ToList();
+        }
+        return departments;
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
+using FrontEnd.Model;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
@@ -22,6 +23,10 @@ public class HttpService : IHttpService
         this.authenticationStateProvider = (CustomAuthenticationProvider)authenticationStateProvider;
         //this.js = IJSRuntime;
     }
+    
+    public  UserSession? Session  => this.authenticationStateProvider.GetSession().GetAwaiter().GetResult(); 
+     
+
 
     public async Task<T1?> Execute<T1, T2>(HttpMethod method, string apiUrl, T2? requestBody = default)
     {
