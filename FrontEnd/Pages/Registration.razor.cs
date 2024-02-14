@@ -1,7 +1,9 @@
-﻿using FrontEnd.Helpers;
+﻿using AutoMapper;
+using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using FrontEnd.Model;
 using Microsoft.AspNetCore.Components;
+using FrontEnd.API;
 
 namespace FrontEnd.Pages;
 
@@ -14,15 +16,23 @@ public partial class Registration
     [Inject]
     private NavigationManager? NavigationManager { get; set; }
 
-    private RegistrationPost Model { get; set; } = new();
-     
+    private RegistrationDto Model { get; set; } = new();
+    private RegistrationPost ModelPost { get; set; } = new();
+
+    public static MapperConfiguration RegisterMapperConfig = new MapperConfiguration(cfg =>
+
+                                cfg.CreateMap<RegistrationDto, RegistrationPost>());
+
+    Mapper mapper = new Mapper(RegisterMapperConfig);
+
     private async void Register()
     {
         await form.Validate();
         if (this.UserService is null || this.DepartmentService == null || !form.IsValid)
             return;
-        
-        if (await this.UserService.RegisterUser(Model))
+
+        ModelPost = mapper.Map<RegistrationPost>(Model);
+        if (await this.UserService.RegisterUser(ModelPost))
         {
             this.NavigationManager?.NavigateTo("/");
         }
@@ -35,7 +45,7 @@ public partial class Registration
         if (this.DepartmentService != null) 
         {
             this.Departments?.ConvertListToEnum(await this.DepartmentService.GetDepartments());
-            this.Model.Suscribe(this.Departments);
+            this.ModelPost.Suscribe(this.Departments);
         }
     } 
     
