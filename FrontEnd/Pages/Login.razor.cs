@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FrontEnd.Interface;
 using FrontEnd.Model;
+using FrontEnd.Model.DTO;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using static MudBlazor.CategoryTypes;
@@ -17,18 +18,14 @@ namespace FrontEnd.Pages
         [Inject]
         private NavigationManager? NavigationManager { get; set; }
 
-        AuthorizationPost modelpost = new();
+        AuthorizationPost modelPost = new();
+
         AuthorizationDto model = new();
-
-        public static MapperConfiguration LoginMapperConfig = new MapperConfiguration(cfg =>
-
-                                cfg.CreateMap<AuthorizationDto, AuthorizationPost>());
 
         private async void Authorize()
         {           
-            Mapper mapper = new Mapper(LoginMapperConfig);
-            modelpost = mapper.Map<AuthorizationPost>(model);
-            if (this.Authorization != null && await Authorization.AuthorizeClient(modelpost))
+            modelPost = GenericAutoMapper<AuthorizationDto, AuthorizationPost>.Map(model);
+            if (this.Authorization != null && await Authorization.AuthorizeClient(modelPost))
             { 
                 this.NavigationManager?.NavigateTo("/AdminPage");
             }

@@ -4,6 +4,8 @@ using FrontEnd.Interface;
 using FrontEnd.Model;
 using Microsoft.AspNetCore.Components;
 using FrontEnd.API;
+using FrontEnd.Model.DTO;
+using System.Reflection;
 
 namespace FrontEnd.Pages;
 
@@ -19,11 +21,11 @@ public partial class Registration
     private RegistrationDto Model { get; set; } = new();
     private RegistrationPost ModelPost { get; set; } = new();
 
-    public static MapperConfiguration RegisterMapperConfig = new MapperConfiguration(cfg =>
+    //public static MapperConfiguration RegisterMapperConfig = new MapperConfiguration(cfg =>
 
-                                cfg.CreateMap<RegistrationDto, RegistrationPost>());
+    //                            cfg.CreateMap<RegistrationDto, RegistrationPost>());
 
-    Mapper mapper = new Mapper(RegisterMapperConfig);
+    //Mapper mapper = new Mapper(RegisterMapperConfig);
 
     private async void Register()
     {
@@ -31,7 +33,9 @@ public partial class Registration
         if (this.UserService is null || this.DepartmentService == null || !form.IsValid)
             return;
 
-        ModelPost = mapper.Map<RegistrationPost>(Model);
+        //ModelPost = mapper.Map<RegistrationPost>(Model);
+        ModelPost = GenericAutoMapper<RegistrationDto, RegistrationPost>.Map(Model);
+
         if (await this.UserService.RegisterUser(ModelPost))
         {
             this.NavigationManager?.NavigateTo("/");
