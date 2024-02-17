@@ -1,5 +1,4 @@
-﻿
-using FrontEnd.Helpers;
+﻿using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using FrontEnd.Model;
 using FrontEnd.Model.BL;
@@ -7,10 +6,7 @@ using FrontEnd.Model.Dialog;
 using FrontEnd.Model.DTO;
 using FrontEnd.Shared.Dialog;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using MudBlazor;
-using MudBlazor.Extensions;
-
 
 namespace FrontEnd.Pages;
 
@@ -58,7 +54,12 @@ public partial class Recipients
     }
     
     
-    private async Task OpenDialog()
+    private async Task AddRecipient()
+    {
+       var recipient = await OpenDialog();
+    }
+
+    private async Task<Recipient?> OpenDialog()
     {
         var options = new DialogOptions 
         {
@@ -67,23 +68,29 @@ public partial class Recipients
             Position = DialogPosition.Center,
         };
         
-         var parameters = new DialogParameters<RecipientDialog>();
+        var parameters = new DialogParameters<RecipientDialog>();
 
-         var r = new RecipientDialog()
-         {
+        var dialog = new RecipientDialog()
+        {
             Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
             Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups)
-         };
+        };
          
+        parameters.Add("ObjectType", dialog);
          
-         parameters.Add("ObjectType", r);
-         
-       //var result = await(await DialogService.ShowAsync<DialogComponent<Recipient>>("Add Recipient", parameters, options)).Result;
         var result = await(await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Add Recipient", parameters, options)).Result;
         if (!result.Canceled)
         {
-            var recipient = result.Data.As<Recipient>();
+            return new Recipient()
+            {
+                DepartmentId = dialog.Department.SelectedValue,
+                GroupId = dialog.Group.SelectedValue,
+                Mail = dialog.Mail,
+                Description = dialog.Description,
+                Name = dialog.Name
+            };
         }
-        
+
+        return default;
     }
 }

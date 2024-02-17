@@ -17,9 +17,7 @@
 
                         if (p.Value?.GetType().GetProperty("Values") != null)
                         {
-                            @* <SelectComponent Enum="@p.Value"  *@
-                            @*                  SelectedEnum="@Model.DepartmentId" *@
-                            @*                  OnSelectChanged="Departments.HandleSelectChanged"/> *@
+                            <SelectComponent Enum="(ISelect)p.Value"/>
                         }
                         else
                         {
@@ -68,17 +66,7 @@
         {
             this.Property?.Add(i.Name, i.GetValue(this.ObjectType));
         }
-
-        foreach (var p in Property)
-        {
-            
-          
-          {
-              var s = "select";
-          }
-       
-        }
-
+        
         base.OnInitialized();
     }
     

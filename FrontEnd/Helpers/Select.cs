@@ -1,24 +1,14 @@
-using System.ComponentModel.DataAnnotations;
-using System.Net.Sockets;
-using MudBlazor;
 
 namespace FrontEnd.Helpers;
 
-public class Select<T> 
+public class Select<T> : ISelect
 {
-    private readonly string? bindPropertyName;
-    public readonly string? Title;
     private Dictionary<string, int>? Enum { get; set; } = new();
     
-    public void Add(string key, int value)
-    {
-        this.Enum?.TryAdd(key, value);
-    }
-
     public Select(string title, string bindPropertyName)
     {
         this.Title = title;
-        this.bindPropertyName = bindPropertyName;
+        this.BindPropertyName = bindPropertyName;
     }
 
 
@@ -28,12 +18,13 @@ public class Select<T>
     }
 
     
-    
-    public Dictionary<string, int>? Values => this.Enum;
-    
+    public Dictionary<string, int>? Values
+    {
+        get => this.Enum;
+        set => this.Enum = value;
+    }
 
-    
-    
+
     private int _selectedValue;
     public int SelectedValue
     {
@@ -41,20 +32,14 @@ public class Select<T>
         set
         {
             if (_selectedValue == value || 
-                string.IsNullOrWhiteSpace(this.bindPropertyName)) 
+                string.IsNullOrWhiteSpace(this.BindPropertyName)) 
                 return;
             
             _selectedValue = value;
-            PropertyChanged?.Invoke(this.bindPropertyName, value);
+             PropertyChanged?.Invoke(this.BindPropertyName, value);
         } 
     }
-    // public int SelectedKey { get; set; }
-         
-    public void HandleSelectChanged(int code)
-    { 
-        this.SelectedValue = code;
-    }
-
+    
     public void ConvertListToEnum(List<T>? list)
     {
         
@@ -88,9 +73,18 @@ public class Select<T>
     }
     public event ChangeEventHandler? PropertyChanged;
     public delegate void ChangeEventHandler(string propertyName, int newValue);
-    
+
+    public string? BindPropertyName { get; set; }
+    public string? Title { get; set; }
 }
 
-internal class ValueAttribute
+public interface ISelect
 {
+    public  string? BindPropertyName { get; set; }
+    public  string? Title { get; set; }
+
+    public Dictionary<string, int>? Values { get; set; }
+    
+    public int SelectedValue { get; set; }
+
 }

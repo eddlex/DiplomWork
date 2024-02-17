@@ -4,7 +4,6 @@
 @using System.Runtime.CompilerServices
 @inject IJSRuntime Js
 
-@typeparam T
 <div class="container">
       <div class="select-box">
         <div class="options-container @(ClassName)">
@@ -35,17 +34,25 @@
 
 @code
 {
-  [Parameter] public Select<T>? Enum { get; set; }
+  [Parameter] public ISelect? Enum { get; set; }
 
   public string? Title { get; set; }
+  
+   [Parameter] public int SelectedEnum
+   {
+     get
+     {
+       if (Enum != null)
+         return Enum.SelectedValue;
+       return 0;
+     }
 
-  
-  
-   [Parameter]
-   public EventCallback<int> OnSelectChanged { get; set; }
-  
-  [Parameter]
-  public int SelectedEnum { get; set; }
+     set
+     {
+       if (Enum != null)
+         Enum.SelectedValue = value;
+     } 
+   }
 
   
   private ElementReference search;
@@ -89,20 +96,12 @@
         this.Enum.Values.TryGetValue(this.Title, out var code))
     {
       SelectedEnum = code;
-       await OnSelectChanged.InvokeAsync(SelectedEnum);
     }
     SearchBoxValue = string.Empty;
     SearchOption();
   }
   
   private string ClassName { get; set; } = string.Empty;
-  
-  
-  protected override void OnParametersSet()
-  {
-    base.OnParametersSet();
-    this.Title = CurrentSelectedDepartment ?? Title;
-  }
 
   protected override Task OnInitializedAsync()
   {

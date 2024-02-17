@@ -34,9 +34,7 @@
 						  Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
 			@bind-Value="Model.Password" />
 		
-			<SelectComponent Enum="@Departments" 
-			                 SelectedEnum="@Model.DepartmentId"
-			                 OnSelectChanged="Departments.HandleSelectChanged" />
+			<SelectComponent Enum="@Departments"/>
 			              
 	
 			
