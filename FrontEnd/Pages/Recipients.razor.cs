@@ -67,7 +67,7 @@ public partial class Recipients
             Position = DialogPosition.Center,
         };
         
-         var parameters = new DialogParameters<Recipient>();
+         var parameters = new DialogParameters<RecipientDialog>();
 
          var r = new RecipientDialog()
          {

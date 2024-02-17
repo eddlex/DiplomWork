@@ -2,7 +2,7 @@
 
 namespace FrontEnd.Model;
 
-public class RegistrationPost : HandleSelectChange
+public class RegistrationPost
 {
     public string? UserName     { get; set; }
     public string? Email        { get; set; }

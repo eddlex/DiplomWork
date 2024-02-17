@@ -33,20 +33,10 @@
 						  RequiredError="Password is required!"
 						  Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
 			@bind-Value="Model.Password" />
-			
-			@* <div style="margin-top: 10px; margin-bottom: 30px;"> *@
-			@* 	<label>Department</label> *@
-			@* 	<select id="color" class="mangust" form="signForm" required @bind="@Model.DepartmentId"> *@
-			@* 		@foreach (var item in Departments) *@
-			@* 		{ *@
-			@* 			<option value="@item.Key" >@item.Value </option> *@
-			@* 		} *@
-			@* 	</select> *@
-			@* </div> *@
-			
+		
 			<SelectComponent Enum="@Departments" 
 			                 SelectedEnum="@Model.DepartmentId"
-			                 OnSelectChanged="Departments.HandleSelectChanged"/>
+			                 OnSelectChanged="Departments.HandleSelectChanged" />
 			              
 	
 			

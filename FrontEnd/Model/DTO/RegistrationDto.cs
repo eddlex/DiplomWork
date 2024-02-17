@@ -2,7 +2,7 @@
 
 namespace FrontEnd.Model;
 
-public class RegistrationDto
+public class RegistrationDto : HandleSelectChange
 {
     public string? UserName     { get; set; }
     public string? Email        { get; set; }

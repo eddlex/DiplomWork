@@ -20,13 +20,7 @@ public partial class Registration
 
     private RegistrationDto Model { get; set; } = new();
     private RegistrationPost ModelPost { get; set; } = new();
-
-    //public static MapperConfiguration RegisterMapperConfig = new MapperConfiguration(cfg =>
-
-    //                            cfg.CreateMap<RegistrationDto, RegistrationPost>());
-
-    //Mapper mapper = new Mapper(RegisterMapperConfig);
-
+    
     private async void Register()
     {
         await form.Validate();
@@ -49,7 +43,7 @@ public partial class Registration
         if (this.DepartmentService != null) 
         {
             this.Departments?.ConvertListToEnum(await this.DepartmentService.GetDepartments());
-            this.ModelPost.Suscribe(this.Departments);
+            this.Model.Suscribe(this.Departments);
         }
     } 
     

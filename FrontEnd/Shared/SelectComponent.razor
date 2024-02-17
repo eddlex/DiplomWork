@@ -41,8 +41,8 @@
 
   
   
-  [Parameter]
-  public EventCallback<int> OnSelectChanged { get; set; }
+   [Parameter]
+   public EventCallback<int> OnSelectChanged { get; set; }
   
   [Parameter]
   public int SelectedEnum { get; set; }
@@ -89,7 +89,7 @@
         this.Enum.Values.TryGetValue(this.Title, out var code))
     {
       SelectedEnum = code;
-      await OnSelectChanged.InvokeAsync(SelectedEnum);
+       await OnSelectChanged.InvokeAsync(SelectedEnum);
     }
     SearchBoxValue = string.Empty;
     SearchOption();

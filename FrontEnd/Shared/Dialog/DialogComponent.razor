@@ -14,27 +14,29 @@
                      @* @foreach (var prop in this.object.Getobject().GetProperties()) *@
                      @foreach (var p in Property)
                     {
-                        // <MudTextField Value="@Property[p.Key]" Label="@p.Key" Immediate="true" TextChanged="OnValueChangeHandler"/>
-                        <MudTextField Value="@Property[p.Key]"
-                                      Label="@p.Key"
-                                      bind-Value="@Property[p.Key]"
-                                      Converter="@converter" 
-                                      TextChanged="(string newValue) => SetPropValue(p.Key, newValue)" />
-                       // <MudTextField bind-Value="@Property[p.Key]" Label="@p.Key" Converter="converter"/>
-                         //<MudTextField  @bind="Property[p.Key]" Label="@p.Key" @bind:event="oninput" />
-                    
+
+                        if (p.Value?.GetType().GetProperty("Values") != null)
+                        {
+                            @* <SelectComponent Enum="@p.Value"  *@
+                            @*                  SelectedEnum="@Model.DepartmentId" *@
+                            @*                  OnSelectChanged="Departments.HandleSelectChanged"/> *@
+                        }
+                        else
+                        {
+                            <MudTextField Value="@Property[p.Key]"
+                                          Label="@p.Key"
+                                          bind-Value="@Property[p.Key]"
+                                          Converter="@converter"
+                                          TextChanged="(string newValue) => SetPropValue(p.Key, newValue)" />
+                        }
+                        
                     }
-                        @* <MudTextField T="string" bind-Value="@TEST" Label="TEST" Inputobject="Inputobject.Text" /> *@
- 
-                    @* <MudTextField Label="ssss" HelperText="Game Title"  *@
-                    @*               @bind-Value="a" Converter="@converter" *@
-                    @*               Required="true" RequiredError="User name is required!" Len/> *@
+                    
 
 
                 
                 </MudCardContent>
                 <MudCardActions>
-                    @*<MudButton OnClick="Cancel">Cancel</MudButton>*@
                     <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit" OnClick="@Save">Save</MudButton>
                 </MudCardActions>
             </MudCard>
@@ -66,6 +68,17 @@
         {
             this.Property?.Add(i.Name, i.GetValue(this.ObjectType));
         }
+
+        foreach (var p in Property)
+        {
+            
+          
+          {
+              var s = "select";
+          }
+       
+        }
+
         base.OnInitialized();
     }
     
