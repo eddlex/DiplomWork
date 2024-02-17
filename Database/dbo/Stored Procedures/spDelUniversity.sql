@@ -1,4 +1,4 @@
-﻿CREATE   PROCEDURE  spDelUniversity
+﻿CREATE   PROCEDURE  spDelDepartment
     @Id BIGINT
 AS
 BEGIN
@@ -6,7 +6,7 @@ BEGIN
         BEGIN TRANSACTION;
 
             DELETE u
-            FROM DepartmentId u
+            FROM Department u
             WHERE u.Id = @Id
             IF(@@ROWCOUNT IS NOT NULL AND  @@ROWCOUNT != 0)
             BEGIN

@@ -1,4 +1,4 @@
-﻿CREATE    PROCEDURE  spAddUniversity
+﻿CREATE    PROCEDURE  spAddDepartment
     @Name NVARCHAR(50),
     @Description NVARCHAR(100) = NULL
 AS
@@ -10,7 +10,7 @@ BEGIN
 
 --             INSERT INTO  University (Id, Name, Description)
 --             VALUES (@Id, @Name, @Description)
-               INSERT INTO  University (Name, Description)
+               INSERT INTO  Department (Name, Description)
                VALUES (@Name, @Description)
 
         COMMIT;

@@ -4,7 +4,7 @@
 AS
 BEGIN
     SELECT Id           [Id],
-           Groupid      [Groupid],
+           GroupId      [Groupid],
            Mail         [Mail],
            Name         [Name],
            Description  [Description],

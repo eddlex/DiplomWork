@@ -9,7 +9,7 @@ BEGIN
         BEGIN TRANSACTION;
 
         DECLARE @Salt  NVARCHAR(MAX) = (SELECT ABS(CHECKSUM(NEWID())))
-        INSERT INTO [User] (Username, Email, Phone, Password, Salt, DepartmentId)
+        INSERT INTO [User] (UserName, Email, Phone, Password, Salt, DepartmentId)
         VALUES (@UserName, @Email, '', HASHBYTES('SHA2_512', @Password + @Salt) , @Salt,  @DepartmentId)
 
         INSERT INTO UserInfo (UserId)
