@@ -11,5 +11,7 @@ namespace BackEnd.Services.Interfaces
         Task<bool> UpdateRecipientGroups(List<RecipientGroupPut> groups);
 
         Task<List<Recipient>> GetRecipients();
+        
+        Task<Recipient?> AddRecipient(Recipient model);
     }
 }

@@ -23,6 +23,12 @@ namespace BackEnd.Controllers
             return Ok(await this.recipientService.GetRecipients());
         }
         
+        [HttpPost]
+        public async Task<ActionResult<Recipient>> Recipient(Recipient input)
+        {
+            return Ok(await this.recipientService.AddRecipient(input));
+        }
+        
         [Route("Groups")]
         [HttpGet]
         public async Task<ActionResult<List<RecipientGroupGet>>> GetRecipientGroups()

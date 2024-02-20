@@ -14,6 +14,7 @@ public static class Constants
         Errors.Add(Error.BackEnd.Code, Error.BackEnd);
         Errors.Add(Error.NotExistAnyDepartment.Code, Error.NotExistAnyDepartment);
         Errors.Add(Error.SessionNotFound.Code, Error.SessionNotFound);
+        Errors.Add(Error.WrongPermissions.Code, Error.WrongPermissions);
         
     }
     public sealed class Error
@@ -27,6 +28,7 @@ public static class Constants
         public static readonly Error BackEnd = new Error(nameof(BackEnd), 50006, "Api call error");
         public static readonly Error NotExistAnyDepartment = new Error(nameof(NotExistAnyDepartment), 50007, "Not found any department!");
         public static readonly Error SessionNotFound = new Error(nameof(SessionNotFound), 50008, "Session Not Found");
+        public static readonly Error WrongPermissions = new Error(nameof(WrongPermissions), 50009, "Permission Error");
         
         public string Text { get; private set; }
         public string UniqueName { get; private set; }

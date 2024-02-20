@@ -5,6 +5,8 @@ using Dapper;
 using BackEnd.Models.Input;
 using BackEnd.Services.Interfaces;
 using BackEnd.Models.Output;
+using FrontEnd.Helpers;
+using Exception = FrontEnd.Helpers.Exception;
 
 namespace BackEnd.Services.Services
 {
@@ -26,6 +28,29 @@ namespace BackEnd.Services.Services
         public async Task<List<Recipient>> GetRecipients()
         {
             var res = (await dbService.QueryAsync<Recipient>("spGetRecipients", new { Token.RoleId, Token.DepartmentId })).ToList();
+            return res;
+        }
+
+        
+
+        public async Task<Recipient?> AddRecipient(Recipient model)
+        {
+            if (Token.RoleId == 0 ||
+                Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
+                throw Exception.Create(Constants.Error.WrongPermissions);
+            
+            var res = (await dbService.QueryAsync<Recipient>("spAddRecipient", 
+                new
+                {
+                    model.Name,
+                    model.Mail,
+                    model.DepartmentId,
+                    model.GroupId,
+                    model.Description
+                })).FirstOrDefault();
+
+            if (res == default)
+                throw Exception.Create(Constants.Error.SomethingWrong);
             return res;
         }
 

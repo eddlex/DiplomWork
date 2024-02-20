@@ -34,9 +34,10 @@ public partial class Recipients
            this.RecipientBl = await this.RecipientService.GetRecipient();
            this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
            this.Departments = await this.DepartmentService.GetDepartments();
+           this.RecipientDto = new();
            if (this.RecipientBl is { Count: > 0 })
            {
-               this.RecipientDto = new();
+               
                this.RecipientBl.ForEach(e => this.RecipientDto.Add(new RecipientDto()
                {
                    Id = e.Id,
@@ -57,6 +58,22 @@ public partial class Recipients
     private async Task AddRecipient()
     {
        var recipient = await OpenDialog();
+       if (recipient != default && this.RecipientService != null)
+       {
+           var result = await this.RecipientService.AddRecipient(recipient);
+           if (result != null)
+           {
+               this.RecipientDto?.Add(new RecipientDto()
+               {
+                   Id = result.Id,
+                   Name = result.Name,
+                   Description = result.Description,
+                   Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
+                   Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
+                   Mail = result.Mail
+               });
+           }
+       }
     }
 
     private async Task<Recipient?> OpenDialog()

@@ -60,10 +60,10 @@
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\User Defined Types\" />
-    <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="dbo\Tables\" />
   </ItemGroup>
   <ItemGroup>
+    <Build Include="dbo\Stored Procedures\spAddRecipient.sql" />
     <Build Include="dbo\Stored Procedures\spGetUsers.sql" />
     <Build Include="dbo\Tables\RecipientGroup.sql" />
     <Build Include="dbo\Tables\Recipient.sql" />

@@ -29,6 +29,7 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetUsers.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetDepartments.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipients.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipient.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" />
