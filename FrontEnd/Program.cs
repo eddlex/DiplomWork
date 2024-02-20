@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using FrontEnd;
 using FrontEnd.API;
+using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
@@ -32,6 +33,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IRecipientService, RecipientService>();
 builder.Services.AddScoped<IDialogService, DialogService>();
+builder.Services.AddScoped<IExeptionService, ExeptionService>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationProvider>();
 

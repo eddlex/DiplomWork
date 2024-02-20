@@ -4,6 +4,7 @@ using FrontEnd.Interface;
 using FrontEnd.Model;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
+using MudBlazor;
 using Newtonsoft.Json;
 using Exception = System.Exception;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -14,13 +15,17 @@ public class HttpService : IHttpService
 {
     private readonly HttpClient httpClient;
     private readonly CustomAuthenticationProvider authenticationStateProvider;
+    private readonly IExeptionService exeptionService;
 
     public int failedAttempts = 0;
     //IJSRuntime js;
-    public HttpService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider)
+    public HttpService(HttpClient httpClient,
+                       AuthenticationStateProvider authenticationStateProvider,
+                       IExeptionService exeptionService)
     {
         this.httpClient = httpClient;
         this.authenticationStateProvider = (CustomAuthenticationProvider)authenticationStateProvider;
+        this.exeptionService = exeptionService;
         //this.js = IJSRuntime;
     }
 
@@ -69,18 +74,18 @@ public class HttpService : IHttpService
                 var parsedJson = JsonSerializer.Deserialize<Dictionary<string, string>>(await response.Content.ReadAsStringAsync());
                 if (parsedJson != null && parsedJson.TryGetValue("ErrorMessage", out var extractedValue))
                 {
-                    throw Alert.Create(extractedValue);
+                   throw exeptionService.Create(extractedValue);
                 }
             }
           
-            throw Alert.Create(Constants.Error.BackEnd);
+            throw exeptionService.Create(Constants.Error.BackEnd);
         }
         catch (Exception ex)
         {
             //if (++failedAttempts >= 3 && ex.Message == "UserName or password is wrong")
             //    await js.InvokeVoidAsync("setLinkRed");
             //return false;
-            throw Alert.Create(ex.Message);
+            throw exeptionService.Create(ex.Message);
         }
     }
 }

@@ -11,6 +11,16 @@ BEGIN
 
         INSERT INTO  Recipient (Name, Mail, GroupId, DepartmentId, Description)
         VALUES (@Name, @Mail, @GroupId, @DepartmentId, @Description)
+        
+        
+        SELECT [Id], 
+               [Name],
+               [Mail],
+               [GroupId],
+               [DepartmentId], 
+               [Description]
+        FROM Recipient
+        WHERE Id = @@IDENTITY
     COMMIT;
 END TRY
 BEGIN CATCH

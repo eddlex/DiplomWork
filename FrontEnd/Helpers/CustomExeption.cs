@@ -1,19 +1,66 @@
 
 using System.Data.SqlClient;
+using MudBlazor;
 
 namespace FrontEnd.Helpers;
 
-public class Exeption : System.Exception 
+public interface IExeptionService
 {
-    public Exeption(Constants.Error error) : base(error.Text)
+    public CutomExeption Create(string msg);
+    public CutomExeption Create(SqlException e);
+    public CutomExeption Create(Constants.Error code);
+    public CutomExeption Create(Exception e);
+}
+public class ExeptionService : IExeptionService
+{
+    private readonly ISnackbar snackbar;
+
+    public ExeptionService(ISnackbar snackbar)
+    {
+        this.snackbar = snackbar;
+    }
+
+    public CutomExeption Create(string msg)
+    {
+        snackbar.ShowExeption(msg);
+        return Alert.Create(msg);
+    }
+
+    public CutomExeption Create(Constants.Error code)
+    {
+        var error = Alert.Create(code);
+        snackbar.ShowExeption(error.Message);
+        return error;
+    }
+    public CutomExeption Create(SqlException e)
+    {
+        var error = Alert.Create(e);
+        snackbar.ShowExeption(error.Message);
+        return error;
+    }
+    
+    public CutomExeption Create(Exception e)
+    {
+        var error = Alert.Create(e);
+        snackbar.ShowExeption(error.Message);
+        return error;
+    }
+    
+    
+    
+}
+public class CutomExeption : System.Exception
+{
+    
+    public CutomExeption(Constants.Error error) : base(error.Text)
     {
     }
 
-    public Exeption(string msg) : base(msg)
+    public CutomExeption(string msg) : base(msg)
     {
     }
     
-    public Exeption(System.Exception e) : base(e.Message)
+    public CutomExeption(System.Exception e) : base(e.Message)
     {
     }
 
@@ -21,29 +68,39 @@ public class Exeption : System.Exception
 
 public static class Alert
 {
+
+    public static void ShowExeption(this ISnackbar snackbar, string message)
+    {
+        snackbar.Configuration.SnackbarVariant = Variant.Filled;   
+        snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomEnd;
+        snackbar.Configuration.ShowCloseIcon = true;
+        snackbar.Add($"Error {message}", Severity.Error);
+        
+    }
     
-    public static Exeption Create(SqlException e)
+    public static CutomExeption Create(SqlException e)
     {
         if (Constants.Errors != null && Constants.Errors.TryGetValue(e.Number, out var error))
         {
-            return new Exeption(error.Text);
+            return new CutomExeption(error.Text);
         }
-        return new Exeption(e);
+        return new CutomExeption(e);
     }
     
-    public static Exeption Create(System.Exception e)
+    public static CutomExeption Create(System.Exception e)
     {
-        return new Exeption(e);
+        return new CutomExeption(e);
     }
         
-    public static Exeption Create(string message)
+    public static CutomExeption Create(string message)
     {
-        return new Exeption(message);
+        return new CutomExeption(message);
     }
         
-    public static Exeption Create(Constants.Error error)
+    public static CutomExeption Create(Constants.Error error)
     {
-        return new Exeption(error);
+        return new CutomExeption(error);
     }
 }
 
