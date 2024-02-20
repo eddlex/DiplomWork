@@ -51,7 +51,7 @@ public class Select<T> : ISelect
 
         if (keyProperty == null || valueProperty == null)
         {
-            throw Exception.Create("Reflaction Error");
+            throw Alert.Create("Reflaction Error");
         }
 
         foreach (T item in list)
@@ -64,7 +64,7 @@ public class Select<T> : ISelect
             }
             catch
             {
-                throw Exception.Create("Reflaction error");
+                throw Alert.Create("Reflaction error");
             }
 
            

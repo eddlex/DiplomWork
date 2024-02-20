@@ -39,7 +39,6 @@ public class CustomAuthenticationProvider : AuthenticationStateProvider
         }
         catch(Exception ex)
         {
-           // throw new AlertException(ex.Message);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))));
             return new AuthenticationState(new(new ClaimsIdentity()));
         }

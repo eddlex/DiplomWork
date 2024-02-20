@@ -3,55 +3,47 @@ using System.Data.SqlClient;
 
 namespace FrontEnd.Helpers;
 
-public class AlertException : System.Exception
+public class Exeption : System.Exception 
 {
-    public AlertException(Constants.Error error) : base(error.Text)
+    public Exeption(Constants.Error error) : base(error.Text)
     {
     }
 
-    public AlertException(string msg) : base(msg)
+    public Exeption(string msg) : base(msg)
     {
     }
     
-    public AlertException(System.Exception e) : base(e.Message)
+    public Exeption(System.Exception e) : base(e.Message)
     {
     }
 
 }
 
-public static class Exception
+public static class Alert
 {
-    // public static AlertException Create(int code)
-    // {
-    //     if (Constants.Errors != null && Constants.Errors.TryGetValue(code, out var error))
-    //     {
-    //         return new AlertException(error.Text);
-    //     }
-    //     return new AlertException("un");
-    // }
     
-    public static AlertException Create(SqlException e)
+    public static Exeption Create(SqlException e)
     {
         if (Constants.Errors != null && Constants.Errors.TryGetValue(e.Number, out var error))
         {
-            return new AlertException(error.Text);
+            return new Exeption(error.Text);
         }
-        return new AlertException(e);
+        return new Exeption(e);
     }
     
-    public static AlertException Create(System.Exception e)
+    public static Exeption Create(System.Exception e)
     {
-        return new AlertException(e);
+        return new Exeption(e);
     }
         
-    public static AlertException Create(string message)
+    public static Exeption Create(string message)
     {
-        return new AlertException(message);
+        return new Exeption(message);
     }
         
-    public static AlertException Create(Constants.Error error)
+    public static Exeption Create(Constants.Error error)
     {
-        return new AlertException(error);
+        return new Exeption(error);
     }
 }
 

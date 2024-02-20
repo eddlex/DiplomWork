@@ -11,7 +11,6 @@ using System.Text;
 using BackEnd.Helpers;
 using BackEnd.Models.Output;
 using FrontEnd.Helpers;
-using Exception = FrontEnd.Helpers.Exception;
 using UserPost = BackEnd.Models.Output.UserPost;
 
 namespace BackEnd.Services.Services
@@ -76,7 +75,7 @@ namespace BackEnd.Services.Services
                 return jwtToken;
             }
             
-            throw Exception.Create(Constants.Error.WrongPasswordOrUserName);
+            throw Alert.Create(Constants.Error.WrongPasswordOrUserName);
         }
 
         public async Task<List<UserGet?>> GetUsers()

@@ -6,7 +6,6 @@ using BackEnd.Models.Input;
 using BackEnd.Services.Interfaces;
 using BackEnd.Models.Output;
 using FrontEnd.Helpers;
-using Exception = FrontEnd.Helpers.Exception;
 
 namespace BackEnd.Services.Services
 {
@@ -37,7 +36,7 @@ namespace BackEnd.Services.Services
         {
             if (Token.RoleId == 0 ||
                 Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
-                throw Exception.Create(Constants.Error.WrongPermissions);
+                throw Alert.Create(Constants.Error.WrongPermissions);
             
             var res = (await dbService.QueryAsync<Recipient>("spAddRecipient", 
                 new
@@ -50,7 +49,7 @@ namespace BackEnd.Services.Services
                 })).FirstOrDefault();
 
             if (res == default)
-                throw Exception.Create(Constants.Error.SomethingWrong);
+                throw Alert.Create(Constants.Error.SomethingWrong);
             return res;
         }
 

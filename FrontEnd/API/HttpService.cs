@@ -69,18 +69,18 @@ public class HttpService : IHttpService
                 var parsedJson = JsonSerializer.Deserialize<Dictionary<string, string>>(await response.Content.ReadAsStringAsync());
                 if (parsedJson != null && parsedJson.TryGetValue("ErrorMessage", out var extractedValue))
                 {
-                    throw new AlertException(extractedValue);
+                    throw Alert.Create(extractedValue);
                 }
             }
           
-            throw new AlertException(Constants.Error.BackEnd);
+            throw Alert.Create(Constants.Error.BackEnd);
         }
         catch (Exception ex)
         {
             //if (++failedAttempts >= 3 && ex.Message == "UserName or password is wrong")
             //    await js.InvokeVoidAsync("setLinkRed");
             //return false;
-            throw new AlertException(ex.Message);
+            throw Alert.Create(ex.Message);
         }
     }
 }

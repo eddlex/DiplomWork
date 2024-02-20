@@ -6,7 +6,6 @@ using System.Data;
 using BackEnd.Helpers;
 using BackEnd.Models.Output;
 using FrontEnd.Helpers;
-using Exception = FrontEnd.Helpers.Exception;
 
 namespace BackEnd.Services.Services
 {
@@ -23,7 +22,7 @@ namespace BackEnd.Services.Services
             var departments = (await dbService.QueryAsync<Department>("spGetDepartments")).ToList();
           
             if (departments == null || !departments.Any())
-                throw Exception.Create(Constants.Error.NotExistAnyDepartment);
+                throw Alert.Create(Constants.Error.NotExistAnyDepartment);
             
             return departments;
         }

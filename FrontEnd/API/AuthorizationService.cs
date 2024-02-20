@@ -24,7 +24,7 @@ public class AuthorizationService : IAuthorizationService
        
   
         if (!await AuthenticationStateProvider.UpdateAuthenticationStateAsync(new UserSession(token)))
-             throw new AlertException(Constants.Error.WrongPasswordOrUserName);
+             throw Alert.Create(Constants.Error.WrongPasswordOrUserName);
         return true;
     }
 

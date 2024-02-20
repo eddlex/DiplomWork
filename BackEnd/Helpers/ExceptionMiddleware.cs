@@ -31,7 +31,7 @@ public class ExceptionMiddleware
         var statusCode = HttpStatusCode.InternalServerError;
         var message = "Internal Server Error";
 
-        if (exception is AlertException badRequestException)
+        if (exception is Exeption badRequestException)
         {
             statusCode = HttpStatusCode.BadRequest;
             message = badRequestException.Message;

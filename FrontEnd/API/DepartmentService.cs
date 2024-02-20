@@ -18,7 +18,7 @@ public class DepartmentService :  IDepartmentService
        var departments =  await this.httpService.Execute<List<Department>, object>(HttpMethod.Get, "Department");
        if (departments is null or { Count: 0 })
        {
-           throw Helpers.Exception.Create(Constants.Error.NotExistAnyDepartment);
+           throw Helpers.Alert.Create(Constants.Error.NotExistAnyDepartment);
        }
 
        return departments;
@@ -26,7 +26,7 @@ public class DepartmentService :  IDepartmentService
     
     public async Task<List<Department>?> GetDepartmentsByRole()
     {
-        var session = await this.httpService.GetSession() ?? throw Helpers.Exception.Create(Constants.Error.SessionNotFound);
+        var session = await this.httpService.GetSession() ?? throw Helpers.Alert.Create(Constants.Error.SessionNotFound);
         var departments = await GetDepartments();
         
         if (session.RoleId != 2 )
