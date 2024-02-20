@@ -74,7 +74,7 @@
                             <CellTemplate>
                                 <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton>
                                 <MudSpacer />
-                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRecipient(context.Item))"> </MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRecipient(context.Item.Id))"> </MudIconButton>
                             </CellTemplate>
                         </TemplateColumn>
                     </Columns>
@@ -103,10 +103,7 @@
     private List<string> _events = new();
 
 
-    private void DeleteRecipient(RecipientDto item)
-    {
-
-    }
+    
     
 
     // events

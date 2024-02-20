@@ -24,6 +24,12 @@ public class RecipientService :  IRecipientService
         var result = await this.httpService.Execute<Recipient?, Recipient>(HttpMethod.Post, "Recipient", model);
         return result;
     }
+    
+    public async Task<int?> DelRecipient(int id)
+    {
+        var result = await this.httpService.Execute<int?, int>(HttpMethod.Delete, "Recipient", id);
+        return result;
+    }
     public async Task<List<RecipientGroup>?> GetRecipientsGroups()
     {
         var result = await this.httpService.Execute<List<RecipientGroup>, object>(HttpMethod.Get, "Recipient/Groups");

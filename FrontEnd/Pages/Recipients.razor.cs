@@ -19,7 +19,7 @@ public partial class Recipients
     private IDepartmentService? DepartmentService { get; set; } 
 
 
-    private List<RecipientDto>? RecipientDto { get; set; }
+    private List<RecipientDto?>? RecipientDto { get; set; }
     private List<Recipient>? RecipientBl { get; set; }
     private List<Department>? Departments { get; set; }
     private List<RecipientGroup>? RecipientsGroups { get; set; }
@@ -53,8 +53,33 @@ public partial class Recipients
            
         } 
     }
+
+
+    private async Task DeleteRecipient(int id)
+    {
+        if (this.RecipientService != null && await DeleteUser())
+        {
+            var result = await this.RecipientService.DelRecipient(id);
+            if (result.HasValue)
+            {
+                RecipientDto?.Remove(RecipientDto.FirstOrDefault(row => row?.Id == result.Value));
+            }
+        }
+    }
     
     
+    private async Task<bool> DeleteUser()
+    {
+        var parameters = new DialogParameters<DeleteDialog>();
+        parameters.Add(x => x.ContentText, "Do you really want to delete this row? This process cannot be undone.");
+        parameters.Add(x => x.ButtonText, "Delete");
+        parameters.Add(x => x.Color, Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        return !(await(await DialogService.ShowAsync<DeleteDialog>("Delete", parameters, options)).Result).Canceled;
+        
+    }
     private async Task AddRecipient()
     {
        var recipient = await OpenDialog();
