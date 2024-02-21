@@ -25,18 +25,19 @@ public class Select<T> : ISelect
     }
 
 
-    private int _selectedValue;
-    public int SelectedValue
+    private int? _selectedValue;
+    public int? SelectedValue
     {
         get => _selectedValue;
         set
         {
-            if (_selectedValue == value || 
+            if (value != null && _selectedValue == value || 
                 string.IsNullOrWhiteSpace(this.BindPropertyName)) 
                 return;
-            
-            _selectedValue = value;
-             PropertyChanged?.Invoke(this.BindPropertyName, value);
+
+            this.Title = Values?.First(p => p.Value == value).Key;
+            _selectedValue = value.Value;
+             PropertyChanged?.Invoke(this.BindPropertyName, value.Value);
         } 
     }
     
@@ -85,6 +86,6 @@ public interface ISelect
 
     public Dictionary<string, int>? Values { get; set; }
     
-    public int SelectedValue { get; set; }
+    public int? SelectedValue { get; set; }
 
 }

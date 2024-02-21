@@ -34,6 +34,13 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.recipientService.DeleteRecipient(model));
         }
+        [HttpPut]
+        public async Task<ActionResult<int?>> RecipientEdit(Recipient model)
+        {
+            return Ok(await this.recipientService.EditRecipient(model));
+        }
+        
+        
         
         [Route("Groups")]
         [HttpGet]

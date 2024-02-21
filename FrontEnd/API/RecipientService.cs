@@ -24,6 +24,12 @@ public class RecipientService :  IRecipientService
         var result = await this.httpService.Execute<Recipient?, Recipient>(HttpMethod.Post, "Recipient", model);
         return result;
     }
+
+    public async Task<Recipient?> EditRecipient(Recipient model)
+    {
+        var result = await this.httpService.Execute<Recipient?, Recipient>(HttpMethod.Put, "Recipient", model);
+        return result;
+    }
     
     public async Task<int?> DelRecipient(Recipient model)
     {

@@ -54,10 +54,43 @@ public partial class Recipients
         } 
     }
 
-
+    private async Task EditRecipient(int id)
+    {
+        if (this.RecipientService != null)
+        {
+            var editedRowBl = this.RecipientBl?.Find(r => r.Id == id);
+            var editedRowDto = this.RecipientDto?.Find(r => r?.Id == id);
+        
+            
+            
+            var recipient = await OpenDialog(editedRowBl);
+            if (recipient != default && editedRowBl is not null )
+            {
+                var result = await this.RecipientService.EditRecipient(recipient);
+                if (result != null)
+                {
+                    this.RecipientDto?.Remove(editedRowDto);
+                    this.RecipientBl?.Remove(editedRowBl);
+                    this.RecipientBl?.Add(result);
+                    
+                    this.RecipientDto?.Add(new RecipientDto()
+                    {
+                        Id = result.Id,
+                        Name = result.Name,
+                        Description = result.Description,
+                        Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
+                        Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
+                        Mail = result.Mail
+                    });
+                }
+            }
+        }
+    }
+    
+    
     private async Task DeleteRecipient(int id)
     {
-        if (this.RecipientService != null && await DeleteUser())
+        if (this.RecipientService != null && await ConfirmDelete())
         {
             var result = await this.RecipientService.DelRecipient(RecipientBl.Find(r => r.Id == id));
             if (result.HasValue)
@@ -68,7 +101,7 @@ public partial class Recipients
     }
     
     
-    private async Task<bool> DeleteUser()
+    private async Task<bool> ConfirmDelete()
     {
         var parameters = new DialogParameters<DeleteDialog>();
         parameters.Add(x => x.ContentText, "Do you really want to delete this row? This process cannot be undone.");
@@ -101,7 +134,7 @@ public partial class Recipients
        }
     }
 
-    private async Task<Recipient?> OpenDialog()
+    private async Task<Recipient?> OpenDialog(Recipient? row = default)
     {
         var options = new DialogOptions 
         {
@@ -112,11 +145,22 @@ public partial class Recipients
         
         var parameters = new DialogParameters<RecipientDialog>();
 
+        
+        
         var dialog = new RecipientDialog()
         {
             Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
             Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups)
         };
+
+        if (row is not null)
+        {
+            dialog.Name = row.Name;
+            dialog.Mail = row.Mail;
+            dialog.Description = row.Description;
+            dialog.Department.SelectedValue = row.DepartmentId;
+            dialog.Group.SelectedValue = row.GroupId;
+        }
          
         parameters.Add("ObjectType", dialog);
          
@@ -125,8 +169,8 @@ public partial class Recipients
         {
             return new Recipient()
             {
-                DepartmentId = dialog.Department.SelectedValue,
-                GroupId = dialog.Group.SelectedValue,
+                DepartmentId = dialog.Department.SelectedValue.Value,
+                GroupId = dialog.Group.SelectedValue.Value,
                 Mail = dialog.Mail,
                 Description = dialog.Description,
                 Name = dialog.Name

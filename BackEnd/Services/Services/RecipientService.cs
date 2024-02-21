@@ -32,7 +32,7 @@ namespace BackEnd.Services.Services
 
 
 
-        public async Task<int?> DeleteRecipient(Recipient model)
+        public async Task<int?> DeleteRecipient(Recipient model) //tested
         {
             if (Token.RoleId == 0 ||
                 Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
@@ -58,7 +58,39 @@ namespace BackEnd.Services.Services
                 throw Alert.Create(Constants.Error.SomethingWrong);
             return res;
         }
+        
+        
+        public async Task<Recipient?> EditRecipient(Recipient model)
+        {
+            if (Token.RoleId == 0 ||
+               Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            var res = (await dbService.QueryAsync<Recipient>("spEditRecipient", model)).FirstOrDefault();
+            
+            if (res == default)
+                throw Alert.Create(Constants.Error.SomethingWrong);
+            return res;
+        }
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         public async Task<List<RecipientGroupGet?>> GetRecipientGroups(int? Id = null)
         {
             return (await dbService.QueryAsync<RecipientGroupGet>("spGetRecipientGroups", new { Id, Token.RoleId, Token.DepartmentId })).ToList();

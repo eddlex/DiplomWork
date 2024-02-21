@@ -72,7 +72,7 @@
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
                             <CellTemplate>
-                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRecipient(context.Item.Id))"> </MudIconButton>
                                 <MudSpacer />
                                 <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRecipient(context.Item.Id))"> </MudIconButton>
                             </CellTemplate>
@@ -118,10 +118,7 @@
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
     
-    void SelectedItemsChanged(HashSet<RecipientDto> items)
-    {
-        System.Text.Json.JsonSerializer.Serialize(items);
-    }
+   
     
     void StartedEditingItem(RecipientDto item)
     {
