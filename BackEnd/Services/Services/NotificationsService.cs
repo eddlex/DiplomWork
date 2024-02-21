@@ -37,7 +37,7 @@ namespace BackEnd.Services.Services
 
         public async Task<bool> SendForms(int groupId)
         {
-            var smtpConfig = (await this.smtpService.GetSmtpConfig(Token.DepartmentId)).FirstOrDefault();
+            var smtpConfig = (await this.smtpService.GetSmtpConfig()).FirstOrDefault();
 
             if (smtpConfig != null)
             {
