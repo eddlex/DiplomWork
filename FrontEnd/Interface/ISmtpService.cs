@@ -5,7 +5,6 @@ namespace FrontEnd.Interface;
 
 public interface ISmtpService
 {
-    public Task<List<Recipient>?> GetSmtpConfigurations();
-
+    public Task<List<SMTPConfig>?> GetSmtpConfigurations();
 
 }

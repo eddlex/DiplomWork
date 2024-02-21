@@ -13,9 +13,9 @@ public class SmtpService :  ISmtpService
         this.httpService = httpService;
     }
     
-    public async Task<List<Recipient>?> GetSmtpConfigurations()
+    public async Task<List<SMTPConfig>?> GetSmtpConfigurations()
     {
-        var result = await this.httpService.Execute<List<Recipient>, object>(HttpMethod.Get, "Smtp");
+        var result = await this.httpService.Execute<List<SMTPConfig>, object>(HttpMethod.Get, "Smtp");
         return result;
     }
 
