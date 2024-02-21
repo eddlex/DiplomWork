@@ -29,17 +29,16 @@ namespace BackEnd.Controllers
 
         [Authorize]
         [HttpPut]
-        public async Task<ActionResult<bool>> UpdateSmtpConfig(SmtpConfigPut config)
+        public async Task<ActionResult<SmtpConfig>> EditSmtpConfig(SmtpConfigPut config)
         {
-            return Ok(await this.configService.UpdateSmtpConfig(User.ParseToken().RoleId, config));
+            return Ok(await this.configService.EditSmtpConfig(config));
         }
 
         [Authorize]
-        [Route("{id:int}")]
         [HttpDelete]
-        public async Task<ActionResult<bool>> DelSmtpConfig(int id)
+        public async Task<ActionResult<int>> DeleteSmtpConfig(SmtpConfigDelete model)
         {
-            return Ok(await this.configService.DelSmtpConfig(User.ParseToken().RoleId, id));
+            return Ok(await this.configService.DeleteSmtpConfig(model));
         }
 
 

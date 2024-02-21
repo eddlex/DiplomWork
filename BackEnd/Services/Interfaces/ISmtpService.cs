@@ -6,8 +6,8 @@ namespace BackEnd.Services.Interfaces
 {
     public interface ISmtpService
     {
-        Task<bool> DelSmtpConfig(int PermissionId, int ConfigId);
-        Task<bool> UpdateSmtpConfig(int PermissionId, SmtpConfigPut config);
+        Task<int> DeleteSmtpConfig(SmtpConfigDelete model);
+        Task<SmtpConfig> EditSmtpConfig(SmtpConfigPut config);
         Task<List<SmtpConfig>> GetSmtpConfig();
     }
 }

@@ -5,6 +5,7 @@ using System.Data;
 using BackEnd.Helpers;
 using BackEnd.Models.Input;
 using BackEnd.Models.Output;
+using FrontEnd.Helpers;
 using static BackEnd.Helpers.Enums;
 
 namespace BackEnd.Services.Services
@@ -21,47 +22,31 @@ namespace BackEnd.Services.Services
                 this.Token = httpContextAccessor.HttpContext.User.ParseToken();
         }
 
-        public async Task<bool> UpdateSmtpConfig(int PermissionId, SmtpConfigPut config)
+        public async Task<SmtpConfig> EditSmtpConfig(SmtpConfigPut model)
         {
-            using var connection = dbService.CreateConnection();
-            var perm = await connection.ExecuteScalarAsync<int>("spGetPermission", new { PermissionId }, commandType: CommandType.StoredProcedure);
+            if (Token.RoleId == 0 ||
+                Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            var result = (await this.dbService.QueryAsync<SmtpConfig>("spEditSmtpConfiguration", model)).FirstOrDefault();
 
-            if (perm != null && perm >= 3)
-            {
-                using var cmd = dbService.CreateCommand();
-                cmd.CommandText = "spUpdateSmtpConfiguration";
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("Id", config.Id);
-                cmd.Parameters.AddWithValue("DepartmentId", config.UniversityId);
-                cmd.Parameters.AddWithValue("SmtpServer", config.SmtpServer);
-                cmd.Parameters.AddWithValue("Port", config.Port);
-                cmd.Parameters.AddWithValue("UserName", config.UserName);
-                cmd.Parameters.AddWithValue("Password", config.Password);
-                cmd.Parameters.AddWithValue("EnableSSL", config.EnableSSL);
-
-                return await cmd.ExecuteNonQueryAsync() > 0;
-            }
-            return false;
+            if (result is null)
+                throw Alert.Create(Constants.Error.SomethingWrong);
+            
+            return result;
         }
 
-        public async Task<bool> DelSmtpConfig(int PermissionId, int id)
+        public async Task<int> DeleteSmtpConfig(SmtpConfigDelete model)
         {
-            using var connection = dbService.CreateConnection();
+            if (Token.RoleId == 0 ||
+                Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            
+            var result = (await dbService.QueryAsync<int?>("spDeleteSmtpConfiguration", new { model.Id })).FirstOrDefault();
 
-            var perm = await connection.ExecuteScalarAsync<int>("spGetPermission", new { PermissionId }, commandType: CommandType.StoredProcedure);
-
-            if (perm != null && perm == 7)
-            {
-                using var cmd = dbService.CreateCommand();
-                cmd.CommandText = "spDeleteSmtpConfigurations";
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("Id", id);
-
-                return await cmd.ExecuteNonQueryAsync() > 0;
-            }
-            return false;
+            if (!result.HasValue)
+                throw Alert.Create(Constants.Error.SomethingWrong);
+           
+            return result.Value;
         }
 
         public async Task<List<SmtpConfig>> GetSmtpConfig()

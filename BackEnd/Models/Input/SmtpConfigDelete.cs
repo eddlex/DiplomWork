@@ -2,21 +2,16 @@
 
 namespace BackEnd.Models.Input
 {
-    public class SmtpConfigPut
+    public class SmtpConfigDelete
     {
         [Required]
         public int Id { get; set; }
         [Required]
         public int DepartmentId { get; }
-        [Required]
-        public string SmtpServer { get; set; }
-        [Required]
+        public string? SmtpServer { get; set; }
         public int Port { get; set; }
-        [Required]
-        public string UserName { get; set; }
-        [Required]
-        public string Password { get; set; }
-        [Required]
+        public string? UserName { get; set; }
+        public string? Password { get; set; }
         public bool EnableSSL { get; set; }
     }
 }
