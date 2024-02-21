@@ -35,7 +35,7 @@ public partial class Smtp
             if (this.SMTPConfigBl is { Count: > 0 })
             {
 
-                this.SMTPConfigBl.ForEach(e => this.SMTPConfigBl.Add(new SMTPConfigDto()
+                this.SMTPConfigBl.ForEach(e => this.SMTPConfigDto.Add(new SMTPConfigDto()
                 {
                     Id = e.Id,
                     DepartmentId = (int)this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId).Id,
