@@ -59,7 +59,7 @@ public partial class Recipients
     {
         if (this.RecipientService != null && await DeleteUser())
         {
-            var result = await this.RecipientService.DelRecipient(id);
+            var result = await this.RecipientService.DelRecipient(RecipientBl.Find(r => r.Id == id));
             if (result.HasValue)
             {
                 RecipientDto?.Remove(RecipientDto.FirstOrDefault(row => row?.Id == result.Value));

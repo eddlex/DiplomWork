@@ -11,10 +11,10 @@ namespace BackEnd.Controllers
     [Route("[controller]")]
     public class RecipientController : ControllerBase
     {
-        private readonly RecipientService recipientService;
+        private readonly IRecipientService recipientService;
         public RecipientController(IRecipientService recipientService)
         {
-            this.recipientService = (RecipientService)recipientService;
+            this.recipientService = recipientService;
         }
         
         [HttpGet]     //tested
@@ -23,10 +23,16 @@ namespace BackEnd.Controllers
             return Ok(await this.recipientService.GetRecipients());
         }
         
-        [HttpPost]
+        [HttpPost]  //tested
         public async Task<ActionResult<Recipient>> Recipient(Recipient input)
         {
             return Ok(await this.recipientService.AddRecipient(input));
+        }
+        
+        [HttpDelete]
+        public async Task<ActionResult<int?>> RecipientDelete(Recipient model)
+        {
+            return Ok(await this.recipientService.DeleteRecipient(model));
         }
         
         [Route("Groups")]

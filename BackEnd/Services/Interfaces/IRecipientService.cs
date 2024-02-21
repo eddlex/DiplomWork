@@ -13,5 +13,6 @@ namespace BackEnd.Services.Interfaces
         Task<List<Recipient>> GetRecipients();
         
         Task<Recipient?> AddRecipient(Recipient model);
+        Task<int?> DeleteRecipient(Recipient model);
     }
 }

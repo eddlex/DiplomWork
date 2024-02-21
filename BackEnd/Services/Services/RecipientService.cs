@@ -30,14 +30,20 @@ namespace BackEnd.Services.Services
             return res;
         }
 
-        
 
-        public async Task<Recipient?> AddRecipient(Recipient model)
+
+        public async Task<int?> DeleteRecipient(Recipient model)
         {
             if (Token.RoleId == 0 ||
                 Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
                 throw Alert.Create(Constants.Error.WrongPermissions);
             
+            var res = (await dbService.QueryAsync<int>("spDeleteRecipient", new{model.Id})).FirstOrDefault();
+            return res;
+        }
+        
+        public async Task<Recipient?> AddRecipient(Recipient model)
+        {
             var res = (await dbService.QueryAsync<Recipient>("spAddRecipient", 
                 new
                 {
