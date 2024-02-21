@@ -34,7 +34,7 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.recipientService.DeleteRecipient(model));
         }
-        [HttpPut]
+        [HttpPut] //tested
         public async Task<ActionResult<int?>> RecipientEdit(Recipient model)
         {
             return Ok(await this.recipientService.EditRecipient(model));
@@ -42,7 +42,7 @@ namespace BackEnd.Controllers
         
         
         
-        [Route("Groups")]
+        [Route("Groups")] //tested
         [HttpGet]
         public async Task<ActionResult<List<RecipientGroupGet>>> GetRecipientGroups()
         {

@@ -2,6 +2,7 @@
 using BackEnd.Services.Interfaces;
 using Dapper;
 using System.Data;
+using BackEnd.Helpers;
 using BackEnd.Models.Input;
 using BackEnd.Models.Output;
 using static BackEnd.Helpers.Enums;
@@ -11,9 +12,13 @@ namespace BackEnd.Services.Services
     public class SmtpService : ISmtpService
     {
         private readonly DbService dbService;
-        public SmtpService(IDbService dbService)
+        public (int UserId, int DepartmentId, int RoleId) Token { get; set; }
+        public SmtpService(IDbService dbService,
+                           IHttpContextAccessor httpContextAccessor)
         {
             this.dbService = (DbService)dbService;
+            if (httpContextAccessor.HttpContext != null)
+                this.Token = httpContextAccessor.HttpContext.User.ParseToken();
         }
 
         public async Task<bool> UpdateSmtpConfig(int PermissionId, SmtpConfigPut config)
@@ -59,11 +64,14 @@ namespace BackEnd.Services.Services
             return false;
         }
 
-        public async Task<List<SmtpConfig>> GetSmtpConfig(int universityId)
+        public async Task<List<SmtpConfig>> GetSmtpConfig()
         {
-            using var connection = dbService.CreateConnection();
-
-            return (List<SmtpConfig>)(await connection.QueryAsync<SmtpConfig>("spGetSmtpConfigurations", new { UniversityId = universityId }, commandType: CommandType.StoredProcedure));
+            var result = await dbService.QueryAsync<SmtpConfig?>("spGetSmtpConfigurations",
+            new {
+                Token.RoleId,
+                Token.DepartmentId    
+            });
+            return result.ToList();
 
         }
     }
