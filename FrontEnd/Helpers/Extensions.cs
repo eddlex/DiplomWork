@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Blazored.SessionStorage;
 using FrontEnd.Model;
+using FrontEnd.Shared.Dialog;
 using MudBlazor;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -57,6 +58,18 @@ public static class Extensions
 
             return hashStringBuilder.ToString();
         }
+    }
+
+    public static async Task<bool> DeleteConfirmationPopUp(this IDialogService dialogService)
+    {
+        var parameters = new DialogParameters<DeleteDialog>();
+        parameters.Add(x => x.ContentText, "Do you really want to delete this row? This process cannot be undone.");
+        parameters.Add(x => x.ButtonText, "Delete");
+        parameters.Add(x => x.Color, Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        return !(await(await dialogService.ShowAsync<DeleteDialog>("Delete", parameters, options)).Result).Canceled;
     }
     
     // public static T Copy<T>(this T item)

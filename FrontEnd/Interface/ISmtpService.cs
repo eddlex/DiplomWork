@@ -5,6 +5,7 @@ namespace FrontEnd.Interface;
 
 public interface ISmtpService
 {
-    public Task<List<SMTPConfig>?> GetSmtpConfigurations();
+     Task<List<SmtpConfigBl>?> GetSmtpConfigurations();
+     Task<int> DeleteSmtpConfiguration(SmtpConfigBl model);
 
 }

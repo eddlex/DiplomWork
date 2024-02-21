@@ -90,7 +90,7 @@ public partial class Recipients
     
     private async Task DeleteRecipient(int id)
     {
-        if (this.RecipientService != null && await ConfirmDelete())
+        if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
         {
             var result = await this.RecipientService.DelRecipient(RecipientBl.Find(r => r.Id == id));
             if (result.HasValue)
@@ -101,18 +101,7 @@ public partial class Recipients
     }
     
     
-    private async Task<bool> ConfirmDelete()
-    {
-        var parameters = new DialogParameters<DeleteDialog>();
-        parameters.Add(x => x.ContentText, "Do you really want to delete this row? This process cannot be undone.");
-        parameters.Add(x => x.ButtonText, "Delete");
-        parameters.Add(x => x.Color, Color.Error);
-
-        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-
-        return !(await(await DialogService.ShowAsync<DeleteDialog>("Delete", parameters, options)).Result).Canceled;
-        
-    }
+  
     private async Task AddRecipient()
     {
        var recipient = await OpenDialog();

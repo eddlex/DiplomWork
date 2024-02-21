@@ -12,16 +12,14 @@ namespace FrontEnd.Pages;
 
 public partial class Smtp
 {
-
-
     [Inject]
     private ISmtpService? SmtpService { get; set; }
 
     [Inject]
     private IDepartmentService? DepartmentService { get; set; }
 
-    private List<SMTPConfigDto?>? SMTPConfigDto { get; set; }
-    private List<SMTPConfig>? SMTPConfigBl { get; set; }
+    private List<SMTPConfigDto?>? SmtpConfigDto { get; set; }
+    private List<SmtpConfigBl>? SmtpConfigBl { get; set; }
     private List<Department>? Departments { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -29,13 +27,13 @@ public partial class Smtp
         if (this.SmtpService != null &&
             this.DepartmentService != null)
         {
-            this.SMTPConfigBl = await this.SmtpService.GetSmtpConfigurations();
+            this.SmtpConfigBl = await this.SmtpService.GetSmtpConfigurations();
             this.Departments = await this.DepartmentService.GetDepartments();
-            this.SMTPConfigDto = new();
-            if (this.SMTPConfigBl is { Count: > 0 })
+            this.SmtpConfigDto = new();
+            if (this.SmtpConfigBl is { Count: > 0 })
             {
             
-                this.SMTPConfigBl.ForEach(e => this.SMTPConfigDto.Add(new SMTPConfigDto()
+                this.SmtpConfigBl.ForEach(e => this.SmtpConfigDto.Add(new SMTPConfigDto()
                 {
                     Id = e.Id,
                     Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
@@ -49,7 +47,7 @@ public partial class Smtp
         }
     }
 
-    private async Task EditSMTP(int id)
+    private async Task EditRow(int id)
     {
         //if (this.RecipientService != null)
         //{
@@ -83,34 +81,22 @@ public partial class Smtp
     }
 
 
-    private async Task DeleteSMTP(int id)
+    private async Task DeleteRow(int id)
     {
-        //if (this.RecipientService != null && await ConfirmDelete())
-        //{
-        //    var result = await this.RecipientService.DelRecipient(RecipientBl.Find(r => r.Id == id));
-        //    if (result.HasValue)
-        //    {
-        //        RecipientDto?.Remove(RecipientDto.FirstOrDefault(row => row?.Id == result.Value));
-        //    }
-        //}
+        if (this.SmtpService != null && await DialogService.DeleteConfirmationPopUp())
+        {
+            var result = await this.SmtpService.DeleteSmtpConfiguration(SmtpConfigBl?.Find(r => r.Id == id));
+            
+            SmtpConfigBl?.Remove(SmtpConfigBl?.FirstOrDefault(row => row.Id == result));
+            
+        }
     }
 
 
-    private async Task<bool> ConfirmDelete()
+    
+    private async Task AddRow()
     {
-        var parameters = new DialogParameters<DeleteDialog>();
-        parameters.Add(x => x.ContentText, "Do you really want to delete this row? This process cannot be undone.");
-        parameters.Add(x => x.ButtonText, "Delete");
-        parameters.Add(x => x.Color, Color.Error);
-
-        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-
-        return !(await (await DialogService.ShowAsync<DeleteDialog>("Delete", parameters, options)).Result).Canceled;
-
-    }
-    private async Task AddSMTP()
-    {
-        //var recipient = await OpenDialog();
+        var recipient = await OpenDialog();
         //if (recipient != default && this.RecipientService != null)
         //{
         //    var result = await this.RecipientService.AddRecipient(recipient);
@@ -129,7 +115,7 @@ public partial class Smtp
         //}
     }
 
-    private async Task<SMTPConfig?> OpenDialog(SMTPConfig? row = default)
+    private async Task<SmtpConfigBl?> OpenDialog(SmtpConfigBl? row = default)
     {
         return new();
         //var options = new DialogOptions

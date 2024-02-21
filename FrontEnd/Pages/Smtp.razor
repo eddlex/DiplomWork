@@ -34,7 +34,7 @@
             <div style="height: 10px;"></div>
             <div style="height: 88vh; width: 83vw; margin: 0 auto;">
                 <MudDataGrid T="SMTPConfigDto"
-                             Items="@SMTPConfigDto"
+                             Items="@SmtpConfigDto"
                              SortMode="SortMode.Multiple" 
                              Filterable="true"
                              RowClick="@RowClicked" 
@@ -55,7 +55,7 @@
                              Style="height:100%" >
                     <ToolBarContent>
                         <MudText Typo="Typo.h4" class="mr-2">SMTP Configuration</MudText>
-                        <MudIconButton @onclick="AddSMTP" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
+                        <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                         <MudSpacer />
                         @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
                         @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
@@ -74,9 +74,9 @@
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
                             <CellTemplate>
-                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditSMTP(context.Item.Id))"> </MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRow(context.Item.Id))"> </MudIconButton>
                                 <MudSpacer />
-                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteSMTP(context.Item.Id))"> </MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton>
                             </CellTemplate>
                         </TemplateColumn>
                     </Columns>

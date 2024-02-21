@@ -3,7 +3,7 @@ using FrontEnd.Helpers;
 
 namespace FrontEnd.Model;
 
-public class SMTPConfig
+public class SmtpConfigBl
 { 
     public int Id { get; set; }
     public int DepartmentId { get; set; }

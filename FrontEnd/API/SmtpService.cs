@@ -13,9 +13,15 @@ public class SmtpService :  ISmtpService
         this.httpService = httpService;
     }
     
-    public async Task<List<SMTPConfig>?> GetSmtpConfigurations()
+    public async Task<List<SmtpConfigBl>?> GetSmtpConfigurations()
     {
-        var result = await this.httpService.Execute<List<SMTPConfig>, object>(HttpMethod.Get, "Smtp");
+        var result = await this.httpService.Execute<List<SmtpConfigBl>, object>(HttpMethod.Get, "Smtp");
+        return result;
+    }
+    
+    public async Task<int> DeleteSmtpConfiguration(SmtpConfigBl model)
+    {
+        var result = await this.httpService.Execute<int, SmtpConfigBl>(HttpMethod.Delete, "Smtp", model);
         return result;
     }
 
@@ -31,11 +37,7 @@ public class SmtpService :  ISmtpService
     //     return result;
     // }
     //
-    // public async Task<int?> DelRecipient(Recipient model)
-    // {
-    //     var result = await this.httpService.Execute<int?, Recipient?>(HttpMethod.Delete, "Recipient", model);
-    //     return result;
-    // }
+
     // public async Task<List<RecipientGroup>?> GetRecipientsGroups()
     // {
     //     var result = await this.httpService.Execute<List<RecipientGroup>, object>(HttpMethod.Get, "Recipient/Groups");
