@@ -34,11 +34,11 @@ public partial class Smtp
             this.SMTPConfigDto = new();
             if (this.SMTPConfigBl is { Count: > 0 })
             {
-
+            
                 this.SMTPConfigBl.ForEach(e => this.SMTPConfigDto.Add(new SMTPConfigDto()
                 {
                     Id = e.Id,
-                    DepartmentId = (int)this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId).Id,
+                    Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
                     SmtpServer = e.SmtpServer,
                     Port = e.Port,
                     UserName = e.UserName,

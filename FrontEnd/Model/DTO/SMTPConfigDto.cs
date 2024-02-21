@@ -6,7 +6,7 @@ namespace FrontEnd.Model.DTO;
 public class SMTPConfigDto
 { 
     public int Id { get; set; }
-    public int DepartmentId { get; set; }
+    public string? Department { get; set; }
     public string? SmtpServer { get; set; }
     public int Port { get; set; }
     public string? UserName { get; set; }
