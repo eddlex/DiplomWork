@@ -55,23 +55,17 @@
                              ColumnResizeMode="ResizeMode.Container"
                              Style="height:100%" >
                     <ToolBarContent>
-                        <MudText Typo="Typo.h4" class="mr-2">SMTP Configuration</MudText>
+                        <MudText Typo="Typo.h4" class="mr-2">Add Form</MudText>
                         <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                         <MudSpacer />
-                        @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
-                        @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
                     </ToolBarContent>
 
                     <Columns>
-                        @* <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" /> *@
-                        @* <PropertyColumn Property="x => x.Department" Title="Department" /> *@
-                        @* <PropertyColumn Property="x => x.Department" Title="Department" /> *@
-                        @* <PropertyColumn Property="x => x.SmtpServer" /> *@
-                        @* <PropertyColumn Property="x => x.Port"  /> *@
-                        @* <PropertyColumn Property="x => x.UserName" /> *@
-                        @* <PropertyColumn Property="x => x.Password"  /> *@
-                        @* <PropertyColumn Property="x => x.EnableSSL" /> *@
-
+                        <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false"/>
+                        <PropertyColumn Property="x => x.Name" Title="Name"/>
+                        <PropertyColumn Property="x => x.Department" Title="Department"/>
+                        <PropertyColumn Property="x => x.Group" Title="Group"/>
+                        <PropertyColumn Property="x => x.Description" Title="Description"/>
 
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
@@ -85,7 +79,7 @@
 
                     <PagerContent>
                         <div class="right-corner">
-                            <MudDataGridPager T="SMTPConfigDto" />
+                            <MudDataGridPager T="FormDto" />
                         </div>
                     </PagerContent>
 

@@ -17,11 +17,12 @@ public partial class Form
     
     [Inject]
     private IDepartmentService? DepartmentService { get; set; } 
+    [Inject]
+    private IBaseService? FormService { get; set; }
 
 
     private List<FormDto?>? FormDto { get; set; }
-    
-    private List<Recipient>? FormBl { get; set; }
+    private List<FormBl>? FormBl { get; set; }
     
     
     
@@ -32,30 +33,29 @@ public partial class Form
 
     protected override async Task OnInitializedAsync()
     {
-        // if (this.RecipientService != null && 
-        //     this.DepartmentService != null)
-        // {
-        //    this.RecipientBl = await this.RecipientService.GetRecipient();
-        //    this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
-        //    this.Departments = await this.DepartmentService.GetDepartments();
-        //    this.RecipientDto = new();
-        //    if (this.RecipientBl is { Count: > 0 })
-        //    {
-        //        
-        //        this.RecipientBl.ForEach(e => this.RecipientDto.Add(new RecipientDto()
-        //        {
-        //            Id = e.Id,
-        //            Name = e.Name,
-        //            Description = e.Description,
-        //            Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
-        //            Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name,
-        //            Mail = e.Mail
-        //        }));
-        //    }
-        //    
-        //    
-        //    
-        // } 
+        if (this.FormService != null && 
+            this.DepartmentService != null &&
+            this.RecipientService != null)
+        {
+           this.FormBl = await this.FormService.Get<FormBl>();
+           this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
+           this.Departments = await this.DepartmentService.GetDepartments();
+           this.FormDto = new();
+           if (this.FormBl is { Count: > 0 })
+           {
+               this.FormBl.ForEach(e => this.FormDto.Add(new()
+               {
+                   Id = e.Id,
+                   Name = e.Name,
+                   Description = e.Description,
+                   Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
+                   Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name
+               }));
+           }
+           
+           
+           
+        } 
     }
 
     private async Task EditRow(int id)
