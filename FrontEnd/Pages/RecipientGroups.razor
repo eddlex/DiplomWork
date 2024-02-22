@@ -1,4 +1,4 @@
-﻿@page "/Recipients"
+﻿@page "/RecipientGroup"
 @using FrontEnd.Model.DTO
 @inject IDialogService DialogService
 
@@ -33,8 +33,8 @@
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div style="height: 10px;"></div>
             <div style="height: 88vh; width: 83vw; margin: 0 auto;">
-                <MudDataGrid T="RecipientDto"
-                             Items="@RecipientDto" 
+                <MudDataGrid T="RecipientGroupDto"
+                             Items="@RecipientGroupDto"
                              SortMode="SortMode.Multiple" 
                              Filterable="true"
                              RowClick="@RowClicked" 
@@ -54,8 +54,8 @@
                              ColumnResizeMode="ResizeMode.Container"
                              Style="height:100%" >
                     <ToolBarContent>
-                        <MudText Typo="Typo.h4" class="mr-2">Recipients</MudText>
-                        <MudIconButton @onclick="AddRecipient" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
+                        <MudText Typo="Typo.h4" class="mr-2">Recipient groups</MudText>
+                        <MudIconButton @onclick="AddRecipientGroup" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                         <MudSpacer />
                         @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
                         @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
@@ -63,18 +63,16 @@
 
                     <Columns>
                         <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
-                        <PropertyColumn Property="x => x.Group" Title="Group" />
-                        <PropertyColumn Property="x => x.Mail" />
                         <PropertyColumn Property="x => x.Name" Title="Name" />
-                        <PropertyColumn Property="x => x.Description" />
                         <PropertyColumn Property="x => x.Department" Title="Department" />
+                        <PropertyColumn Property="x => x.Description" />
 
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
                             <CellTemplate>
-                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRecipient(context.Item.Id))"> </MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRecipientGroup(context.Item.Id))"> </MudIconButton>
                                 <MudSpacer />
-                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRecipient(context.Item.Id))"> </MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRecipientGroup(context.Item.Id))"> </MudIconButton>
                             </CellTemplate>
                         </TemplateColumn>
                     </Columns>
@@ -107,12 +105,12 @@
     
 
     // events
-    void RowClicked(DataGridRowClickEventArgs<RecipientDto> args)
+    void RowClicked(DataGridRowClickEventArgs<RecipientGroupDto> args)
     {
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
     
-    void RowRightClicked(DataGridRowClickEventArgs<RecipientDto> args)
+    void RowRightClicked(DataGridRowClickEventArgs<RecipientGroupDto> args)
     {
         //args.RowIndex
         System.Text.Json.JsonSerializer.Serialize(args.Item);
@@ -120,17 +118,17 @@
     
    
     
-    void StartedEditingItem(RecipientDto item)
+    void StartedEditingItem(RecipientGroupDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
     
-    void CanceledEditingItem(RecipientDto item)
+    void CanceledEditingItem(RecipientGroupDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
     
-    void CommittedItemChanges(RecipientDto item)
+    void CommittedItemChanges(RecipientGroupDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
