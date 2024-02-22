@@ -8,6 +8,7 @@ namespace BackEnd.Services.Interfaces
     {
         Task<int> DeleteSmtpConfig(SmtpConfigDelete model);
         Task<SmtpConfig> EditSmtpConfig(SmtpConfigPut config);
-        Task<List<SmtpConfig>> GetSmtpConfig();
+        Task<List<SmtpConfig?>> GetSmtpConfig();
+        Task<T1> AddSmtpConfig<T1, T2>(T2 model);
     }
 }

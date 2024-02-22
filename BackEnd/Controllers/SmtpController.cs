@@ -40,6 +40,13 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.configService.DeleteSmtpConfig(model));
         }
+        
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<SmtpConfig>> AddSmtpConfig(SmtpConfigPost model)
+        {
+            return Ok(await this.configService.AddSmtpConfig<SmtpConfig, SmtpConfigPost>(model));
+        }
 
 
         //[Route("{id:int}")]

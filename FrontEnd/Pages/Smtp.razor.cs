@@ -19,7 +19,7 @@ public partial class Smtp
     private IDepartmentService? DepartmentService { get; set; }
 
     private List<SMTPConfigDto?>? SmtpConfigDto { get; set; }
-    private List<SmtpConfigBl>? SmtpConfigBl { get; set; }
+    private List<SmtpConfigBl?>? SmtpConfigBl { get; set; }
     private List<Department>? Departments { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -27,7 +27,7 @@ public partial class Smtp
         if (this.SmtpService != null &&
             this.DepartmentService != null)
         {
-            this.SmtpConfigBl = await this.SmtpService.GetSmtpConfigurations();
+            this.SmtpConfigBl = await this.SmtpService.GetSmtpConfigurations<SmtpConfigBl>();
             this.Departments = await this.DepartmentService.GetDepartments();
             this.SmtpConfigDto = new();
             if (this.SmtpConfigBl is { Count: > 0 })
@@ -85,10 +85,9 @@ public partial class Smtp
     {
         if (this.SmtpService != null && await DialogService.DeleteConfirmationPopUp())
         {
-            var result = await this.SmtpService.DeleteSmtpConfiguration(SmtpConfigBl?.Find(r => r.Id == id));
-            
-            SmtpConfigBl?.Remove(SmtpConfigBl?.FirstOrDefault(row => row.Id == result));
-            
+            var result = await this.SmtpService.DeleteSmtpConfiguration<int, SmtpConfigBl?>(SmtpConfigBl?.Find(r => r.Id == id));
+            SmtpConfigBl?.Remove(SmtpConfigBl?.FirstOrDefault(row => row?.Id == result));
+            SmtpConfigDto?.Remove(SmtpConfigDto?.FirstOrDefault(row => row?.Id == result));
         }
     }
 
@@ -96,69 +95,68 @@ public partial class Smtp
     
     private async Task AddRow()
     {
-        var recipient = await OpenDialog();
-        //if (recipient != default && this.RecipientService != null)
-        //{
-        //    var result = await this.RecipientService.AddRecipient(recipient);
-        //    if (result != null)
-        //    {
-        //        this.RecipientDto?.Add(new RecipientDto()
-        //        {
-        //            Id = result.Id,
-        //            Name = result.Name,
-        //            Description = result.Description,
-        //            Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
-        //            Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
-        //            Mail = result.Mail
-        //        });
-        //    }
-        //}
+        var smtpBl = await OpenDialog<SmtpDialog>();
+        if (smtpBl != default && this.SmtpService != null)
+        {
+            var result = await this.SmtpService.AddSmtpConfiguration<SmtpConfigBl, SmtpConfigBl>(smtpBl);
+            
+            this.SmtpConfigBl?.Add(result);
+            this.SmtpConfigDto?.Add(new SMTPConfigDto()
+            {
+                Id = result.Id,
+                Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
+                SmtpServer = result.SmtpServer,
+                Port = result.Port,
+                UserName = result.UserName,
+                Password = result.Password,
+                EnableSSL = result.EnableSSL 
+            });
+            
+        }
     }
 
-    private async Task<SmtpConfigBl?> OpenDialog(SmtpConfigBl? row = default)
+    private async Task<SmtpConfigBl?> OpenDialog<T>(SmtpConfigBl? row = default)
     {
-        return new();
-        //var options = new DialogOptions
-        //{
-        //    CloseOnEscapeKey = true,
-        //    MaxWidth = MaxWidth.Large,
-        //    Position = DialogPosition.Center,
-        //};
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            MaxWidth = MaxWidth.Large,
+            Position = DialogPosition.Center,
+        };
 
-        //var parameters = new DialogParameters<RecipientDialog>();
+        var parameters = new DialogParameters<T>();
+        
+        var dialog = new SmtpDialog()
+        {
+            Department = new Select<Department?>("Select Department", "DepartmentId", this.Departments)
+        };
 
+        if (row is not null)
+        {
+            dialog.Department.SelectedValue = row.DepartmentId;
+            dialog.EnableSSL = row.EnableSSL;
+            dialog.Password = row.Password;
+            dialog.UserName = row.UserName;
+            dialog.Port = row.Port;
+            dialog.SmtpServer = row.SmtpServer;
+        }
 
+        parameters.Add("ObjectType", dialog);
 
-        //var dialog = new RecipientDialog()
-        //{
-        //    Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
-        //    Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups)
-        //};
+        var result = await (await DialogService.ShowAsync<DialogComponent<T>>("Add Smtp Configuration", parameters, options)).Result;
+        if (!result.Canceled && dialog.Department.SelectedValue is not null)
+        {
+            return new SmtpConfigBl()
+            {
+                DepartmentId = dialog.Department.SelectedValue.Value,
+                EnableSSL = dialog.EnableSSL,
+                Password = dialog.Password,
+                UserName = dialog.UserName,
+                Port = dialog.Port,
+                SmtpServer = dialog.SmtpServer
+            };
+        }
 
-        //if (row is not null)
-        //{
-        //    dialog.Name = row.Name;
-        //    dialog.Mail = row.Mail;
-        //    dialog.Description = row.Description;
-        //    dialog.Department.SelectedValue = row.DepartmentId;
-        //    dialog.Group.SelectedValue = row.GroupId;
-        //}
-
-        //parameters.Add("ObjectType", dialog);
-
-        //var result = await (await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Add Recipient", parameters, options)).Result;
-        //if (!result.Canceled)
-        //{
-        //    return new Recipient()
-        //    {
-        //        DepartmentId = dialog.Department.SelectedValue.Value,
-        //        GroupId = dialog.Group.SelectedValue.Value,
-        //        Mail = dialog.Mail,
-        //        Description = dialog.Description,
-        //        Name = dialog.Name
-        //    };
-        //}
-
-        //return default;
+        return default;
     }
 }

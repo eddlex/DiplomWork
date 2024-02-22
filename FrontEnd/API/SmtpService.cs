@@ -13,15 +13,21 @@ public class SmtpService :  ISmtpService
         this.httpService = httpService;
     }
     
-    public async Task<List<SmtpConfigBl>?> GetSmtpConfigurations()
+    public async Task<List<T>?> GetSmtpConfigurations<T>()
     {
-        var result = await this.httpService.Execute<List<SmtpConfigBl>, object>(HttpMethod.Get, "Smtp");
+        var result = await this.httpService.Execute<List<T>, object>(HttpMethod.Get, "Smtp");
         return result;
     }
     
-    public async Task<int> DeleteSmtpConfiguration(SmtpConfigBl model)
+    public async Task<T1?> DeleteSmtpConfiguration<T1, T2>(T2 model)
     {
-        var result = await this.httpService.Execute<int, SmtpConfigBl>(HttpMethod.Delete, "Smtp", model);
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Delete, "Smtp", model);
+        return result;
+    }
+    
+    public async Task<T1> AddSmtpConfiguration<T1, T2>(T2 model)
+    {
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Post, "Smtp", model);
         return result;
     }
 

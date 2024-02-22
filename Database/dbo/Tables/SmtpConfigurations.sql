@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[SmtpConfigurations] (
     [Id]           INT            IDENTITY (0, 1) NOT NULL,
-    [DepartmentId] INT            NULL,
+    [DepartmentId] INT            NULL UNIQUE,
     [SmtpServer]   NVARCHAR (255) NOT NULL,
     [Port]         INT            NOT NULL,
     [UserName]     NVARCHAR (100) NOT NULL,

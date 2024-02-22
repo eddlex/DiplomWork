@@ -49,7 +49,7 @@ namespace BackEnd.Services.Services
             return result.Value;
         }
 
-        public async Task<List<SmtpConfig>> GetSmtpConfig()
+        public async Task<List<SmtpConfig?>> GetSmtpConfig()
         {
             var result = await dbService.QueryAsync<SmtpConfig?>("spGetSmtpConfigurations",
             new {
@@ -58,6 +58,20 @@ namespace BackEnd.Services.Services
             });
             return result.ToList();
 
+        }
+        public async Task<T1> AddSmtpConfig<T1, T2>(T2 model)
+        {
+            var department = (int?)model?.GetType()?.GetProperty("DepartmentId")?.GetValue(model);
+            
+            if (Token.RoleId == 0 ||
+                Token.RoleId == 1 && Token.DepartmentId != department)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            
+            var result = (await dbService.QueryAsync<T1?>("spAddSmtpConfiguration", model)).FirstOrDefault();
+            
+            if (result is null)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            return result;
         }
     }
 

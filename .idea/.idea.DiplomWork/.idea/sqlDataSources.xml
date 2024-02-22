@@ -32,6 +32,8 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipient.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeletRecipient.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditRecipient.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteSmtpConfiguration.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddSmtpConfiguration.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" />
