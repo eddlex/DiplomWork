@@ -161,14 +161,15 @@
         } */
 
         .selected {
-            background: #E0E0E0;
-            border-radius: 8px;
-            /*margin-bottom: 8px;*/
-            color: black;
-            position: relative;
-            order: 0;
-            text-align: left;
-            padding: 20px 3px 5px 0;
+             background: transparent;
+             border-radius: 8px;
+             /* margin-bottom: 8px; */
+             color: black;
+             position: relative;
+             order: 0;
+             text-align: left;
+             padding: 20px 3px 5px 0;
+             margin: 0 0 0 0
         }
 
         .selected::after {
@@ -189,6 +190,10 @@
             opacity: 1;
             overflow-y: scroll;
             margin-top: 54px;
+        }
+        .selected {
+            color: dimgray;
+            font-weight: 500;
         }
 
         .select-box .options-container.active + .selected::after {
