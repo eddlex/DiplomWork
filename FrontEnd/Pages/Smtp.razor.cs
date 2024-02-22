@@ -49,35 +49,31 @@ public partial class Smtp
 
     private async Task EditRow(int id)
     {
-        //if (this.RecipientService != null)
-        //{
-        //    var editedRowBl = this.RecipientBl?.Find(r => r.Id == id);
-        //    var editedRowDto = this.RecipientDto?.Find(r => r?.Id == id);
+        if (this.SmtpService != null)
+        {
+            var editedRowBl = this.SmtpConfigBl?.Find(r => r.Id == id);
+            var editedRowDto = this.SmtpConfigDto?.Find(r => r?.Id == id);
+            
+            var editedRow = await OpenDialog<SmtpDialog>(editedRowBl);
+            if (editedRow != default && editedRowBl is not null)
+            {
+                var result = await this.SmtpService.EditSmtpConfiguration<SmtpConfigBl, SmtpConfigBl>(editedRow);
+                this.SmtpConfigDto?.Remove(editedRowDto);
+                this.SmtpConfigBl?.Remove(editedRowBl);
+                this.SmtpConfigBl?.Add(result);
 
-
-
-        //    var recipient = await OpenDialog(editedRowBl);
-        //    if (recipient != default && editedRowBl is not null)
-        //    {
-        //        var result = await this.RecipientService.EditRecipient(recipient);
-        //        if (result != null)
-        //        {
-        //            this.RecipientDto?.Remove(editedRowDto);
-        //            this.RecipientBl?.Remove(editedRowBl);
-        //            this.RecipientBl?.Add(result);
-
-        //            this.RecipientDto?.Add(new RecipientDto()
-        //            {
-        //                Id = result.Id,
-        //                Name = result.Name,
-        //                Description = result.Description,
-        //                Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
-        //                Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
-        //                Mail = result.Mail
-        //            });
-        //        }
-        //    }
-        //}
+                this.SmtpConfigDto?.Add(new SMTPConfigDto()
+                {
+                    Id = result.Id,
+                    Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
+                    SmtpServer = result.SmtpServer,
+                    Port = result.Port,
+                    UserName = result.UserName,
+                    Password = result.Password,
+                    EnableSSL = result.EnableSSL,
+                });
+            }
+        }
     }
 
 
@@ -139,6 +135,7 @@ public partial class Smtp
             dialog.UserName = row.UserName;
             dialog.Port = row.Port;
             dialog.SmtpServer = row.SmtpServer;
+            
         }
 
         parameters.Add("ObjectType", dialog);
@@ -153,7 +150,8 @@ public partial class Smtp
                 Password = dialog.Password,
                 UserName = dialog.UserName,
                 Port = dialog.Port,
-                SmtpServer = dialog.SmtpServer
+                SmtpServer = dialog.SmtpServer,
+                Id = row?.Id ?? 0
             };
         }
 

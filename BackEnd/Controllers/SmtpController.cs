@@ -29,9 +29,9 @@ namespace BackEnd.Controllers
 
         [Authorize]
         [HttpPut]
-        public async Task<ActionResult<SmtpConfig>> EditSmtpConfig(SmtpConfigPut config)
+        public async Task<ActionResult<SmtpConfig>> EditSmtpConfig(SmtpConfigPut model)
         {
-            return Ok(await this.configService.EditSmtpConfig(config));
+            return Ok(await this.configService.EditSmtpConfig<SmtpConfig, SmtpConfigPut>(model));
         }
 
         [Authorize]

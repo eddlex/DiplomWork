@@ -22,12 +22,14 @@ namespace BackEnd.Services.Services
                 this.Token = httpContextAccessor.HttpContext.User.ParseToken();
         }
 
-        public async Task<SmtpConfig> EditSmtpConfig(SmtpConfigPut model)
+        public async Task<T1> EditSmtpConfig<T1, T2>(T2 model)
         {
+            var department = (int?)model?.GetType()?.GetProperty("DepartmentId")?.GetValue(model);
             if (Token.RoleId == 0 ||
-                Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
+                Token.RoleId == 1 && Token.DepartmentId != department)
                 throw Alert.Create(Constants.Error.WrongPermissions);
-            var result = (await this.dbService.QueryAsync<SmtpConfig>("spEditSmtpConfiguration", model)).FirstOrDefault();
+            
+            var result = (await this.dbService.QueryAsync<T1>("spEditSmtpConfiguration", model)).FirstOrDefault();
 
             if (result is null)
                 throw Alert.Create(Constants.Error.SomethingWrong);

@@ -7,15 +7,15 @@ namespace BackEnd.Models.Input
         [Required]
         public int Id { get; set; }
         [Required]
-        public int DepartmentId { get; }
+        public int DepartmentId { get; set; }
         [Required]
-        public string SmtpServer { get; set; }
+        public string? SmtpServer { get; set; }
         [Required]
         public int Port { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
         [Required]
-        public string Password { get; set; }
+        public string? Password { get; set; }
         [Required]
         public bool EnableSSL { get; set; }
     }

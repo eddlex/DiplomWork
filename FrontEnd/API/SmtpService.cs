@@ -30,6 +30,13 @@ public class SmtpService :  ISmtpService
         var result = await this.httpService.Execute<T1, T2>(HttpMethod.Post, "Smtp", model);
         return result;
     }
+     public async Task<T1> EditSmtpConfiguration<T1, T2>(T2 model)
+    {
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Put, "Smtp", model);
+        return result;
+    }
+    
+    
 
     // public async Task<Recipient?> AddRecipient(Recipient model)
     // {
