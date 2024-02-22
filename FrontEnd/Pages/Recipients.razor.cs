@@ -154,7 +154,7 @@ public partial class Recipients
         parameters.Add("ObjectType", dialog);
          
         var result = await(await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Add Recipient", parameters, options)).Result;
-        if (!result.Canceled)
+        if (!result.Canceled && dialog.Department.SelectedValue != null && dialog.Group.SelectedValue != null)
         {
             return new Recipient()
             {
@@ -162,7 +162,8 @@ public partial class Recipients
                 GroupId = dialog.Group.SelectedValue.Value,
                 Mail = dialog.Mail,
                 Description = dialog.Description,
-                Name = dialog.Name
+                Name = dialog.Name,
+                Id = row?.Id ?? 0
             };
         }
 
