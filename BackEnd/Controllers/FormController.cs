@@ -1,3 +1,4 @@
+using BackEnd.Models.Input;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +29,13 @@ namespace BackEnd.Controllers
         public async Task<ActionResult<List<Models.Output.Form>>> GetForm()
         {
             return Ok(await this.formService.GetForms());
+        }
+        
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<List<Models.Output.Form>>> AddForm(FormPost model)
+        {
+            return Ok(await this.formService.AddForm(model));
         }
 
     }; 

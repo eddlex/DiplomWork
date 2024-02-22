@@ -1,8 +1,11 @@
 ﻿using BackEnd.Services.Db;
 using System.Data;
 using BackEnd.Helpers;
+using BackEnd.Models.Input;
 using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
+using FrontEnd.Helpers;
+using MudBlazor;
 
 namespace BackEnd.Services.Services
 {
@@ -75,6 +78,19 @@ namespace BackEnd.Services.Services
                 Token.RoleId,
                 Token.DepartmentId
             })).ToList();
+            return result;
+        }
+
+        public async Task<Form> AddForm(FormPost model)
+        {
+            var department = (int?)model?.GetType()?.GetProperty("DepartmentId")?.GetValue(model);
+            if (Token.RoleId == 0 ||
+                Token.RoleId == 1 && Token.DepartmentId != department)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+
+            var result = (await this.dbService.QueryAsync<Form>("spAddForm", model)).FirstOrDefault();
+            if (result is null)
+                throw Alert.Create(Constants.Error.SomethingWrong);
             return result;
         }
     }
