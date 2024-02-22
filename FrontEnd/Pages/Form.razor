@@ -23,6 +23,18 @@
         color: white; 
         font-size: 20px;
     }
+    .div-left{
+        width: 48.5%;
+        float:left;
+        height: 88vh; 
+        margin: 1% 0 0 1%;
+    }
+    .div-right{
+        width: 48.5%;
+        float:right;
+        height: 88vh;
+        margin: 1% 1% 0 0;
+    }
 </style>
 
 <MudThemeProvider />
@@ -32,8 +44,7 @@
         <Drawer></Drawer>
 
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
-            <div style="height: 10px;"></div>
-            <div style="height: 88vh; width: 83vw; margin: 0 auto;">
+            <div class = "div-left">
                 <MudDataGrid T="FormDto"
                              Items="@FormDto"
                              SortMode="SortMode.Multiple" 
@@ -55,7 +66,7 @@
                              ColumnResizeMode="ResizeMode.Container"
                              Style="height:100%" >
                     <ToolBarContent>
-                        <MudText Typo="Typo.h4" class="mr-2">Add Form</MudText>
+                        <MudText Typo="Typo.h4" class="mr-2">Forms</MudText>
                         <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                         <MudSpacer />
                     </ToolBarContent>
@@ -86,9 +97,55 @@
                 </MudDataGrid>
             </div>
 
-            @* <MudButton @onclick="AddRecipient" Variant="Variant.Filled" Color="Color.Primary">
-                Add recipient
-            </MudButton> *@
+            <div class="div-right">
+                <MudDataGrid T="FormRowDto"
+                             Items="@FormRowDto"
+                             SortMode="SortMode.Multiple"
+                             Filterable="true"
+                             Selectable="false"
+                             MultiSelection="false"
+                             ReadOnly="false"
+                             FixedHeader="true"
+                             EditMode="DataGridEditMode.Form"
+                             RowsPerPage="10"
+                             StartedEditingItem="@StartedEditingItem"
+                             CanceledEditingItem="@CanceledEditingItem"
+                             CommittedItemChanges="@CommittedItemChanges"
+                             Bordered="true"
+                             Dense="true"
+                             EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
+                             ColumnResizeMode="ResizeMode.Container"
+                             Style="height:100%">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h4" class="mr-2">Form rows</MudText>
+                        <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
+                        <MudSpacer />
+                    </ToolBarContent>
+
+                    <Columns>
+                        <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
+                        <PropertyColumn Property="x => x.Name" Title="Name" />
+                        <PropertyColumn Property="x => x.FomId"/>
+                        <PropertyColumn Property="x => x.Value"/>
+
+                        <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
+                                        Sortable="false" Filterable="false" StickyRight="true">
+                            <CellTemplate>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRow(context.Item.Id))"> </MudIconButton>
+                                <MudSpacer />
+                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton>
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+
+                    <PagerContent>
+                        <div class="right-corner">
+                            <MudDataGridPager T="FormDto" />
+                        </div>
+                    </PagerContent>
+
+                </MudDataGrid>
+            </div>
         </MudMainContent>
     </MudLayout>
 </div>
@@ -98,10 +155,7 @@
     private bool _editTriggerRowClick;
     public string _searchString;
     private bool _sortNameByLength;
-    private List<string> _events = new();
-
-
-    
+    private List<string> _events = new();    
     
 
     // events
@@ -114,9 +168,7 @@
     {
         //args.RowIndex
         System.Text.Json.JsonSerializer.Serialize(args.Item);
-    }
-    
-   
+    }   
     
     void StartedEditingItem(FormDto item)
     {
@@ -129,6 +181,21 @@
     }
     
     void CommittedItemChanges(FormDto item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+
+    void StartedEditingItem(FormRowDto item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+
+    void CanceledEditingItem(FormRowDto item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+
+    void CommittedItemChanges(FormRowDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }

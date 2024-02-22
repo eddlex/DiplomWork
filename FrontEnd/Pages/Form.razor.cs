@@ -24,9 +24,11 @@ public partial class Form
 
     private List<FormDto?>? FormDto { get; set; }
     private List<FormBl>? FormBl { get; set; }
-    
-    
-    
+
+    private List<FormRowDto?>? FormRowDto { get; set; }
+    private List<FormRowBl>? FormRowBl { get; set; }
+
+
     private List<Department>? Departments { get; set; }
     private List<RecipientGroup>? RecipientsGroups { get; set; }
     
@@ -52,10 +54,7 @@ public partial class Form
                    Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
                    Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name
                }));
-           }
-           
-           
-           
+           }                   
         } 
     }
 
@@ -106,7 +105,6 @@ public partial class Form
     }
     
     
-  
     private async Task AddRow()
     {
         var smtpBl = await OpenDialog<FormDialog>();
