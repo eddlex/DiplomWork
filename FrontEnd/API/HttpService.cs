@@ -40,10 +40,14 @@ public class HttpService : IHttpService
     {
         try
         {
+            var url = ConfigurationService.URL + apiUrl;
+
+            if (requestBody != null && method == HttpMethod.Get)
+                url += $"?id={requestBody}";
             var request = new HttpRequestMessage
             {
                 Method = method,
-                RequestUri = new Uri(ConfigurationService.URL + apiUrl)
+                RequestUri = new Uri(url)
             };
 
             var session = await this.authenticationStateProvider.GetSession();
@@ -54,9 +58,8 @@ public class HttpService : IHttpService
             
             request.Headers.Add("Accept", "application/json");
 
-            if (requestBody != null)
+            if (requestBody != null && method != HttpMethod.Get)
             {
-
                 request.Content = new StringContent(JsonSerializer.Serialize(requestBody), System.Text.Encoding.UTF8, "application/json");
 			}
 
