@@ -24,30 +24,19 @@ public partial class Form
 
     private List<FormDto?>? FormDto { get; set; }
     private List<FormBl?>? FormBl { get; set; }
-
-<<<<<<< HEAD
-    private List<FormRowBl>? FormRowBl { get; set; }
-
-
-=======
-    private List<FormRowDto?>? FormRowDto { get; set; }
-    private List<FormRowBl?>? FormRowBl { get; set; }
->>>>>>> 274d2b54ecf83916610b3bc3cbf07ea71fbc61de
     private List<Department>? Departments { get; set; }
     private List<RecipientGroup>? RecipientsGroups { get; set; }
 
     #region FormRow
-
-    private async Task<List<FormRowBl>> GetFormRows(int id)
+    private List<FormRowBl>? FormRowBl { get; set; }
+    private async Task GetFormRows(int id)
     {
         if (this.FormService != null)
         {
-            var formRows= await this.FormService.Get<FormRowBl>(id, "Row");
-            if (formRows is not null)
-                return formRows;
+             FormRowBl= await this.FormService.Get<FormRowBl>(id, "Row");
         }
 
-        return new();
+        this.FormRowBl = new();
     }
     
     #endregion
@@ -58,19 +47,13 @@ public partial class Form
             this.DepartmentService != null &&
             this.RecipientService != null)
         {
-<<<<<<< HEAD
-           this.FormBl = await this.FormService.Get<FormBl>();
-
-           this.FormRowBl = await this.FormService.Get<FormRowBl>();
-
-=======
            this.FormBl = await this.FormService.Get<FormBl?>();
->>>>>>> 274d2b54ecf83916610b3bc3cbf07ea71fbc61de
            this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
            this.Departments = await this.DepartmentService.GetDepartments();
            this.FormDto = new();
            if (this.FormBl is { Count: > 0 })
            {
+               await GetFormRows(this.FormBl.OrderBy(r => r?.Id).First().Id);
                this.FormBl.ForEach(e => this.FormDto.Add(new()
                {
                    Id = e.Id,
