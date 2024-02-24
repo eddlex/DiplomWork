@@ -34,9 +34,8 @@ public partial class Form
         if (this.FormService != null)
         {
              FormRowBl= await this.FormService.Get<FormRowBl>(id, "Row");
+             this.FormRowBl ??= new();
         }
-
-        this.FormRowBl = new();
     }
     
     #endregion
