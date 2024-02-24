@@ -35,6 +35,22 @@ public partial class Form
 >>>>>>> 274d2b54ecf83916610b3bc3cbf07ea71fbc61de
     private List<Department>? Departments { get; set; }
     private List<RecipientGroup>? RecipientsGroups { get; set; }
+
+    #region FormRow
+
+    private async Task<List<FormRowBl>> GetFormRows(int id)
+    {
+        if (this.FormService != null)
+        {
+            var formRows= await this.FormService.Get<FormRowBl>(id, "Row");
+            if (formRows is not null)
+                return formRows;
+        }
+
+        return new();
+    }
+    
+    #endregion
     
     protected override async Task OnInitializedAsync()
     {

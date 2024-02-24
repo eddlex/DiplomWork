@@ -15,12 +15,14 @@ public abstract class BaseService : IBaseService
         this.Controller = controller;
     }
     
-    public virtual async Task<List<T>?> Get<T>()
+    public virtual async Task<List<T>?> Get<T>(int? id = null, string method = "")
     {
         if (this.httpService is null)
             throw Alert.Create(Constants.Error.Injection);
-        var result = await this.httpService.Execute<List<T>, object>(HttpMethod.Get, "Form");
-        return result;
+        if (id.HasValue)
+            return await this.httpService.Execute<List<T>, object>(HttpMethod.Get, this.Controller + "/" + method, id);
+        else
+            return await this.httpService.Execute<List<T>, object>(HttpMethod.Get, this.Controller + "/" + method);
 
     }
     
@@ -28,7 +30,7 @@ public abstract class BaseService : IBaseService
     {
         if (this.httpService is null) 
             throw Alert.Create(Constants.Error.Injection);
-        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Delete, "Form", model);
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Delete, this.Controller, model);
         return result;
     }
     
@@ -36,7 +38,7 @@ public abstract class BaseService : IBaseService
     {
         if (this.httpService is null)
             throw Alert.Create(Constants.Error.Injection);
-        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Post, "Form", model);
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Post, this.Controller, model);
         
         return result ?? throw Alert.Create(Constants.Error.BackEnd);
     }
@@ -44,7 +46,7 @@ public abstract class BaseService : IBaseService
     {
         if (this.httpService is null)
             throw Alert.Create(Constants.Error.Injection);
-        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Put, "Form", model);
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Put, this.Controller, model);
         return result ?? throw Alert.Create(Constants.Error.BackEnd);
     }
 
