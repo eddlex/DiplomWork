@@ -26,16 +26,23 @@ namespace BackEnd.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<List<Models.Output.Form>>> GetForm()
+        public async Task<ActionResult<List<Models.Output.Form>>> Form()
         {
             return Ok(await this.formService.GetForms());
         }
         
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<List<Models.Output.Form>>> AddForm(FormPost model)
+        public async Task<ActionResult<List<Models.Output.Form>>> Form(FormPost model)
         {
             return Ok(await this.formService.AddForm(model));
+        }
+        
+        [HttpDelete]
+        [Authorize]
+        public async Task<ActionResult<List<Models.Output.Form>>> Form(FormDelete model)
+        {
+            return Ok(await this.formService.DeleteForm(model));
         }
 
     }; 

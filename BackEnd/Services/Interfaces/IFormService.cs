@@ -8,5 +8,6 @@ namespace BackEnd.Services.Interfaces
     {
         Task<List<Models.Output.Form>> GetForms();
         Task<Form> AddForm(FormPost model);
+        Task<int> DeleteForm(FormDelete model);
     }
 }

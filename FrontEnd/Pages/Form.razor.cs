@@ -23,24 +23,20 @@ public partial class Form
 
 
     private List<FormDto?>? FormDto { get; set; }
-    private List<FormBl>? FormBl { get; set; }
+    private List<FormBl?>? FormBl { get; set; }
 
     private List<FormRowDto?>? FormRowDto { get; set; }
-    private List<FormRowBl>? FormRowBl { get; set; }
-
-
+    private List<FormRowBl?>? FormRowBl { get; set; }
     private List<Department>? Departments { get; set; }
     private List<RecipientGroup>? RecipientsGroups { get; set; }
     
-    
-
     protected override async Task OnInitializedAsync()
     {
         if (this.FormService != null && 
             this.DepartmentService != null &&
             this.RecipientService != null)
         {
-           this.FormBl = await this.FormService.Get<FormBl>();
+           this.FormBl = await this.FormService.Get<FormBl?>();
            this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
            this.Departments = await this.DepartmentService.GetDepartments();
            this.FormDto = new();
@@ -94,16 +90,14 @@ public partial class Form
     
     private async Task DeleteRow(int id)
     {
-        // if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
-        // {
-        //     var result = await this.RecipientService.DelRecipient(RecipientBl.Find(r => r.Id == id));
-        //     if (result.HasValue)
-        //     {
-        //         RecipientDto?.Remove(RecipientDto.FirstOrDefault(row => row?.Id == result.Value));
-        //     }
-        // }
+        if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
+        {
+            var result = await this.FormService?.Delete<int, FormBl>(FormBl?.Find(r => r.Id == id)); 
+            
+            FormDto?.Remove(FormDto?.FirstOrDefault(row => row?.Id == result));
+            FormBl?.Remove(FormBl?.FirstOrDefault(row => row?.Id == result));
+        }
     }
-    
     
     private async Task AddRow()
     {
