@@ -26,13 +26,12 @@
 
 <MudThemeProvider />
 
-<div class="body">
+@* <div class="body"> *@
     <MudLayout style="background-color: #212121; color: white;" Elevation="5">
         <Drawer></Drawer>
 
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
-            <div style="height: 10px;"></div>
-            <div style="height: 88vh; width: 83vw; margin: 0 auto;">
+            <div style="margin: 1% 1% 1% 1%; height:100vh">
                 <MudDataGrid T="RecipientGroupDto"
                              Items="@RecipientGroupDto"
                              SortMode="SortMode.Multiple" 
@@ -91,7 +90,7 @@
             </MudButton> *@
         </MudMainContent>
     </MudLayout>
-</div>
+@* </div> *@
 
 @code {
     private bool _isCellEditMode;

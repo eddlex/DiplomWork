@@ -32,24 +32,23 @@
     .div-left{
         width: 66.5%;
         float:left;
-        /* height: 88vh;  */
-        height: 88vh;
-        margin: 1% 0 0% 1%;
+        margin: 1% 0 1% 1%;
+        height:100vh
     }
     .div-right{
         width: 30.5%;
         float:right;
-        height: 88vh;
-        margin: 1% 1% 0 0;
+        margin: 1% 1% 1% 0;
+        height:100vh
     }
 </style>
 
 <MudThemeProvider />
 
-<div class="body">
+@* <div class="body"> *@
     <MudLayout style="background-color: #212121; color: white;" Elevation="5">
         <Drawer></Drawer>
-        <MudMainContent style="background-color: black; color: white; height:100%;" Elevation="5">
+        <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div class = "div-left">
                 <MudDataGrid T="FormDto"
                              Items="@FormDto"
@@ -111,7 +110,9 @@
                              ReadOnly="false"
                              RowsPerPage="10"
                              Filterable="false"
+                             RowClick="@RowClicked" 
                              SortMode="SortMode.None"
+                             MultiSelection="false"
                              StartedEditingItem="@StartedEditingItem"
                              CanceledEditingItem="@CanceledEditingItem"
                              CommittedItemChanges="@CommittedItemChanges"
@@ -120,6 +121,7 @@
                              EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
                              ColumnResizeMode="ResizeMode.Column"
                              Style="height:100%">
+
                     <ToolBarContent>
                         <MudText Typo="Typo.h4" class="mr-2">Form rows</MudText>
                         
@@ -134,10 +136,10 @@
 
                         
 
-                        <TemplateColumn StickyRight="true">
+                        <TemplateColumn Hidden="false" CellClass="justify-start" StickyRight="true">
                             <CellTemplate>
                                 <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error"
-                                               OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton>
+                                               OnClick="@(() => DeleteRow(context.Item.Id))" /> 
                             </CellTemplate>
                         </TemplateColumn>
                     </Columns>
@@ -151,7 +153,7 @@
             </div>
         </MudMainContent>
     </MudLayout>
-</div>
+@* </div> *@
 
 @code {
     private bool _isCellEditMode;
@@ -166,6 +168,10 @@
     }
     // events
     void RowClicked(DataGridRowClickEventArgs<FormDto> args)
+    {
+        System.Text.Json.JsonSerializer.Serialize(args.Item);
+    }
+    void RowClicked(DataGridRowClickEventArgs<FormRowBl> args)
     {
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }

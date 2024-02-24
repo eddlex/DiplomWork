@@ -6,10 +6,8 @@
 
 <style>
     body {
-        min-height: 100%;
         background-color: black;
-        opacity: 0.8;  
-        height:100vh;
+        opacity: 0.8; 
     }
 
     .custom-elevation {
@@ -28,10 +26,11 @@
     }
 </style>
 
-@* <MudThemeProvider /> *@
-    <MudLayout style="background-color: #212121; color: white; height:100vh " Elevation="5">
+<MudThemeProvider />
+
+    <MudLayout style="background-color: #212121; color: white;" Elevation="5">
         <Drawer></Drawer>
-    <MudMainContent style=" color: white; height:100vh" Elevation="5">
+    <MudMainContent style="background-color: black; color: white;" Elevation="5">
         <div style="margin: 1% 1% 1% 1%; height:100vh">
                 <MudDataGrid T="User" 
                     Items="@GridUsers" 
@@ -49,9 +48,11 @@
                     StartedEditingItem="@StartedEditingItem" 
                     CanceledEditingItem="@CanceledEditingItem" 
                     CommittedItemChanges="@CommittedItemChanges"
-                    Bordered="true" Dense="true" 
+                    Bordered="true" 
+                    Dense="true" 
                     EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
-                    ColumnResizeMode="ResizeMode.Column">
+                    ColumnResizeMode="ResizeMode.Column"
+                    Style="height:100%">
                 <ToolBarContent>
                     <MudText Typo="Typo.h4">Users</MudText>
                     <MudSpacer />
