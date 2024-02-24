@@ -25,7 +25,6 @@ public partial class Form
     private List<FormDto?>? FormDto { get; set; }
     private List<FormBl>? FormBl { get; set; }
 
-    private List<FormRowDto?>? FormRowDto { get; set; }
     private List<FormRowBl>? FormRowBl { get; set; }
 
 
@@ -41,6 +40,9 @@ public partial class Form
             this.RecipientService != null)
         {
            this.FormBl = await this.FormService.Get<FormBl>();
+
+           this.FormRowBl = await this.FormService.Get<FormRowBl>();
+
            this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
            this.Departments = await this.DepartmentService.GetDepartments();
            this.FormDto = new();
@@ -54,7 +56,7 @@ public partial class Form
                    Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
                    Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name
                }));
-           }                   
+           }
         } 
     }
 
