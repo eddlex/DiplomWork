@@ -34,12 +34,26 @@
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div style="height: 10px;"></div>
             <div style="height: 88vh; width: 83vw; margin: 0 auto;">
-                <MudDataGrid T="User" Items="@GridUsers" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
-                             RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Selectable="false" MultiSelection="false"
-                             ReadOnly="false" FixedHeader="true" EditMode="DataGridEditMode.Form" RowsPerPage="10"
-                             StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
-                             Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
-                             ColumnResizeMode="ResizeMode.Container" Style="height:100%" autoPageSize="true">
+                <MudDataGrid T="User" 
+                    Items="@GridUsers" 
+                    SortMode="SortMode.Multiple" 
+                    Filterable="true" 
+                    QuickFilter="@_quickFilter"
+                             RowClick="@RowClicked" 
+                             RowContextMenuClick="RowRightClicked" 
+                             Selectable="false" 
+                             MultiSelection="false"
+                             ReadOnly="false" 
+                             FixedHeader="true" 
+                             EditMode="DataGridEditMode.Form" 
+                             RowsPerPage="10"
+                             StartedEditingItem="@StartedEditingItem" 
+                             CanceledEditingItem="@CanceledEditingItem" 
+                             CommittedItemChanges="@CommittedItemChanges"
+                             Bordered="true" Dense="true" 
+                             EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
+                             ColumnResizeMode="ResizeMode.Column"
+                             Style="height:100%" autoPageSize="true">
                 <ToolBarContent>
                     <MudText Typo="Typo.h4">Users</MudText>
                     <MudSpacer />
