@@ -51,6 +51,14 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.formService.EditForm(model));
         }
+        
+        [HttpGet]
+        [Authorize]
+        [Route("Row")]
+        public async Task<ActionResult<List<Models.Output.Form>>> FormRow(int id)
+        {
+            return Ok(await this.formService.GetFormRows(id));
+        }
 
     }; 
 }

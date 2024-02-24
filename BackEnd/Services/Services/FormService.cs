@@ -120,5 +120,11 @@ namespace BackEnd.Services.Services
                 throw Alert.Create(Constants.Error.SomethingWrong);
             return result;
         }
+
+        public async Task<List<FormRow?>> GetFormRows(int id)
+        {
+            var result = await this.dbService.QueryAsync<FormRow>("spGetFormRows", new {id});
+            return result.ToList();
+        }
     }
 }
