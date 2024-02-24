@@ -23,26 +23,33 @@ public partial class Form
 
 
     private List<FormDto?>? FormDto { get; set; }
-    private List<FormBl>? FormBl { get; set; }
+    private List<FormBl?>? FormBl { get; set; }
 
+<<<<<<< HEAD
     private List<FormRowBl>? FormRowBl { get; set; }
 
 
+=======
+    private List<FormRowDto?>? FormRowDto { get; set; }
+    private List<FormRowBl?>? FormRowBl { get; set; }
+>>>>>>> 274d2b54ecf83916610b3bc3cbf07ea71fbc61de
     private List<Department>? Departments { get; set; }
     private List<RecipientGroup>? RecipientsGroups { get; set; }
     
-    
-
     protected override async Task OnInitializedAsync()
     {
         if (this.FormService != null && 
             this.DepartmentService != null &&
             this.RecipientService != null)
         {
+<<<<<<< HEAD
            this.FormBl = await this.FormService.Get<FormBl>();
 
            this.FormRowBl = await this.FormService.Get<FormRowBl>();
 
+=======
+           this.FormBl = await this.FormService.Get<FormBl?>();
+>>>>>>> 274d2b54ecf83916610b3bc3cbf07ea71fbc61de
            this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
            this.Departments = await this.DepartmentService.GetDepartments();
            this.FormDto = new();
@@ -62,50 +69,45 @@ public partial class Form
 
     private async Task EditRow(int id)
     {
-        // if (this.RecipientService != null)
-        // {
-        //     var editedRowBl = this.RecipientBl?.Find(r => r.Id == id);
-        //     var editedRowDto = this.RecipientDto?.Find(r => r?.Id == id);
-        //
-        //     
-        //     
-        //     var recipient = await OpenDialog(editedRowBl);
-        //     if (recipient != default && editedRowBl is not null )
-        //     {
-        //         var result = await this.RecipientService.EditRecipient(recipient);
-        //         if (result != null)
-        //         {
-        //             this.RecipientDto?.Remove(editedRowDto);
-        //             this.RecipientBl?.Remove(editedRowBl);
-        //             this.RecipientBl?.Add(result);
-        //             
-        //             this.RecipientDto?.Add(new RecipientDto()
-        //             {
-        //                 Id = result.Id,
-        //                 Name = result.Name,
-        //                 Description = result.Description,
-        //                 Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
-        //                 Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
-        //                 Mail = result.Mail
-        //             });
-        //         }
-        //     }
-        // }
+        if (this.FormService != null)
+        {
+            var editedRowBl = this.FormBl?.Find(r => r.Id == id);
+            var editedRowDto = this.FormDto?.Find(r => r?.Id == id);
+        
+            
+            
+            var recipient = await OpenDialog<FormDialog>(editedRowBl);
+            if (recipient != default && editedRowBl is not null )
+            {
+                var result = await this.FormService.Edit<FormBl, FormBl>(recipient);
+                
+                this.FormDto?.Remove(editedRowDto);
+                this.FormBl?.Remove(editedRowBl);
+                this.FormBl?.Add(result);
+                this.FormDto?.Add(new FormDto()
+                {
+                    Id = result.Id,
+                    Name = result.Name,
+                    Description = result.Description,
+                    Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
+                    Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
+                   
+                });
+            }
+        }
     }
     
     
     private async Task DeleteRow(int id)
     {
-        // if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
-        // {
-        //     var result = await this.RecipientService.DelRecipient(RecipientBl.Find(r => r.Id == id));
-        //     if (result.HasValue)
-        //     {
-        //         RecipientDto?.Remove(RecipientDto.FirstOrDefault(row => row?.Id == result.Value));
-        //     }
-        // }
+        if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
+        {
+            var result = await this.FormService?.Delete<int, FormBl>(FormBl?.Find(r => r.Id == id)); 
+            
+            FormDto?.Remove(FormDto?.FirstOrDefault(row => row?.Id == result));
+            FormBl?.Remove(FormBl?.FirstOrDefault(row => row?.Id == result));
+        }
     }
-    
     
     private async Task AddRow()
     {

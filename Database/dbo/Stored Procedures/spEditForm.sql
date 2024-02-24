@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[spAddForm]
+﻿CREATE PROCEDURE [dbo].[spEditForm]
+@Id INT,
 @GroupId INT,
 @Name NVARCHAR(50),
 @DepartmentId INT,
@@ -8,8 +9,12 @@ BEGIN
    BEGIN TRY
     BEGIN TRANSACTION;
 
-        INSERT INTO  Form (GroupId, Name, DepartmentId, Description)
-        VALUES (@GroupId, @Name, @DepartmentId, @Description)
+        UPDATE Form 
+        SET GroupId = @GroupId, 
+            Name = @Name,
+            DepartmentId = @DepartmentId,
+            Description = @Description
+        WHERE Id = @Id
         
         SELECT [Id],
                [GroupId],
@@ -17,7 +22,7 @@ BEGIN
                [DepartmentId],
                [Description]
         FROM Form
-        WHERE Id = @@IDENTITY
+        WHERE Id = @Id
     COMMIT;
 END TRY
 BEGIN CATCH
