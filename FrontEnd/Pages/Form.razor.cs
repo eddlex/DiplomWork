@@ -56,35 +56,32 @@ public partial class Form
 
     private async Task EditRow(int id)
     {
-        // if (this.RecipientService != null)
-        // {
-        //     var editedRowBl = this.RecipientBl?.Find(r => r.Id == id);
-        //     var editedRowDto = this.RecipientDto?.Find(r => r?.Id == id);
-        //
-        //     
-        //     
-        //     var recipient = await OpenDialog(editedRowBl);
-        //     if (recipient != default && editedRowBl is not null )
-        //     {
-        //         var result = await this.RecipientService.EditRecipient(recipient);
-        //         if (result != null)
-        //         {
-        //             this.RecipientDto?.Remove(editedRowDto);
-        //             this.RecipientBl?.Remove(editedRowBl);
-        //             this.RecipientBl?.Add(result);
-        //             
-        //             this.RecipientDto?.Add(new RecipientDto()
-        //             {
-        //                 Id = result.Id,
-        //                 Name = result.Name,
-        //                 Description = result.Description,
-        //                 Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
-        //                 Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
-        //                 Mail = result.Mail
-        //             });
-        //         }
-        //     }
-        // }
+        if (this.FormService != null)
+        {
+            var editedRowBl = this.FormBl?.Find(r => r.Id == id);
+            var editedRowDto = this.FormDto?.Find(r => r?.Id == id);
+        
+            
+            
+            var recipient = await OpenDialog<FormDialog>(editedRowBl);
+            if (recipient != default && editedRowBl is not null )
+            {
+                var result = await this.FormService.Edit<FormBl, FormBl>(recipient);
+                
+                this.FormDto?.Remove(editedRowDto);
+                this.FormBl?.Remove(editedRowBl);
+                this.FormBl?.Add(result);
+                this.FormDto?.Add(new FormDto()
+                {
+                    Id = result.Id,
+                    Name = result.Name,
+                    Description = result.Description,
+                    Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
+                    Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
+                   
+                });
+            }
+        }
     }
     
     

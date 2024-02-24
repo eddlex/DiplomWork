@@ -44,6 +44,13 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.formService.DeleteForm(model));
         }
+        
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<List<Models.Output.Form>>> Form(FormPut model)
+        {
+            return Ok(await this.formService.EditForm(model));
+        }
 
     }; 
 }
