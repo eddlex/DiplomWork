@@ -42,6 +42,7 @@ public partial class Form
     
     protected override async Task OnInitializedAsync()
     {
+
         if (this.FormService != null && 
             this.DepartmentService != null &&
             this.RecipientService != null)
@@ -95,7 +96,10 @@ public partial class Form
         }
     }
     
-    
+    private async Task SendEmail(int id)
+    {
+
+    }
     private async Task DeleteRow(int id)
     {
         if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
