@@ -3,7 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddMailBody.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipient.sql" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipientGroups.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipientGroup.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddSmtpConfiguration.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddUniversity.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelMailBody.sql" dialect="TSQL" />

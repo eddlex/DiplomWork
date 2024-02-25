@@ -44,10 +44,20 @@ namespace BackEnd.Controllers
         
         [Route("Groups")] //tested
         [HttpGet]
-        public async Task<ActionResult<List<RecipientGroupGet>>> GetRecipientGroups()
+        public async Task<ActionResult<List<RecipientGroupGet>>> RecipientGroup()
         {
             return Ok(await this.recipientService.GetRecipientGroups());
-        } 
+        }
+        
+        [Route("Groups")] 
+        [HttpPost]
+        public async Task<ActionResult<RecipientGroup>> RecipientGroup(RecipientGroupPost model)
+        {
+            return Ok(await this.recipientService.AddRecipientGroup(model));
+        }
+        
+        
+        
         /*
         [Route("Groups/{Id:int}")]
         [HttpGet]
