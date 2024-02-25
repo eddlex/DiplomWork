@@ -92,66 +92,61 @@ public partial class RecipientGroups
     }
     
   
-    private async Task AddRecipientGroup()
+    private async Task AddRow()
     {
-    //   var recipient = await OpenDialog();
-    //   if (recipient != default && this.RecipientService != null)
-    //   {
-    //       var result = await this.RecipientService.AddRecipient(recipient);
-    //       if (result != null)
-    //       {
-    //           this.RecipientGroupDto?.Add(new RecipientGroupDto()
-    //           {
-    //               Id = result.Id,
-    //               Name = result.Name,
-    //               Description = result.Description,
-    //               Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name
-    //           });
-    //       }
-    //   }
+        var recipient = await OpenDialog();
+        if (recipient != default && this.RecipientService != null)
+        {
+            var result = await this.RecipientService.AddRecipientGroup(recipient);
+            if (result != null)
+            {
+                this.RecipientGroupDto?.Add(new RecipientGroupDto()
+                {
+                    Id = result.Id,
+                    Name = result.Name,
+                    Description = result.Description,
+                    Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name
+                });
+            }
+        }
     }
 
     private async Task<RecipientGroup?> OpenDialog(RecipientGroup? row = default)
     {
-    //    var options = new DialogOptions 
-    //    {
-    //        CloseOnEscapeKey = true,
-    //        MaxWidth = MaxWidth.Large,
-    //        Position = DialogPosition.Center,
-    //    };
+        var options = new DialogOptions 
+        {
+            CloseOnEscapeKey = true,
+            MaxWidth = MaxWidth.Large,
+            Position = DialogPosition.Center,
+        };
         
-    //    var parameters = new DialogParameters<RecipientDialog>();
+        var parameters = new DialogParameters<RecipientDialog>();
+        
+        var dialog = new RecipientGroupDialog()
+        {
+            Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
+        };
 
-        
-        
-    //    var dialog = new RecipientDialog()
-    //    {
-    //        Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
-    //        //Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups)
-    //    };
-
-    //    if (row is not null)
-    //    {
-    //        dialog.Name = row.Name;
-    //        dialog.Description = row.Description;
-    //        dialog.Department.SelectedValue = row.DepartmentId;
-    //    }
+        if (row is not null)
+        {
+            dialog.Name = row.Name;
+            dialog.Description = row.Description;
+            dialog.Department.SelectedValue = row.DepartmentId;
+        }
          
-    //    parameters.Add("ObjectType", dialog);
+        parameters.Add("ObjectType", dialog);
          
-    //    var result = await(await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Add Recipient", parameters, options)).Result;
-    //    if (!result.Canceled && dialog.Department.SelectedValue != null && dialog.Group.SelectedValue != null)
-    //    {
-    //        return new Recipient()
-    //        {
-    //            DepartmentId = dialog.Department.SelectedValue.Value,
-    //            GroupId = dialog.Group.SelectedValue.Value,
-    //            Mail = dialog.Mail,
-    //            Description = dialog.Description,
-    //            Name = dialog.Name,
-    //            Id = row?.Id ?? 0
-    //        };
-    //    }
+        var result = await(await DialogService.ShowAsync<DialogComponent<RecipientGroupDialog>>("Add RecipientGroup", parameters, options)).Result;
+        if (!result.Canceled && dialog.Department.SelectedValue != null)
+        {
+            return new RecipientGroup()
+            {
+                DepartmentId = dialog.Department.SelectedValue.Value,
+                Description = dialog.Description,
+                Name = dialog.Name,
+                Id = row?.Id ?? 0
+            };
+        }
 
         return default;
     }
