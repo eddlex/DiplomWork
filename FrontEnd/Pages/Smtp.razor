@@ -79,12 +79,10 @@
                             </CellTemplate>
                         </TemplateColumn>
                     </Columns>
-@* 
+
                     <PagerContent>
-                        <div class="right-corner">
-                            <MudDataGridPager T="SMTPConfigDto" />
-                        </div>
-                    </PagerContent> *@
+                        <MudDataGridPager T="SMTPConfigDto" DisableRowsPerPage="true" />
+                    </PagerContent>
 
                 </MudDataGrid>
             </div>
