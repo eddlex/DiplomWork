@@ -49,33 +49,31 @@ public partial class RecipientGroups
 
     private async Task EditRecipientGroup(int id)
     {
-    //    if (this.RecipientService != null)
-    //    {
-    //        var editedRowBl = this.RecipientGroupBl?.Find(r => r.Id == id);
-    //        var editedRowDto = this.RecipientGroupDto?.Find(r => r?.Id == id);
+    if (this.RecipientService != null)
+    {
+        var editedRowBl = this.RecipientGroupBl?.Find(r => r.Id == id);
+        var editedRowDto = this.RecipientGroupDto?.Find(r => r?.Id == id);
         
-            
-            
-    //        var recipient = await OpenDialog(editedRowBl);
-    //        if (recipient != default && editedRowBl is not null )
-    //        {
-    //            var result = await this.RecipientService.EditRecipient(recipient);
-    //            if (result != null)
-    //            {
-    //                this.RecipientGroupDto?.Remove(editedRowDto);
-    //                this.RecipientGroupBl?.Remove(editedRowBl);
-    //                this.RecipientGroupBl?.Add(result);
+        var recipient = await OpenDialog(editedRowBl);
+        if (recipient != default && editedRowBl is not null )
+        {
+            var result = await this.RecipientService.EditRecipientGroup(recipient);
+            if (result != null)
+            {
+                this.RecipientGroupDto?.Remove(editedRowDto);
+                this.RecipientGroupBl?.Remove(editedRowBl);
+                this.RecipientGroupBl?.Add(result);
                     
-    //                this.RecipientGroupDto?.Add(new RecipientGroupDto()
-    //                {
-    //                    Id = result.Id,
-    //                    Name = result.Name,
-    //                    Description = result.Description,
-    //                    Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name
-    //                });
-    //            }
-    //        }
-    //    }
+                this.RecipientGroupDto?.Add(new RecipientGroupDto()
+                {
+                    Id = result.Id,
+                    Name = result.Name,
+                    Description = result.Description,
+                    Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name
+                });
+            }
+        }
+    }
     }
     
     
