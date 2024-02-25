@@ -167,9 +167,9 @@
         FormRowBl.Add(new FormRowBl());
     }
     // events
-    void RowClicked(DataGridRowClickEventArgs<FormDto> args)
+    async Task RowClicked(DataGridRowClickEventArgs<FormDto> args)
     {
-        System.Text.Json.JsonSerializer.Serialize(args.Item);
+        await GetFormRows(args.Item.Id);
     }
     void RowClicked(DataGridRowClickEventArgs<FormRowBl> args)
     {
