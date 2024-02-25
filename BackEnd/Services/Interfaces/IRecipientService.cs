@@ -8,8 +8,7 @@ namespace BackEnd.Services.Interfaces
     {
         Task<List<RecipientGroupGet?>> GetRecipientGroups(int? Id = null);
         Task<RecipientGroup?> AddRecipientGroup(RecipientGroupPost model);
-        
-        Task<bool> DelRecipientGroups(List<int> ides);
+        Task<int?> DeleteRecipientGroup(RecipientGroupDelete model);
         Task<bool> UpdateRecipientGroups(List<RecipientGroupPut> groups);
 
         Task<List<Recipient>> GetRecipients();

@@ -102,9 +102,16 @@ namespace BackEnd.Services.Services
 
         }      
      
-        public Task<bool> DelRecipientGroups(List<int> ides)
+        public async Task<int?> DeleteRecipientGroup(RecipientGroupDelete model)
         {
-            throw new NotImplementedException();
+            if (Token.RoleId == 0 ||
+                Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            
+            var result = (await dbService.QueryAsync<int?>("spDeleteRecipientGroup", new{model.Id})).FirstOrDefault();
+            if (result is null)
+                throw Alert.Create(Constants.Error.SomethingWrong);
+            return result;
         }
         
         public Task<bool> UpdateRecipientGroups(List<RecipientGroupPut> groups)

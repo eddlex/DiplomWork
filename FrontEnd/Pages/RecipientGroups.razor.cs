@@ -79,16 +79,16 @@ public partial class RecipientGroups
     }
     
     
-    private async Task DeleteRecipientGroup(int id)
+    private async Task DeleteRow(int id)
     {
-    //    if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
-    //    {
-    //        var result = await this.RecipientService.DelRecipient(RecipientGroupBl.Find(r => r.Id == id));
-    //        if (result.HasValue)
-    //        {
-    //            RecipientGroupDto?.Remove(RecipientGroupDto.FirstOrDefault(row => row?.Id == result.Value));
-    //        }
-    //    }
+        if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
+        {
+            var result = await this.RecipientService.DeleteRecipientGroup(RecipientGroupBl.Find(r => r.Id == id));
+            if (result.HasValue)
+            {
+                RecipientGroupDto?.Remove(RecipientGroupDto.FirstOrDefault(row => row?.Id == result.Value));
+            }
+        }
     }
     
   

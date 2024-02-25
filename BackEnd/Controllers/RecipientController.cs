@@ -56,6 +56,13 @@ namespace BackEnd.Controllers
             return Ok(await this.recipientService.AddRecipientGroup(model));
         }
         
+        [Route("Group")] 
+        [HttpDelete]
+        public async Task<ActionResult<int>> RecipientGroup(RecipientGroupDelete model)
+        {
+            return Ok(await this.recipientService.DeleteRecipientGroup(model));
+        }
+        
         
         
         /*
