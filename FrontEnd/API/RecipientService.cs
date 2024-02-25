@@ -4,44 +4,46 @@ using FrontEnd.Model.BL;
 
 namespace FrontEnd.API;
 
-public class RecipientService :  IRecipientService
+public class RecipientService : BaseService, IRecipientService
 {
-    private readonly IHttpService httpService;
-
-    public RecipientService(IHttpService httpService)
+    
+    public RecipientService(IHttpService httpService) :base(httpService, "Recipient")
     {
-        this.httpService = httpService;
+        
     }
     
     public async Task<List<Recipient>?> GetRecipient()
     {
-        var result = await this.httpService.Execute<List<Recipient>, object>(HttpMethod.Get, "Recipient");
+        var result = await this.Get<Recipient>();
         return result;
     }
 
     public async Task<Recipient?> AddRecipient(Recipient model)
     {
-        var result = await this.httpService.Execute<Recipient?, Recipient>(HttpMethod.Post, "Recipient", model);
+        var result = await this.Add<Recipient?, Recipient>(model);
         return result;
     }
 
     public async Task<Recipient?> EditRecipient(Recipient model)
     {
-        var result = await this.httpService.Execute<Recipient?, Recipient>(HttpMethod.Put, "Recipient", model);
+        var result = await this.Edit<Recipient?, Recipient>(model);
         return result;
     }
     
     public async Task<int?> DelRecipient(Recipient model)
     {
-        var result = await this.httpService.Execute<int?, Recipient?>(HttpMethod.Delete, "Recipient", model);
+        var result = await this.Delete<int?, Recipient?>(model);
         return result;
     }
     public async Task<List<RecipientGroup>?> GetRecipientsGroups()
     {
-        var result = await this.httpService.Execute<List<RecipientGroup>, object>(HttpMethod.Get, "Recipient/Groups");
+        var result = await this.Get<RecipientGroup>(method:"Group");
         return result;
     }
-    
-    
-   
+
+    public async Task<RecipientGroup?> AddRecipientGroup(RecipientGroup model)
+    {
+        var result = await this.Add<RecipientGroup, RecipientGroup>(model, method:"Group");
+        return result;
+    }
 }

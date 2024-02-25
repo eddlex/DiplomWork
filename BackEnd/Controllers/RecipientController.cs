@@ -42,14 +42,14 @@ namespace BackEnd.Controllers
         
         
         
-        [Route("Groups")] //tested
+        [Route("Group")] //tested
         [HttpGet]
         public async Task<ActionResult<List<RecipientGroupGet>>> RecipientGroup()
         {
             return Ok(await this.recipientService.GetRecipientGroups());
         }
         
-        [Route("Groups")] 
+        [Route("Group")] 
         [HttpPost]
         public async Task<ActionResult<RecipientGroup>> RecipientGroup(RecipientGroupPost model)
         {

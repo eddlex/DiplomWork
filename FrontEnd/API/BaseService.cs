@@ -26,27 +26,27 @@ public abstract class BaseService : IBaseService
 
     }
     
-    public virtual async Task<T1?> Delete<T1, T2>(T2 model)
+    public virtual async Task<T1?> Delete<T1, T2>(T2 model, string method = "")
     {
         if (this.httpService is null) 
             throw Alert.Create(Constants.Error.Injection);
-        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Delete, this.Controller, model);
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Delete, this.Controller + "/" + method, model  );
         return result;
     }
     
-    public virtual async Task<T1> Add<T1, T2>(T2 model)
+    public virtual async Task<T1> Add<T1, T2>(T2 model, string method = "")
     {
         if (this.httpService is null)
             throw Alert.Create(Constants.Error.Injection);
-        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Post, this.Controller, model);
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Post, this.Controller + "/" + method, model);
         
         return result ?? throw Alert.Create(Constants.Error.BackEnd);
     }
-    public virtual async Task<T1> Edit<T1, T2>(T2 model)
+    public virtual async Task<T1> Edit<T1, T2>(T2 model, string method = "")
     {
         if (this.httpService is null)
             throw Alert.Create(Constants.Error.Injection);
-        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Put, this.Controller, model);
+        var result = await this.httpService.Execute<T1, T2>(HttpMethod.Put, this.Controller + "/" + method, model);
         return result ?? throw Alert.Create(Constants.Error.BackEnd);
     }
 
