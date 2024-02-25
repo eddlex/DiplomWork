@@ -52,4 +52,10 @@ public class RecipientService : BaseService, IRecipientService
         var result = await this.Delete<int, RecipientGroup>(model, method:"Group");
         return result ;
     }
+
+    public async Task<RecipientGroup> EditRecipientGroup(RecipientGroup model)
+    {
+        var result = await this.Edit<RecipientGroup, RecipientGroup>(model, method:"Group");
+        return result ;
+    }
 }

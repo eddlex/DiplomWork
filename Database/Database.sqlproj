@@ -73,6 +73,7 @@
     <Build Include="dbo\Stored Procedures\spDeletRecipient.sql" />
     <Build Include="dbo\Stored Procedures\spEditForm.sql" />
     <Build Include="dbo\Stored Procedures\spEditRecipient.sql" />
+    <Build Include="dbo\Stored Procedures\spEditRecipientGroup.sql" />
     <Build Include="dbo\Stored Procedures\spEditSmtpConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spGetFormRows.sql" />
     <Build Include="dbo\Stored Procedures\spGetUsers.sql" />

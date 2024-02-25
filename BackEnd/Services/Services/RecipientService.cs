@@ -114,9 +114,16 @@ namespace BackEnd.Services.Services
             return result;
         }
         
-        public Task<bool> UpdateRecipientGroups(List<RecipientGroupPut> groups)
+        public async Task<RecipientGroup?> EditRecipientGroup(RecipientGroupPut model)
         {
-            throw new NotImplementedException();
+            if (Token.RoleId == 0 ||
+                Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            
+            var result = (await dbService.QueryAsync<RecipientGroup?>("spEditRecipientGroup", model)).FirstOrDefault();
+            if (result is null)
+                throw Alert.Create(Constants.Error.SomethingWrong);
+            return result;
         }
         
         #endregion
