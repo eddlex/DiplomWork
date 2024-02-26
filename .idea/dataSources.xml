@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="SERVER" uuid="3179c23f-cbdb-4d90-8c03-ab60a206ba78">
-      <driver-ref>sqlserver.jtds</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:jtds:sqlserver://SQL5111.site4now.net/db_aa03dc_diplomwork</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="db_aa3177_backend2@SQL8006.site4now.net" uuid="7f2d7824-b371-446b-aeed-c02eee505bf1">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://SQL8006.site4now.net;database=db_aa3177_backend2</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="new" uuid="862a9a00-efbd-49cd-a3ce-6d00021e2166">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://SQL8005.site4now.net;database=db_aa56f4_diplom</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
