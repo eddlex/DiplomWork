@@ -85,8 +85,10 @@
                         <TemplateColumn Hidden="false" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
                             <CellTemplate>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Send" Size="@Size.Small" Color="Color.Primary" 
+                                               OnClick="@(() => SendEmail(context.Item.Id))"> </MudIconButton>
                                 <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRow(context.Item.Id))"> </MudIconButton>
-                                <MudSpacer />
+                                <MudSpacer/>
                                 <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton>
                             </CellTemplate>
                         </TemplateColumn>
@@ -130,16 +132,16 @@
 
                     <Columns>
                         <PropertyColumn Property="x => x.Query" />
-                        <PropertyColumn Property="x => x.Required" />
-
+                        <PropertyColumn Property="x => x.Required">
+                            <EditTemplate>
+                                <MudCheckBox @bind-Checked="context.Item.Required" @onclick="@(()=>EditFormRows(context.Item))" />
+                            </EditTemplate>
+                        </PropertyColumn>
                         <TemplateColumn Hidden="false" 
                                         Sortable="false" Filterable="false" StickyRight="true">
                             <CellTemplate>
-                                
-                                <MudIconButton Icon="@Icons.Material.Outlined.Send" Size="@Size.Small" Color="Color.Primary" 
-                                                OnClick="@(() => SendEmail(context.Item.Id))"> </MudIconButton>
                                 <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" 
-                                                OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton>
+                                                OnClick="@(() => DeleteFormRow(context.Item.Id))"> </MudIconButton>
                             </CellTemplate>
 
                         </TemplateColumn>                       
@@ -179,22 +181,9 @@
         }
         _isEditMode = isEditMode;
     }
-
-    void AddItem()
-    {
-        FormRowBl.Add(new FormRowBl());
-    }
-    // events
-    void RowClicked(DataGridRowClickEventArgs<FormDto> args)
-    {
-        System.Text.Json.JsonSerializer.Serialize(args.Item);
-    }
-    void RowClicked(DataGridRowClickEventArgs<FormRowBl> args)
-    {
-        System.Text.Json.JsonSerializer.Serialize(args.Item);
-    }
-         
-
+    
+    async Task RowClicked(DataGridRowClickEventArgs<FormDto> args) => await GetFormRows(args.Item.Id);
+    
     void StartedEditingItem(FormDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
@@ -209,7 +198,9 @@
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
-
+    
+    
+    
     void StartedEditingItem(FormRowBl item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
@@ -220,8 +211,11 @@
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    void CommittedItemChanges(FormRowBl item)
+    async Task CommittedItemChanges(FormRowBl item) => await EditFormRows(item);
+    void AddItem() => FormRowBl?.Add(new FormRowBl());
+    
+    void RowClicked(DataGridRowClickEventArgs<FormRowBl> args)
     {
-        System.Text.Json.JsonSerializer.Serialize(item);
+        System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
 }

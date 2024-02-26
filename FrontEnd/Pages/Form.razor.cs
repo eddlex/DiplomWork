@@ -38,6 +38,25 @@ public partial class Form
         }
     }
     
+    private async Task EditFormRows(FormRowBl row)
+    {
+        if (this.FormService != null)
+        {
+            row =  await this.FormService.Edit<FormRowBl, FormRowBl>(row, "Row");
+        }
+    }
+    
+    private async Task DeleteFormRow(int id)
+    {
+        if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
+        {
+            var result = await this.FormService?.Delete<int, FormRowBl>(FormRowBl?.Find(r => r.Id == id)); 
+            
+            // FormDto?.Remove(FormRowDto?.FirstOrDefault(row => row?.Id == result));
+            FormRowBl?.Remove(FormRowBl?.FirstOrDefault(row => row?.Id == result));
+        }
+    }
+    
     #endregion
     
     protected override async Task OnInitializedAsync()
