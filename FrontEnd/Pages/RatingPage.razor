@@ -1,4 +1,4 @@
-﻿@page "/Rating"
+﻿@page "/Rating/{key}"
 @using FrontEnd.Model.DTO
 @using FrontEnd.Model.BL
 @using FrontEnd.Model
@@ -90,7 +90,8 @@
     </MudButton>
 </div>
 
-@code {
+@code 
+{
     private List<SubjectBl>? Subjects = new List<SubjectBl>();
 
     private List<SuggestionBl>? Suggestions = new List<SuggestionBl>();
@@ -110,5 +111,10 @@
 
         Subjects?.Add(Subject);
     }
+
     void AddItem() => Suggestions?.Add(new SuggestionBl());
+    
+    [Parameter] public string Key{get;set;}
+
+
 }
