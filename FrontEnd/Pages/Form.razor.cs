@@ -42,18 +42,25 @@ public partial class Form
     {
         if (this.FormService != null)
         {
-            row =  await this.FormService.Edit<FormRowBl, FormRowBl>(row, "Row");
+            if (!string.IsNullOrWhiteSpace(row.Query))
+                row =  await this.FormService.Edit<FormRowBl, FormRowBl>(row, "Row");
         }
     }
     
-    private async Task DeleteFormRow(int id)
+    private async Task DeleteFormRow(FormRowBl item)
     {
         if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
         {
-            var result = await this.FormService?.Delete<int, FormRowBl>(FormRowBl?.Find(r => r.Id == id)); 
-            
-            // FormDto?.Remove(FormRowDto?.FirstOrDefault(row => row?.Id == result));
-            FormRowBl?.Remove(FormRowBl?.FirstOrDefault(row => row?.Id == result));
+            if (!string.IsNullOrWhiteSpace(item.Query))
+            {
+                var result = await this.FormService?.Delete<int, FormRowBl>(item, "Row"); 
+                this.FormRowBl?.Remove(FormRowBl?.Find(f => f.Id == result));
+            }
+            else
+            {
+                FormRowBl?.Remove(item);
+            }
+
         }
     }
     

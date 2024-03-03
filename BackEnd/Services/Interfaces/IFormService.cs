@@ -11,5 +11,7 @@ namespace BackEnd.Services.Interfaces
         Task<Form> EditForm(FormPut model);
         
         Task<List<FormRow?>> GetFormRows(int id);
+        Task<int> DeleteFormRow(FormRowDelete model);
+        Task<FormRow> EditFormRow(FormRowPut model);
     }
 }
