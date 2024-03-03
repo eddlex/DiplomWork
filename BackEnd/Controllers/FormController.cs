@@ -61,13 +61,21 @@ namespace BackEnd.Controllers
             return Ok(await this.formService.GetFormRows(id));
         }
         
-        
         [HttpDelete]
         [Authorize]
         [Route("Row")]
         public async Task<ActionResult<int>> FormRow(FormRowDelete model)
         {
             return Ok(await this.formService.DeleteFormRow(model));
+        }
+        
+        
+        [HttpPut]
+        [Authorize]
+        [Route("Row")]
+        public async Task<ActionResult<int>> FormRow(FormRowPut model)
+        {
+            return Ok(await this.formService.EditFormRow(model));
         }
 
     }; 

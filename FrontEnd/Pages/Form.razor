@@ -164,6 +164,7 @@
     private bool _editTriggerRowClick;
     public string _searchString;
     private bool _sortNameByLength;
+    private int _currentSelectedFormId;
     private List<string> _events = new();    
     
         bool _isEditMode = false;
@@ -182,8 +183,13 @@
         _isEditMode = isEditMode;
     }
     
-    async Task RowClicked(DataGridRowClickEventArgs<FormDto> args) => await GetFormRows(args.Item.Id);
     
+    async Task RowClicked(DataGridRowClickEventArgs<FormDto> args)
+    {
+        await GetFormRows(args.Item.Id);
+        _currentSelectedFormId = args.Item.Id;
+    }
+
     void StartedEditingItem(FormDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
@@ -218,7 +224,7 @@
         if (this.FormBl is { Count: > 0 })
             FormRowBl?.Add(new()
             {
-                FormId = this.FormBl.Select(f => f.Id).First()
+                FormId = _currentSelectedFormId
             });
     }
 
