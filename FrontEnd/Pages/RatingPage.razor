@@ -1,0 +1,114 @@
+﻿@page "/Rating"
+@using FrontEnd.Model.DTO
+@using FrontEnd.Model.BL
+@using FrontEnd.Model
+@inject IDialogService DialogService
+
+
+<style>
+    body {
+        background-color: lightgrey;
+        opacity: 0.8;
+    }
+</style>
+
+<MudThemeProvider />
+            
+<div style="margin: 1% 5% 0% 5%; height:95vh;">
+    <MudDataGrid 
+            T="SubjectBl" 
+            Items="@Subjects" 
+            Filterable="false" 
+            SortMode="@SortMode.None" 
+            Groupable="false"
+            Bordered="true" 
+            Dense="true"
+            ColumnResizeMode="ResizeMode.Column"
+            Style="height:95%">
+
+        <ToolBarContent>
+            <MudText Typo="Typo.h4" class="mr-2">Survey</MudText>              
+        </ToolBarContent>
+
+        <Columns>
+            <PropertyColumn Property="x => x.Title" />
+            <PropertyColumn Property="x => x.Outcome" />
+            <PropertyColumn Property="x => x.OutcomeType" />
+
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudRating @bind-SelectedValue="@context.Item.Rating"
+                                    Size="@Size.Small"
+                                    MaxValue="10"
+                                    Color="Color.Primary" />
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+    <PagerContent>
+        <MudDataGridPager T="SubjectBl" DisableRowsPerPage="true" />
+    </PagerContent>
+
+    </MudDataGrid>
+</div>
+
+<div style="margin: 0% 5% 0% 5%; height:50vh"> 
+    <MudDataGrid T="SuggestionBl"
+                 Items="@Suggestions"
+                SortMode="SortMode.Multiple"
+                Filterable="true"
+                Selectable="false"
+                MultiSelection="false"
+                ReadOnly="false"
+                FixedHeader="true"
+                EditMode="DataGridEditMode.Cell"
+                RowsPerPage="10"
+                Bordered="true"
+                Dense="true"
+                ColumnResizeMode="ResizeMode.Column"
+                Style="height:95%" >
+    <ToolBarContent>
+        <MudText Typo="Typo.h4" class="mr-2">Suggestions</MudText>
+        <MudIconButton @onclick="AddItem" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
+    </ToolBarContent>
+
+    <Columns>
+        <PropertyColumn Property="x => x.Suggestion" Sortable="false" Filterable="false" IsEditable="true" />
+    </Columns>
+
+    <PagerContent>
+            <MudDataGridPager T="SuggestionBl" DisableRowsPerPage="true" />
+    </PagerContent>
+
+    </MudDataGrid> 
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; margin: 0% 5% 0% 5%;">
+    <MudButton EndIcon="@Icons.Material.Filled.Send" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
+        Send
+    </MudButton>
+</div>
+
+@code {
+    private List<SubjectBl>? Subjects = new List<SubjectBl>();
+
+    private List<SuggestionBl>? Suggestions = new List<SuggestionBl>();
+
+
+    protected override void OnInitialized()
+    {
+        SuggestionBl? Suggestions = new SuggestionBl();
+
+        SubjectBl? Subject = new SubjectBl();
+        Subject.Id = 0;
+        Subject.Title = "Tvyalneri henqer";
+        Subject.Outcome = "Karoxanal grel harcumner";
+        Subject.OutcomeType = 0;
+        Subject.Rating = 0;
+        Subject.DepartmentId = 1;
+
+        Subjects?.Add(Subject);
+    }
+    void AddItem() => Suggestions?.Add(new SuggestionBl());
+}
