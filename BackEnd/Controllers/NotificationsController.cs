@@ -1,4 +1,5 @@
 using BackEnd.Helpers;
+using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -22,10 +23,9 @@ namespace BackEnd.Controllers
         [HttpPost]
         [Authorize]
         [Route("SendForms")]
-        public async Task<ActionResult<bool>> SendForms(int groupId)
+        public async Task<ActionResult<bool>> SendForms(Form model)
         {
-            this.notificationsService.Token = User.ParseToken();
-            return Ok(await notificationsService.SendForms(groupId));
+            return Ok(await notificationsService.SendForms(model));
         }
 
     }; 

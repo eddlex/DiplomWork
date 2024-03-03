@@ -1,8 +1,10 @@
-﻿namespace BackEnd.Services.Interfaces
+﻿using BackEnd.Models.Output;
+
+namespace BackEnd.Services.Interfaces
 {
     public interface INotificationsService
     {
         Task SendPhoneVerificationCode(int ClientId);
-        Task<bool> SendForms(int groupId);
+        Task<bool> SendForms(Form model);
     }
 }

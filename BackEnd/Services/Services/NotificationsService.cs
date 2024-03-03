@@ -1,11 +1,17 @@
 ﻿using System.Net.Mail;
 using System.Net;
+using System.Net.Mime;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using System.Text;
 using BackEnd.Services.Interfaces;
 using System.Security.Claims;
+using System.Text.Json;
 using BackEnd.Helpers;
+using BackEnd.Models.Input;
+using BackEnd.Models.Output;
+using FrontEnd.Helpers;
+
 
 namespace BackEnd.Services.Services
 {
@@ -13,12 +19,17 @@ namespace BackEnd.Services.Services
     {
         private readonly SmtpService smtpService;
         private readonly RecipientService recipientService;
+        private readonly IHttpContextAccessor httpContextAccessor;
         public (int UserId, int DepartmentId, int RoleId) Token { get; set; } = (-1, -1, -1);
 
-        public NotificationsService(ISmtpService smtpService, IRecipientService recipientService)
+        public NotificationsService(ISmtpService smtpService,
+                                    IRecipientService recipientService,
+                                    IHttpContextAccessor httpContextAccessor)
         {
             this.smtpService = (SmtpService)smtpService;
             this.recipientService = (RecipientService)recipientService;
+            if (httpContextAccessor.HttpContext != null)
+                this.Token = httpContextAccessor.HttpContext.User.ParseToken();
         }
 
    
@@ -33,16 +44,20 @@ namespace BackEnd.Services.Services
                 to: new Twilio.Types.PhoneNumber("+15558675310")
             );
         }
-
-
-        public async Task<bool> SendForms(int groupId)
+       
+        public async Task<bool> SendForms(Form model)
         {
+            var department = (int?)model?.GetType()?.GetProperty("DepartmentId")?.GetValue(model);
+            if (Token.RoleId == 0 ||
+                Token.RoleId == 1 && Token.DepartmentId != department)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            
             var smtpConfig = (await this.smtpService.GetSmtpConfig()).FirstOrDefault();
 
             if (smtpConfig != null)
             {
-                var to = await this.recipientService.GetRecipients();
-                if (to != null && to.Count > 0)
+                var to = (await this.recipientService.GetRecipients()).Where(r => r.GroupId == model?.GroupId).ToList();
+                if (to is { Count: > 0 })
                 {
                     // Create a new SmtpClient
                     var smtpClient = new SmtpClient(smtpConfig.SmtpServer)
@@ -54,14 +69,27 @@ namespace BackEnd.Services.Services
                         UseDefaultCredentials = false
                     };
 
-                    foreach (var item in to)
+                    var href = default(string);
+                    foreach (var recipient in to)
                     {
-                        var mailMessage = new MailMessage(smtpConfig.UserName, item.Mail)
+
+                  
+                    
+                        
+                        // href = $"https://localhost:7088/Recipient/Forms?{id}{model.Id}{recipient.Id}";
+                        var mailMessage = new MailMessage(smtpConfig.UserName, recipient.Mail)
                         {
-                            Subject = "Test Email",
-                            Body = "This is a test email sent from C#.",
+                            Subject =  "ՈՒսումնական պլանի արդիականացման հարցում",
+                            Body = $"Հարգելի {recipient.Name} " + Environment.NewLine+
+                                   "Խնդուրմ ենք անցնել հղումով և մասնակցել հարցմանը" + Environment.NewLine +
+                                   "Նամակը գեներացվել է ավտոմատ" + Environment.NewLine + 
+                                   "Հրգանքով՝" + Environment.NewLine +
+                                   "Հայաստանի Ազգային Պոլիտեխնիկական Համալսարան" + Environment.NewLine +
+                                   $"Հղում {href}",
                             BodyEncoding = Encoding.UTF8,
+                            
                             SubjectEncoding = Encoding.UTF8,
+                            
                         };
 
 
