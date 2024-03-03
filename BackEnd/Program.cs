@@ -25,7 +25,7 @@ builder.Services.AddScoped<IFormService, FormService>();
 builder.Services.AddScoped<IRecipientService, RecipientService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
-builder.Services.AddScoped<INotificationsService, NotificationsService>();
+builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 

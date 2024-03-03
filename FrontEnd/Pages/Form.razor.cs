@@ -16,10 +16,15 @@ public partial class Form
     [Inject]
     private IRecipientService? RecipientService { get; set; } 
     
+    
+   
+    
     [Inject]
     private IDepartmentService? DepartmentService { get; set; } 
     [Inject]
-    private IBaseService? FormService { get; set; }
+    private IBaseService? FormService { get; set; }  
+    [Inject]
+    private IMailService? MailService { get; set; }
 
 
     private List<FormDto?>? FormDto { get; set; }
@@ -121,10 +126,10 @@ public partial class Form
             }
         }
     }
-    
+
     private async Task SendEmail(int id)
     {
-
+        var result = await this.MailService?.SendMail(this.FormBl?.Find(f => f.Id == id));
     }
     private async Task DeleteRow(int id)
     {

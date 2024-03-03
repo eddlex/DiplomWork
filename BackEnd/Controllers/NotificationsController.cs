@@ -12,20 +12,20 @@ namespace BackEnd.Controllers
     [Route("[controller]")]
     public class NotificationsController : ControllerBase
     {
-        private readonly NotificationsService notificationsService;
+        private readonly MailService mailService;
 
-        public NotificationsController(INotificationsService notificationsService)
+        public NotificationsController(IMailService mailService)
         {
-            this.notificationsService = (NotificationsService)notificationsService;
+            this.mailService = (MailService)mailService;
         }
 
 
         [HttpPost]
         [Authorize]
-        [Route("SendForms")]
+        [Route("SendMail")]
         public async Task<ActionResult<bool>> SendForms(Form model)
         {
-            return Ok(await notificationsService.SendForms(model));
+            return Ok(await mailService.SendMail(model));
         }
 
     }; 

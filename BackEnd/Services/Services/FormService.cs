@@ -144,6 +144,15 @@ namespace BackEnd.Services.Services
                 
             return result;
         }
-        
+
+
+
+        public async Task<Guid> AddFormIdentification(FormIdentificationPost model)
+        {
+            var result = (await this.dbService.QueryAsync<Guid?>("spAddFormIdentification", model)).FirstOrDefault();
+            if (result is null)
+                throw Alert.Create(Constants.Error.SomethingWrong);
+            return result.Value;
+        }
     }
 }

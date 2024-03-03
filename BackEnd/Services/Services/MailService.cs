@@ -15,37 +15,40 @@ using FrontEnd.Helpers;
 
 namespace BackEnd.Services.Services
 {
-    public class NotificationsService : INotificationsService
+    public class MailService : IMailService
     {
         private readonly SmtpService smtpService;
         private readonly RecipientService recipientService;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IFormService? formService;
         public (int UserId, int DepartmentId, int RoleId) Token { get; set; } = (-1, -1, -1);
 
-        public NotificationsService(ISmtpService smtpService,
+        public MailService(ISmtpService smtpService,
                                     IRecipientService recipientService,
-                                    IHttpContextAccessor httpContextAccessor)
+                                    IHttpContextAccessor httpContextAccessor, IFormService formService)
         {
+            this.httpContextAccessor = httpContextAccessor;
+            this.formService = formService;
             this.smtpService = (SmtpService)smtpService;
             this.recipientService = (RecipientService)recipientService;
             if (httpContextAccessor.HttpContext != null)
-                this.Token = httpContextAccessor.HttpContext.User.ParseToken();
+                this.Token = this.httpContextAccessor.HttpContext.User.ParseToken();
         }
 
    
-        public async Task SendPhoneVerificationCode(int ClientId)
-        {
-            TwilioClient.Init(Environment.GetEnvironmentVariable("ACf32f5326cbde6aac5d1420be3b4d0f58"), Environment.GetEnvironmentVariable("764dc2208aa5de75cde16db2f70673e0"));
-
-            var message = await MessageResource.CreateAsync
-            (
-                body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
-                from: new Twilio.Types.PhoneNumber("+15598534880"),
-                to: new Twilio.Types.PhoneNumber("+15558675310")
-            );
-        }
+        // public async Task SendPhoneVerificationCode(int ClientId)
+        // {
+        //     TwilioClient.Init(Environment.GetEnvironmentVariable("ACf32f5326cbde6aac5d1420be3b4d0f58"), Environment.GetEnvironmentVariable("764dc2208aa5de75cde16db2f70673e0"));
+        //
+        //     var message = await MessageResource.CreateAsync
+        //     (
+        //         body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
+        //         from: new Twilio.Types.PhoneNumber("+15598534880"),
+        //         to: new Twilio.Types.PhoneNumber("+15558675310")
+        //     );
+        // }
        
-        public async Task<bool> SendForms(Form model)
+        public async Task<bool> SendMail(Form model)
         {
             var department = (int?)model?.GetType()?.GetProperty("DepartmentId")?.GetValue(model);
             if (Token.RoleId == 0 ||
@@ -74,9 +77,15 @@ namespace BackEnd.Services.Services
                     {
 
                   
-                    
+                        var guid = await this.formService?.AddFormIdentification(new()
+                        {
+                            GroupId = recipient.GroupId,
+                            ExpirationTime = DateTime.Today,
+                            FormId = model.Id,
+                            RecipientId = recipient.Id
+                        });
                         
-                        // href = $"https://localhost:7088/Recipient/Forms?{id}{model.Id}{recipient.Id}";
+                         href = $"https://localhost:7088/Rating/{guid}";
                         var mailMessage = new MailMessage(smtpConfig.UserName, recipient.Mail)
                         {
                             Subject =  "ՈՒսումնական պլանի արդիականացման հարցում",
