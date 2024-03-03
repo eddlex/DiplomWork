@@ -1,4 +1,5 @@
 using BackEnd.Models.Input;
+using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -58,6 +59,15 @@ namespace BackEnd.Controllers
         public async Task<ActionResult<List<Models.Output.Form>>> FormRow(int id)
         {
             return Ok(await this.formService.GetFormRows(id));
+        }
+        
+        
+        [HttpDelete]
+        [Authorize]
+        [Route("Row")]
+        public async Task<ActionResult<int>> FormRow(FormRowDelete model)
+        {
+            return Ok(await this.formService.DeleteFormRow(model));
         }
 
     }; 

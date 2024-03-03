@@ -141,7 +141,7 @@
                                         Sortable="false" Filterable="false" StickyRight="true">
                             <CellTemplate>
                                 <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" 
-                                                OnClick="@(() => DeleteFormRow(context.Item.Id))"> </MudIconButton>
+                                                OnClick="@(() => DeleteFormRow(context.Item))"> </MudIconButton>
                             </CellTemplate>
 
                         </TemplateColumn>                       
@@ -212,8 +212,16 @@
     }
 
     async Task CommittedItemChanges(FormRowBl item) => await EditFormRows(item);
-    void AddItem() => FormRowBl?.Add(new FormRowBl());
-    
+    void AddItem()
+    {
+
+        if (this.FormBl is { Count: > 0 })
+            FormRowBl?.Add(new()
+            {
+                FormId = this.FormBl.Select(f => f.Id).First()
+            });
+    }
+
     void RowClicked(DataGridRowClickEventArgs<FormRowBl> args)
     {
         System.Text.Json.JsonSerializer.Serialize(args.Item);

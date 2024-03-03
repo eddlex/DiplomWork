@@ -126,5 +126,14 @@ namespace BackEnd.Services.Services
             var result = await this.dbService.QueryAsync<FormRow>("spGetFormRows", new {id});
             return result.ToList();
         }
+        
+        public async Task<int> DeleteFormRow(FormRowDelete model)
+        {
+            var result = (await this.dbService.QueryAsync<int?>("spDeleteFormRow", new {model.Id})).FirstOrDefault();
+            if (result is null)
+                throw Alert.Create(Constants.Error.SomethingWrong);
+                
+            return result.Value;
+        }
     }
 }
