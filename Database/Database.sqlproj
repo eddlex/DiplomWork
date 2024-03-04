@@ -62,6 +62,7 @@
     <Folder Include="dbo\User Defined Types\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\InsertQueries" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\spAddForm.sql" />
@@ -113,5 +114,7 @@
     <Build Include="dbo\Stored Procedures\spGetMailBody.sql" />
     <Build Include="dbo\Stored Procedures\spDelMailBody.sql" />
     <Build Include="dbo\Stored Procedures\spAddMailBody.sql" />
+    <Build Include="dbo\InsertQueries\Subjects.sql" />
+    <Build Include="dbo\InsertQueries\OutcomeTypes.sql" />
   </ItemGroup>
 </Project>
