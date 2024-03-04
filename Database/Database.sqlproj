@@ -116,5 +116,9 @@
     <Build Include="dbo\Stored Procedures\spAddMailBody.sql" />
     <Build Include="dbo\InsertQueries\Subjects.sql" />
     <Build Include="dbo\InsertQueries\OutcomeTypes.sql" />
+    <Build Include="dbo\Tables\OutcomeTypes.sql" />
+    <Build Include="dbo\Tables\Weights.sql" />
+    <Build Include="dbo\Tables\Subjects.sql" />
+    <Build Include="dbo\Tables\Ratings.sql" />
   </ItemGroup>
 </Project>
