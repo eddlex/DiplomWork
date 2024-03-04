@@ -1,4 +1,3 @@
-using BackEnd.Helpers;
 using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
@@ -10,11 +9,11 @@ namespace BackEnd.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class NotificationsController : ControllerBase
+    public class MailController : ControllerBase
     {
         private readonly MailService mailService;
 
-        public NotificationsController(IMailService mailService)
+        public MailController(IMailService mailService)
         {
             this.mailService = (MailService)mailService;
         }
@@ -22,8 +21,7 @@ namespace BackEnd.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("SendMail")]
-        public async Task<ActionResult<bool>> SendForms(Form model)
+        public async Task<ActionResult<bool>> Mail(Form model)
         {
             return Ok(await mailService.SendMail(model));
         }
