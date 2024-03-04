@@ -2,6 +2,7 @@
 using System.Data;
 using BackEnd.Helpers;
 using BackEnd.Models.Input;
+using BackEnd.Models.Input.Post;
 using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using FrontEnd.Helpers;

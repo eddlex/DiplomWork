@@ -90,11 +90,11 @@ namespace BackEnd.Services.Services
                         {
                             Subject =  "ՈՒսումնական պլանի արդիականացման հարցում",
                             Body = $"Հարգելի {recipient.Name} " + Environment.NewLine+
-                                   "Խնդուրմ ենք անցնել հղումով և մասնակցել հարցմանը" + Environment.NewLine +
-                                   "Նամակը գեներացվել է ավտոմատ" + Environment.NewLine + 
-                                   "Հրգանքով՝" + Environment.NewLine +
-                                   "Հայաստանի Ազգային Պոլիտեխնիկական Համալսարան" + Environment.NewLine +
-                                   $"Հղում {href}",
+                                    "Խնդուրմ ենք անցնել հղումով և մասնակցել հարցմանը" + Environment.NewLine +
+                                    "Նամակը գեներացվել է ավտոմատ" + Environment.NewLine + 
+                                    "Հրգանքով՝" + Environment.NewLine +
+                                    "Հայաստանի Ազգային Պոլիտեխնիկական Համալսարան" + Environment.NewLine +
+                                    $"Հղում {href}",
                             BodyEncoding = Encoding.UTF8,
                             
                             SubjectEncoding = Encoding.UTF8,

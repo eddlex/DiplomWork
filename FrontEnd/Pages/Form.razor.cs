@@ -131,6 +131,7 @@ public partial class Form
     {
         var result = await this.MailService?.SendMail(this.FormBl?.Find(f => f.Id == id));
     }
+    
     private async Task DeleteRow(int id)
     {
         if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())

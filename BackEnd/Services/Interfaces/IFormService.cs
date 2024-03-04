@@ -1,4 +1,5 @@
 ﻿using BackEnd.Models.Input;
+using BackEnd.Models.Input.Post;
 using BackEnd.Models.Output;
 
 namespace BackEnd.Services.Interfaces
