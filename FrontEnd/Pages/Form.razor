@@ -39,8 +39,32 @@
         width: 30.5%;
         float:right;
         margin: 1% 1% 1% 0;
-        height:88vh
+        max-height:88vh;
     }
+    .card
+    {
+        color: #353535;
+        background-color: white;
+    }
+    
+    .right
+    {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      max-height: 55vh;
+      border: 2px solid silver;
+      background-color: white;
+      border-radius: 4px;
+    }
+    
+    .right-first, .right-second
+    {
+       background-color: white;
+       /*margin: 20px 0 0 0 ;*/
+       color: black;
+    }
+
+    
 </style>
 
 <MudThemeProvider />
@@ -102,58 +126,33 @@
             </div>
 
             <div class="div-right">
-                    <MudDataGrid id="right"
-                             T="FormRowBl"
-                             Items="@FormRowBl"
-                             FixedHeader="true"
-                             EditMode="DataGridEditMode.Cell"
-                             ReadOnly="@_readOnly"
-                             RowsPerPage="10"
-                             Filterable="false"
-                             RowClick="@RowClicked"
-                             SortMode="SortMode.None"
-                             MultiSelection="false"
-                             StartedEditingItem="@StartedEditingItem"
-                             CanceledEditingItem="@CanceledEditingItem"
-                             CommittedItemChanges="@CommittedItemChanges"
-                             Bordered="true"
-                             Dense="true"
-                             EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
-                             ColumnResizeMode="ResizeMode.Column"
-                             Style="height:100%">
+                <div id="right">
+                    <div class="right-first">
+                         <h4 class="mud-typography mud-typography-h4 mr-2">From Subjects</h4>
+                        <div class="right">
 
-                    <ToolBarContent>
-                        <MudText Typo="Typo.h4" class="mr-2">Form rows</MudText>
-                        <MudIconButton @onclick="AddItem" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
-                        <MudSpacer />
-                        <MudSwitch T="bool" Checked="@_isEditMode" CheckedChanged="HandleEditMode" Color="Color.Primary">Edit Mode</MudSwitch>
-
-                    </ToolBarContent>
-
-                    <Columns>
-                        <PropertyColumn Property="x => x.Query" />
-                        <PropertyColumn Property="x => x.Required">
-                            <EditTemplate>
-                                <MudCheckBox @bind-Checked="context.Item.Required" @onclick="@(()=>EditFormRows(context.Item))" />
-                            </EditTemplate>
-                        </PropertyColumn>
-                        <TemplateColumn Hidden="false" 
-                                        Sortable="false" Filterable="false" StickyRight="true">
-                            <CellTemplate>
-                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" 
-                                                OnClick="@(() => DeleteFormRow(context.Item))"> </MudIconButton>
-                            </CellTemplate>
-
-                        </TemplateColumn>                       
-                    </Columns>
-
-
-                    <PagerContent>                       
-                             <MudDataGridPager T="FormRowBl" DisableRowsPerPage="true"/>                         
-                    </PagerContent>
-
-                   
-                </MudDataGrid>
+                            <SortableList Group="sharedLists" Items="items1" Context="item" OnRemove="ListOneRemove">
+                                <SortableItemTemplate>
+                                    <div class=" card has-border has-background-white">
+                                        <p class="is-size-4 p-2 ml-4"> @item.Order.@item.Name</p>
+                                    </div>
+                                </SortableItemTemplate>
+                            </SortableList>
+                        </div>
+                    </div>
+                    <div class="right-second">
+                         <h4 class="mud-typography mud-typography-h4 mr-2">Subjects</h4>
+                        <div class="right">
+                            <SortableList Group="sharedLists" OnRemove="ListTwoRemove" Items="items2" Context="item">
+                                <SortableItemTemplate>
+                                    <div class="card has-background-white has-border">
+                                        <p class="is-size-4 p-2 ml-4">@item.Order.@item.Name</p>
+                                    </div>
+                                </SortableItemTemplate>
+                            </SortableList>
+                        </div>
+                    </div>
+                    </div>
             </div>
         </MudMainContent>
     </MudLayout>
@@ -182,8 +181,10 @@
         }
         _isEditMode = isEditMode;
     }
-    
-    
+
+
+    #region MyRegion
+
     async Task RowClicked(DataGridRowClickEventArgs<FormDto> args)
     {
         await GetFormRows(args.Item.Id);
@@ -232,4 +233,69 @@
     {
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
-}
+    
+    #endregion
+    
+    
+
+
+ 
+
+       public  List<Item> items1 = Enumerable.Range(1, 20).Select(i => new Item { Id = i, Name = $"Item {i}", Order = i}).ToList();
+
+       public  List<Item> items2 = Enumerable.Range(20, 50).Select(i => new Item { Id = i, Name = $"Item {i}", Order = i}).ToList();
+
+       public class Item
+       {
+           public int Id { get; set; }
+           public string Name { get; set; }
+           public int Order { get; set; }
+       }
+
+
+    
+       public void ListOneRemove((int oldIndex, int newIndex) indices)
+       {
+           // get the item at the old index in list 1
+           var item = items1[indices.oldIndex];
+
+           // add it to the new index in list 2
+           items2.Insert(indices.newIndex, item);
+
+           // remove the item from the old index in list 1
+           items1.Remove(items1[indices.oldIndex]);
+           for (var i = 0; i < items2.Count; ++i)
+           {
+               items2[i].Order = i;
+           }
+           
+           for (var i = 0; i < items1.Count; ++i)
+           {
+               items1[i].Order = i;
+           }
+            
+       }
+
+       private void ListTwoRemove((int oldIndex, int newIndex) indices)
+       {
+           // get the item at the old index in list 2
+           var item = items2[indices.oldIndex];
+
+           // add it to the new index in list 1
+           items1.Insert(indices.newIndex, item);
+
+           // remove the item from the old index in list 2
+           items2.Remove(items2[indices.oldIndex]);
+           
+           for (var i = 0; i < items2.Count; ++i)
+           {
+               items2[i].Order = i;
+           }
+           
+           for (var i = 0; i < items1.Count; ++i)
+           {
+               items1[i].Order = i;
+           }
+       }
+
+   } 
