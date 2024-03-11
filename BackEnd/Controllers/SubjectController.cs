@@ -1,8 +1,6 @@
-using BackEnd.Helpers;
-using BackEnd.Models.Input;
 using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
-using BackEnd.Services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEnd.Controllers
@@ -17,7 +15,8 @@ namespace BackEnd.Controllers
             this.subjectService = subjectService;
         }
         
-        [HttpGet]   
+        [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<Subject>>> Subject()
         {
             return Ok(await this.subjectService.GetSubjects());

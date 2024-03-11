@@ -8,6 +8,6 @@ BEGIN
           ,Outcome
           ,OutcomeTypeId
           ,DepartmentId
-    FROM Subject
+    FROM [Subject]
     WHERE  @RoleId = 2 OR (@RoleId IN (0, 1) AND DepartmentId = @DepartmentId)
 END

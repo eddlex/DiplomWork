@@ -10,5 +10,4 @@ public class SubjectBl
     public string? Outcome { get; set; }
     public int OutcomeType { get; set; }
     public int DepartmentId { get; set; }
-    public int Rating { get; set; }
 }
