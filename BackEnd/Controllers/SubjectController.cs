@@ -17,9 +17,9 @@ namespace BackEnd.Controllers
         
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<List<Subject>>> Subject()
+        public async Task<ActionResult<List<Subject>>> Subject(int id)
         {
-            return Ok(await this.subjectService.GetSubjects());
+            return Ok(await this.subjectService.GetSubjects(id));
         }
         
         // [HttpPost]  //tested
