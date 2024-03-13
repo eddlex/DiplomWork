@@ -37,6 +37,7 @@ builder.Services.AddScoped<IExeptionService, ExeptionService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
 
 builder.Services.AddScoped<IBaseService, FormService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services.AddAuthorizationCore();

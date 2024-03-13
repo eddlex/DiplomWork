@@ -1,4 +1,4 @@
-﻿CREATE or alter PROCEDURE spAddRecipientGroup
+﻿CREATE PROCEDURE spAddRecipientGroup
 @Name NVARCHAR(50),
 @Description NVARCHAR(MAX),
 @DepartmentId INT

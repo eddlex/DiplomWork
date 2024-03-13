@@ -115,8 +115,8 @@
     <Build Include="dbo\Stored Procedures\spGetMailBody.sql" />
     <Build Include="dbo\Stored Procedures\spDelMailBody.sql" />
     <Build Include="dbo\Stored Procedures\spAddMailBody.sql" />
-    <Build Include="dbo\InsertQueries\Subjects.sql" />
-    <Build Include="dbo\InsertQueries\OutcomeTypes.sql" />
+    <None Include="dbo\InsertQueries\Subjects.sql" />
+    <None Include="dbo\InsertQueries\OutcomeTypes.sql" />
     <Build Include="dbo\Tables\OutcomeTypes.sql" />
     <Build Include="dbo\Tables\Weights.sql" />
     <Build Include="dbo\Tables\Subject.sql" />
