@@ -87,14 +87,16 @@ public partial class Form
            this.FormBl = await this.FormService.Get<FormBl?>();
            this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
            this.Departments = await this.DepartmentService.GetDepartments();
-           this.SubjectsBl = await this.SubjectService.GetSubjects();
+           
            this.FormDto = new();
            
            if (this.FormBl is { Count: > 0 })
            {
+               var firstDepartmentId = this.FormBl?.OrderBy(r => r?.Id).First()?.DepartmentId;
+               if (firstDepartmentId.HasValue)
+                    this.SubjectsBl = await this.SubjectService.GetSubjects(firstDepartmentId.Value);
                
-               // await GetFormRows(this.FormBl.OrderBy(r => r?.Id).First().Id);
-                this.FormBl.ForEach(e => this.FormDto.Add(new()
+               this.FormBl?.ForEach(e => this.FormDto.Add(new()
                {
                    Id = e.Id,
                    Name = e.Name,

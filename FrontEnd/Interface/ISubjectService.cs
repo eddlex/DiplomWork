@@ -5,5 +5,5 @@ namespace FrontEnd.Interface;
 
 public interface ISubjectService
 {
-    public Task<List<SubjectBl>?> GetSubjects();
+    public Task<List<SubjectBl>?> GetSubjects(int departmentId);
 }
