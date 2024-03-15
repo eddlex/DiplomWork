@@ -43,24 +43,51 @@ public partial class Form
     
     private async Task GetFormRows(int? id = null)
     {
-        if (this.FormService != null)
+        if (this.FormService != null &&
+            this.SubjectService != null)
         {
             id ??= this.FormBl?.OrderBy(r => r?.Id).First()?.Id;
             var departmentId = this.FormBl?.First(r => r.Id == id).DepartmentId;
-             
-             this.FormRowBl = await this.FormService.Get<FormRowBl>(id, "Row") ?? new();
-
-             if (departmentId.HasValue)
-             {
-                 this.SubjectsBl = await this.SubjectService.GetSubjects(departmentId.Value);
-                 this.SubjectsBl?.ForEach(e => this.SubjectsDto?.Add(new()
-                 {
-                     Id = e.Id,
-                     Title = e.Title,
-                     Order = e.Id,
-                     Outcome = e.Outcome
-                 }));
-             }
+            this.SubjectsBl = await this.SubjectService.GetSubjects(departmentId.Value);
+            this.FormRowBl = await this.FormService.Get<FormRowBl>(id, "Row") ?? new();
+            selectedSubjects?.Clear();
+            var tmpCount = default(int);
+            foreach (var item in  this.FormRowBl)
+            {
+                var subject = this.SubjectsBl?.FirstOrDefault(r => r.Id == item.SubjectId);
+                if (subject != null)
+                {
+                    this.selectedSubjects?.Add(new ()
+                    {
+                     Id = item.Id,
+                     Title = subject.Title,
+                     Order = tmpCount++,
+                     Outcome = subject.Outcome
+                    });
+                }
+            }
+            
+            if (SubjectsBl != null)
+            {
+                this.SubjectsDto?.Clear();
+                foreach (var item in this.SubjectsBl)
+                {
+                    if (!this.FormRowBl.Select(r => r.SubjectId).Contains(item.Id))
+                    {
+                        this.SubjectsDto?.Add(new()
+                        {
+                            Id = item.Id,
+                            Title = item.Title,
+                            Order = tmpCount++,
+                            Outcome = item.Outcome
+                        });
+                    }
+                }
+            }
+            else
+            {
+                Alert.Create(Helpers.Constants.Error.SubjectNotExist);
+            }
         }
     }
     
@@ -97,13 +124,11 @@ public partial class Form
            this.FormBl = await this.FormService.Get<FormBl?>();
            this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
            this.Departments = await this.DepartmentService.GetDepartments();
-           
            this.FormDto = new();
            
            if (this.FormBl is { Count: > 0 })
            {
-
-               
+               await GetFormRows();
                this.FormBl?.ForEach(e => this.FormDto.Add(new()
                {
                    Id = e.Id,
@@ -112,10 +137,6 @@ public partial class Form
                    Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
                    Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name
                }));
-                
-  
-               
-                
            }
         } 
     }

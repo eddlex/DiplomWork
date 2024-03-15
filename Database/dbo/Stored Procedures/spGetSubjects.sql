@@ -9,5 +9,6 @@ BEGIN
           ,OutcomeTypeId
           ,DepartmentId
     FROM [Subject]
-    WHERE  @RoleId = 2 OR (@RoleId IN (0, 1) AND DepartmentId = @DepartmentId)
+    WHERE DepartmentId = @DepartmentId
+ --   WHERE  @RoleId = 2 OR (@RoleId IN (0, 1) AND DepartmentId = @DepartmentId)
 END

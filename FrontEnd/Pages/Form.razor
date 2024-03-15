@@ -264,11 +264,14 @@
        public void DeleteFormRow((int oldIndex, int newIndex) indices)
        {
            var item = selectedSubjects?[indices.oldIndex];
+
+           if (item == null)
+               return;
+           
            allSubjects?.Insert(indices.newIndex, item);
            
            selectedSubjects?.Remove(selectedSubjects[indices.oldIndex]);
-           
-           
+               
            for (var i = 0; i < allSubjects?.Count; ++i)
            {
                allSubjects[i].Order = i;
@@ -278,35 +281,41 @@
            {
                selectedSubjects[i].Order = i;
            }
-  
+           
+           var itemBl = DeleteFormRow(new FormRowBl()
+           {
+               FormId = _currentSelectedFormId,
+               SubjectId = item.Id,
+               Order = item.Order
+           });
        }
 
        private void AddFormRow((int oldIndex, int newIndex) indices)
        {
            var item = allSubjects?[indices.oldIndex];
 
-           if (item != null)
+           if (item == null)
+               return;
+           
+           selectedSubjects?.Insert(indices.newIndex, item);
+           allSubjects?.Remove(allSubjects[indices.oldIndex]);
+               
+           for (var i = 0; i < allSubjects?.Count; ++i)
            {
-               selectedSubjects?.Insert(indices.newIndex, item);
-               allSubjects?.Remove(allSubjects[indices.oldIndex]);
-               
-               for (var i = 0; i < allSubjects?.Count; ++i)
-               {
-                   allSubjects[i].Order = i;
-               }
-               
-               for (var i = 0; i < selectedSubjects?.Count; ++i)
-               {
-                   selectedSubjects[i].Order = i;
-               }
-                   
-               var itemBl = AddFormRow(new FormRowBl()
-               {
-                   FormId = _currentSelectedFormId,
-                   SubjectId = item.Id,
-                   Order = item.Order
-               });
+               allSubjects[i].Order = i;
            }
+               
+           for (var i = 0; i < selectedSubjects?.Count; ++i)
+           {
+               selectedSubjects[i].Order = i;
+           }
+                   
+           var itemBl = AddFormRow(new FormRowBl()
+           {
+               FormId = _currentSelectedFormId,
+               SubjectId = item.Id,
+               Order = item.Order
+           });
        }
     
     

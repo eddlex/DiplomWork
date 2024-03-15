@@ -12,7 +12,6 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetForms.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientGroups.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelRecipientGroups.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipientGroups.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateRecipientGroups.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spRegister.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spLogIn.sql" />
@@ -35,6 +34,16 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteSmtpConfiguration.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddSmtpConfiguration.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditSmtpConfiguration.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddForm.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteForm.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteFormRow.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteRecipientGroup.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditForm.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddFormRow.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditRecipientGroup.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetFormRows.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSubjects.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipientGroup.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" />
@@ -49,6 +58,11 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/UserInfo.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/MailBody.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Department.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/FormIdentification.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/OutcomeTypes.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Weights.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Subject.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Ratings.sql" />
             </array>
           </option>
           <option name="remarks" value="Database Project" />

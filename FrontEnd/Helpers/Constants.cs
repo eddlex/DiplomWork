@@ -17,6 +17,7 @@ public static class Constants
         Errors.Add(Error.WrongPermissions.Code, Error.WrongPermissions);
         Errors.Add(Error.Injection.Code, Error.Injection);
         Errors.Add(Error.CantDeleteRecipientGroup.Code, Error.CantDeleteRecipientGroup);
+        Errors.Add(Error.SubjectNotExist.Code, Error.SubjectNotExist);
         
     }
     public sealed class Error
@@ -33,6 +34,7 @@ public static class Constants
         public static readonly Error WrongPermissions = new Error(nameof(WrongPermissions), 50009, "Permission Error");
         public static readonly Error Injection = new Error(nameof(Injection), 50010, "Dependencies Injection Error");
         public static readonly Error CantDeleteRecipientGroup = new Error(nameof(CantDeleteRecipientGroup), 50011, "Exists Recipient which use this group");
+        public static readonly Error SubjectNotExist = new Error(nameof(SubjectNotExist), 50012, "Subject Not Exist");
         
         public string Text { get; private set; }
         public string UniqueName { get; private set; }
