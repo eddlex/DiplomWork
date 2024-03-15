@@ -2,14 +2,14 @@
 
 namespace BackEnd.Models.Output;
 
-public class FormRowPut
+public class FormRowPost
 {
     [Required]
     public int Id { get; set; }
     [Required]
     public int FormId { get; set; }
     [Required]
-    public string? Query { get; set; }
+    public int SubjectId { get; set; }
     [Required]
-    public bool Required { get; set; }
+    public int Order { get; set; }
 }

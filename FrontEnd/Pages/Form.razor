@@ -217,7 +217,7 @@
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    async Task CommittedItemChanges(FormRowBl item) => await EditFormRows(item);
+    async Task CommittedItemChanges(FormRowBl item) => await AddFormRow(item);
     void AddItem()
     {
 

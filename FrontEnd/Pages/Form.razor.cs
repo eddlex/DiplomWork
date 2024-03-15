@@ -48,12 +48,11 @@ public partial class Form
         }
     }
     
-    private async Task EditFormRows(FormRowBl row)
+    private async Task AddFormRow(FormRowBl row)
     {
         if (this.FormService != null)
-        {
-            if (!string.IsNullOrWhiteSpace(row.Query))
-                row =  await this.FormService.Edit<FormRowBl, FormRowBl>(row, "Row");
+        { 
+            row =  await this.FormService.Add<FormRowBl, FormRowBl>(row, "Row");
         }
     }
     
@@ -61,16 +60,9 @@ public partial class Form
     {
         if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
         {
-            if (!string.IsNullOrWhiteSpace(item.Query))
-            {
-                var result = await this.FormService?.Delete<int, FormRowBl>(item, "Row"); 
-                this.FormRowBl?.Remove(FormRowBl?.Find(f => f.Id == result));
-            }
-            else
-            {
-                FormRowBl?.Remove(item);
-            }
-
+            var result = await this.FormService?.Delete<int, FormRowBl>(item, "Row"); 
+            this.FormRowBl?.Remove(FormRowBl?.Find(f => f.Id == result));
+            FormRowBl?.Remove(item);
         }
     }
     

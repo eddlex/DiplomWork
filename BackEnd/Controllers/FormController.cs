@@ -73,7 +73,7 @@ namespace BackEnd.Controllers
         [HttpPut]
         [Authorize]
         [Route("Row")]
-        public async Task<ActionResult<int>> FormRow(FormRowPut model)
+        public async Task<ActionResult<int>> FormRow(FormRowPost model)
         {
             return Ok(await this.formService.EditFormRow(model));
         }
