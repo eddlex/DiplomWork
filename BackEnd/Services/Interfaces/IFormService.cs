@@ -13,7 +13,7 @@ namespace BackEnd.Services.Interfaces
         
         Task<List<FormRow?>> GetFormRows(int id);
         Task<int> DeleteFormRow(FormRowDelete model);
-        Task<FormRow> EditFormRow(FormRowPost model);
+        Task<FormRow> AddFormRow(FormRowPost model);
         Task<Guid> AddFormIdentification(FormIdentificationPost model);
     }
 }

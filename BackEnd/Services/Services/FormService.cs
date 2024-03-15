@@ -137,9 +137,9 @@ namespace BackEnd.Services.Services
             return result.Value;
         }
         
-        public async Task<FormRow> EditFormRow(FormRowPost model)
+        public async Task<FormRow> AddFormRow(FormRowPost model)
         {
-            var result = (await this.dbService.QueryAsync<FormRow>("spEditFormRow", model)).FirstOrDefault();
+            var result = (await this.dbService.QueryAsync<FormRow>("spAddFormRow", model)).FirstOrDefault();
             if (result is null)
                 throw Alert.Create(Constants.Error.SomethingWrong);
                 

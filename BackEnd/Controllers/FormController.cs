@@ -53,6 +53,8 @@ namespace BackEnd.Controllers
             return Ok(await this.formService.EditForm(model));
         }
         
+        
+        
         [HttpGet]
         [Authorize]
         [Route("Row")]
@@ -60,6 +62,15 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.formService.GetFormRows(id));
         }
+        
+        [HttpPost]
+        [Authorize]
+        [Route("Row")]
+        public async Task<ActionResult<int>> FormRow(FormRowPost model)
+        {
+            return Ok(await this.formService.AddFormRow(model));
+        }
+        
         
         [HttpDelete]
         [Authorize]
@@ -69,14 +80,5 @@ namespace BackEnd.Controllers
             return Ok(await this.formService.DeleteFormRow(model));
         }
         
-        
-        [HttpPut]
-        [Authorize]
-        [Route("Row")]
-        public async Task<ActionResult<int>> FormRow(FormRowPost model)
-        {
-            return Ok(await this.formService.EditFormRow(model));
-        }
-
     }; 
 }

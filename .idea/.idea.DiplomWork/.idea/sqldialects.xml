@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddForm.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddFormRow.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddMailBody.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipient.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipientGroup.sql" dialect="TSQL" />
@@ -10,17 +12,24 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelRecipientGroups.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelUniversity.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeletRecipient.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteForm.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteFormRow.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteRecipientGroup.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteSmtpConfiguration.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteSmtpConfigurations.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditForm.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditRecipient.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditRecipientGroup.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditSmtpConfiguration.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetDepartments.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetFormRows.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetForms.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetMailBody.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetPermission.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipientGroups.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRecipients.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSmtpConfigurations.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSubjects.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetUsers.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spLogIn.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spRegister.sql" dialect="TSQL" />
@@ -29,15 +38,20 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateSmtpConfiguration.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Department.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Form.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/FormIdentification.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/FormRow.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/MailBody.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/OutcomeTypes.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Permission.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Ratings.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Recipient.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/RecipientGroup.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Role.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/SmtpConfigurations.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Subject.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/User.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/UserInfo.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Weights.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" dialect="TSQL" />

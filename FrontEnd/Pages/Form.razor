@@ -144,7 +144,7 @@
                         </h4>
                         <div class="right">
 
-                            <SortableList Group="sharedLists" Items="selectedSubjects" Context="item" OnRemove="ListOneRemove">
+                            <SortableList Group="sharedLists" Items="selectedSubjects" Context="item" OnRemove="DeleteFormRow">
                                 <SortableItemTemplate>
                                     <div class=" card has-border has-background-white">
                                         <p class="is-size-4 p-1 ml-1 mb-0">
@@ -162,7 +162,7 @@
                             Subjects
                         </h4>
                         <div class="right">
-                            <SortableList Group="sharedLists" OnRemove="ListTwoRemove" Items="allSubjects" Context="item">
+                            <SortableList Group="sharedLists" OnRemove="AddFormRow" Items="allSubjects" Context="item">
                                 <SortableItemTemplate>
                                     <div class="card has-background-white has-border">
                                         <p class="is-size-4 p-1 ml-1 mb-0" style="padding-left: 20px;">
@@ -230,17 +230,8 @@
     
     
     
-    void StartedEditingItem(FormRowBl item)
-    {
-        System.Text.Json.JsonSerializer.Serialize(item);
-    }
 
-    void CanceledEditingItem(FormRowBl item)
-    {
-        System.Text.Json.JsonSerializer.Serialize(item);
-    }
-
-    async Task CommittedItemChanges(FormRowBl item) => await AddFormRow(item);
+    
     void AddItem()
     {
 
@@ -270,48 +261,55 @@
 
 
     
-       public void ListOneRemove((int oldIndex, int newIndex) indices)
+       public void DeleteFormRow((int oldIndex, int newIndex) indices)
        {
-           // get the item at the old index in list 1
-           var item = selectedSubjects[indices.oldIndex];
-
-           // add it to the new index in list 2
-           allSubjects.Insert(indices.newIndex, item);
-
-           // remove the item from the old index in list 1
-           selectedSubjects.Remove(selectedSubjects[indices.oldIndex]);
-           for (var i = 0; i < allSubjects.Count; ++i)
+           var item = selectedSubjects?[indices.oldIndex];
+           allSubjects?.Insert(indices.newIndex, item);
+           
+           selectedSubjects?.Remove(selectedSubjects[indices.oldIndex]);
+           
+           
+           for (var i = 0; i < allSubjects?.Count; ++i)
            {
                allSubjects[i].Order = i;
            }
            
-           for (var i = 0; i < selectedSubjects.Count; ++i)
+           for (var i = 0; i < selectedSubjects?.Count; ++i)
            {
                selectedSubjects[i].Order = i;
            }
-            
+  
        }
 
-       private void ListTwoRemove((int oldIndex, int newIndex) indices)
+       private void AddFormRow((int oldIndex, int newIndex) indices)
        {
-           // get the item at the old index in list 2
-           var item = allSubjects[indices.oldIndex];
+           var item = allSubjects?[indices.oldIndex];
 
-           // add it to the new index in list 1
-           selectedSubjects.Insert(indices.newIndex, item);
-
-           // remove the item from the old index in list 2
-           allSubjects.Remove(allSubjects[indices.oldIndex]);
-           
-           for (var i = 0; i < allSubjects.Count; ++i)
+           if (item != null)
            {
-               allSubjects[i].Order = i;
-           }
-           
-           for (var i = 0; i < selectedSubjects.Count; ++i)
-           {
-               selectedSubjects[i].Order = i;
+               selectedSubjects?.Insert(indices.newIndex, item);
+               allSubjects?.Remove(allSubjects[indices.oldIndex]);
+               
+               for (var i = 0; i < allSubjects?.Count; ++i)
+               {
+                   allSubjects[i].Order = i;
+               }
+               
+               for (var i = 0; i < selectedSubjects?.Count; ++i)
+               {
+                   selectedSubjects[i].Order = i;
+               }
+                   
+               var itemBl = AddFormRow(new FormRowBl()
+               {
+                   FormId = _currentSelectedFormId,
+                   SubjectId = item.Id,
+                   Order = item.Order
+               });
            }
        }
+    
+    
+    
 
    } 

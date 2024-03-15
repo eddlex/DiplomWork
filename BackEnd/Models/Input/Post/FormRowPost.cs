@@ -5,8 +5,6 @@ namespace BackEnd.Models.Output;
 public class FormRowPost
 {
     [Required]
-    public int Id { get; set; }
-    [Required]
     public int FormId { get; set; }
     [Required]
     public int SubjectId { get; set; }

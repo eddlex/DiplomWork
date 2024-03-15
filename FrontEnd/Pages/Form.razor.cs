@@ -39,12 +39,28 @@ public partial class Form
 
     #region FormRow
     private List<FormRowBl>? FormRowBl { get; set; }
-    private async Task GetFormRows(int id)
+    
+    
+    private async Task GetFormRows(int? id = null)
     {
         if (this.FormService != null)
         {
-             FormRowBl= await this.FormService.Get<FormRowBl>(id, "Row");
-             this.FormRowBl ??= new();
+            id ??= this.FormBl?.OrderBy(r => r?.Id).First()?.Id;
+            var departmentId = this.FormBl?.First(r => r.Id == id).DepartmentId;
+             
+             this.FormRowBl = await this.FormService.Get<FormRowBl>(id, "Row") ?? new();
+
+             if (departmentId.HasValue)
+             {
+                 this.SubjectsBl = await this.SubjectService.GetSubjects(departmentId.Value);
+                 this.SubjectsBl?.ForEach(e => this.SubjectsDto?.Add(new()
+                 {
+                     Id = e.Id,
+                     Title = e.Title,
+                     Order = e.Id,
+                     Outcome = e.Outcome
+                 }));
+             }
         }
     }
     
@@ -61,6 +77,8 @@ public partial class Form
         if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
         {
             var result = await this.FormService?.Delete<int, FormRowBl>(item, "Row"); 
+            
+            
             this.FormRowBl?.Remove(FormRowBl?.Find(f => f.Id == result));
             FormRowBl?.Remove(item);
         }
@@ -84,9 +102,7 @@ public partial class Form
            
            if (this.FormBl is { Count: > 0 })
            {
-               var firstDepartmentId = this.FormBl?.OrderBy(r => r?.Id).First()?.DepartmentId;
-               if (firstDepartmentId.HasValue)
-                    this.SubjectsBl = await this.SubjectService.GetSubjects(firstDepartmentId.Value);
+
                
                this.FormBl?.ForEach(e => this.FormDto.Add(new()
                {
@@ -97,14 +113,7 @@ public partial class Form
                    Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name
                }));
                 
-               this.SubjectsBl?.ForEach(e => this.SubjectsDto?.Add(new()
-               {
-                   Id = e.Id,
-                   Title = e.Title,
-                   Order = e.Id,
-                   Outcome = e.Outcome
-                   
-               }));
+  
                
                 
            }

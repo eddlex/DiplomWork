@@ -6,10 +6,11 @@ BEGIN
     BEGIN TRANSACTION;
     SELECT [Id],
            [FormId],
-           [Query],
-           [Required]
+           [SubjectId],
+           [Order]
     FROM FormRow
     WHERE FormId = @Id
+    ORDER BY [Order] ASC, CreationDate DESC    
     COMMIT;
 END TRY
 BEGIN CATCH
