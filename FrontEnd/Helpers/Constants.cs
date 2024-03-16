@@ -18,7 +18,9 @@ public static class Constants
         Errors.Add(Error.Injection.Code, Error.Injection);
         Errors.Add(Error.CantDeleteRecipientGroup.Code, Error.CantDeleteRecipientGroup);
         Errors.Add(Error.SubjectNotExist.Code, Error.SubjectNotExist);
-        
+        Errors.Add(Error.NotExistAnyWeight.Code, Error.NotExistAnyWeight);
+
+
     }
     public sealed class Error
     {
@@ -35,7 +37,12 @@ public static class Constants
         public static readonly Error Injection = new Error(nameof(Injection), 50010, "Dependencies Injection Error");
         public static readonly Error CantDeleteRecipientGroup = new Error(nameof(CantDeleteRecipientGroup), 50011, "Exists Recipient which use this group");
         public static readonly Error SubjectNotExist = new Error(nameof(SubjectNotExist), 50012, "Subject Not Exist");
-        
+        public static readonly Error NotExistAnyWeight = new Error(nameof(NotExistAnyWeight), 50013, "Not found any weight!");
+        public static readonly Error CantDeleteWeight = new Error(nameof(CantDeleteWeight), 50014, "Exists Recipient that uses this weight");
+
+
+
+
         public string Text { get; private set; }
         public string UniqueName { get; private set; }
         public int Code { get; }

@@ -11,4 +11,6 @@ public class RecipientDialog
     public Select<Department> Department { get; set; }
 
     public string? Description { get; set; }
+    public Select<Weight> Weight { get; set; }
+
 }

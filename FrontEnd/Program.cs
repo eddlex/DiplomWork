@@ -35,6 +35,8 @@ builder.Services.AddScoped<IRecipientService, RecipientService>();
 builder.Services.AddScoped<IDialogService, DialogService>();
 builder.Services.AddScoped<IExeptionService, ExeptionService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
+builder.Services.AddScoped<IWeightService, WeightService>();
+
 
 builder.Services.AddScoped<IBaseService, FormService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();

@@ -8,7 +8,8 @@ BEGIN
            Mail         [Mail],
            Name         [Name],
            Description  [Description],
-           DepartmentId [DepartmentId]
+           DepartmentId [DepartmentId],
+           WeightId     [WeightId]
     FROM Recipient
     WHERE  @RoleId = 2 OR (@RoleId IN (0, 1) AND DepartmentId = @DepartmentId)
 END

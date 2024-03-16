@@ -67,6 +67,7 @@
                         <PropertyColumn Property="x => x.Name" Title="Name" />
                         <PropertyColumn Property="x => x.Description" />
                         <PropertyColumn Property="x => x.Department" Title="Department" />
+                        <PropertyColumn Property="x => x.Weight" Title="Department" />
 
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
@@ -100,9 +101,6 @@
     private List<string> _events = new();
 
 
-    
-    
-
     // events
     void RowClicked(DataGridRowClickEventArgs<RecipientDto> args)
     {
@@ -114,8 +112,6 @@
         //args.RowIndex
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
-    
-   
     
     void StartedEditingItem(RecipientDto item)
     {

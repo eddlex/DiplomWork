@@ -4,5 +4,5 @@
 	[Rating] FLOAT NOT NULL,
 	[GroupWeight] INT NOT NULL,
 	FOREIGN KEY ([SubjectId]) REFERENCES Subject([Id]),
-	FOREIGN KEY ([GroupWeight]) REFERENCES Weights([Id])
+	FOREIGN KEY ([GroupWeight]) REFERENCES Weight([Id])
 )
