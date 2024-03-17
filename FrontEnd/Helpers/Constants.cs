@@ -19,6 +19,7 @@ public static class Constants
         Errors.Add(Error.CantDeleteRecipientGroup.Code, Error.CantDeleteRecipientGroup);
         Errors.Add(Error.SubjectNotExist.Code, Error.SubjectNotExist);
         Errors.Add(Error.NotExistAnyWeight.Code, Error.NotExistAnyWeight);
+        Errors.Add(Error.CantDeleteWeight.Code, Error.CantDeleteWeight);
 
 
     }

@@ -62,10 +62,10 @@
     <Folder Include="dbo\User Defined Types\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\InsertQueries" />
-    <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\spAddForm.sql" />
+    <Build Include="dbo\Stored Procedures\spAddFormIdentification.sql" />
     <Build Include="dbo\Stored Procedures\spAddRecipient.sql" />
     <Build Include="dbo\Stored Procedures\spAddSmtpConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteForm.sql" />

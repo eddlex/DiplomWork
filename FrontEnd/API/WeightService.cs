@@ -5,17 +5,15 @@ using FrontEnd.Model;
 
 namespace FrontEnd.API;
 
-public class WeightService : IWeightService
+public class WeightService : BaseService,  IWeightService
 {
-    private readonly IHttpService httpService;
-
-    public WeightService(IHttpService httpService)
+    
+    public WeightService(IHttpService httpService) : base(httpService, "Weight")
     {
-        this.httpService = httpService;
     }
     public async Task<List<Weight>?> GetWeights()
     {
-       var weights =  await this.httpService.Execute<List<Weight>, object>(HttpMethod.Get, "Weight");
+       var weights =  await this.Get<Weight>();
        if (weights is null or { Count: 0 })
        {
            throw Helpers.Alert.Create(Constants.Error.NotExistAnyWeight);
