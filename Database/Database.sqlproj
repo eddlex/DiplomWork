@@ -79,6 +79,7 @@
     <Build Include="dbo\Stored Procedures\spEditRecipientGroup.sql" />
     <Build Include="dbo\Stored Procedures\spEditSmtpConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spGetFormRows.sql" />
+    <Build Include="dbo\Stored Procedures\spGetRatingsView.sql" />
     <Build Include="dbo\Stored Procedures\spGetSubjects.sql" />
     <Build Include="dbo\Stored Procedures\spGetUsers.sql" />
     <Build Include="dbo\Tables\FormIdentification.sql" />

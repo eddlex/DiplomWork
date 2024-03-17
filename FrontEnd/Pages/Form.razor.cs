@@ -47,6 +47,7 @@ public partial class Form
             this.SubjectService != null)
         {
             id ??= this.FormBl?.OrderBy(r => r?.Id).First()?.Id;
+            _currentSelectedFormId = id.Value;
             var departmentId = this.FormBl?.First(r => r.Id == id).DepartmentId;
             this.SubjectsBl = await this.SubjectService.GetSubjects(departmentId.Value);
             this.FormRowBl = await this.FormService.Get<FormRowBl>(id, "Row") ?? new();
