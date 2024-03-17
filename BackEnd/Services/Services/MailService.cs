@@ -22,7 +22,7 @@ namespace BackEnd.Services.Services
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IFormService? formService;
         public (int UserId, int DepartmentId, int RoleId) Token { get; set; } = (-1, -1, -1);
-
+        private readonly string href;
         public MailService(ISmtpService smtpService,
                                     IRecipientService recipientService,
                                     IHttpContextAccessor httpContextAccessor, IFormService formService)
@@ -31,8 +31,11 @@ namespace BackEnd.Services.Services
             this.formService = formService;
             this.smtpService = (SmtpService)smtpService;
             this.recipientService = (RecipientService)recipientService;
-            if (httpContextAccessor.HttpContext != null)
+            if (this.httpContextAccessor.HttpContext != null)
+            {
                 this.Token = this.httpContextAccessor.HttpContext.User.ParseToken();
+                this.href = this.httpContextAccessor.HttpContext.Request.Headers["Origin"]+ "/Rating/";
+            }
         }
 
    
@@ -51,7 +54,7 @@ namespace BackEnd.Services.Services
         public async Task<bool> SendMail(Form model)
         {
             var department = (int?)model?.GetType()?.GetProperty("DepartmentId")?.GetValue(model);
-            if (Token.RoleId == 0 ||
+             if (Token.RoleId == 0 ||
                 Token.RoleId == 1 && Token.DepartmentId != department)
                 throw Alert.Create(Constants.Error.WrongPermissions);
             
@@ -71,12 +74,9 @@ namespace BackEnd.Services.Services
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false
                     };
-
-                    var href = default(string);
+                    
                     foreach (var recipient in to)
                     {
-
-                  
                         var guid = await this.formService?.AddFormIdentification(new()
                         {
                             GroupId = recipient.GroupId,
@@ -85,7 +85,6 @@ namespace BackEnd.Services.Services
                             RecipientId = recipient.Id
                         });
                         
-                         href = $"https://localhost:7088/Rating/{guid}";
                         var mailMessage = new MailMessage(smtpConfig.UserName, recipient.Mail)
                         {
                             Subject =  "ՈՒսումնական պլանի արդիականացման հարցում",
@@ -94,7 +93,7 @@ namespace BackEnd.Services.Services
                                     "Նամակը գեներացվել է ավտոմատ" + Environment.NewLine + 
                                     "Հրգանքով՝" + Environment.NewLine +
                                     "Հայաստանի Ազգային Պոլիտեխնիկական Համալսարան" + Environment.NewLine +
-                                    $"Հղում {href}",
+                                    $"Հղում {href + guid}",
                             BodyEncoding = Encoding.UTF8,
                             
                             SubjectEncoding = Encoding.UTF8,
