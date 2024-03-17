@@ -1,21 +1,23 @@
-﻿CREATE  PROCEDURE spEditRecipient
+﻿CREATE PROCEDURE spEditRecipient
     @Id INT,
     @Name NVARCHAR(50),
     @Mail NVARCHAR(50),
     @GroupId INT,
     @DepartmentId INT,
-    @Description NVARCHAR(MAX)
+    @Description NVARCHAR(MAX),
+    @WeightId INT
 AS
 BEGIN
     BEGIN TRY
-        BEGIN TRANSACTION;
+        BEGIN TRANSACTION
 
         UPDATE  Recipient
         SET Name = @Name,
             Mail = @Mail,
             GroupId = @GroupId,
             DepartmentId = @DepartmentId,
-            Description = @Description
+            Description = @Description,
+            WeightId = @WeightId
         WHERE Id = @Id
         COMMIT;
 
@@ -24,7 +26,8 @@ BEGIN
                [Mail],
                [GroupId],
                [DepartmentId],
-               [Description]
+               [Description],
+               [WeightId]
         FROM Recipient
         WHERE Id = @Id
 

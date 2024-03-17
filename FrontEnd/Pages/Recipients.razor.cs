@@ -161,7 +161,7 @@ public partial class Recipients
         parameters.Add("ObjectType", dialog);
          
         var result = await(await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Add Recipient", parameters, options)).Result;
-        if (!result.Canceled && dialog.Department.SelectedValue != null && dialog.Group.SelectedValue != null)
+        if (!result.Canceled && dialog.Department.SelectedValue != null && dialog.Group.SelectedValue != null && dialog.Weight.SelectedValue != null)
         {
             return new Recipient()
             {

@@ -50,7 +50,8 @@ namespace BackEnd.Services.Services
                     model.Mail,
                     model.DepartmentId,
                     model.GroupId,
-                    model.Description
+                    model.Description,
+                    model.WeightId
                 })).FirstOrDefault();
 
             if (res == default)

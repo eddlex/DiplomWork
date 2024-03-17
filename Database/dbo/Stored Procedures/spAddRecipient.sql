@@ -3,14 +3,15 @@
 @Mail NVARCHAR(50),
 @GroupId INT,
 @DepartmentId INT,
-@Description NVARCHAR(MAX)
+@Description NVARCHAR(MAX),
+@WeightId INT
 AS
 BEGIN
    BEGIN TRY
     BEGIN TRANSACTION;
 
-        INSERT INTO  Recipient (Name, Mail, GroupId, DepartmentId, Description)
-        VALUES (@Name, @Mail, @GroupId, @DepartmentId, @Description)
+        INSERT INTO  Recipient (Name, Mail, GroupId, DepartmentId, Description, WeightId)
+        VALUES (@Name, @Mail, @GroupId, @DepartmentId, @Description, @WeightId)
         
         
         SELECT [Id], 
@@ -18,7 +19,8 @@ BEGIN
                [Mail],
                [GroupId],
                [DepartmentId], 
-               [Description]
+               [Description],
+               [WeightId]
         FROM Recipient
         WHERE Id = @@IDENTITY
     COMMIT;

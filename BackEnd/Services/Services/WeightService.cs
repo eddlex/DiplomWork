@@ -30,7 +30,7 @@ namespace BackEnd.Services.Services
         public async Task<bool> AddWeight(WeightPost weight)
         {
             await using var cmd = dbService.CreateCommand();
-            cmd.CommandText = "spAddDepartment"; //change
+            cmd.CommandText = "spAddWeight"; //not implemented
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@Name", weight.Name);
