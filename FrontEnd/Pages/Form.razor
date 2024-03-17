@@ -166,7 +166,7 @@
                                 <SortableItemTemplate>
                                     <div class="card has-background-white has-border">
                                         <p class="is-size-4 p-1 ml-1 mb-0" style="padding-left: 20px;">
-                                            @(item.Order + 1) . Subject name - @item.Title<br>
+                                            @(item.Id) . Subject name - @item.Title<br>
                                                                 Outcome - @item.Outcome
                                         </p>
                                     </div>
@@ -271,22 +271,16 @@
            allSubjects?.Insert(indices.newIndex, item);
            
            selectedSubjects?.Remove(selectedSubjects[indices.oldIndex]);
-               
-           for (var i = 0; i < allSubjects?.Count; ++i)
-           {
-               allSubjects[i].Order = i;
-           }
            
            for (var i = 0; i < selectedSubjects?.Count; ++i)
            {
-               selectedSubjects[i].Order = i;
+               selectedSubjects[i].Order =  i;
            }
            
            var itemBl = DeleteFormRow(new FormRowBl()
            {
+               Id =  item.Id,
                FormId = _currentSelectedFormId,
-               SubjectId = item.Id,
-               Order = item.Order
            });
        }
 
@@ -299,12 +293,7 @@
            
            selectedSubjects?.Insert(indices.newIndex, item);
            allSubjects?.Remove(allSubjects[indices.oldIndex]);
-               
-           for (var i = 0; i < allSubjects?.Count; ++i)
-           {
-               allSubjects[i].Order = i;
-           }
-               
+           
            for (var i = 0; i < selectedSubjects?.Count; ++i)
            {
                selectedSubjects[i].Order = i;

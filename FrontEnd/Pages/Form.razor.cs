@@ -66,7 +66,7 @@ public partial class Form
                     });
                 }
             }
-            
+             
             if (SubjectsBl != null)
             {
                 this.SubjectsDto?.Clear();
@@ -78,7 +78,6 @@ public partial class Form
                         {
                             Id = item.Id,
                             Title = item.Title,
-                            Order = tmpCount++,
                             Outcome = item.Outcome
                         });
                     }

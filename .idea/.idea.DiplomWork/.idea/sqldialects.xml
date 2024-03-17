@@ -51,7 +51,6 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Subject.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/User.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/UserInfo.sql" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Weights.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" dialect="TSQL" />
