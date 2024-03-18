@@ -15,11 +15,11 @@ public abstract class BaseService : IBaseService
         this.Controller = controller;
     }
     
-    public virtual async Task<List<T>?> Get<T>(int? id = null, string method = "")
+    public virtual async Task<List<T>?> Get<T>(object? id = null, string method = "")
     {
         if (this.httpService is null)
             throw Alert.Create(Constants.Error.Injection);
-        if (id.HasValue)
+        if (id != null)
             return await this.httpService.Execute<List<T>, object>(HttpMethod.Get, this.Controller + "/" + method, id);
         else
             return await this.httpService.Execute<List<T>, object>(HttpMethod.Get, this.Controller + "/" + method);

@@ -44,6 +44,10 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetFormRows.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSubjects.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRecipientGroup.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddFormIdentification.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRatingsView.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetWeights.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelWeight.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" />
@@ -60,9 +64,9 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Department.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/FormIdentification.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/OutcomeTypes.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Weights.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Subject.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Ratings.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Weight.sql" />
             </array>
           </option>
           <option name="remarks" value="Database Project" />
