@@ -10,14 +10,14 @@ public class Weight
     
     
     [CustomAttributes.EnumKey]
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public float Value { get; set; }
     
-    public Weight(int id, string name, float value)
-    {
-        this.Id = id;
-        this.Name = name;
-        this.Value = value;
-    }
+    //public Weight(int id, string name, float value)
+    //{
+    //    this.Id = id;
+    //    this.Name = name;
+    //    this.Value = value;
+    //}
 }
 

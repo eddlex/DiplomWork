@@ -65,8 +65,20 @@ namespace BackEnd.Services.Services
             if (Token.RoleId == 0 ||
                Token.RoleId == 1 && Token.DepartmentId != model.DepartmentId)
                 throw Alert.Create(Constants.Error.WrongPermissions);
-            var res = (await dbService.QueryAsync<Recipient>("spEditRecipient", model)).FirstOrDefault();
-            
+            //var res = (await dbService.QueryAsync<Recipient>("spEditRecipient", model)).FirstOrDefault();
+
+            var res = (await dbService.QueryAsync<Recipient>("spEditRecipient",
+                new
+                {
+                    model.Id,
+                    model.Name,
+                    model.Mail,
+                    model.DepartmentId,
+                    model.GroupId,
+                    model.Description,
+                    model.WeightId
+                })).FirstOrDefault();
+
             if (res == default)
                 throw Alert.Create(Constants.Error.SomethingWrong);
             return res;

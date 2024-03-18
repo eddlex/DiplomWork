@@ -24,10 +24,6 @@ public partial class Rating
         else
         {
             this.RatingView = await this.RatingService?.GetRatingsView(this.Id);
-        }
-       
-    }
- 
-    
-    
+        }       
+    }    
 }
