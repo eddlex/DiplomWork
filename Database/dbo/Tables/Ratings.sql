@@ -1,8 +1,16 @@
-﻿CREATE TABLE Ratings (
+﻿CREATE TABLE Rating (
     [Id] INT PRIMARY KEY IDENTITY(0,1),
-    [SubjectId] INT NOT NULL,
-	[Rating] FLOAT NOT NULL,
-	[GroupWeight] INT NOT NULL,
-	FOREIGN KEY ([SubjectId]) REFERENCES Subject([Id]),
-	FOREIGN KEY ([GroupWeight]) REFERENCES Weight([Id])
+    [FormIdentificationId] INT NOT NULL,
+    [FormRowId] INT NOT NULL,
+	[Value] DECIMAL NOT NULL,
+    [LastUpdateDate] DATETIME2(7) NOT NULL,
+    [CreationDate] DATETIME2(7) NOT NULL,
+	FOREIGN KEY ([FormIdentificationId]) REFERENCES FormIdentification([Id])
 )
+GO
+
+create unique index Rating_FormIdentificationId_uindex
+    on Rating (FormIdentificationId)
+go
+
+

@@ -48,9 +48,11 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetRatingsView.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetWeights.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelWeight.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRatings.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Rayting.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/RecipientGroup.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Recipient.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Form.sql" />

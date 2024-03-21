@@ -1,6 +1,7 @@
 ﻿CREATE TABLE FormIdentification
 (
-    Id             UNIQUEIDENTIFIER DEFAULT NEWID(),
+    Id             INT PRIMARY KEY IDENTITY (0, 1) NOT NULL,
+    GuId           UNIQUEIDENTIFIER DEFAULT NEWID(),
     FormId         INT NOT NULL,
     GroupId        INT NOT NULL,
     RecipientId    INT NOT NULL,

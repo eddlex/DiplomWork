@@ -59,14 +59,13 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
-    <Folder Include="dbo\User Defined Types\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\InsertQueries" />
-    <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\spAddForm.sql" />
     <Build Include="dbo\Stored Procedures\spAddFormIdentification.sql" />
+    <Build Include="dbo\Stored Procedures\spAddRatings.sql" />
     <Build Include="dbo\Stored Procedures\spAddRecipient.sql" />
     <Build Include="dbo\Stored Procedures\spAddSmtpConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteForm.sql" />
@@ -93,6 +92,7 @@
     <Build Include="dbo\Stored Procedures\spDelRecipientGroups.sql" />
     <Build Include="dbo\Stored Procedures\spAddRecipientGroup.sql" />
     <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\User Defined Types\Rating.sql" />
     <Build Include="dbo\User Defined Types\StringTuple.sql" />
     <Build Include="dbo\User Defined Types\Ides.sql" />
     <Build Include="dbo\Stored Procedures\spUpdateRecipientGroups.sql" />

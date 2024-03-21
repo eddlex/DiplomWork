@@ -30,6 +30,26 @@ namespace BackEnd.Services.Services
 
             return new();
         }
+        
+        
+        public async Task<bool> AddRatings(RatingPost model)
+        {
+            
+            var dataTable = new DataTable();
+            dataTable.Columns.Add("Id", typeof(int));
+            dataTable.Columns.Add("FormRowId", typeof(int));
+            dataTable.Columns.Add("Value", typeof(decimal));
+            
+            foreach (var ratingRow in model.RatingRows)
+            {
+                dataTable.Rows.Add(ratingRow.Id, ratingRow.FormRowId, ratingRow.Value);
+            }
+            
+            var result = await this.dbService.QueryAsync<bool>("spAddRatings", new {model.FormIdentificationId, dataTable});
+          
+                
+            return false;
+        }
 
 
    
