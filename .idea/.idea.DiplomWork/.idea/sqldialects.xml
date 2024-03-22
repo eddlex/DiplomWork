@@ -48,7 +48,7 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/MailBody.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/OutcomeTypes.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Permission.sql" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Ratings.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Rating.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Recipient.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/RecipientGroup.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Role.sql" dialect="TSQL" />
@@ -59,7 +59,7 @@
     <file url="file://$PROJECT_DIR$/Database/dbo/Tables/Weight.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Rayting.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Rating.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" dialect="TSQL" />
   </component>
 </project>

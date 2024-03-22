@@ -122,7 +122,7 @@
     <Build Include="dbo\Tables\OutcomeTypes.sql" />
     <Build Include="dbo\Tables\Weight.sql" />
     <Build Include="dbo\Tables\Subject.sql" />
-    <Build Include="dbo\Tables\Ratings.sql" />
+    <Build Include="dbo\Tables\Rating.sql" />
     <Build Include="dbo\Stored Procedures\spGetWeights.sql" />
     <Build Include="dbo\Stored Procedures\spDelWeight.sql" />
   </ItemGroup>
