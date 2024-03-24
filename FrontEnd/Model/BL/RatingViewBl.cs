@@ -5,6 +5,7 @@ namespace FrontEnd.Model.BL;
 
 public class RatingViewBl
 {
+    public int FormIdentificationId { get; set; }
     public int FromId { get; set; }
     public int FormRowId { get; set; }
     public string? Title { get; set; }

@@ -25,5 +25,29 @@ public partial class Rating
         {
             this.RatingView = await this.RatingService?.GetRatingsView(this.Id);
         }       
-    }    
+    }
+
+
+    public async Task Submit()
+    {
+        var s = this.RatingView;
+        var formIdentificationId = this.RatingView.First().FormIdentificationId;
+
+        var ratingRows = new List<RatingRowBl>();
+        this.RatingView.ForEach(r => ratingRows.Add(new ()
+        {
+            Id = r.RatingId,
+            Value = r.RatingValue,
+            FormRowId = r.FormRowId
+        }));
+
+        var ratingBl = new RatingBl
+        {
+            FormIdentificationId = formIdentificationId,
+            RatingRows = ratingRows
+        };
+        
+        var result = await this.RatingService.AddRatings(ratingBl);
+    }
+    
 }

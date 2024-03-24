@@ -7,7 +7,7 @@ namespace BackEnd.Models.Input
         [Required]
         [Range(0, int.MaxValue)]
         public int FormIdentificationId { get; set; }
-        // public int FormId { get; set; }
+
         public List<RatingRowPost> RatingRows { get; set; }
     }
     

@@ -10,7 +10,7 @@
 GO
 
 create unique index Rating_FormIdentificationId_uindex
-    on Rating (FormIdentificationId)
+    on Rating (FormIdentificationId, FormRowId)
 go
 
 

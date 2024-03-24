@@ -2,6 +2,7 @@
 
 public class RatingView
 {
+    public int FormIdentificationId { get; set; }
     public int FormId { get; set; }
     public int FormRowId { get; set; }
     public string? Title { get; set; }

@@ -45,10 +45,10 @@ namespace BackEnd.Services.Services
                 dataTable.Rows.Add(ratingRow.Id, ratingRow.FormRowId, ratingRow.Value);
             }
             
-            var result = await this.dbService.QueryAsync<bool>("spAddRatings", new {model.FormIdentificationId, dataTable});
+            var result = (await this.dbService.QueryAsync<bool>("spAddRatings", new {model.FormIdentificationId, Ratings = dataTable})).FirstOrDefault();
           
                 
-            return false;
+            return result;
         }
 
 

@@ -14,4 +14,12 @@ public class RatingService : BaseService, IRatingService
        var result =  await this.Get<RatingViewBl>(model);
        return result ?? new();
     }
+    
+    public async Task<bool> AddRatings(RatingBl model)
+    {
+        var result = (await this.Add<bool, RatingBl>(model));
+        return result;
+    }
+    
+    
 }
