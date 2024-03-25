@@ -2,6 +2,7 @@
 using FrontEnd.Model.BL;
 using Microsoft.AspNetCore.Components;
 
+
 namespace FrontEnd.Pages;
 
 public partial class Rating
@@ -48,6 +49,10 @@ public partial class Rating
         };
         
         var result = await this.RatingService.AddRatings(ratingBl);
+        if(result)
+        {
+            NavigationManager.NavigateTo("/ThankYou");
+        }
     }
     
 }
