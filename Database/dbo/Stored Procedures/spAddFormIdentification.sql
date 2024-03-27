@@ -7,10 +7,10 @@ AS
 BEGIN
    BEGIN TRY
     BEGIN TRANSACTION;
-        DECLARE @GuId UNIQUEIDENTIFIER = NEWID()
-        INSERT INTO  FormIdentification (GuId, FormId, GroupId, RecipientId, Status, ExpirationTime, LastUpdateTime)
-        OUTPUT GuId
-        VALUES (@GuId, @FormId, @GroupId, @RecipientId, 0, @ExpirationTime, GETUTCDATE())
+        INSERT INTO  FormIdentification (FormId, GroupId, RecipientId, Status, ExpirationTime, LastUpdateTime)
+        VALUES (@FormId, @GroupId, @RecipientId, 0, @ExpirationTime, GETUTCDATE())
+
+        SELECT GuId FROM FormIdentification WHERE Id = @@IDENTITY
     COMMIT;
 END TRY
 BEGIN CATCH

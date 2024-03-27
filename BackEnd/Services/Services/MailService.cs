@@ -102,7 +102,14 @@ namespace BackEnd.Services.Services
 
 
                         // Send the email
-                        await smtpClient.SendMailAsync(mailMessage);
+                        try
+                        {
+                            await smtpClient.SendMailAsync(mailMessage);
+                        }
+                        catch (Exception ex)
+                        {
+                            // ignored
+                        }
                     }
                     return true;
                 }
