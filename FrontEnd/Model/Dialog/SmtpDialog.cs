@@ -4,7 +4,7 @@ namespace FrontEnd.Model.Dialog;
 
 public class SmtpDialog
 {
-    public Select<Department?>? Department { get; set; }
+    public Select<DepartmentBl?>? Department { get; set; }
     public string? SmtpServer { get; set; }
     public int Port { get; set; }
     public string? UserName { get; set; }

@@ -24,7 +24,7 @@ public partial class Recipients
 
     private List<RecipientDto?>? RecipientDto { get; set; }
     private List<Recipient>? RecipientBl { get; set; }
-    private List<Department>? Departments { get; set; }
+    private List<DepartmentBl>? Departments { get; set; }
     private List<RecipientGroup>? RecipientsGroups { get; set; }
     private List<Weight>? Weights { get; set; }
 
@@ -143,7 +143,7 @@ public partial class Recipients
         
         var dialog = new RecipientDialog()
         {
-            Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
+            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
             Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups),
             Weight = new Select<Weight>("Select Weight", "WeightId", this.Weights)
         };

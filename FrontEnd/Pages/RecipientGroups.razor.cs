@@ -20,7 +20,7 @@ public partial class RecipientGroups
 
     private List<RecipientGroupDto?>? RecipientGroupDto { get; set; }
     private List<RecipientGroup>? RecipientGroupBl { get; set; }
-    private List<Department>? Departments { get; set; }
+    private List<DepartmentBl>? Departments { get; set; }
     //private List<RecipientGroup>? RecipientsGroups { get; set; }
     
     
@@ -122,7 +122,7 @@ public partial class RecipientGroups
         
         var dialog = new RecipientGroupDialog()
         {
-            Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
+            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
         };
 
         if (row is not null)

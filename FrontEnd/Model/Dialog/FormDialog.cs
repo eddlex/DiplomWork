@@ -7,6 +7,6 @@ public class FormDialog
 {
     public Select<RecipientGroup> Group { get; set; }
     public string? Name { get; set; }
-    public Select<Department> Department { get; set; }
+    public Select<DepartmentBl> Department { get; set; }
     public string? Description { get; set; }
 }

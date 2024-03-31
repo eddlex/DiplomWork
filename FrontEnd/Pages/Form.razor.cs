@@ -31,7 +31,7 @@ public partial class Form
 
     private List<FormDto?>? FormDto { get; set; }
     private List<FormBl?>? FormBl { get; set; }
-    private List<Department>? Departments { get; set; }
+    private List<DepartmentBl>? Departments { get; set; }
     private List<RecipientGroup>? RecipientsGroups { get; set; }
     
     public List<SubjectBl>? SubjectsBl { get; set; }
@@ -227,7 +227,7 @@ public partial class Form
         
         var dialog = new FormDialog()
         {
-            Department = new Select<Department>("Select Department", "DepartmentId", this.Departments),
+            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
             Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups),
         };
 

@@ -10,9 +10,9 @@ public class DepartmentService :  BaseService,  IDepartmentService
     public DepartmentService(IHttpService httpService) : base(httpService, "Department")
     {
     }
-    public async Task<List<Department>?> GetDepartments()
+    public async Task<List<DepartmentBl>?> GetDepartments()
     {
-       var departments =  await this.Get<Department>();
+       var departments =  await this.Get<DepartmentBl>();
        if (departments is null or { Count: 0 })
        {
            throw Helpers.Alert.Create(Constants.Error.NotExistAnyDepartment);
@@ -21,7 +21,7 @@ public class DepartmentService :  BaseService,  IDepartmentService
        return departments;
     }
     
-    public async Task<List<Department>?> GetDepartmentsByRole()
+    public async Task<List<DepartmentBl>?> GetDepartmentsByRole()
     {
         var session = await this.GetSession() ?? throw Helpers.Alert.Create(Constants.Error.SessionNotFound);
         var departments = await GetDepartments();
@@ -34,13 +34,13 @@ public class DepartmentService :  BaseService,  IDepartmentService
     }
     
     
-    public async Task<Department?> AddDepartment(Department model)
+    public async Task<DepartmentBl?> AddDepartment(DepartmentBl model)
     {
         var session = await this.GetSession() ?? throw Helpers.Alert.Create(Constants.Error.SessionNotFound);
         if (session.RoleId != 2 )
             throw Helpers.Alert.Create(Constants.Error.WrongPermissions);
 
-        var department = await this.Add<Department?, Department>(model);
+        var department = await this.Add<DepartmentBl?, DepartmentBl>(model);
         return department;
     }
     
