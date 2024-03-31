@@ -1,3 +1,5 @@
+using BackEnd.Models.Input;
+using BackEnd.Models.Input.Put;
 using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
@@ -33,9 +35,17 @@ namespace BackEnd.Controllers
 
         [HttpDelete]
         [Authorize]
-        public async Task<ActionResult<bool>> DelDepartment(int id)
+        public async Task<ActionResult<bool>> Department([FromBody] int id)
         {
             return Ok(await this.departmentService.DelDepartment(id));
+        }
+        
+        
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<Department>> Department(DepartmentPut model)
+        {
+            return Ok(await this.departmentService.EditDepartment(model));
         }
 
     }; 

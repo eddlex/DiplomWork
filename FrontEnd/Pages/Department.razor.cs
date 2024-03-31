@@ -53,9 +53,24 @@ public partial class Department
            var result = await this.DepartmentService.AddDepartment(dialog);
            if (result != null)
            {
-               this.Departments?.Add(new DepartmentBl(0, result.Name, result.Description));
+               this.Departments?.Add(result);
            }
        }
+    }
+    
+    
+    private async Task EditDepartment(DepartmentBl model)
+    {
+        var dialog = await OpenDialog(model);
+        if (dialog != default && this.DepartmentService != null)
+        {
+            var result = await this.DepartmentService.EditDepartment(dialog);
+            if (result != null)
+            {
+                model.Description = result.Description;
+                model.Name = result.Name;
+            }
+        }
     }
 
     private async Task<DepartmentBl?> OpenDialog(DepartmentBl? row = default)
@@ -67,7 +82,7 @@ public partial class Department
             Position = DialogPosition.Center,
         };
         
-        var parameters = new DialogParameters<RecipientDialog>();
+        var parameters = new DialogParameters<DepartmentDialog>();
         
         var dialog = new DepartmentDialog();
 
@@ -79,7 +94,7 @@ public partial class Department
 
         parameters.Add("ObjectType", dialog);
          
-        var result = await(await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Add Department", parameters, options)).Result;
+        var result = await(await DialogService.ShowAsync<DialogComponent<DepartmentDialog>>("Add Department", parameters, options)).Result;
         if (!result.Canceled && dialog is { Description: not null, Name: not null })
         {
             return new DepartmentBl(row?.Id ?? 0, dialog.Description, dialog.Name);

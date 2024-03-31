@@ -15,8 +15,6 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateRecipientGroups.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spRegister.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spLogIn.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelUniversity.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddUniversity.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetSmtpConfigurations.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDeleteSmtpConfigurations.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spUpdateSmtpConfiguration.sql" />
@@ -49,6 +47,9 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetWeights.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelWeight.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddRatings.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddDepartment.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelDepartment.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditDepartment.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/StringTuple.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/Ides.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/User Defined Types/IntStringStringTriple.sql" />

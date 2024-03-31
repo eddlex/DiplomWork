@@ -4,6 +4,7 @@ using BackEnd.Services.Interfaces;
 using Dapper;
 using System.Data;
 using BackEnd.Helpers;
+using BackEnd.Models.Input.Put;
 using BackEnd.Models.Output;
 using FrontEnd.Helpers;
 
@@ -36,7 +37,19 @@ namespace BackEnd.Services.Services
             if (Token.RoleId != 2)
                 Alert.Create(Constants.Error.WrongPermissions);
 
-            var result =  (await this.dbService.QueryAsync<Department?>("spAddDepartment", department)).FirstOrDefault();
+            var result =  (await this.dbService.QueryAsync<Department?>("spEditDepartment", department)).FirstOrDefault();
+            if (result == null)
+                Alert.Create(Constants.Error.SomethingWrong);
+            return result;
+
+        }
+        
+        public async Task<Department?> EditDepartment(DepartmentPut department)
+        {
+            if (Token.RoleId != 2)
+                Alert.Create(Constants.Error.WrongPermissions);
+
+            var result =  (await this.dbService.QueryAsync<Department?>("spEditDepartment", department)).FirstOrDefault();
             if (result == null)
                 Alert.Create(Constants.Error.SomethingWrong);
             return result;

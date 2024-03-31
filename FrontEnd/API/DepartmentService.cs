@@ -54,6 +54,17 @@ public class DepartmentService :  BaseService,  IDepartmentService
         var result = await this.Delete<bool, int>(id);
         return result;
     }
+    
+    public async Task<DepartmentBl?> EditDepartment(DepartmentBl model)
+    {
+        var session = await this.GetSession() ?? throw Helpers.Alert.Create(Constants.Error.SessionNotFound);
+        if (session.RoleId != 2 )
+            throw Helpers.Alert.Create(Constants.Error.WrongPermissions);
+
+        var result = await this.Edit<DepartmentBl?, DepartmentBl>(model);
+        
+        return result;
+    }
 }
 
 

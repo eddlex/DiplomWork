@@ -7,6 +7,7 @@ public interface IDepartmentService
     public Task<List<DepartmentBl>?> GetDepartments(); 
     public Task<List<DepartmentBl>?> GetDepartmentsByRole();
     public Task<DepartmentBl?> AddDepartment(DepartmentBl model);
+    public Task<DepartmentBl?> EditDepartment(DepartmentBl model);
     public Task<bool> DeleteDepartment(int id);
     
 }
