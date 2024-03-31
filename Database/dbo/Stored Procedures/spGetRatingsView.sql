@@ -12,6 +12,7 @@ BEGIN
     FROM FormIdentification fi JOIN FormRow fr ON fr.FormId = fi.FormId
                                                AND fi.GuId = @Id
                                                AND fi.Status = 0
+                                               AND fi.ExpirationTime > GETUTCDATE()
          JOIN Subject s ON s.Id = fr.SubjectId
          LEFT JOIN Rating r ON r.FormRowId = fr.Id AND r.FormIdentificationId = fi.Id
 END

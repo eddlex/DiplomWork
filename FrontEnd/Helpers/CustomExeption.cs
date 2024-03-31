@@ -76,7 +76,37 @@ public static class Alert
         snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomEnd;
         snackbar.Configuration.ShowCloseIcon = true;
         snackbar.Add($"Error {message}", Severity.Error);
-        
+    }
+    
+    public static void ShowExeption(this ISnackbar snackbar, Constants.Error message)
+    {
+        snackbar.Configuration.SnackbarVariant = Variant.Filled;   
+        snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomEnd;
+        snackbar.Configuration.ShowCloseIcon = true;
+        snackbar.Add($"Error {message}", Severity.Error);
+    }
+    
+    
+    
+    public static void ShowSuccess(this ISnackbar snackbar, string message)
+    {
+        snackbar.Configuration.SnackbarVariant = Variant.Filled;   
+        snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomEnd;
+        snackbar.Configuration.ShowCloseIcon = true;
+        snackbar.Add($"Error {message}", Severity.Info);
+    }
+    
+    
+    public static void ShowSuccess(this ISnackbar snackbar, Constants.Success message)
+    {
+        snackbar.Configuration.SnackbarVariant = Variant.Filled;   
+        snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomEnd;
+        snackbar.Configuration.ShowCloseIcon = true;
+
+        snackbar.Add($"Success {message.Text}", Severity.Success);
     }
     
     public static CutomExeption Create(SqlException e)

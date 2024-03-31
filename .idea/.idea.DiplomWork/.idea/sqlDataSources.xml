@@ -67,7 +67,7 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/FormIdentification.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/OutcomeTypes.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Subject.sql" />
-              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Ratings.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Rating.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Tables/Weight.sql" />
             </array>
           </option>

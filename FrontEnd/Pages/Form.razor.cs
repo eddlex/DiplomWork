@@ -174,6 +174,13 @@ public partial class Form
     private async Task SendEmail(int id)
     {
         var result = await this.MailService?.SendMail(this.FormBl?.Find(f => f.Id == id));
+        
+        if (result)
+            Snackbar.ShowSuccess(Constants.Success.FormSubmit);
+        else
+        {
+            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+        }
     }
     
     private async Task DeleteRow(int id)

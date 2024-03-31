@@ -56,5 +56,22 @@ public static class Constants
         }
     }
     
+    
+      public sealed class Success
+    {
+        public static readonly Success FormSubmit = new Success(nameof(FormSubmit), 0, "Form successfully sent");
+        
+        public string Text { get; private set; }
+        public string UniqueName { get; private set; }
+        public int Code { get; }
+        
+        private Success(string uniqueName, int code, string text) 
+        {
+            this.UniqueName = uniqueName;
+            this.Code = code;
+            this.Text = text;
+        }
+    }
+    
    
 }

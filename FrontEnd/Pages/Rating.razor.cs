@@ -25,6 +25,8 @@ public partial class Rating
         else
         {
             this.RatingView = await this.RatingService?.GetRatingsView(this.Id);
+            if (!this.RatingView.Any())
+                NavigationManager.NavigateTo("/SomethingWrong");
         }       
     }
 
@@ -52,6 +54,10 @@ public partial class Rating
         if(result)
         {
             NavigationManager.NavigateTo("/ThankYou");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/SomethingWrong");
         }
     }
     
