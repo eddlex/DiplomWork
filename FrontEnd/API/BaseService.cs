@@ -1,18 +1,25 @@
-using System.Net;
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
-
+using FrontEnd.Model;
 namespace FrontEnd.API;
 
-public abstract class BaseService : IBaseService
+public abstract class BaseService : /* ComponentBase,*/ IBaseService
 {
     private readonly IHttpService? httpService;
     public string Controller { get; set; }
-
+    
     protected BaseService(IHttpService httpService, string controller)
     {
         this.httpService = httpService;
         this.Controller = controller;
+    }
+    
+    public async Task<UserSession?> GetSession()
+    {
+        if (this.httpService == null)
+            throw Helpers.Alert.Create(Constants.Error.Injection);
+    
+        return await this.httpService.GetSession() ?? throw Helpers.Alert.Create(Constants.Error.SessionNotFound);
     }
     
     public virtual async Task<List<T>?> Get<T>(object? id = null, string method = "")

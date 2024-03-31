@@ -10,10 +10,6 @@ BEGIN
             WHERE u.Id = @Id
             IF(@@ROWCOUNT IS NOT NULL AND  @@ROWCOUNT != 0)
             BEGIN
---                 UPDATE University
---                 SET Id = Id / 2
---                 WHERE  @Id < Id
-
                 SELECT 1
             END
             ELSE

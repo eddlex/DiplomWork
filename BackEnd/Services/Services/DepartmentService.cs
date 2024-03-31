@@ -12,8 +12,12 @@ namespace BackEnd.Services.Services
     public class DepartmentService : IDepartmentService
     {
         private readonly DbService dbService;
-        public DepartmentService(IDbService dbService)
+        public (int UserId, int DepartmentId, int RoleId) Token { get; set; }
+        public DepartmentService(IDbService dbService,
+                                 IHttpContextAccessor httpContextAccessor)
         {
+            if (httpContextAccessor.HttpContext != null)
+                this.Token = httpContextAccessor.HttpContext.User.ParseToken();
             this.dbService = (DbService)dbService;
         }
 
@@ -27,22 +31,25 @@ namespace BackEnd.Services.Services
             return departments;
         }
 
-        public async Task<bool> AddDepartment(DepartmentPost department)
+        public async Task<Department?> AddDepartment(DepartmentPost department)
         {
-            await using var cmd = dbService.CreateCommand();
-            cmd.CommandText = "spAddDepartment";
-            cmd.CommandType = CommandType.StoredProcedure;
+            if (Token.RoleId != 2)
+                Alert.Create(Constants.Error.WrongPermissions);
 
-            cmd.Parameters.AddWithValue("@Name", department.Name);
-            cmd.Parameters.AddWithValue("@Description", department.Description);
+            var result =  (await this.dbService.QueryAsync<Department?>("spAddDepartment", department)).FirstOrDefault();
+            if (result == null)
+                Alert.Create(Constants.Error.SomethingWrong);
+            return result;
 
-            return Convert.ToBoolean(await cmd.ExecuteNonQueryAsync());
         }
 
 
         public async Task<bool> DelDepartment(int id)
         {
-            using var cmd = dbService.CreateCommand();
+            if (Token.RoleId != 2)
+                Alert.Create(Constants.Error.WrongPermissions);
+            
+            await using var cmd = dbService.CreateCommand();
             cmd.CommandText = "spDelDepartment";
             cmd.CommandType = CommandType.StoredProcedure;
 

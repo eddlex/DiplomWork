@@ -1,4 +1,5 @@
-﻿
+﻿using FrontEnd.Model;
+
 namespace FrontEnd.Interface;
 
 public interface IBaseService
@@ -8,4 +9,6 @@ public interface IBaseService
      Task<TRes> Add<TRes, TReq>(TReq model, string method = "");
      Task<TRes> Edit<TRes, TReq>(TReq model, string method = "");
      string Controller { get; set; }
+
+     Task<UserSession?> GetSession();
 }

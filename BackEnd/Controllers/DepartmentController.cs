@@ -1,4 +1,4 @@
-using BackEnd.Helpers;
+using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using BackEnd.Services.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -24,14 +24,16 @@ namespace BackEnd.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<List<Models.Output.Department>>> Department(Models.Input.DepartmentPost department)
+        [Authorize]
+        public async Task<ActionResult<Department>> Department(Models.Input.DepartmentPost department)
         {
             return Ok(await this.departmentService.AddDepartment(department));
         }
 
 
         [HttpDelete]
-        public async Task<ActionResult<bool>> DelUniversity(int id)
+        [Authorize]
+        public async Task<ActionResult<bool>> DelDepartment(int id)
         {
             return Ok(await this.departmentService.DelDepartment(id));
         }
