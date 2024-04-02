@@ -1,6 +1,7 @@
 ﻿using FrontEnd.Interface;
 using FrontEnd.Model.BL;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 
 namespace FrontEnd.Pages;
@@ -24,6 +25,8 @@ public partial class Rating
         }
         else
         {
+            WindowInnerHeight = await JSRuntime.InvokeAsync<int>("getWindowInnerHeight");
+            RowsPerPage = CalculateRowsPerPage();
             this.RatingView = await this.RatingService?.GetRatingsView(this.Id);
         }       
     }
