@@ -20,7 +20,7 @@ public partial class Smtp
 
     private List<SMTPConfigDto?>? SmtpConfigDto { get; set; }
     private List<SmtpConfigBl?>? SmtpConfigBl { get; set; }
-    private List<Department>? Departments { get; set; }
+    private List<DepartmentBl>? Departments { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -124,7 +124,7 @@ public partial class Smtp
         
         var dialog = new SmtpDialog()
         {
-            Department = new Select<Department?>("Select Department", "DepartmentId", this.Departments)
+            Department = new Select<DepartmentBl?>("Select Department", "DepartmentId", this.Departments)
         };
 
         if (row is not null)

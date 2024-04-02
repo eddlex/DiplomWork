@@ -3,7 +3,7 @@ using FrontEnd.Helpers;
 
 namespace FrontEnd.Model;
 
-public class Department
+public class DepartmentBl
 {
     [CustomAttributes.EnumValue]
     public int Id { get; set; }
@@ -13,7 +13,7 @@ public class Department
     public string Name { get; set; }
     public string Description { get; set; }
     
-    public Department(int id, string name, string description)
+    public DepartmentBl(int id, string name, string description)
     {
         this.Id = id;
         this.Name = name;

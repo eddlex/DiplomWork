@@ -5,7 +5,8 @@
 @inject IDialogService DialogService
 @inject HttpClient httpClient
 @inject ISnackbar Snackbar
-
+@using MudBlazor
+@using System.Threading.Tasks
 <style>
     body {
         background-color: black;
@@ -75,11 +76,16 @@
         /* padding-left: 1%; */
         padding-top: 2%;
         max-height: 50vh;
+    }
+    .progress
+    {
+    position:absolute; 
     }    
 </style>
 
-<MudThemeProvider />
 
+
+<MudThemeProvider />
 @* <div class="body"> *@
     <MudLayout style="background-color: #212121; color: white;" Elevation="5">
         <Drawer></Drawer>
@@ -181,6 +187,9 @@
 @* </div> *@
 
 @code {
+
+
+
     private bool _isCellEditMode;
     private bool _editTriggerRowClick;
     public string _searchString;

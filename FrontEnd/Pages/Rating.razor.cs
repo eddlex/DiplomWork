@@ -28,6 +28,8 @@ public partial class Rating
             WindowInnerHeight = await JSRuntime.InvokeAsync<int>("getWindowInnerHeight");
             RowsPerPage = CalculateRowsPerPage();
             this.RatingView = await this.RatingService?.GetRatingsView(this.Id);
+            if (!this.RatingView.Any())
+                NavigationManager.NavigateTo("/SomethingWrong");
         }       
     }
 
@@ -55,6 +57,10 @@ public partial class Rating
         if(result)
         {
             NavigationManager.NavigateTo("/ThankYou");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/SomethingWrong");
         }
     }
     

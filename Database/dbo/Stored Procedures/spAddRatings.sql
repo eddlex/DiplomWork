@@ -15,6 +15,11 @@ BEGIN
             UPDATE r
             SET r.Value = tmp.Value
             FROM Rating r JOIN @Ratings tmp ON r.Id = tmp.Id AND r.Id <> -1
+            
+            If @@ROWCOUNT > 0 OR @@IDENTITY > 0
+                SELECT 1
+            ELSE
+                SELECT 0
 
         COMMIT
     END TRY
