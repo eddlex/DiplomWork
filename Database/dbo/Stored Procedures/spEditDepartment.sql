@@ -12,13 +12,12 @@ BEGIN
         WHERE Id = @Id
         COMMIT
         
-        IF @@ROWCOUNT = 1
-            BEGIN
-            SELECT Id,
-                   Name,
-                   Description
-            FROM Department WHERE Id = @Id
-        END
+
+        SELECT Id,
+               Name,
+               Description
+        FROM Department WHERE Id = @Id
+
         END TRY
     BEGIN CATCH
         ROLLBACK

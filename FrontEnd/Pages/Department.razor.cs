@@ -97,7 +97,7 @@ public partial class Department
         var result = await(await DialogService.ShowAsync<DialogComponent<DepartmentDialog>>("Add Department", parameters, options)).Result;
         if (!result.Canceled && dialog is { Description: not null, Name: not null })
         {
-            return new DepartmentBl(row?.Id ?? 0, dialog.Description, dialog.Name);
+            return new DepartmentBl(row?.Id ?? 0, dialog.Name, dialog.Description);
         }
 
         return default;
