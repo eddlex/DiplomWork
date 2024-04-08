@@ -70,6 +70,9 @@
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddMailBody.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spGetWeights.sql" />
               <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelWeight.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spAddSubject.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spDelSubject.sql" />
+              <option value="file://$PROJECT_DIR$/Database/dbo/Stored Procedures/spEditSubject.sql" />
             </array>
           </option>
           <option name="remarks" value="Database Project" />

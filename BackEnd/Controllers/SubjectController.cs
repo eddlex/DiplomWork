@@ -1,3 +1,5 @@
+using BackEnd.Models.Input.Post;
+using BackEnd.Models.Input.Put;
 using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -22,26 +24,27 @@ namespace BackEnd.Controllers
             return Ok(await this.subjectService.GetSubjects(id));
         }
         
-        // [HttpPost]  //tested
-        // public async Task<ActionResult<Recipient>> Recipient(Recipient input)
-        // {
-        //     return Ok(await this.recipientService.AddRecipient(input));
-        // }
-        //
-        // [HttpDelete]
-        // public async Task<ActionResult<int?>> RecipientDelete(Recipient model)
-        // {
-        //     return Ok(await this.recipientService.DeleteRecipient(model));
-        // }
-        // [HttpPut] //tested
-        // public async Task<ActionResult<int?>> RecipientEdit(Recipient model)
-        // {
-        //     return Ok(await this.recipientService.EditRecipient(model));
-        // }
-        //
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<List<Subject>>> Subject()
+        {
+            return Ok(await this.subjectService.GetSubjects());
+        }
         
         
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<Subject?>> Subject(SubjectPost model)
+        {
+            return Ok(await this.subjectService.AddSubject(model));
+        }
         
-  
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<Subject>> Subject(SubjectPut model)
+        {
+            return Ok(await this.subjectService.EditSubject(model));
+        }
+        
     } 
 }
