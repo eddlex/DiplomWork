@@ -32,7 +32,7 @@ namespace BackEnd.Services.Services
         }
 
         
-        public Task<Subject?> AddGetSubject(Recipient model)
+        public Task<Subject?> AddSubject(Recipient model)
         {
             throw new NotImplementedException();
         }
@@ -42,7 +42,7 @@ namespace BackEnd.Services.Services
             throw new NotImplementedException();
         }
 
-        public Task<Recipient?> EditGetSubject(Recipient model)
+        public Task<Recipient?> EditSubject(Recipient model)
         {
             throw new NotImplementedException();
         }

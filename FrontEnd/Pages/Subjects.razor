@@ -1,0 +1,128 @@
+﻿@page "/Recipients"
+@using FrontEnd.Model.DTO
+@inject IDialogService DialogService
+
+<style>
+    body {
+        background-color: black;
+        opacity: 0.8;
+    }
+
+    .custom-elevation {
+        box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.75);
+    }
+
+    .custom-paper {
+        background-color: #651FFF;
+        color: white;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .custom-subheader {
+        color: white; 
+        font-size: 20px;
+    }
+</style>
+
+<MudThemeProvider />
+
+@* <div class="body"> *@
+    <MudLayout style="background-color: #212121; color: white;" Elevation="5">
+        <Drawer></Drawer>
+
+        <MudMainContent style="background-color: black; color: white;" Elevation="5">
+            <div style="margin: 1% 1% 1% 1%; height:100vh">
+                <MudDataGrid T="SubjectDtoForPage"
+                             Items="@SubjectDto" 
+                             SortMode="SortMode.Multiple" 
+                             Filterable="true"
+                             RowClick="@RowClicked" 
+                             RowContextMenuClick="RowRightClicked"
+                             Selectable="false" 
+                             MultiSelection="false"
+                             ReadOnly="false"
+                             FixedHeader="true"
+                             EditMode="DataGridEditMode.Form"
+                             RowsPerPage="10"
+                             StartedEditingItem="@StartedEditingItem" 
+                             CanceledEditingItem="@CanceledEditingItem"
+                             CommittedItemChanges="@CommittedItemChanges"
+                             Bordered="true" 
+                             Dense="true"
+                             EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
+                             ColumnResizeMode="ResizeMode.Column"
+                             Style="height:100%" >
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h4" class="mr-2">Subjects</MudText>
+                        <MudIconButton @onclick="AddSubject" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
+                        <MudSpacer />
+                        @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
+                        @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
+                    </ToolBarContent>
+
+                    <Columns>
+                        <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
+                        <PropertyColumn Property="x => x.Title" Title="Group" />
+                        <PropertyColumn Property="x => x.Outcome" />
+                        <PropertyColumn Property="x => x.OutcomeType" Title="Name" />
+                        <PropertyColumn Property="x => x.Department" Title="Department" />
+
+                        <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
+                                        Sortable="false" Filterable="false" StickyRight="true">
+                            <CellTemplate>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditSubject(context.Item.Id))"> </MudIconButton>
+                                <MudSpacer />
+                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteSubject(context.Item.Id))"> </MudIconButton>
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+
+                    <PagerContent>
+                        <MudDataGridPager T="SubjectDtoForPage" DisableRowsPerPage="true" />
+                    </PagerContent>
+
+                </MudDataGrid>
+            </div>
+
+            @* <MudButton @onclick="AddRecipient" Variant="Variant.Filled" Color="Color.Primary">
+                Add recipient
+            </MudButton> *@
+        </MudMainContent>
+    </MudLayout>
+@* </div> *@
+
+@code {
+    private bool _isCellEditMode;
+    private bool _editTriggerRowClick;
+    public string _searchString;
+    private bool _sortNameByLength;
+    private List<string> _events = new();
+
+
+    // events
+    void RowClicked(DataGridRowClickEventArgs<SubjectDtoForPage> args)
+    {
+        System.Text.Json.JsonSerializer.Serialize(args.Item);
+    }
+    
+    void RowRightClicked(DataGridRowClickEventArgs<SubjectDtoForPage> args)
+    {
+        //args.RowIndex
+        System.Text.Json.JsonSerializer.Serialize(args.Item);
+    }
+    
+    void StartedEditingItem(SubjectDtoForPage item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+    
+    void CanceledEditingItem(SubjectDtoForPage item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+    
+    void CommittedItemChanges(SubjectDtoForPage item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+}
