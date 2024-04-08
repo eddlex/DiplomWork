@@ -84,22 +84,20 @@ namespace BackEnd.Services.Services
                             FormId = model.Id,
                             RecipientId = recipient.Id
                         });
-                        
+
                         var mailMessage = new MailMessage(smtpConfig.UserName, recipient.Mail)
                         {
-                            Subject =  "ՈՒսումնական պլանի արդիականացման հարցում",
-                            Body = $"Հարգելի {recipient.Name} " + Environment.NewLine+
-                                    "Խնդուրմ ենք անցնել հղումով և մասնակցել հարցմանը" + Environment.NewLine +
-                                    "Նամակը գեներացվել է ավտոմատ" + Environment.NewLine + 
-                                    "Հրգանքով՝" + Environment.NewLine +
-                                    "Հայաստանի Ազգային Պոլիտեխնիկական Համալսարան" + Environment.NewLine +
-                                    $"Հղում {href + guid}",
+                            Subject = "ՈՒսումնական պլանի արդիականացման հարցում",
+                            Body = $"Հարգելի {recipient.Name} " + Environment.NewLine +
+                                    "Խնդրում ենք անցնել հղումով և մասնակցել հարցմանը" + Environment.NewLine +
+                                    $"Հղում` {href + guid}" + Environment.NewLine + Environment.NewLine +
+                                    "Նամակը գեներացվել է ավտոմատ" + Environment.NewLine + Environment.NewLine +
+                                    "Հարգանքով՝" + Environment.NewLine +
+                                    "Հայաստանի Ազգային Պոլիտեխնիկական Համալսարան" + Environment.NewLine,
                             BodyEncoding = Encoding.UTF8,
-                            
                             SubjectEncoding = Encoding.UTF8,
-                            
-                        };
 
+                        };
 
                         // Send the email
                         try

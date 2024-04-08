@@ -8,7 +8,9 @@ function getRowCount() {
 function setLinkRed() {
     document.getElementById('forgotPasswordLink').style.color = 'red';
 }
-
+function getWindowInnerHeight() {
+    return window.innerHeight;
+}
 let s = true
 
 function SearchOption()

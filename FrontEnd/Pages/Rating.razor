@@ -4,7 +4,7 @@
 @using FrontEnd.Model
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
-
+@inject IJSRuntime JSRuntime
 
 
 <style>
@@ -26,7 +26,8 @@
             Bordered="true" 
             Dense="true"
             ColumnResizeMode="ResizeMode.Column"
-            Style="height:99%">
+            Style="height:99%"
+            RowsPerPage="13">
 
         <ToolBarContent>
             <MudText Typo="Typo.h4" class="mr-2">Survey</MudText>              
@@ -108,6 +109,17 @@
 
 @code 
 {
+    // int WindowInnerHeight, RowsPerPage;
+
+    // public int CalculateRowsPerPage()
+    // {
+    //     // Calculate the number of rows based on the available height and row height
+    //     double availableHeight = 80 * WindowInnerHeight / 100;
+    //     double rowHeight = 20;
+    //     return (int)Math.Floor(availableHeight / rowHeight);
+    // }
+
+
     // private bool _readOnly;
     // private bool _isCellEditMode;
     // private bool _editTriggerRowClick;
