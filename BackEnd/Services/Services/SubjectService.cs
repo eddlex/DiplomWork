@@ -26,24 +26,15 @@ namespace BackEnd.Services.Services
                 this.Token = httpContextAccessor.HttpContext.User.ParseToken();
         }
 
-        public async Task<List<Subject>> GetSubjects(int id)
+        public async Task<List<Subject>> GetSubjects(int? id)
         {
             if (Token.RoleId < 2 && id != Token.DepartmentId)
                 throw Alert.Create(Constants.Error.WrongPermissions);
-            var res = (await dbService.QueryAsync<Subject>("spGetSubjects", new { Token.RoleId, DepartmentId = id }))
+            var res = (await dbService.QueryAsync<Subject>("spGetSubjects", new { RoleId = Token.RoleId, DepartmentId = id }))
                 .ToList();
             return res;
         }
-
-
-        public async Task<List<Subject>> GetSubjects()
-        {
-            var res = (await dbService.QueryAsync<Subject>("spGetSubjects",
-                new { Token.RoleId, DepartmentId = Token.DepartmentId })).ToList();
-            return res;
-        }
-
-
+        
         public async Task<Subject?> AddSubject(SubjectPost model)
         {
             var res = await dbService.QueryAsync<Subject>("spAddSubject", model);

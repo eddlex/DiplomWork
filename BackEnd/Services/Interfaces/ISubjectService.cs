@@ -7,8 +7,7 @@ namespace BackEnd.Services.Interfaces
 {
     public interface ISubjectService
     {
-        Task<List<Subject>> GetSubjects(int id);
-        Task<List<Subject>> GetSubjects();
+        Task<List<Subject>> GetSubjects(int? id);
         Task<Subject?> AddSubject(SubjectPost model);
         Task<bool?> DeleteSubject(SubjectDelete model);
         Task<Subject?> EditSubject(SubjectPut model);

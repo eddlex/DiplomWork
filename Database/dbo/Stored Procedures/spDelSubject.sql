@@ -1,4 +1,4 @@
-﻿CREATE   PROCEDURE  spDelSubject
+﻿CREATE   PROCEDURE  spDeleteSubject
 @Id BIGINT
 AS
 BEGIN

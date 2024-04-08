@@ -1,4 +1,4 @@
-﻿@page "/Recipients"
+﻿@page "/Subjects"
 @using FrontEnd.Model.DTO
 @inject IDialogService DialogService
 
@@ -62,9 +62,9 @@
 
                     <Columns>
                         <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
-                        <PropertyColumn Property="x => x.Title" Title="Group" />
+                        <PropertyColumn Property="x => x.Title" />
                         <PropertyColumn Property="x => x.Outcome" />
-                        <PropertyColumn Property="x => x.OutcomeType" Title="Name" />
+                        <PropertyColumn Property="x => x.OutcomeType" Title="OutcomeType" />
                         <PropertyColumn Property="x => x.Department" Title="Department" />
 
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"

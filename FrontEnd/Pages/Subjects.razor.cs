@@ -25,12 +25,18 @@ public partial class Subjects
     private List<SubjectDtoForPage?>? SubjectDto { get; set; }
     private List<SubjectBl>? SubjectBl { get; set; }
     private List<DepartmentBl>? Departments { get; set; }
-    
-    private List<OutcomeType>? OutcomeTypes { get; set; } 
+
+    private List<OutcomeType>? OutcomeTypes { get; set; } = new();
 
 
     protected override async Task OnInitializedAsync()
     {
+        
+        OutcomeTypes?.Add(new OutcomeType(0, "A"));
+        OutcomeTypes?.Add(new OutcomeType(1, "B"));
+        
+        
+        
         if (this.DepartmentService != null &&
             this.SubjectService != null)
         {
@@ -39,7 +45,7 @@ public partial class Subjects
           
 
            this.SubjectDto = new();
-           if (this.SubjectDto is { Count: > 0 })
+           if (this.SubjectBl is { Count: > 0 })
            {
                
                this.SubjectBl?.ForEach(e => this.SubjectDto.Add(new SubjectDtoForPage()
@@ -47,9 +53,11 @@ public partial class Subjects
                    Id = e.Id,
                    Title = e.Title,
                    Outcome = e.Outcome,
-                   OutcomeType =  "",
+                   OutcomeType =  this.OutcomeTypes?.FirstOrDefault(d => d.Id == e.OutcomeTypeId)?.Title,
                    Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name
                }));
+               
+               
            }                
         } 
     }
@@ -77,7 +85,7 @@ public partial class Subjects
                         Id = result.Id,
                         Title = result.Title,
                         Outcome = result.Outcome,
-                        OutcomeType = this.OutcomeTypes?.FirstOrDefault(d => d.Id == result.OutcomeType)?.Title,
+                        OutcomeType = this.OutcomeTypes?.FirstOrDefault(d => d.Id == result.OutcomeTypeId)?.Title,
                         Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
                     });
                 }
@@ -109,12 +117,13 @@ public partial class Subjects
            var result = await this.SubjectService.AddSubject(subject);
            if (result != null)
            {
+               this.SubjectBl?.Add(result);
                this.SubjectDto?.Add(new ()
                {
                    Id = result.Id,
                    Title = result.
                    Outcome = result.Outcome,
-                   OutcomeType = this.OutcomeTypes?.FirstOrDefault(d => d.Id == result.OutcomeType)?.Title,
+                   OutcomeType = this.OutcomeTypes?.FirstOrDefault(d => d.Id == result.OutcomeTypeId)?.Title,
                    Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
                    
                });
@@ -136,19 +145,16 @@ public partial class Subjects
         var dialog = new SubjectDialog()
         {
             Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
-            OutcomeType = new Select<OutcomeType>("Select OutcomeType", "OutcomeType", this.OutcomeTypes),
-           // Group = new Select<RecipientGroup>("Select Outcome", "GroupId", this.RecipientsGroups),
+            OutcomeType = new Select<OutcomeType>("Select OutcomeType", "OutcomeTypeId", this.OutcomeTypes)
 
         };
-
+        
         if (row is not null)
         {
-            dialog.Id = row.Id;
             dialog.Title = row.Title;
             dialog.Outcome = row.Outcome;
-            dialog.OutcomeType.SelectedValue = row.OutcomeType;
+            dialog.OutcomeType.SelectedValue = row.OutcomeTypeId;
             dialog.Department.SelectedValue = row.DepartmentId;
-  
         }
 
         parameters.Add("ObjectType", dialog);
@@ -159,7 +165,7 @@ public partial class Subjects
             return new SubjectBl()
             {
                 DepartmentId = dialog.Department.SelectedValue.Value,
-                OutcomeType = dialog.OutcomeType.SelectedValue.Value,
+                OutcomeTypeId = dialog.OutcomeType.SelectedValue.Value,
                 Outcome = dialog.Outcome,
                 Title = dialog.Title,
                 Id = row?.Id ?? 0

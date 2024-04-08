@@ -1,3 +1,4 @@
+using BackEnd.Models.Input.Delete;
 using BackEnd.Models.Input.Post;
 using BackEnd.Models.Input.Put;
 using BackEnd.Models.Output;
@@ -19,18 +20,10 @@ namespace BackEnd.Controllers
         
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<List<Subject>>> Subject(int id)
+        public async Task<ActionResult<List<Subject>>> Subject(int? id)
         {
             return Ok(await this.subjectService.GetSubjects(id));
         }
-        
-        [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<List<Subject>>> Subject()
-        {
-            return Ok(await this.subjectService.GetSubjects());
-        }
-        
         
         [HttpPost]
         [Authorize]
@@ -44,6 +37,14 @@ namespace BackEnd.Controllers
         public async Task<ActionResult<Subject>> Subject(SubjectPut model)
         {
             return Ok(await this.subjectService.EditSubject(model));
+        }
+        
+        
+        [HttpDelete]
+        [Authorize]
+        public async Task<ActionResult<bool>> Subject(SubjectDelete model)
+        {
+            return Ok(await this.subjectService.DeleteSubject(model));
         }
         
     } 

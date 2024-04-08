@@ -9,19 +9,11 @@ public class SubjectService : BaseService , ISubjectService
     {
     }
 
-    public async Task<List<SubjectBl>?> GetSubjects(int departmentId)
+    public async Task<List<SubjectBl>?> GetSubjects(int? departmentId = null)
     {
         var result = await this.Get<SubjectBl>(departmentId);
         return result;
     }
-    
-    
-    public async Task<List<SubjectBl>?> GetSubjects()
-    {
-        var result = await this.Get<SubjectBl>();
-        return result;
-    }
-    
     
     public async Task<SubjectBl?> AddSubject(SubjectBl model)
     {
