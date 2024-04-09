@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{6ADE61
 		FrontEnd.PublishSettings = FrontEnd.PublishSettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{B9A1A0FF-EFF5-4F36-9B0C-01E8D70677EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{B9A1A0FF-EFF5-4F36-9B0C-01E8D70677EB}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ML", "ML\ML.pyproj", "{675E767D-3243-4AD8-9E86-DA8E7086A43F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,8 @@ Global
 		{B9A1A0FF-EFF5-4F36-9B0C-01E8D70677EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9A1A0FF-EFF5-4F36-9B0C-01E8D70677EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9A1A0FF-EFF5-4F36-9B0C-01E8D70677EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{675E767D-3243-4AD8-9E86-DA8E7086A43F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675E767D-3243-4AD8-9E86-DA8E7086A43F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
