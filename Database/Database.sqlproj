@@ -88,8 +88,7 @@
     <Build Include="dbo\Stored Procedures\spGetSubjects.sql" />
     <Build Include="dbo\Stored Procedures\spGetUsers.sql" />
     <Build Include="dbo\Tables\FormIdentification.sql" />
-    <Build Include="dbo\Tables\MlGeneralParam.sql" />
-    <Build Include="dbo\Tables\MlParamBsql.sql" />
+    <Build Include="dbo\Tables\MlParam.sql" />
     <Build Include="dbo\Tables\MlSubjectCalculation.sql" />
     <Build Include="dbo\Tables\RecipientGroup.sql" />
     <Build Include="dbo\Tables\Recipient.sql" />
