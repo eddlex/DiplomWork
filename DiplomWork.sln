@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "FrontEnd\FrontE
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ML", "ML\ML.pyproj", "{675E767D-3243-4AD8-9E86-DA8E7086A43F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackUp", "BackUp\BackUp.csproj", "{C5D53128-80EF-42C6-95E6-F7E6ACD10E9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackUp", "BackUp\BackUp.csproj", "{BF629551-49A3-44F1-8AAC-B0DD4272C58A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,10 +42,10 @@ Global
 		{B9A1A0FF-EFF5-4F36-9B0C-01E8D70677EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{675E767D-3243-4AD8-9E86-DA8E7086A43F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{675E767D-3243-4AD8-9E86-DA8E7086A43F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5D53128-80EF-42C6-95E6-F7E6ACD10E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5D53128-80EF-42C6-95E6-F7E6ACD10E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5D53128-80EF-42C6-95E6-F7E6ACD10E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5D53128-80EF-42C6-95E6-F7E6ACD10E9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF629551-49A3-44F1-8AAC-B0DD4272C58A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF629551-49A3-44F1-8AAC-B0DD4272C58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF629551-49A3-44F1-8AAC-B0DD4272C58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF629551-49A3-44F1-8AAC-B0DD4272C58A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
