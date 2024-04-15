@@ -128,6 +128,7 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
 
 //app.MapGet("/items", [Authorize] async (ApiDbContext db) =>
