@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "FrontEnd\FrontE
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ML", "ML\ML.pyproj", "{675E767D-3243-4AD8-9E86-DA8E7086A43F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobService", "JobService\JobService.csproj", "{C5FBC952-CA98-44C1-909B-5A25AC183E46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{B9A1A0FF-EFF5-4F36-9B0C-01E8D70677EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{675E767D-3243-4AD8-9E86-DA8E7086A43F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{675E767D-3243-4AD8-9E86-DA8E7086A43F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FBC952-CA98-44C1-909B-5A25AC183E46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FBC952-CA98-44C1-909B-5A25AC183E46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FBC952-CA98-44C1-909B-5A25AC183E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FBC952-CA98-44C1-909B-5A25AC183E46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
