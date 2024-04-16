@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Microsoft SQL Server (JetBrains)" uuid="58faac4e-e6d0-4482-a1ac-397eb4a7527f">
-      <driver-ref>sqlserver.jb</driver-ref>
+    <data-source source="LOCAL" name="db_aa56f4_diplom@SQL8005.site4now.net" uuid="58faac4e-e6d0-4482-a1ac-397eb4a7527f">
+      <driver-ref>sqlserver.jtds</driver-ref>
       <synchronize>true</synchronize>
-      <configured-by-url>true</configured-by-url>
-      <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
-      <jdbc-url>Data Source=SQL8006.site4now.net;Initial Catalog=db_aa3177_backend2;User Id=db_aa3177_backend2_admin;Password=123123Aa</jdbc-url>
+      <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:jtds:sqlserver://SQL8005.site4now.net/db_aa56f4_diplom</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="Microsoft SQL Server (JetBrains) [2]" uuid="73edf7bb-006e-4965-a4a3-187678e989ed">
-      <driver-ref>sqlserver.jb</driver-ref>
+    <data-source source="LOCAL" name="LIVE" uuid="73edf7bb-006e-4965-a4a3-187678e989ed">
+      <driver-ref>sqlserver.jtds</driver-ref>
       <synchronize>true</synchronize>
-      <configured-by-url>true</configured-by-url>
-      <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
-      <jdbc-url>Data Source=SQL8005.site4now.net;Initial Catalog=db_aa56f4_diplom;User Id=db_aa56f4_diplom_admin;Password=123123Aa</jdbc-url>
+      <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:jtds:sqlserver://SQL8005.site4now.net/db_aa56f4_diplom</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
