@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>675e767d-3243-4ad8-9e86-da8e7086a43f</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>ML.py</StartupFile>
+    <StartupFile>create_model.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ML.py" />
+    <Compile Include="schedule.py" />
+    <Compile Include="eval_model.py" />
+    <Compile Include="create_model.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

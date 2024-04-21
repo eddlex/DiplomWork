@@ -5,6 +5,7 @@ using BackEnd.Models.Output;
 using BackEnd.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BackEnd.Controllers
 {
@@ -17,7 +18,15 @@ namespace BackEnd.Controllers
         {
             this.subjectService = subjectService;
         }
-        
+
+        [Route("Hour")]
+        [HttpGet]
+        public async Task<ActionResult<List<SubjectOptimized>>> SubjectHours(int hours, [FromQuery]  List<int> ids)
+        {
+            return Ok(await this.subjectService.GetOptimizedHours(hours, ids));
+        }
+
+
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<List<Subject>>> Subject(int? id)

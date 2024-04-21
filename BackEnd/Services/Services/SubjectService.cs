@@ -1,14 +1,14 @@
 ﻿using BackEnd.Services.Db;
-using System.Data;
 using BackEnd.Helpers;
 using Dapper;
-using BackEnd.Models.Input;
 using BackEnd.Models.Input.Delete;
 using BackEnd.Models.Input.Post;
 using BackEnd.Models.Input.Put;
 using BackEnd.Services.Interfaces;
 using BackEnd.Models.Output;
 using FrontEnd.Helpers;
+using System.Diagnostics;
+using System.Text.Json;
 
 namespace BackEnd.Services.Services
 {
@@ -24,6 +24,69 @@ namespace BackEnd.Services.Services
             this.dbService = (DbService)dbService;
             if (httpContextAccessor.HttpContext != null)
                 this.Token = httpContextAccessor.HttpContext.User.ParseToken();
+        }
+
+        // change to another dir
+        public string ExecutePythonScript(string scriptPath, string arguments)
+        {
+            // Create a new Process
+            ProcessStartInfo processStartInfo = new ProcessStartInfo();
+
+            // Set the Python executable path and the script path
+            processStartInfo.FileName = "python";  // Use "python3" if necessary
+
+            // Combine script path and arguments into a single string
+            //string argumentString = $"{scriptPath} {string.Join(" ", arguments)}";
+            string argumentString = scriptPath + " " + arguments;
+            processStartInfo.Arguments = argumentString;
+
+            // Set other process start options
+            processStartInfo.RedirectStandardOutput = true;  // Redirect the output
+            processStartInfo.UseShellExecute = false;  // Run the process without shell
+            processStartInfo.CreateNoWindow = true;  // Don't create a console window
+
+            // Start the process
+            Process process = new Process();
+            process.StartInfo = processStartInfo;
+            process.Start();
+
+            // Capture the output
+            string output = process.StandardOutput.ReadToEnd();
+
+            // Wait for the process to exit
+            process.WaitForExit();
+
+            // Return the output
+            return output;
+        }
+
+        public async Task<List<SubjectOptimized>> GetOptimizedHours(int hours, List<int> ids)
+        {
+            string scriptPath = @"c:\Users\Irin\Desktop\diplom_ML\schedule.py";
+            //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //string scriptPath = Path.Combines(baseDirectory, "schedule.py");
+
+            string argumentsString = hours.ToString() + " " + string.Join(" ", ids);
+            //string result = ExecutePythonScript(scriptPath, new string[] { argumentsString });
+
+            string result = await Task.Run(() => ExecutePythonScript(scriptPath, argumentsString));
+
+            Dictionary<int, double> optimizedHoursDict = JsonSerializer.Deserialize<Dictionary<int, double>>(result);
+
+            List<SubjectOptimized> optimizedList = new List<SubjectOptimized>();
+
+            foreach (var kvp in optimizedHoursDict)
+            {
+                SubjectOptimized subjectOptimized = new SubjectOptimized
+                {
+                    Id = kvp.Key, 
+                    Hour = kvp.Value 
+                };
+
+                optimizedList.Add(subjectOptimized);
+            }
+
+            return optimizedList;
         }
 
         public async Task<List<Subject>> GetSubjects(int? id)
