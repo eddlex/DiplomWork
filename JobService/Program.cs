@@ -5,9 +5,7 @@ using JobService;
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
-        services.AddHostedService<Worker>();
-        services.AddSingleton<IConfigurationService, ConfigurationService>();
-      //  services.AddSingleton<IDbService, IDbService>();
+        services.AddHostedService<DbBackUpWorker>();
     })
     .Build();
 

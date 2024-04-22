@@ -74,9 +74,13 @@ public class RequestResponseLoggingMiddleware
     private async Task LogToFile(string message)
     {
         // Define the log file path
-        string logFilePath = $"logs/log_{DateTime.Now.Date.Year}_{DateTime.Now.Date.Month}_{DateTime.Now.Date.Day}.txt"; // Adjust the log file path as needed
+        string logFilePath = $"Log/log_{DateTime.Now.Date.Year}_{DateTime.Now.Date.Month}_{DateTime.Now.Date.Day}.txt"; // Adjust the log file path as needed
 
-        // Write the log message to the file
+        if (!Directory.Exists("Log"))
+        {
+            Directory.CreateDirectory("Log");
+        }
+
         using (var writer = new StreamWriter(logFilePath, append: true))
         {
            await writer.WriteLineAsync($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} {message}");
