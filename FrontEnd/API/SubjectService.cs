@@ -8,6 +8,7 @@ public class SubjectService : BaseService , ISubjectService
 {
     public SubjectService(IHttpService httpService) : base(httpService, "Subject")
     {
+
     }
 
     //public async Task<List<SubjectOptimized>?> GetOptimizedHours(int? hours = null , List<int> ids = null)
