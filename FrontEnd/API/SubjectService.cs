@@ -1,4 +1,5 @@
 using FrontEnd.Interface;
+using FrontEnd.Model;
 using FrontEnd.Model.BL;
 
 namespace FrontEnd.API;
@@ -9,6 +10,11 @@ public class SubjectService : BaseService , ISubjectService
     {
     }
 
+    //public async Task<List<SubjectOptimized>?> GetOptimizedHours(int? hours = null , List<int> ids = null)
+    //{
+    //    var result = await this.Get<SubjectOptimized>(hours, ids);
+    //    return result;
+    //}
     public async Task<List<SubjectBl>?> GetSubjects(int? departmentId = null)
     {
         var result = await this.Get<SubjectBl>(departmentId);

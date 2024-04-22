@@ -2,16 +2,17 @@
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
     <MudText Typo="Typo.h5" Class="ml-3">Admin panel</MudText>
     <MudSpacer />
+    <MudIconButton Icon="@Icons.Material.Filled.Language" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => ChangeLanguage())" />
     <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => Logout())" />
-</MudAppBar>
+    </MudAppBar>
 
 <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Color="Color.Inherit">
     <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2" Bordered="true">
         <MudNavLink Href="/Users" Match="NavLinkMatch.All">Users</MudNavLink>
-        <MudNavLink Href="/Departments" Match="NavLinkMatch.Prefix">Universities</MudNavLink>
+        <MudNavLink Href="/Departments" Match="NavLinkMatch.Prefix">Departments</MudNavLink>
         <MudNavLink Href="/Recipients" Match="NavLinkMatch.Prefix">Recipients</MudNavLink>
         <MudNavLink Href="/RecipientGroup" Match="NavLinkMatch.Prefix">Recipient groups</MudNavLink>        
-        <MudNavLink Href="/surveys" Match="NavLinkMatch.Prefix">Surveys</MudNavLink>
+        @* <MudNavLink Href="/surveys" Match="NavLinkMatch.Prefix">Surveys</MudNavLink> *@
         <MudNavLink Href="/SMTPConfigs" Match="NavLinkMatch.Prefix">SMTP configuration</MudNavLink>
         <MudNavLink Href="/Forms" Match="NavLinkMatch.Prefix">Forms</MudNavLink>
 
@@ -22,12 +23,15 @@
         <MudNavLink Href="/lecturers" Match="NavLinkMatch.Prefix">Among lecturers</MudNavLink>
         </MudNavGroup> *@
         <MudNavLink Href="/subjects" Match="NavLinkMatch.Prefix">Subjects</MudNavLink>
+        <MudNavLink Href="/Schedule" Match="NavLinkMatch.Prefix">Create schedule</MudNavLink>
 
-        <MudNavGroup Title="Settings" Expanded="false">
+        
+
+        @* <MudNavGroup Title="Settings" Expanded="false">
             <!-- <MudNavLink Href="/users"  Match="NavLinkMatch.Prefix">Users</MudNavLink> -->
             <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
         </MudNavGroup>
-        <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
+        <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink> *@
     </MudNavMenu>
 </MudDrawer>
 
@@ -42,5 +46,9 @@
     private void Logout()
     {
         // NavigationManager.NavigateTo("/logout");
+    }
+    private void ChangeLanguage()
+    {
+        
     }
 }
