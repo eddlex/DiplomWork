@@ -24,48 +24,48 @@
     }
 
     .custom-subheader {
-        color: white; 
+        color: white;
         font-size: 20px;
     }
-    .div-left{
+
+    .div-left {
         width: 56.5%;
-        float:left;
+        float: left;
         margin: 1% 0 1% 1%;
-        height:99vh
+        height: 99vh
     }
-    .div-right{
+
+    .div-right {
         width: 40.5%;
-        float:right;
+        float: right;
         margin: 1% 1% 1% 0;
-        height:99vh;
+        height: 99vh;
     }
-    .card
-    {
+
+    .card {
         color: #353535;
         background-color: white;
         padding: 0;
         margin: 0;
     }
-    
-    .right
-    {
-      overflow-x: hidden;
-      overflow-y: scroll;
-      max-height: 40vh;
-      border: 1px solid #b3b3b3;
-      background-color: white;
-      border-radius: 1px;
+
+    .right {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 40vh;
+        border: 1px solid #b3b3b3;
+        background-color: white;
+        border-radius: 1px;
     }
-    
-    .right-first
-    {
-       background-color: white;
-       margin: 0 0 1% 0 ;
-       color: black;
-       border-radius: 5px;
-       /* padding-left: 1%; */
-       padding-top: 2%;
-       max-height: 50vh;
+
+    .right-first {
+        background-color: white;
+        margin: 0 0 1% 0;
+        color: black;
+        border-radius: 5px;
+        /* padding-left: 1%; */
+        padding-top: 2%;
+        max-height: 50vh;
     }
 
     .right-second {
@@ -77,116 +77,112 @@
         padding-top: 2%;
         max-height: 50vh;
     }
-    .progress
-    {
-    position:absolute; 
-    }    
+
+    .progress {
+        position: absolute;
+    }
 </style>
 
 
 
 <MudThemeProvider />
 @* <div class="body"> *@
-    <MudLayout style="background-color: #212121; color: white;" Elevation="5">
-        <Drawer></Drawer>
-        <MudMainContent style="background-color: black; color: white;" Elevation="5">
-            <div class = "div-left">
-                <MudDataGrid id="left"
-                         T="SubjectOptimized"
-                         Items="@SubjectOptimized"
-                             SortMode="SortMode.Multiple" 
-                             Filterable="true"
-                             RowClick="@RowClicked"
-                             MultiSelection="false"
-                             ReadOnly="false"
-                             FixedHeader="true"
-                             EditMode="DataGridEditMode.Form"
-                             RowsPerPage="10"
-                             StartedEditingItem="@StartedEditingItem" 
-                             CanceledEditingItem="@CanceledEditingItem"
-                             CommittedItemChanges="@CommittedItemChanges"
-                             Bordered="true" 
-                             Dense="true"
-                             EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
-                             ColumnResizeMode="ResizeMode.Column"
-                             Style="height:100%" >
-                    <ToolBarContent>
-                        <MudText Typo="Typo.h4" class="mr-2">Make schedule</MudText>
-@*                         <MudIconButton @onclick="GetHours" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" /> 
- *@                        <MudSpacer />
-                    </ToolBarContent>
+<MudLayout style="background-color: #212121; color: white;" Elevation="5">
+    <Drawer></Drawer>
+    <MudMainContent style="background-color: black; color: white;" Elevation="5">
+        <div class="div-left">
+            <MudDataGrid id="left"
+                         T="FormDto"
+                         Items="@FormDto"
+                         SortMode="SortMode.Multiple"
+                         Filterable="true"
+                         RowClick="@RowClicked"
+                         MultiSelection="false"
+                         ReadOnly="false"
+                         FixedHeader="true"
+                         EditMode="DataGridEditMode.Form"
+                         RowsPerPage="10"
+                         StartedEditingItem="@StartedEditingItem"
+                         CanceledEditingItem="@CanceledEditingItem"
+                         CommittedItemChanges="@CommittedItemChanges"
+                         Bordered="true"
+                         Dense="true"
+                         EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
+                         ColumnResizeMode="ResizeMode.Column"
+                         Style="height:100%">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h4" class="mr-2">Schedules</MudText>
+                    <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
+                    <MudSpacer />
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">Train model</MudButton>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">Evaluate</MudButton>
 
-                    <Columns>
-                        <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false"/>
-                        <PropertyColumn Property="x => x.Hour" Title="Name"/>
+                </ToolBarContent>
 
-                        <TemplateColumn Hidden="false" CellClass="d-flex justify-end"
-                                        Sortable="false" Filterable="false" StickyRight="true">
-                            <CellTemplate>
-                            <MudIconButton @onclick="GetHours" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
+                <Columns>
+                    <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
+                    <PropertyColumn Property="x => x.Name" Title="Hours" />
 
-                            @* <MudIconButton Icon="@Icons.Material.Outlined.Send" Size="@Size.Small" Color="Color.Primary" 
-                                               OnClick="@(() => SendEmail(context.Item.Id))"> </MudIconButton>
-                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRow(context.Item.Id))"> </MudIconButton>
-                                <MudSpacer/>
-                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton> *@
-                            </CellTemplate>
-                        </TemplateColumn>
-                    </Columns>
+                    <TemplateColumn Hidden="false" CellClass="d-flex justify-end"
+                                    Sortable="false" Filterable="false" StickyRight="true">
+                        <CellTemplate>
+                            <MudIconButton Icon="@Icons.Material.Filled.AlignVerticalBottom" Size="@Size.Small" Color="Color.Primary"
+                                           OnClick="@(() => SendEmail(context.Item.Id))"> </MudIconButton>
+                            @* <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRow(context.Item.Id))"> </MudIconButton>
+                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton> *@
+                        </CellTemplate>
+                    </TemplateColumn>
+                </Columns>
 
-                    @* <PagerContent>                       
-                             <MudDataGridPager T="FormDto" DisableRowsPerPage="true"/>                         
-                    </PagerContent> *@
+                <PagerContent>
+                    <MudDataGridPager T="FormDto" DisableRowsPerPage="true" />
+                </PagerContent>
 
-                </MudDataGrid>
+            </MudDataGrid>
+        </div>
+
+        <div id="right" class="div-right">
+            @* <div id="right"> *@
+            <div class="right-first">
+                <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
+                    From Subjects
+                </h4>
+                <div class="right">
+
+                    <SortableList Group="sharedLists" Items="selectedSubjects" Context="item" OnRemove="DeleteFormRow">
+                        <SortableItemTemplate>
+                            <div class=" card has-border has-background-white">
+                                <p class="is-size-4 p-1 ml-1 mb-0">
+                                    @(item.Order + 1) . Subject name - @item.Title<br style="padding-left: 20px;">
+                                    Outcome - @item.Outcome
+                                </p>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
             </div>
 
-            <div id="right" class="div-right">
-                @* <div id="right"> *@
-                    <div class="right-first">
-                        <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
-                            From Subjects
-                        </h4>
-                        <div class="right">
-
-                            @* <SortableList Group="sharedLists" Items="selectedSubjects" Context="item" OnRemove="DeleteFormRow"> *@
-                        <SortableList Group="sharedLists" Items="selectedSubjects" Context="item" >
-
-                                <SortableItemTemplate>
-                                    <div class=" card has-border has-background-white">
-                                        <p class="is-size-4 p-1 ml-1 mb-0">
-                                            @(item.Order + 1) . Subject name - @item.Title<br style="padding-left: 20px;">
-                                                                Outcome - @item.Outcome
-                                        </p>
-                                    </div>
-                                </SortableItemTemplate>
-                            </SortableList>
-                        </div>
-                    </div>
-
-                    <div class="right-second">
-                        <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
-                            Subjects
-                        </h4>
-                        <div class="right">
-                            @* <SortableList Group="sharedLists" OnRemove="AddFormRow" Items="allSubjects" Context="item"> *@
-                    <SortableList Group="sharedLists"  Items="allSubjects" Context="item">
-
-                                <SortableItemTemplate>
-                                    <div class="card has-background-white has-border">
-                                        <p class="is-size-4 p-1 ml-1 mb-0" style="padding-left: 20px;">
-                                            @(item.Id) . Subject name - @item.Title<br>
-                                                                Outcome - @item.Outcome
-                                        </p>
-                                    </div>
-                                </SortableItemTemplate>
-                            </SortableList>
-                        </div>
-                    </div>
-                @* </div> *@
+            <div class="right-second">
+                <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
+                    Subjects
+                </h4>
+                <div class="right">
+                    <SortableList Group="sharedLists" OnRemove="AddFormRow" Items="allSubjects" Context="item">
+                        <SortableItemTemplate>
+                            <div class="card has-background-white has-border">
+                                <p class="is-size-4 p-1 ml-1 mb-0" style="padding-left: 20px;">
+                                    @(item.Id) . Subject name - @item.Title<br>
+                                    Outcome - @item.Outcome
+                                </p>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
             </div>
-        </MudMainContent>
-    </MudLayout>
+            @* </div> *@
+        </div>
+    </MudMainContent>
+</MudLayout>
 @* </div> *@
 
 @code {
@@ -198,20 +194,20 @@
     public string _searchString;
     private bool _sortNameByLength;
     private int _currentSelectedFormId;
-    private List<string> _events = new();    
+    private List<string> _events = new();
 
     bool _isEditMode = false;
     bool _readOnly = true;
 
     void HandleEditMode(bool isEditMode)
     {
-        if(isEditMode)
+        if (isEditMode)
         {
-            _readOnly=false;
+            _readOnly = false;
         }
         else
         {
-            _readOnly=true;
+            _readOnly = true;
         }
         _isEditMode = isEditMode;
     }
@@ -219,23 +215,23 @@
 
     #region MyRegion
 
-    async Task RowClicked(DataGridRowClickEventArgs<SubjectOptimized> args)
+    async Task RowClicked(DataGridRowClickEventArgs<FormDto> args)
     {
         await GetFormRows(args.Item.Id);
         _currentSelectedFormId = args.Item.Id;
     }
 
-    void StartedEditingItem(SubjectOptimized item)
+    void StartedEditingItem(FormDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    void CanceledEditingItem(SubjectOptimized item)
+    void CanceledEditingItem(FormDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    void CommittedItemChanges(SubjectOptimized item)
+    void CommittedItemChanges(FormDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
@@ -249,9 +245,9 @@
 
         if (this.FormBl is { Count: > 0 })
             FormRowBl?.Add(new()
-            {
-                FormId = _currentSelectedFormId
-            });
+                {
+                    FormId = _currentSelectedFormId
+                });
     }
 
     void RowClicked(DataGridRowClickEventArgs<FormRowBl> args)
@@ -263,66 +259,59 @@
 
 
 
-    public void GetHours()
-    {
-        
-    }
+
 
 
     public List<SubjectDto?>? allSubjects => SubjectsDto;
 
-    public  List<SubjectDto?>? selectedSubjects = new();
+    public List<SubjectDto?>? selectedSubjects = new();
 
 
 
-    
-       // public void DeleteFormRow((int oldIndex, int newIndex) indices)
-       // {
-       //     var item = selectedSubjects?[indices.oldIndex];
 
-       //     if (item == null)
-       //         return;
-           
-       //     allSubjects?.Insert(indices.newIndex, item);
-           
-       //     selectedSubjects?.Remove(selectedSubjects[indices.oldIndex]);
-           
-       //     for (var i = 0; i < selectedSubjects?.Count; ++i)
-       //     {
-       //         selectedSubjects[i].Order =  i;
-       //     }
-           
-       //     var itemBl = DeleteFormRow(new FormRowBl()
-       //     {
-       //         Id =  item.Id,
-       //         FormId = _currentSelectedFormId,
-       //     });
-       // }
+    public void DeleteFormRow((int oldIndex, int newIndex) indices)
+    {
+        var item = selectedSubjects?[indices.oldIndex];
 
-       // private void AddFormRow((int oldIndex, int newIndex) indices)
-       // {
-       //     var item = allSubjects?[indices.oldIndex];
+        if (item == null)
+            return;
 
-       //     if (item == null)
-       //         return;
-           
-       //     selectedSubjects?.Insert(indices.newIndex, item);
-       //     allSubjects?.Remove(allSubjects[indices.oldIndex]);
-           
-       //     for (var i = 0; i < selectedSubjects?.Count; ++i)
-       //     {
-       //         selectedSubjects[i].Order = i;
-       //     }
-                   
-       //     var itemBl = AddFormRow(new FormRowBl()
-       //     {
-       //         FormId = _currentSelectedFormId,
-       //         SubjectId = item.Id,
-       //         Order = item.Order
-       //     });
-       // }
-    
-    
-    
+        allSubjects?.Insert(indices.newIndex, item);
 
-   } 
+        selectedSubjects?.Remove(selectedSubjects[indices.oldIndex]);
+
+        for (var i = 0; i < selectedSubjects?.Count; ++i)
+        {
+            selectedSubjects[i].Order = i;
+        }
+
+        var itemBl = DeleteFormRow(new FormRowBl()
+            {
+                Id = item.Id,
+                FormId = _currentSelectedFormId,
+            });
+    }
+
+    private void AddFormRow((int oldIndex, int newIndex) indices)
+    {
+        var item = allSubjects?[indices.oldIndex];
+
+        if (item == null)
+            return;
+
+        selectedSubjects?.Insert(indices.newIndex, item);
+        allSubjects?.Remove(allSubjects[indices.oldIndex]);
+
+        for (var i = 0; i < selectedSubjects?.Count; ++i)
+        {
+            selectedSubjects[i].Order = i;
+        }
+
+        var itemBl = AddFormRow(new FormRowBl()
+            {
+                FormId = _currentSelectedFormId,
+                SubjectId = item.Id,
+                Order = item.Order
+            });
+    }
+}
