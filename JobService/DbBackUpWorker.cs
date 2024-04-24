@@ -1,22 +1,15 @@
 using System.Net;
-using BackEnd.Services.Configuration;
-using BackEnd.Services.Db;
 
 namespace JobService;
 
 public class DbBackUpWorker : BackgroundService
 {
     private readonly ILogger<DbBackUpWorker> _logger;
-    private readonly IConfigurationService configurationService;
-    public IDbService dbService { get; set; }
-
-
-    public DbBackUpWorker(ILogger<DbBackUpWorker> logger,
-        IConfigurationService configurationService
+    
+    public DbBackUpWorker(ILogger<DbBackUpWorker> logger
     )
     {
         _logger = logger;
-        this.configurationService = configurationService;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
