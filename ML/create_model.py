@@ -23,7 +23,7 @@ model_file = "model.pkl"
 
 def get_data():
     sql_query = """
-        SELECT S.Title, R.Value, S.HoursPerSem, S.DepartmentId, S.Id
+        SELECT R.FormIdentificationId, S.Title, R.Value, S.HoursPerSem, S.DepartmentId
         FROM Rating R
         JOIN dbo.FormIdentification FI ON R.FormIdentificationId = FI.Id
         JOIN dbo.FormRow FR ON R.FormRowId = FR.Id
@@ -87,35 +87,43 @@ def save_model(model):
         pickle.dump(model, file)
 
 
-if __name__ == '__main__':
-    # Encode categorical variables using one-hot encoding
-    data = get_data()
+def filter_data(data):
+    grouped = data.groupby('FormIdentificationId')['Value']
+
+    agg_results = grouped.agg(['min', 'median', 'max'])
+    agg_results['all_equal'] = (agg_results['min'] == agg_results['median']) & (agg_results['median'] == agg_results['max'])
+    groups_to_keep = agg_results.index[~agg_results['all_equal']]
+
+    return data[data['FormIdentificationId'].isin(groups_to_keep)]
+
+
+if __name__ == '__main__':    
+    data1 = get_data()
+    data = filter_data(data1)
+    # Encoding categorical variables using one-hot encoding
     data = pd.get_dummies(data, columns=['Title'])
 
-    # Split the data into features (X) and target variable (y)
-    X = data.drop(columns=['HoursPerSem']).sort_index(axis=1)  # Features
+    X = data.drop(columns=['HoursPerSem', 'FormIdentificationId']).sort_index(axis=1)  # Features
     y = data['HoursPerSem']  # Target variable
 
-    # Split the data into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     with open('shared_data.pkl', 'wb') as f:
         pickle.dump(X_train, f)
 
-    # Model training
     model = LinearRegression()
     model.fit(X_train, y_train)
 
     save_model(model)
 
-    # # Model evaluation
-    # train_predictions = model.predict(X_train)
-    # test_predictions = model.predict(X_test)
+    train_predictions = model.predict(X_train)
+    test_predictions = model.predict(X_test)
 
-    # train_rmse = mean_squared_error(y_train, train_predictions).round(3)
-    # test_rmse = mean_squared_error(y_test, test_predictions).round(3)
-
-    # # Concatenate predicted values with actual values
+    train_rmse = mean_squared_error(y_train, train_predictions).round(3)
+    test_rmse = mean_squared_error(y_test, test_predictions).round(3)
+    
+    print(f"Train RMSE: {train_rmse}")
+    print(f"Test RMSE: {test_rmse}")
     # train_results = pd.DataFrame({'Actual': y_train, 'Predicted': train_predictions.round(1)})
     # test_results = pd.DataFrame({'Actual': y_test, 'Predicted': test_predictions.round(1)})
 
