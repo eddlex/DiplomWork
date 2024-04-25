@@ -7,17 +7,29 @@ from sklearn.metrics import mean_squared_error
 import seaborn as sns
 import numpy as np
 import pickle
+import json
+import platform
+
+db_config_path = __file__.replace('create_model.py', 'DBconn.json') 
+
+try:
+    with open(db_config_path, 'r') as config_file:
+        db_config = json.load(config_file)
+        driver = db_config['DriverWindows'] if platform.system() == 'Windows' else db_config['DriverMac']
+        connection_string_odbc  = (
+                                f"Driver={{{driver}}};"
+                                f"Server={db_config['Server']};"
+                                f"Database={db_config['Database']};"
+                                f"UID={db_config['UID']};"
+                                f"PWD={db_config['PWD']};"
+                            )
+except FileNotFoundError:
+    print(f"Error: {db_config_path} not found.")
 
 
-connection_string = (
-    "mssql+pyodbc:///?odbc_connect="
-    "Driver={SQL Server};"
-    "Server=SQL5113.site4now.net;"
-    "Database=db_aa7bdf_diplom;"
-    'UID=db_aa7bdf_diplom_admin;'
-    'PWD=123123Aa;'
-)
-engine = create_engine(connection_string)
+connection_string_alchemy = "mssql+pyodbc:///?odbc_connect=" + connection_string_odbc
+engine = create_engine(connection_string_alchemy)
+
 model_file = "model.pkl"  
 
 
@@ -33,27 +45,6 @@ def get_data():
     data = pd.read_sql_query(sql_query, engine)
     return data
 
-# def get_predict_data(subject_id=None): 
-#     sql_query = """
-#         SELECT S.Title, R.Value, S.HoursPerSem, S.DepartmentId
-#         FROM Rating R
-#         JOIN dbo.FormIdentification FI ON R.FormIdentificationId = FI.Id
-#         JOIN dbo.FormRow FR ON R.FormRowId = FR.Id
-#         JOIN dbo.Form F ON F.Id = FR.FormId
-#         JOIN Subject S ON S.Id = FR.SubjectId
-#     """
-#     if subject_id:
-#         sql_query = sql_query + f" where S.Id = {subject_id}"
-
-#     data = pd.read_sql_query(sql_query, engine)
-#     return data
-
-# def process_data():
-    pass
-    # Data preprocessing
-
-    # Drop any rows with missing values
-    #data.dropna(inplace=True)
 
 def get_original_title(row):
     # Map dummy variables back to original categorical values
@@ -63,24 +54,6 @@ def get_original_title(row):
         if row[col] == 1:
             return col[len('Title_'):]
 
-def get_figure():
-    pass
-    # # Scatter plot of actual vs. predicted values
-    # plt.figure(figsize=(10, 6))
-    # sns.scatterplot(x=test_results['Actual'], y=test_results['Predicted'])
-    # plt.xlabel('Actual Hours Per Semester')
-    # plt.ylabel('Predicted Hours Per Semester')
-    # plt.title('Actual vs. Predicted Hours Per Semester')
-    # plt.show()
-
-    # # Histogram or density plot of residuals
-    # residuals = test_results['Actual'] - test_results['Predicted']
-    # plt.figure(figsize=(8, 6))
-    # sns.histplot(residuals, kde=True)
-    # plt.xlabel('Residuals')
-    # plt.ylabel('Frequency')
-    # plt.title('Histogram of Residuals')
-    # plt.show()
 
 def save_model(model):
     with open(model_file, 'wb') as file:  
@@ -97,7 +70,7 @@ def filter_data(data):
     return data[data['FormIdentificationId'].isin(groups_to_keep)]
 
 
-if __name__ == '__main__':    
+if __name__ == '__main__': 
     data1 = get_data()
     data = filter_data(data1)
     # Encoding categorical variables using one-hot encoding
@@ -106,7 +79,7 @@ if __name__ == '__main__':
     X = data.drop(columns=['HoursPerSem', 'FormIdentificationId']).sort_index(axis=1)  # Features
     y = data['HoursPerSem']  # Target variable
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=69)
 
     with open('shared_data.pkl', 'wb') as f:
         pickle.dump(X_train, f)
@@ -121,23 +94,10 @@ if __name__ == '__main__':
 
     train_rmse = mean_squared_error(y_train, train_predictions).round(3)
     test_rmse = mean_squared_error(y_test, test_predictions).round(3)
-    
+
     print(f"Train RMSE: {train_rmse}")
     print(f"Test RMSE: {test_rmse}")
-    # train_results = pd.DataFrame({'Actual': y_train, 'Predicted': train_predictions.round(1)})
-    # test_results = pd.DataFrame({'Actual': y_test, 'Predicted': test_predictions.round(1)})
-
-    # train_results['SubjectTitle'] = X_train.apply(get_original_title, axis=1)
-    # test_results['SubjectTitle'] = X_test.apply(get_original_title, axis=1)
 
     engine.dispose()
 
-
-# print("\nTraining Set Results:")
-# train_results[['SubjectTitle', 'Actual', 'Predicted', 'ChangeHours']].to_csv('train_results.csv', index=False)
-# print(f"Train RMSE: {train_rmse}")
-
-# print("\nTesting Set Results:")
-# test_results[['SubjectTitle', 'Actual', 'Predicted', 'ChangeHours']].to_csv('test_results.csv', index=False)
-# print(f"Test RMSE: {test_rmse}")
 

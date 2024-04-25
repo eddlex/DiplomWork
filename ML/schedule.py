@@ -4,17 +4,27 @@ from scipy.optimize import minimize
 from sqlalchemy import create_engine
 import pandas as pd
 import sys
+import platform
 
-connection_string = (
-    "mssql+pyodbc:///?odbc_connect="
-    "Driver={ODBC Driver 18 for SQL Server};"
-    "Server=SQL5113.site4now.net;"
-    "Database=db_aa7bdf_diplom;"
-    'UID=db_aa7bdf_diplom_admin;'
-    'PWD=123123Aa;'
-)
+db_config_path = __file__.replace('schedule.py', 'DBconn.json') 
 
-engine = create_engine(connection_string)
+try:
+    with open(db_config_path, 'r') as config_file:
+        db_config = json.load(config_file)
+        driver = db_config['DriverWindows'] if platform.system() == 'Windows' else db_config['DriverMac']
+        connection_string_odbc  = (
+                                f"Driver={{{driver}}};"
+                                f"Server={db_config['Server']};"
+                                f"Database={db_config['Database']};"
+                                f"UID={db_config['UID']};"
+                                f"PWD={db_config['PWD']};"
+                            )
+except FileNotFoundError:
+    print(f"Error: {db_config_path} not found.")
+
+
+connection_string_alchemy = "mssql+pyodbc:///?odbc_connect=" + connection_string_odbc
+engine = create_engine(connection_string_alchemy)
 
 def fetch_data(subject_ids):
     subject_ids_str = ','.join(map(str, subject_ids))
