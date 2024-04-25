@@ -7,7 +7,7 @@ import sys
 
 connection_string = (
     "mssql+pyodbc:///?odbc_connect="
-    "Driver={SQL Server};"
+    "Driver={ODBC Driver 18 for SQL Server};"
     "Server=SQL5113.site4now.net;"
     "Database=db_aa7bdf_diplom;"
     'UID=db_aa7bdf_diplom_admin;'

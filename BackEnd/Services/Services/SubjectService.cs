@@ -33,7 +33,7 @@ namespace BackEnd.Services.Services
             ProcessStartInfo processStartInfo = new ProcessStartInfo();
 
             // Set the Python executable path and the script path
-            processStartInfo.FileName = "python";  // Use "python3" if necessary
+            processStartInfo.FileName = "python3";  // Use "python3" if necessary
 
             // Combine script path and arguments into a single string
             //string argumentString = $"{scriptPath} {string.Join(" ", arguments)}";
@@ -62,15 +62,15 @@ namespace BackEnd.Services.Services
 
         public async Task<List<SubjectOptimized>> GetOptimizedHours(int hours, List<int> ids)
         {
-            string scriptPath = @"c:\Users\Irin\Desktop\diplom_ML\schedule.py";
+            string fileName = @"schedule.py";
             //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             //string scriptPath = Path.Combines(baseDirectory, "schedule.py");
 
             string argumentsString = hours.ToString() + " " + string.Join(" ", ids);
             //string result = ExecutePythonScript(scriptPath, new string[] { argumentsString });
-
-            string result = await Task.Run(() => ExecutePythonScript(scriptPath, argumentsString));
-
+            var filePath = Directory.GetCurrentDirectory().Replace("BackEnd", "ML/" + fileName);
+            string result = await Task.Run(() => ExecutePythonScript(filePath, argumentsString));
+              //   /Users/eduardordukhanyan/RiderProjects/DiplomWork/BackEnd
             Dictionary<int, double> optimizedHoursDict = JsonSerializer.Deserialize<Dictionary<int, double>>(result);
 
             List<SubjectOptimized> optimizedList = new List<SubjectOptimized>();
