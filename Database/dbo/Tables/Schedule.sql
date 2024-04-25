@@ -1,0 +1,9 @@
+﻿(
+    Id INT IDENTITY(0, 1) PRIMARY KEY  NOT NULl,
+    DepartmentId INT FOREIGN KEY REFERENCES Department(Id),
+    Semester TINYINT NOT NULL,
+    Hours DECIMAL NOT NULL,
+    Name NVARCHAR(50) NULL,
+    LastUpdateDate DATETIME2(7) DEFAULT  GETUTCDATE(),
+    CreationDate DATETIME2(7) DEFAULT  GETUTCDATE(),
+)
