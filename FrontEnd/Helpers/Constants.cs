@@ -60,7 +60,9 @@ public static class Constants
       public sealed class Success
     {
         public static readonly Success FormSubmit = new Success(nameof(FormSubmit), 0, "Form successfully sent");
-        
+        public static readonly Success ModelTrain = new Success(nameof(ModelTrain), 0, "Model has been successfully trained");
+        public static readonly Success ModelEval = new Success(nameof(ModelEval), 0, "Hours have been successfully evaluated");
+
         public string Text { get; private set; }
         public string UniqueName { get; private set; }
         public int Code { get; }

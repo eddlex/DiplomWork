@@ -1,4 +1,5 @@
 ﻿@page "/Schedule"
+@using FrontEnd.Helpers;
 @using FrontEnd.Model.DTO
 @using FrontEnd.Model.BL
 @using FrontEnd.Model
@@ -7,6 +8,7 @@
 @inject ISnackbar Snackbar
 @using MudBlazor
 @using System.Threading.Tasks
+@using System.Diagnostics;
 <style>
     body {
         background-color: black;
@@ -114,8 +116,8 @@
                     <MudText Typo="Typo.h4" class="mr-2">Schedules</MudText>
                     <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                     <MudSpacer />
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Train model</MudButton>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Evaluate</MudButton>
+                    <MudButton Variant="Variant.Text" @onclick="TrainModel" Color="Color.Primary">Train model</MudButton>
+                    <MudButton Variant="Variant.Text" @onclick="Evaluate" Color="Color.Primary">Evaluate</MudButton>
 
                 </ToolBarContent>
 
@@ -186,6 +188,76 @@
 @* </div> *@
 
 @code {
+
+    public string ExecutePythonScript(string scriptPath, string arguments="")
+    {
+        ProcessStartInfo processStartInfo = new ProcessStartInfo();
+        processStartInfo.FileName = "python";  // Use "python3" if necessary
+
+        // // Combine script path and arguments into a single string
+        // //string argumentString = $"{scriptPath} {string.Join(" ", arguments)}";
+        // string argumentString = scriptPath + " " + arguments;
+        processStartInfo.Arguments = scriptPath;
+
+        // Set other process start options
+        processStartInfo.RedirectStandardOutput = true;  // Redirect the output
+        processStartInfo.UseShellExecute = false;  // Run the process without shell
+        processStartInfo.CreateNoWindow = true;  // Don't create a console window
+
+        // Start the process
+        Process process = new Process();
+        process.StartInfo = processStartInfo;
+        process.Start();
+
+        // Capture the output
+        string output = process.StandardOutput.ReadToEnd();
+
+        // Wait for the process to exit
+        process.WaitForExit();
+
+        // Return the output
+        return output;
+    }
+
+        public async Task<int> TrainModel()
+        {
+            string scriptPath = @"c:\Users\Irin\Desktop\diplom_ML\create_model.py";
+            //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //string scriptPath = Path.Combines(baseDirectory, "schedule.py");
+
+            //string argumentsString = hours.ToString() + " " + string.Join(" ", ids);
+            //string result = ExecutePythonScript(scriptPath, new string[] { argumentsString });
+
+            string res = (await Task.Run(() => ExecutePythonScript(scriptPath)));
+
+            if (res.StartsWith("Traceback"))
+                Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+                
+            else
+                Snackbar.ShowSuccess(Constants.Success.ModelTrain);
+
+            return 0;
+          }
+
+        public async Task<int> Evaluate()
+        {
+            string scriptPath = @"c:\Users\Irin\Desktop\diplom_ML\evaluate.py";
+            //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //string scriptPath = Path.Combines(baseDirectory, "schedule.py");
+
+            //string argumentsString = hours.ToString() + " " + string.Join(" ", ids);
+            //string result = ExecutePythonScript(scriptPath, new string[] { argumentsString });
+
+            string res = await Task.Run(() => ExecutePythonScript(scriptPath));
+            if (res.StartsWith("Traceback"))
+                Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+
+            else
+                Snackbar.ShowSuccess(Constants.Success.ModelEval);
+
+            return 0;
+
+        }
 
 
 
