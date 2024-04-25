@@ -30,6 +30,7 @@ namespace BackEnd.Services.Services
         public string ExecutePythonScript(string scriptPath, string arguments)
         {
             // Create a new Process
+            scriptPath = Directory.GetCurrentDirectory().Replace("BackEnd", "ML/" + scriptPath);
             ProcessStartInfo processStartInfo = new ProcessStartInfo();
 
             // Set the Python executable path and the script path
@@ -62,18 +63,18 @@ namespace BackEnd.Services.Services
 
         public async Task<List<SubjectOptimized>> GetOptimizedHours(int hours, List<int> ids)
         {
-            string fileName = @"schedule.py";
+            var fileName = "schedule.py";
             //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             //string scriptPath = Path.Combines(baseDirectory, "schedule.py");
 
-            string argumentsString = hours.ToString() + " " + string.Join(" ", ids);
+            var argumentsString = hours.ToString() + " " + string.Join(" ", ids);
             //string result = ExecutePythonScript(scriptPath, new string[] { argumentsString });
-            var filePath = Directory.GetCurrentDirectory().Replace("BackEnd", "ML/" + fileName);
-            string result = await Task.Run(() => ExecutePythonScript(filePath, argumentsString));
+            
+            var result = await Task.Run(() => ExecutePythonScript(fileName, argumentsString));
               //   /Users/eduardordukhanyan/RiderProjects/DiplomWork/BackEnd
-            Dictionary<int, double> optimizedHoursDict = JsonSerializer.Deserialize<Dictionary<int, double>>(result);
+            var optimizedHoursDict = JsonSerializer.Deserialize<Dictionary<int, double>>(result);
 
-            List<SubjectOptimized> optimizedList = new List<SubjectOptimized>();
+            var optimizedList = new List<SubjectOptimized>();
 
             foreach (var kvp in optimizedHoursDict)
             {
