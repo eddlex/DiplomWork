@@ -10,12 +10,6 @@ public class SubjectService : BaseService , ISubjectService
     {
 
     }
-
-    //public async Task<List<SubjectOptimized>?> GetOptimizedHours(int? hours = null , List<int> ids = null)
-    //{
-    //    var result = await this.Get<SubjectOptimized>(hours, ids);
-    //    return result;
-    //}
     public async Task<List<SubjectBl>?> GetSubjects(int? departmentId = null)
     {
         var result = await this.Get<SubjectBl>(departmentId);
@@ -39,4 +33,22 @@ public class SubjectService : BaseService , ISubjectService
         var result = await this.Edit<SubjectBl, SubjectBl>(model);
         return result;
     }
+
+    public async Task<bool> EvaluateModel()
+    {
+        var result = await this.Get<bool>(method: "Evaluate");
+        return result.FirstOrDefault();
+    }
+
+    public async Task<bool> TrainModel()
+    {
+        var result = await this.Get<bool>(method: "Train");
+        return result.FirstOrDefault();
+    }
+
+    //public async Task<List<SubjectOptimized>?> GetOptimizedHours(int? hours = null , List<int> ids = null)
+    //{
+    //    var result = await this.Get<SubjectOptimized>(hours, ids);
+    //    return result;
+    //}
 }

@@ -26,6 +26,21 @@ namespace BackEnd.Controllers
             return Ok(await this.subjectService.GetOptimizedHours(hours, ids));
         }
 
+        [Route("Train")]
+        [HttpGet]
+        public async Task<ActionResult<List<bool>>> TrainModel()
+        {
+            return Ok(await this.subjectService.TrainModel());
+        }
+
+        [Route("Evaluate")]
+        [HttpGet]
+        public async Task<ActionResult<List<bool>>> EvaluateModel()
+        {
+            return Ok(await this.subjectService.EvaluateModel());
+        }
+
+
 
         [HttpGet]
         [Authorize]

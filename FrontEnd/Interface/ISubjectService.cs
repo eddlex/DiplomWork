@@ -11,4 +11,9 @@ public interface ISubjectService
     public Task<bool?> DelSubject(SubjectBl model);
     public Task<SubjectBl?> EditSubject(SubjectBl model);
 
+    public Task<bool> EvaluateModel();
+
+    public Task<bool> TrainModel();
+
+
 }

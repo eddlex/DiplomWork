@@ -17,16 +17,12 @@ public partial class Schedule
     private IRecipientService? RecipientService { get; set; }
 
 
-
-
     [Inject]
     private IDepartmentService? DepartmentService { get; set; }
     [Inject]
     private IBaseService? FormService { get; set; }
     [Inject]
     private ISubjectService? SubjectService { get; set; }
-    [Inject]
-    private IMailService? MailService { get; set; }
 
 
     private List<FormDto?>? FormDto { get; set; }
@@ -90,6 +86,30 @@ public partial class Schedule
             }
         }
     }
+
+    private async Task EvaluateModel()
+    {
+        var result = await this.SubjectService?.EvaluateModel();
+
+        if (result)
+            Snackbar.ShowSuccess(Constants.Success.ModelEval);
+        else
+        {
+            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+        }
+    }
+    private async Task TrainModel()
+    {
+        var result = await this.SubjectService?.TrainModel();
+
+        if (result)
+            Snackbar.ShowSuccess(Constants.Success.ModelTrain);
+        else
+        {
+            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+        }
+    }
+
 
     private async Task AddFormRow(FormRowBl row)
     {
@@ -168,18 +188,6 @@ public partial class Schedule
 
                 });
             }
-        }
-    }
-
-    private async Task SendEmail(int id)
-    {
-        var result = await this.MailService?.SendMail(this.FormBl?.Find(f => f.Id == id));
-
-        if (result)
-            Snackbar.ShowSuccess(Constants.Success.FormSubmit);
-        else
-        {
-            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
         }
     }
 

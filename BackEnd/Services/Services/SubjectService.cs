@@ -9,6 +9,7 @@ using BackEnd.Models.Output;
 using FrontEnd.Helpers;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace BackEnd.Services.Services
 {
@@ -26,51 +27,67 @@ namespace BackEnd.Services.Services
                 this.Token = httpContextAccessor.HttpContext.User.ParseToken();
         }
 
-        // change to another dir
-        public string ExecutePythonScript(string scriptPath, string arguments)
+        public string ExecutePythonScript(string scriptName, string arguments="")
         {
-            // Create a new Process
-            scriptPath = Directory.GetCurrentDirectory().Replace("BackEnd", "ML/" + scriptPath);
+            scriptName = Directory.GetCurrentDirectory().Replace("BackEnd", @"ML\" + scriptName);
+
+            //string currentPath = Directory.GetCurrentDirectory();
+            //string newPath = @"ML\" + scriptName;
+
+            //string pattern = @"BackEnd.*";
+            //scriptName = Regex.Replace(currentPath, pattern, newPath);
+
             ProcessStartInfo processStartInfo = new ProcessStartInfo();
 
-            // Set the Python executable path and the script path
-            processStartInfo.FileName = "python3";  // Use "python3" if necessary
+            //processStartInfo.FileName = "python3";
+            processStartInfo.FileName = "python3";
 
-            // Combine script path and arguments into a single string
-            //string argumentString = $"{scriptPath} {string.Join(" ", arguments)}";
-            string argumentString = scriptPath + " " + arguments;
+            string argumentString = scriptName + " " + arguments;
             processStartInfo.Arguments = argumentString;
 
-            // Set other process start options
             processStartInfo.RedirectStandardOutput = true;  // Redirect the output
             processStartInfo.UseShellExecute = false;  // Run the process without shell
             processStartInfo.CreateNoWindow = true;  // Don't create a console window
 
-            // Start the process
             Process process = new Process();
             process.StartInfo = processStartInfo;
             process.Start();
 
-            // Capture the output
             string output = process.StandardOutput.ReadToEnd();
 
-            // Wait for the process to exit
             process.WaitForExit();
 
-            // Return the output
             return output;
+        }
+
+        public async Task<List<bool>> TrainModel()
+        {
+            string scriptName = "create_model.py";
+
+            string res = await Task.Run(() => ExecutePythonScript(scriptName));
+
+            var resList = new List<bool> { !res.StartsWith("Traceback") };
+            return resList;
+              
+        }
+
+        public async Task<List<bool>> EvaluateModel()
+        {
+            string scriptName = "evaluate.py";
+
+            string res = await Task.Run(() => ExecutePythonScript(scriptName));
+
+            var resList = new List<bool> { !res.StartsWith("Traceback") };
+            return resList;
+
         }
 
         public async Task<List<SubjectOptimized>> GetOptimizedHours(int hours, List<int> ids)
         {
-            var fileName = "schedule.py";
-            //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            //string scriptPath = Path.Combines(baseDirectory, "schedule.py");
-
+            var scriptName = "schedule.py";
             var argumentsString = hours.ToString() + " " + string.Join(" ", ids);
-            //string result = ExecutePythonScript(scriptPath, new string[] { argumentsString });
             
-            var result = await Task.Run(() => ExecutePythonScript(fileName, argumentsString));
+            var result = await Task.Run(() => ExecutePythonScript(scriptName, argumentsString));
               //   /Users/eduardordukhanyan/RiderProjects/DiplomWork/BackEnd
             var optimizedHoursDict = JsonSerializer.Deserialize<Dictionary<int, double>>(result);
 
