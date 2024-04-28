@@ -8,13 +8,32 @@ using FrontEnd.Interface;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using MudBlazor.Services;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Builder;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+
+
+//builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+//var supportedCultures = new[]
+//{
+//    new CultureInfo("eng"),
+//    new CultureInfo("arm")
+//};
+
+//builder.Services.Configure<RequestLocalizationOptions>(options =>
+//{
+//    options.DefaultRequestCulture = new RequestCulture("arm");
+//    options.SupportedCultures = supportedCultures;
+//    options.SupportedUICultures = supportedCultures;
+//    options.RequestCultureProviders.Remove((IRequestCultureProvider)typeof(AcceptLanguageHeaderRequestCultureProvider));
+//});
+
 builder.Services.AddAuthorizationCore();
-
-
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");

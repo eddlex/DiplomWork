@@ -1,13 +1,24 @@
-﻿<MudAppBar Elevation="5">
+﻿@* @using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<Drawer> Localizer
+@inject NavigationManager Navigation
+@using System.Globalization
+ *@
+
+<MudAppBar Elevation="5">
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
     <MudText Typo="Typo.h5" Class="ml-3">Admin panel</MudText>
     <MudSpacer />
     <MudIconButton Icon="@Icons.Material.Filled.Language" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => ChangeLanguage())" />
-    <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => Logout())" />
+    @* <MudButton Variant="Variant.Text" @onclick="SetArm" Color="Color.Secondary">Arm</MudButton>
+    <MudButton Variant="Variant.Text" @onclick="SetEng" Color="Color.Secondary">Eng</MudButton> *@
+<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => Logout())" />
     </MudAppBar>
 
 <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Color="Color.Inherit">
     <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2" Bordered="true">
+@*         <MudNavLink Href="/Users" Match="NavLinkMatch.All">@Localizer["Users"]</MudNavLink>
+        <MudNavLink Href="/SMTPConfigs" Match="NavLinkMatch.Prefix">@Localizer["SMTP"]</MudNavLink>
+        <MudNavLink Href="/Departments" Match="NavLinkMatch.Prefix">@Localizer["Departments"]</MudNavLink> *@
         <MudNavLink Href="/Users" Match="NavLinkMatch.All">Users</MudNavLink>
         <MudNavLink Href="/SMTPConfigs" Match="NavLinkMatch.Prefix">SMTP configuration</MudNavLink>
         <MudNavLink Href="/Departments" Match="NavLinkMatch.Prefix">Departments</MudNavLink>
@@ -50,6 +61,18 @@
     }
     private void ChangeLanguage()
     {
-        
+
     }
+
+    // private void SetArm()
+    // {
+    //     Thread.CurrentThread.CurrentUICulture = new CultureInfo("arm");
+    //     Navigation.NavigateTo(Navigation.Uri, forceLoad: true);        
+    // }
+
+    // private void SetEng()
+    // {
+    //     Thread.CurrentThread.CurrentUICulture = new CultureInfo("eng");
+    //     Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+    // }
 }
