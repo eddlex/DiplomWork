@@ -37,7 +37,7 @@ public partial class Registration
     }
 
 
-    private Select<DepartmentBl>? Departments { get; set; } = new("Select Department", nameof(RegistrationPost.DepartmentId));
+    private Select<DepartmentBl>? Departments { get; set; } = new("Ամբիոն", nameof(RegistrationPost.DepartmentId));
     protected override async  Task OnInitializedAsync()
     {
         if (this.DepartmentService != null) 

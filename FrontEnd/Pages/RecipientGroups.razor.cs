@@ -122,7 +122,7 @@ public partial class RecipientGroups
         
         var dialog = new RecipientGroupDialog()
         {
-            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
+            Department = new Select<DepartmentBl>("Ամբիոն", "DepartmentId", this.Departments),
         };
 
         if (row is not null)
@@ -134,7 +134,7 @@ public partial class RecipientGroups
          
         parameters.Add("ObjectType", dialog);
          
-        var result = await(await DialogService.ShowAsync<DialogComponent<RecipientGroupDialog>>("Add RecipientGroup", parameters, options)).Result;
+        var result = await(await DialogService.ShowAsync<DialogComponent<RecipientGroupDialog>>("Ավելացնել խումբ", parameters, options)).Result;
         if (!result.Canceled && dialog.Department.SelectedValue != null)
         {
             return new RecipientGroup()

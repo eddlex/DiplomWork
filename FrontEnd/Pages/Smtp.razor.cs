@@ -124,7 +124,7 @@ public partial class Smtp
         
         var dialog = new SmtpDialog()
         {
-            Department = new Select<DepartmentBl?>("Select Department", "DepartmentId", this.Departments)
+            Department = new Select<DepartmentBl?>("Ամբիոն", "DepartmentId", this.Departments)
         };
 
         if (row is not null)
@@ -140,7 +140,7 @@ public partial class Smtp
 
         parameters.Add("ObjectType", dialog);
 
-        var result = await (await DialogService.ShowAsync<DialogComponent<T>>("Add Smtp Configuration", parameters, options)).Result;
+        var result = await (await DialogService.ShowAsync<DialogComponent<T>>("Ավելացնել SMTP կարգավորում", parameters, options)).Result;
         if (!result.Canceled && dialog.Department.SelectedValue is not null)
         {
             return new SmtpConfigBl()

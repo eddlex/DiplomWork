@@ -144,8 +144,8 @@ public partial class Subjects
         
         var dialog = new SubjectDialog()
         {
-            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
-            OutcomeType = new Select<OutcomeType>("Select OutcomeType", "OutcomeTypeId", this.OutcomeTypes)
+            Department = new Select<DepartmentBl>("Ամբիոն", "DepartmentId", this.Departments),
+            OutcomeType = new Select<OutcomeType>("Վերջնարդյունքի տիպ", "OutcomeTypeId", this.OutcomeTypes)
 
         };
         
@@ -159,7 +159,7 @@ public partial class Subjects
 
         parameters.Add("ObjectType", dialog);
          
-        var result = await(await DialogService.ShowAsync<DialogComponent<SubjectDialog>>("Add Recipient", parameters, options)).Result;
+        var result = await(await DialogService.ShowAsync<DialogComponent<SubjectDialog>>("Ավելացնել առարկա", parameters, options)).Result;
         if (!result.Canceled && dialog.Department.SelectedValue != null && dialog.OutcomeType.SelectedValue != null && dialog.Department.SelectedValue != null)
         {
             return new SubjectBl()

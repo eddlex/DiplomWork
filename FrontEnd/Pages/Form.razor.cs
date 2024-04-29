@@ -227,8 +227,8 @@ public partial class Form
         
         var dialog = new FormDialog()
         {
-            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
-            Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups),
+            Department = new Select<DepartmentBl>("Ամբիոն", "DepartmentId", this.Departments),
+            Group = new Select<RecipientGroup>("Խումբ", "GroupId", this.RecipientsGroups),
         };
 
         if (row is not null)
@@ -241,7 +241,7 @@ public partial class Form
 
         parameters.Add("ObjectType", dialog);
 
-        var result = await (await DialogService.ShowAsync<DialogComponent<T>>("Add Form", parameters, options)).Result;
+        var result = await (await DialogService.ShowAsync<DialogComponent<T>>("Ավելացնել ֆորմա", parameters, options)).Result;
         if (!result.Canceled &&
             dialog.Department.SelectedValue is not null &&
             dialog.Group.SelectedValue != null)

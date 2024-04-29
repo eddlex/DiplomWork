@@ -18,33 +18,41 @@
 
 <MudCard Class="pa-5 align-content-center " style="background-color: #E0E0E0;" Elevation="10" Outlined="true">
 	<MudCardContent>
-		<h1> Sign up </h1>
+		<h1> Գրանցում </h1>
 		<MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors" Class="select-container" id="signForm">
 
-			<MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!"
+			<MudTextField T="string" Label="Մուտքանուն" Required="true" RequiredError="Մուտքանունը պարտադիր է!"
 			@bind-Value="Model.UserName" />
-			<MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-						  Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })"
+			<MudTextField T="string" Label="Էլ․ հասցե" Required="true" RequiredError="Էլ․ հասցեն պարտադիր է!"
+						  Validation="@(new EmailAddressAttribute() { ErrorMessage = "Էլ․ հասցեն սխալ է" })"
 			@bind-Value="Model.Email" />
 			<MudTextField T="string"
-						  Label="Password" HelperText="Choose a strong password" @ref="pwField1"
+						  Label="Գաղտնաբառ" HelperText="Ընտրեք ամուր գաղտնաբառ"
 						  InputType="@PasswordInput"
 						  Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-						  RequiredError="Password is required!"
-						  Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"
+						  RequiredError="Գաղտնաբառը պարտադիր է!"
+						  Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPass1"
 			@bind-Value="Model.Password" />
+
+			<MudTextField T="string"
+						  Label="Կրկնեք գաղտնաբառը" 
+						  InputType="@PasswordInput2"
+						  Validation="@(new Func<string, IEnumerable<string>>(ValidatePasswordMatch))" Required="true"
+						  RequiredError="Գաղտնաբառի կրկնությունը պարտադիր է!"
+						  Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPass2"
+			 />
 		
 			<SelectComponent Enum="@Departments"/>
 			              
 	
 			
 			<MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => { form.Validate(); Register(); })"
-					   Class="my-5">Sign up</MudButton>
+					   Class="my-5">Գրանցվել</MudButton>
 			<MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(() => form.ResetAsync())"
-					   Class="mx-5">Clear</MudButton>
+					   Class="mx-5">Մաքրել</MudButton>
 
 			<div class="signup-link">
-				<p>Already have an account? <a href="/">Sign In</a></p>
+				<p>Ունեք հաշիվ? <a href="/">Մուտք</a></p>
 			</div>
 		</MudForm>
 	</MudCardContent>
@@ -53,7 +61,7 @@
 @code{
 	bool success;
 	string[] errors = { };
-	MudTextField<string> pwField1;
+	// MudTextField<string> pwField1;
 	MudForm form;
 
 
@@ -62,26 +70,36 @@
 
 		if (string.IsNullOrWhiteSpace(pw))
 		{
-			yield return "Password is required!";
+			yield return "Գաղտնաբառը պարտադիր է!";
 			yield break;
 		}
 		if (pw.Length < 8)
-			yield return "Password must be at least of length 8";
+			yield return "Գաղտնաբառը պետք է լինի 8 նիշից ավելի";
 		if (!Regex.IsMatch(pw, @"[A-Z]"))
-			yield return "Password must contain at least one capital letter";
+			yield return "Գաղտնաբառը պետք է պարունակի գոնե մեկ մեծատառ";
 		if (!Regex.IsMatch(pw, @"[a-z]"))
-			yield return "Password must contain at least one lowercase letter";
+			yield return "Գաղտնաբառը պետք է պարունակի գոնե մեկ փոքրատառ";
 		if (!Regex.IsMatch(pw, @"[0-9]"))
-			yield return "Password must contain at least one digit";
+			yield return "Գաղտնաբառը պետք է պարունակի գոնե մեկ թիվ";
 	}
 
-	//public string Password { get; set;} = "superstrong123";
+	private IEnumerable<string> ValidatePasswordMatch(string value)
+	{
+		if (value != Model.Password)
+		{
+			yield return "Գաղտնաբառերը չեն համապատասխանում";
+		}
+	}
+
 
 	bool isShow, isShow2;
 	InputType PasswordInput = InputType.Password;
-	string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+	InputType PasswordInput2 = InputType.Password;
 
-	void ButtonTestclick()
+	string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+	string PasswordInputIcon2 = Icons.Material.Filled.VisibilityOff;
+
+	void ShowPass1()
 	{
 		@if (isShow)
 		{
@@ -94,6 +112,22 @@
 			isShow = true;
 			PasswordInputIcon = Icons.Material.Filled.Visibility;
 			PasswordInput = InputType.Text;
+		}
+	}
+
+	void ShowPass2()
+	{
+		@if (isShow2)
+		{
+			isShow2 = false;
+			PasswordInputIcon2 = Icons.Material.Filled.VisibilityOff;
+			PasswordInput2 = InputType.Password;
+		}
+		else
+		{
+			isShow2 = true;
+			PasswordInputIcon2 = Icons.Material.Filled.Visibility;
+			PasswordInput2 = InputType.Text;
 		}
 	}
 	

@@ -39,24 +39,24 @@
         <MudCardContent>
             @* <div class="paper-container">
                 <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10"> *@
-                    <h1> Sign in </h1>
+                    <h1> Մուտք </h1>
                     <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
                         <MudTextField T="string" id="username"
-                                      Label="UserName"
-                                      Required="true" RequiredError="User name is required!"
-                                      Validation="@(new StringLengthAttribute(20) {ErrorMessage = "The UserName is invalid"})"
+                                  Label="Մուտքանուն"
+                                  Required="true" RequiredError="Մուտքանունը պարտադիր է!"
+                                      Validation="@(new StringLengthAttribute(20) {ErrorMessage = "Անունը վավեր չէ"})"
                         @bind-Value="model.LogIn" @onkeydown="@(args => { HandleEnterKeyPress(args, "pass"); })" />
                         <MudTextField T="string" id="pass"
-                                      Label="Password" @ref="pwField1"
+                                      Label="Գաղտնաբառ" @ref="pwField1"
                                       InputType="@PasswordInput"
                                       Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))"
-                                      Required="true" RequiredError="Password is required!"
+                                      Required="true" RequiredError="Գաղտնաբառը պարտադիր է!"
                                       Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="VisibilityButtonClick"
                                       style="margin-bottom: 10px;"
                         @bind-Value="model.Password" @onkeydown="@(args => { HandleEnterKeyPress(args, "loginButton"); })" />
 
                         <div class="signup-link" style="margin-top: 10px; margin-bottom: 5px;">
-                             <p>Forgot password? <a id="forgotPasswordLink" href="/ResetPass">Reset</a></p>                      
+                        <p> <a id="forgotPasswordLink" href="/ResetPass">Մոռացե՞լ եք գաղտնաբառը</a></p>
 
                         @* <p style=@((failedAttempts >= 3) ? "color: red" : "")>Forgot password? <a id="forgotPasswordLink" href="/ResetPass">Reset</a></p>  *@
 
@@ -64,12 +64,12 @@
 
                         <MudButton id=loginButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true"
                                    OnClick="@(() => { form.Validate(); Authorize(); })" @onkeydown="@(args => { HandleEnterKeyPress(args); })"
-                                   Class="my-5">Sign in</MudButton>
+                                   Class="my-5">Մուտք</MudButton>
                         <MudButton Variant="Variant.Outlined" DisableElevation="true" OnClick="@(()=>form.ResetAsync())"
-                                   Class="mx-5">Clear</MudButton>
+                                   Class="mx-5">Մաքրել</MudButton>
 
                         <div class="signup-link">
-                            <p>Don't have an account? <a href="/Registration">Sign Up</a></p>
+                            <p>Չունե՞ք հաշիվ <a href="/Registration">Գրանցվել</a></p>
                         </div>
 
                     </MudForm>

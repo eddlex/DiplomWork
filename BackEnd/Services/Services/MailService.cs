@@ -88,7 +88,7 @@ namespace BackEnd.Services.Services
                         var mailMessage = new MailMessage(smtpConfig.UserName, recipient.Mail)
                         {
                             Subject = "ՈՒսումնական պլանի արդիականացման հարցում",
-                            Body = $"Հարգելի {recipient.Name} " + Environment.NewLine +
+                            Body = $"Հարգելի {recipient.Name}, " + Environment.NewLine +
                                     "Խնդրում ենք անցնել հղումով և մասնակցել հարցմանը:" + Environment.NewLine +
                                     $"Հղում` {href + guid}" + Environment.NewLine + Environment.NewLine +
                                     "Նամակը գեներացվել է ավտոմատ:" + Environment.NewLine + Environment.NewLine +

@@ -143,9 +143,9 @@ public partial class Recipients
         
         var dialog = new RecipientDialog()
         {
-            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
-            Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups),
-            Weight = new Select<Weight>("Select Weight", "WeightId", this.Weights)
+            Department = new Select<DepartmentBl>("Ամբիոն", "DepartmentId", this.Departments),
+            Group = new Select<RecipientGroup>("Խումբ", "GroupId", this.RecipientsGroups),
+            Weight = new Select<Weight>("Գործակից", "WeightId", this.Weights)
         };
 
         if (row is not null)
@@ -160,7 +160,7 @@ public partial class Recipients
 
         parameters.Add("ObjectType", dialog);
          
-        var result = await(await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Add Recipient", parameters, options)).Result;
+        var result = await(await DialogService.ShowAsync<DialogComponent<RecipientDialog>>("Ավելացնել մասնակից", parameters, options)).Result;
         if (!result.Canceled && dialog.Department.SelectedValue != null && dialog.Group.SelectedValue != null && dialog.Weight.SelectedValue != null)
         {
             return new Recipient()

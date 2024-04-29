@@ -26,10 +26,10 @@
 <MudCardContent>
     <div class="paper-container">
         <MudPaper Class="pa-5 align-content-center" style="background-color: #E0E0E0;" Elevation="10">
-            <h1> Reset </h1>
+            <h1> Վերականգնել գաղտնաբառը </h1>
             <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"
+                <MudTextField T="string" Label="Էլ․ հասցե" Required="true" RequiredError="Էլ․ հասցեն պարտադիր է!"
+                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "Էլ․ հասցեն վավեր չէ"})"
                 @bind-Value="model.UserEmail" />
                 
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>form.Validate())"

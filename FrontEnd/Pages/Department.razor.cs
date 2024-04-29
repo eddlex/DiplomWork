@@ -94,7 +94,7 @@ public partial class Department
 
         parameters.Add("ObjectType", dialog);
          
-        var result = await(await DialogService.ShowAsync<DialogComponent<DepartmentDialog>>("Add Department", parameters, options)).Result;
+        var result = await(await DialogService.ShowAsync<DialogComponent<DepartmentDialog>>("Ավելացնել ամբիոն", parameters, options)).Result;
         if (!result.Canceled && dialog is { Description: not null, Name: not null })
         {
             return new DepartmentBl(row?.Id ?? 0, dialog.Name, dialog.Description);
