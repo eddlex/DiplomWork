@@ -96,8 +96,8 @@
             <MudDataGrid id="left"
                          T="FormDto"
                          Items="@FormDto"
-                         SortMode="SortMode.Multiple"
-                         Filterable="true"
+                         SortMode="SortMode.None"
+                         Filterable="false"
                          RowClick="@RowClicked"
                          MultiSelection="false"
                          ReadOnly="false"
@@ -113,7 +113,7 @@
                          ColumnResizeMode="ResizeMode.Column"
                          Style="height:100%">
                 <ToolBarContent>
-                    <MudText Typo="Typo.h4" class="mr-2">Schedules</MudText>
+                    <MudText Typo="Typo.h4" class="mr-2">Առաջարկություններ</MudText>
                     <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                     <MudSpacer />
                     <MudButton Variant="Variant.Text" @onclick="TrainModel" Color="Color.Primary">Train model</MudButton>
@@ -123,7 +123,7 @@
 
                 <Columns>
                     <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
-                    <PropertyColumn Property="x => x.Name" Title="Hours" />
+                    <PropertyColumn Property="x => x.Name" Title="Ժամաքանակ" />
 
                     <TemplateColumn Hidden="false" CellClass="d-flex justify-end"
                                     Sortable="false" Filterable="false" StickyRight="true">
@@ -147,7 +147,7 @@
             @* <div id="right"> *@
             <div class="right-first">
                 <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
-                    From Subjects
+                    Ընտրված
                 </h4>
                 <div class="right">
 
@@ -155,8 +155,8 @@
                         <SortableItemTemplate>
                             <div class=" card has-border has-background-white">
                                 <p class="is-size-4 p-1 ml-1 mb-0">
-                                    @(item.Order + 1) . Subject name - @item.Title<br style="padding-left: 20px;">
-                                    Outcome - @item.Outcome
+                                    @(item.Order + 1) . Առարկայի անուն - @item.Title<br style="padding-left: 20px;">
+                                                        Վերջնարդյունք - @item.Outcome
                                 </p>
                             </div>
                         </SortableItemTemplate>
@@ -166,15 +166,15 @@
 
             <div class="right-second">
                 <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
-                    Subjects
+                    Առարկաներ
                 </h4>
                 <div class="right">
                     <SortableList Group="sharedLists" OnRemove="AddFormRow" Items="allSubjects" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-background-white has-border">
                                 <p class="is-size-4 p-1 ml-1 mb-0" style="padding-left: 20px;">
-                                    @(item.Id) . Subject name - @item.Title<br>
-                                    Outcome - @item.Outcome
+                                    @(item.Id) . Առարկայի անուն - @item.Title<br>
+                                                Վերջնարդյունք - @item.Outcome
                                 </p>
                             </div>
                         </SortableItemTemplate>

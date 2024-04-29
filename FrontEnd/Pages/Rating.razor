@@ -30,12 +30,12 @@
             RowsPerPage="13">
 
         <ToolBarContent>
-            <MudText Typo="Typo.h4" class="mr-2">Survey</MudText>              
+            <MudText Typo="Typo.h4" class="mr-2">Ուսումնական հարցում</MudText>              
         </ToolBarContent>
 
         <Columns>
-            <PropertyColumn Property="x => x.Title" />
-            <PropertyColumn Property="x => x.Outcome" />
+            <PropertyColumn Property="x => x.Title" Title="Առարկայի անուն" />
+            <PropertyColumn Property="x => x.Outcome" Title="Վերջնարդյունք" />
             <TemplateColumn CellClass="d-flex justify-end">
                 <CellTemplate>
                     <MudStack Row>
@@ -54,48 +54,48 @@
     </MudDataGrid>
 </div>
 
-@* <div style="margin: 0% 5% 2% 5%; height:50vh">  *@
-@*     <MudDataGrid T="SuggestionBl" *@
-@*                  Items="@Suggestions" *@
-@*                 SortMode="SortMode.Multiple" *@
-@*                 Filterable="true" *@
-@*                 Selectable="false" *@
-@*                 MultiSelection="false" *@
-@*                 ReadOnly="false" *@
-@*                 FixedHeader="true" *@
-@*                 EditMode="DataGridEditMode.Cell" *@
-@*                 RowsPerPage="10" *@
-@*                 Bordered="true" *@
-@*                 Dense="true" *@
-@*                 ColumnResizeMode="ResizeMode.Column" *@
-@*                 *@
-@*                  Virtualize="true"  *@
-@*                  Height="40vh"> *@
-@*         $1$ EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)">    Style="height:100%" #1# *@
-@*     <ToolBarContent> *@
-@*         <MudText Typo="Typo.h4" class="mr-2">Suggestions</MudText> *@
-@*         <MudIconButton @onclick="AddItem" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" /> *@
-@*         <MudSpacer/> *@
-@*         <MudButton OnClick="@DeleteItem" Color="@Color.Dark" Class="remove-item-btn">Remove row</MudButton> *@
-@* *@
-@*     </ToolBarContent> *@
-@* *@
-@*     <Columns> *@
-@*         <PropertyColumn Property="x => x.Suggestion" Sortable="false" Filterable="false" IsEditable="true" Required="false"/>             *@
-@*             @* <TemplateColumn Hidden="@(_isCellEditMode || _readOnly || _editTriggerRowClick)" CellClass="d-flex justify-end" Sortable="false" Filterable="false" StickyRight="true"> *@
-@*                 <CellTemplate> *@
-@*                     <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Small" Color="Color.Error" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton> *@
-@*                     <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteItem(context.Item))"> </MudIconButton> *@
-@*                 </CellTemplate> *@
-@*             </TemplateColumn> *@ 
-@*     </Columns> *@
-@* *@
-@*     <PagerContent> *@
-@*             <MudDataGridPager T="SuggestionBl" DisableRowsPerPage="true" /> *@
-@*     </PagerContent> *@
-@* *@
-@*     </MudDataGrid>  *@
-@* </div> *@
+<div style="margin: 0% 5% 2% 5%; height:50vh">  
+    <MudDataGrid T="SuggestionBl" 
+                 Items="@Suggestions"
+                 SortMode="SortMode.None"
+                 Filterable="false"
+                 Selectable="false" 
+                MultiSelection="false" 
+                ReadOnly="false" 
+                FixedHeader="true" 
+                EditMode="DataGridEditMode.Cell" 
+                RowsPerPage="10" 
+                Bordered="true" 
+                Dense="true" 
+                ColumnResizeMode="ResizeMode.Column"               
+                Virtualize="true"  
+                Height="40vh"
+                EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
+                Style="height:100%" >
+    <ToolBarContent> 
+        <MudText Typo="Typo.h4" class="mr-2">Առաջարկություններ</MudText> 
+        <MudIconButton @onclick="AddItem" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" /> 
+        <MudSpacer/> 
+        <MudButton OnClick="@DeleteItem" Color="@Color.Dark" Class="remove-item-btn">Ջնջել տողը</MudButton> 
+
+    </ToolBarContent> 
+
+    <Columns>
+            <PropertyColumn Property="x => x.Suggestion" Title="Առաջարկություն" Sortable="false" Filterable="false" IsEditable="true" Required="false" />
+            <TemplateColumn Hidden="@(_isCellEditMode || _readOnly || _editTriggerRowClick)" CellClass="d-flex justify-end" Sortable="false" Filterable="false" StickyRight="true">
+                <CellTemplate> 
+                    <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Small" Color="Color.Error" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton> 
+                    <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteItem())"> </MudIconButton> 
+                </CellTemplate> 
+            </TemplateColumn> 
+    </Columns> 
+
+@*     <PagerContent> 
+            <MudDataGridPager T="SuggestionBl" DisableRowsPerPage="true" /> 
+    </PagerContent>  *@
+
+    </MudDataGrid>  
+</div> 
 
 <div style="display: flex; justify-content: center; align-items: center; margin: 0% 5% 0% 5%;">
     <MudButton EndIcon="@Icons.Material.Filled.Send"
@@ -103,7 +103,7 @@
                Color="Color.Primary" 
                FullWidth="true"
                OnClick="@Submit">
-        Send
+        Ուղարկել
     </MudButton>
 </div>
 
@@ -120,12 +120,12 @@
     // }
 
 
-    // private bool _readOnly;
-    // private bool _isCellEditMode;
-    // private bool _editTriggerRowClick;
+    private bool _readOnly;
+    private bool _isCellEditMode;
+    private bool _editTriggerRowClick;
 
-    // private List<SuggestionBl>? Suggestions = new List<SuggestionBl>();
+    private List<SuggestionBl>? Suggestions = new List<SuggestionBl>();
 
-    // void AddItem() => Suggestions?.Add(new SuggestionBl());
-    // void DeleteItem() => Suggestions?.RemoveAt(Suggestions.Count - 1);   
+    void AddItem() => Suggestions?.Add(new SuggestionBl());
+    void DeleteItem() => Suggestions?.RemoveAt(Suggestions.Count - 1);   
 }

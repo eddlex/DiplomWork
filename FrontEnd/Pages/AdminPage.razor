@@ -31,16 +31,16 @@
                 <Drawer></Drawer>
                 <MudMainContent style="background-color: black; color: white;" Elevation="5">
                     <div style="height: 16px;"></div>
-                    <MudText Typo="Typo.h4" Class="ml-3">Schedule</MudText>
+                    <MudText Typo="Typo.h4" Class="ml-3">Ուսումնական պլան</MudText>
                     <MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Selector == dropzone)"
                                       ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
                         <ChildContent>
-                            @for (int i = 1; i < 5; i++)
+                            @for (int i = 1; i < 9; i++)
                             {
                                 var dropzone = i.ToString();
                                 <MudPaper Class="ma-4 flex-grow-1 custom-paper" style="background-color: rgba(89,74,226,1); color: white;">
                                     <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
-                                        <MudListSubheader class="custom-subheader">Grade @dropzone</MudListSubheader>
+                                        <MudListSubheader class="custom-subheader">Կիսամյակ @dropzone</MudListSubheader>
                                         <MudDropZone T="DropItem" Identifier="@dropzone" Class="flex-grow-1" AllowReorder="true" />
                                     </MudList>
                                 </MudPaper>

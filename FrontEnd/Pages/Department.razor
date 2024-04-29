@@ -34,9 +34,9 @@
         <MudMainContent style="background-color: black; color: white;" Elevation="5">
             <div style="margin: 1% 1% 1% 1%; height:100vh">
                 <MudDataGrid T="DepartmentBl"
-                             Items="@Departments" 
-                             SortMode="SortMode.Multiple" 
-                             Filterable="true"
+                             Items="@Departments"
+                             SortMode="SortMode.None"
+                             Filterable="false"
                              RowClick="@RowClicked" 
                              RowContextMenuClick="RowRightClicked"
                              Selectable="false" 
@@ -54,7 +54,7 @@
                              ColumnResizeMode="ResizeMode.Column"
                              Style="height:100%" >
                     <ToolBarContent>
-                        <MudText Typo="Typo.h4" class="mr-2">Departments</MudText>
+                        <MudText Typo="Typo.h4" class="mr-2">Ամբիոններ</MudText>
                         <MudIconButton @onclick="AddDepartment" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                         <MudSpacer />
                         @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
@@ -63,8 +63,8 @@
 
                     <Columns>
                         <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
-                        <PropertyColumn Property="x => x.Name" Title="Name" />
-                        <PropertyColumn Property="x => x.Description" />
+                        <PropertyColumn Property="x => x.Name" Title="Անուն" />
+                        <PropertyColumn Property="x => x.Description" Title="Նկարագրություն" />
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">
                             <CellTemplate>
@@ -76,7 +76,7 @@
                     </Columns>
 
                     <PagerContent>
-                        <MudDataGridPager T="RecipientDto" DisableRowsPerPage="true" />
+                    <MudDataGridPager T="DepartmentBl" DisableRowsPerPage="true" />
                     </PagerContent>
 
                 </MudDataGrid>

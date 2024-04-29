@@ -34,8 +34,8 @@
             <div style="margin: 1% 1% 1% 1%; height:100vh">
                 <MudDataGrid T="SMTPConfigDto"
                              Items="@SmtpConfigDto"
-                             SortMode="SortMode.Multiple" 
-                             Filterable="true"
+                             SortMode="SortMode.None"
+                             Filterable="false"
                              RowClick="@RowClicked" 
                              RowContextMenuClick="RowRightClicked"
                              Selectable="false" 
@@ -53,7 +53,7 @@
                              ColumnResizeMode="ResizeMode.Column"
                              Style="height:100%" >
                     <ToolBarContent>
-                        <MudText Typo="Typo.h4" class="mr-2">SMTP Configuration</MudText>
+                        <MudText Typo="Typo.h4" class="mr-2">SMTP կարգավորումներ</MudText>
                         <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                         <MudSpacer />
                         @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
@@ -62,12 +62,12 @@
 
                     <Columns>
                         <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
-                        <PropertyColumn Property="x => x.Department" Title="Department" />
-                        <PropertyColumn Property="x => x.SmtpServer" />
-                        <PropertyColumn Property="x => x.Port"  />
-                        <PropertyColumn Property="x => x.UserName" />
-                        <PropertyColumn Property="x => x.Password"  />
-                        <PropertyColumn Property="x => x.EnableSSL" />
+                        <PropertyColumn Property="x => x.Department" Title="Ամբիոն" />
+                        <PropertyColumn Property="x => x.SmtpServer" Title="SMTP սերվեր" />
+                        <PropertyColumn Property="x => x.Port" Title="Պորտ" />
+                        <PropertyColumn Property="x => x.UserName" Title="Ուղարկողի էլ․ հասցե" />
+                        <PropertyColumn Property="x => x.Password" Title="Գաղտնաբառ" />
+                        <PropertyColumn Property="x => x.EnableSSL" Title="Ակտիվացնել SSL" />
 
 
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"

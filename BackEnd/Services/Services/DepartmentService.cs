@@ -37,7 +37,7 @@ namespace BackEnd.Services.Services
             if (Token.RoleId != 2)
                 Alert.Create(Constants.Error.WrongPermissions);
 
-            var result =  (await this.dbService.QueryAsync<Department?>("spEditDepartment", department)).FirstOrDefault();
+            var result =  (await this.dbService.QueryAsync<Department?>("spAddDepartment", department)).FirstOrDefault();
             if (result == null)
                 Alert.Create(Constants.Error.SomethingWrong);
             return result;
