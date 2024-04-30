@@ -5,7 +5,7 @@ using FrontEnd.Model;
 
 namespace FrontEnd.API;
 
-public class UserService :  IUserService
+public class UserService : BaseService, IUserService
 {
     
     // public UserService(HttpClient httpClient):base(httpClient)
@@ -13,11 +13,12 @@ public class UserService :  IUserService
     // }
     private readonly IHttpService httpService;
 
-    public UserService(IHttpService httpService)
+    public UserService(IHttpService httpService) :base
+        (httpService, "User")
     {
-        this.httpService = httpService;
+
     }
-    
+
     public async Task<bool> RegisterUser(RegistrationPost input)
     {
         
@@ -29,7 +30,21 @@ public class UserService :  IUserService
 
     public async Task<List<User?>> GetUsers()
     {
-        var result = await this.httpService.Execute<List<User>, object>(HttpMethod.Get, "User");
+        //var result = await this.httpService.Execute<List<User>, object>(HttpMethod.Get, "User");
+        var result = await this.Get<User>();
+        return result;
+    }
+
+
+    public async Task<User?> EditUser(User model)
+    {
+        var result = await this.Edit<User?, User>(model);
+        return result;
+    }
+
+    public async Task<int?> DeleteUser(User model)
+    {
+        var result = await this.Delete<int?, User?>(model);
         return result;
     }
 }

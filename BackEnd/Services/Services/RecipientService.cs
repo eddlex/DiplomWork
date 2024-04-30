@@ -29,8 +29,6 @@ namespace BackEnd.Services.Services
             return res;
         }
 
-
-
         public async Task<int?> DeleteRecipient(Recipient model) //tested
         {
             if (Token.RoleId == 0 ||
@@ -83,21 +81,6 @@ namespace BackEnd.Services.Services
                 throw Alert.Create(Constants.Error.SomethingWrong);
             return res;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         #region Recipient Groups
@@ -179,6 +162,5 @@ namespace BackEnd.Services.Services
 
             return await cmd.ExecuteNonQueryAsync() > 0;
         }
-
     }
 }

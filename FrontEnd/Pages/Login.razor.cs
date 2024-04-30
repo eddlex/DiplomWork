@@ -1,17 +1,12 @@
-﻿using AutoMapper;
-using FrontEnd.Interface;
+﻿using FrontEnd.Interface;
 using FrontEnd.Model;
 using FrontEnd.Model.DTO;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using static MudBlazor.CategoryTypes;
 
 namespace FrontEnd.Pages
 {
     public partial class Login
     {
-        //int failedAttempts = 0;
-
         [Inject]
         private IAuthorizationService? Authorization { get; set; }
         

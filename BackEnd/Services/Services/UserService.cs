@@ -1,5 +1,4 @@
-﻿
-using BackEnd.Services.Configuration;
+﻿using BackEnd.Services.Configuration;
 using BackEnd.Services.Db;
 using BackEnd.Services.Interfaces;
 using Dapper;
@@ -12,6 +11,7 @@ using BackEnd.Helpers;
 using BackEnd.Models.Output;
 using FrontEnd.Helpers;
 using UserPost = BackEnd.Models.Output.UserPost;
+using Twilio.Jwt.AccessToken;
 
 namespace BackEnd.Services.Services
 {
@@ -19,14 +19,17 @@ namespace BackEnd.Services.Services
     {
         private readonly DbService dbService; 
         private readonly ConfigurationService configurationService;
-        private  readonly (int UserId, int DepartmentId, int RoleId)? token;
+        //private  readonly (int UserId, int DepartmentId, int RoleId)? token;
+
+        public (int UserId, int DepartmentId, int RoleId) token { get; set; }
         public UserService(IDbService dbService,
                            IConfigurationService configurationService,
                            IHttpContextAccessor httpContextAccessor)
         {
             this.dbService = (DbService)dbService;
             this.configurationService = (ConfigurationService)configurationService;
-            token = httpContextAccessor.HttpContext?.User.ParseToken();
+            if (httpContextAccessor.HttpContext != null)
+                this.token = httpContextAccessor.HttpContext.User.ParseToken();
         }
 
         public async Task<UserPost?> LogIn(Models.Input.UserPost user)
@@ -80,17 +83,48 @@ namespace BackEnd.Services.Services
 
         public async Task<List<UserGet?>> GetUsers()
         {
-            if (!this.token.HasValue)
-                return new();
+            //if (!this.token.HasValue)
+            //    return new();
             
-            var param = new BaseParam()
-            { 
-               DepartmentId = this.token.Value.DepartmentId,
-               RoleId = this.token.Value.RoleId,
-            };
-            var users = (await dbService.QueryAsync<UserGet>("spGetUsers", param)).ToList();
+            //var param = new BaseParam()
+            //{ 
+            //   DepartmentId = this.token.Value.DepartmentId,
+            //   RoleId = this.token.RoleId,
+            //};
+            var users = (await dbService.QueryAsync<UserGet>("spGetUsers", new { token.RoleId, token.DepartmentId })).ToList();
             return users;
         }
 
+        public async Task<int?> DeleteUser(UserGet model) //tested
+        {
+            if (token.RoleId != 2)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+
+            var res = (await dbService.QueryAsync<int>("spDeleteUser", new { model.Id })).FirstOrDefault();
+            return res;
+        }
+
+        public async Task<UserGet?> EditUser(UserGet model)
+        {
+            if (token.RoleId != 2)
+                throw Alert.Create(Constants.Error.WrongPermissions);
+            //var res = (await dbService.QueryAsync<Recipient>("spEditRecipient", model)).FirstOrDefault();
+
+            var res = (await dbService.QueryAsync<UserGet>("spEditUser",
+                new
+                {
+                    model.Id,
+                    model.UserName,
+                    model.Email,
+                    model.DepartmentId,
+                    model.RoleId,
+                    model.CreationDate,
+                    model.UpdateDate
+                })).FirstOrDefault();
+
+            if (res == default)
+                throw Alert.Create(Constants.Error.SomethingWrong);
+            return res;
+        }
     }
 }

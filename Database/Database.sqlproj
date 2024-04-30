@@ -136,5 +136,7 @@
     <Build Include="dbo\Tables\Rating.sql" />
     <Build Include="dbo\Stored Procedures\spGetWeights.sql" />
     <Build Include="dbo\Stored Procedures\spDelWeight.sql" />
+    <Build Include="dbo\Stored Procedures\spDeleteUser.sql" />
+    <Build Include="dbo\Stored Procedures\spEditUser.sql" />
   </ItemGroup>
 </Project>

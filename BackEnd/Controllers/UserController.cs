@@ -31,6 +31,19 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.userService.GetUsers());
         }
-        
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<ActionResult<int?>> UserDelete(UserGet model)
+        {
+            return Ok(await this.userService.DeleteUser(model));
+        }
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<int?>> UserEdit(UserGet model)
+        {
+            return Ok(await this.userService.EditUser(model));
+        }
+
     }; 
 }

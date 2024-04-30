@@ -70,10 +70,5 @@ namespace BackEnd.Services.Services
 
             return Convert.ToBoolean(await cmd.ExecuteNonQueryAsync());
         }
-
-
-
-
-
     }
 }

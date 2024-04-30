@@ -14,9 +14,7 @@ public partial class Department
 {
     
     [Inject]
-    private IDepartmentService? DepartmentService { get; set; }
-
-    
+    private IDepartmentService? DepartmentService { get; set; }    
     private List<DepartmentBl>? Departments { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -41,9 +39,7 @@ public partial class Department
                 this.Departments.Remove(this.Departments.First(r => r.Id == id));
             }
         }
-    }
-    
-    
+    }    
   
     private async Task AddDepartment()
     {

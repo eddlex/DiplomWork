@@ -26,8 +26,6 @@
 </style>
 
 <MudThemeProvider />
-
-@* <div class="body"> *@
     <MudLayout style="background-color: #212121; color: white;" Elevation="5">
         <Drawer></Drawer>
 
@@ -56,10 +54,7 @@
                     <ToolBarContent>
                         <MudText Typo="Typo.h4" class="mr-2">Ամբիոններ</MudText>
                         <MudIconButton @onclick="AddDepartment" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
-                        <MudSpacer />
-                        @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
-                        @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
-                    </ToolBarContent>
+                       </ToolBarContent>
 
                     <Columns>
                         <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
@@ -76,18 +71,13 @@
                     </Columns>
 
                     <PagerContent>
-                    <MudDataGridPager T="DepartmentBl" DisableRowsPerPage="true" />
+                        <MudDataGridPager T="DepartmentBl" DisableRowsPerPage="true" />
                     </PagerContent>
 
                 </MudDataGrid>
             </div>
-
-            @* <MudButton @onclick="AddDepartment" Variant="Variant.Filled" Color="Color.Primary">
-                Add recipient
-            </MudButton> *@
         </MudMainContent>
     </MudLayout>
-@* </div> *@
 
 @code {
     private bool _isCellEditMode;
@@ -103,7 +93,6 @@
     
     void RowRightClicked(DataGridRowClickEventArgs<DepartmentBl> args)
     {
-        //args.RowIndex
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
     

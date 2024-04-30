@@ -7,10 +7,9 @@ namespace BackEnd.Models.Output
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public string DepartmentId { get; set; }
-        public string RoleId { get; set; }
+        public int DepartmentId { get; set; }
+        public int RoleId { get; set; }
         public DateTime CreationDate { get; set; }
-        public DateTime UpdateDate { get; set; }
-        
+        public DateTime UpdateDate { get; set; }        
     }
 }

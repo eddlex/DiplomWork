@@ -1,15 +1,13 @@
-namespace FrontEnd.Model;
+﻿using FrontEnd.Helpers;
 
-public class User
+namespace FrontEnd.Model.Dialog;
+
+public class UserDialog
 {
-    public int Id { get; set; }
+    public Select<DepartmentBl?>? Department { get; set; }
     public string? UserName { get; set; }
     public string? Email { get; set; }
-    //public string? DepartmentId { get; set; }
-    public int DepartmentId { get; set; }
-    //public string? RoleId { get; set; }
     public int RoleId { get; set; }
-
     public DateTime CreationDate { get; set; }
     public DateTime UpdateDate { get; set; }
 }

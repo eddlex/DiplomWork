@@ -116,8 +116,8 @@
                     <MudText Typo="Typo.h4" class="mr-2">Առաջարկություններ</MudText>
                     <MudIconButton @onclick="AddRow" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                     <MudSpacer />
-                    <MudButton Variant="Variant.Text" @onclick="TrainModel" Color="Color.Primary">Աշխատացնել մոդելը</MudButton>
-                    <MudButton Variant="Variant.Text" @onclick="EvaluateModel" Color="Color.Primary">Հաշվարկել</MudButton>
+                    <MudButton Variant="Variant.Outlined" @onclick="TrainModel" Color="Color.Primary">Աշխատացնել մոդելը</MudButton>
+                    <MudButton Variant="Variant.Outlined" @onclick="EvaluateModel" Color="Color.Primary">Հաշվարկել</MudButton>
 
                 </ToolBarContent>
 
@@ -189,61 +189,6 @@
 
 @code {
 
-    // public string ExecutePythonScript(string scriptPath, string arguments="")
-    // {
-    //     ProcessStartInfo processStartInfo = new ProcessStartInfo();
-    //     processStartInfo.FileName = "python"; 
-
-    //     processStartInfo.Arguments = scriptPath;
-
-    //     processStartInfo.RedirectStandardOutput = true;  // Redirect the output
-    //     processStartInfo.UseShellExecute = false;  // Run the process without shell
-    //     processStartInfo.CreateNoWindow = true;  // Don't create a console window
-
-    //     Process process = new Process();
-    //     process.StartInfo = processStartInfo;
-    //     process.Start();
-
-    //     string output = process.StandardOutput.ReadToEnd();
-
-    //     process.WaitForExit();
-
-    //     return output;
-    // }
-
-        // public async Task<int> TrainModel()
-        // {
-        //     string scriptPath = @"c:\Users\Irin\Desktop\diplom_ML\create_model.py";
-
-        //     string res = (await Task.Run(() => ExecutePythonScript(scriptPath)));
-
-        //     if (res.StartsWith("Traceback"))
-        //         Snackbar.ShowExeption(Constants.Error.SomethingWrong);
-                
-        //     else
-        //         Snackbar.ShowSuccess(Constants.Success.ModelTrain);
-
-        //     return 0;
-        //   }
-
-        // public async Task<int> Evaluate()
-        // {
-        //     string scriptPath = @"c:\Users\Irin\Desktop\diplom_ML\evaluate.py";
-
-        //     string res = await Task.Run(() => ExecutePythonScript(scriptPath));
-
-        //     if (res.StartsWith("Traceback"))
-        //         Snackbar.ShowExeption(Constants.Error.SomethingWrong);
-
-        //     else
-        //         Snackbar.ShowSuccess(Constants.Success.ModelEval);
-
-        //     return 0;
-
-        // }
-
-
-
     private bool _isCellEditMode;
     private bool _editTriggerRowClick;
     public string _searchString;
@@ -292,9 +237,6 @@
     }
 
 
-
-
-
     void AddItem()
     {
 
@@ -313,15 +255,9 @@
     #endregion
 
 
-
-
-
-
     public List<SubjectDto?>? allSubjects => SubjectsDto;
 
     public List<SubjectDto?>? selectedSubjects = new();
-
-
 
 
     public void DeleteFormRow((int oldIndex, int newIndex) indices)
