@@ -44,15 +44,16 @@ cursor = connection.cursor()
 connection_string_alchemy = "mssql+pyodbc:///?odbc_connect=" + connection_string_odbc
 engine = create_engine(connection_string_alchemy)
 
-
 def get_predict_data(subject_id=None): 
     sql_query = """
-        SELECT S.Title, R.Value, S.HoursPerSem, S.DepartmentId
+        SELECT R.Value * w.Weight AS Value, S.HoursPerSem, S.DepartmentId
         FROM Rating R
         JOIN dbo.FormIdentification FI ON R.FormIdentificationId = FI.Id
         JOIN dbo.FormRow FR ON R.FormRowId = FR.Id
         JOIN dbo.Form F ON F.Id = FR.FormId
         JOIN Subject S ON S.Id = FR.SubjectId
+        JOIN Recipient rec ON rec.GroupId = F.GroupId
+        JOIN Weight w ON w.Id = rec.WeightId
     """
 
     if subject_id:
@@ -104,7 +105,7 @@ def insert_hour(sub_id, value):
 
 def evaluate_model(sbj_id=None):
     eval_data = get_predict_data(sbj_id)
-    eval_data = pd.get_dummies(eval_data, columns=['Title'])
+    #eval_data = pd.get_dummies(eval_data, columns=['Title'])
     features = eval_data.drop(columns=['HoursPerSem']).sort_index(axis=1)
     # yres = eval_data['HoursPerSem']
 

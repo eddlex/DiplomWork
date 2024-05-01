@@ -35,12 +35,14 @@ model_file = "model.pkl"
 
 def get_data():
     sql_query = """
-        SELECT R.FormIdentificationId, S.Title, R.Value, S.HoursPerSem, S.DepartmentId
+        SELECT R.FormIdentificationId, R.Value * w.Weight AS Value, S.HoursPerSem, S.DepartmentId
         FROM Rating R
         JOIN dbo.FormIdentification FI ON R.FormIdentificationId = FI.Id
         JOIN dbo.FormRow FR ON R.FormRowId = FR.Id
         JOIN dbo.Form F ON F.Id = FR.FormId
         JOIN Subject S ON S.Id = FR.SubjectId
+        JOIN Recipient rec ON rec.GroupId = F.GroupId
+        JOIN Weight w ON w.Id = rec.WeightId
     """
     data = pd.read_sql_query(sql_query, engine)
     return data
@@ -74,12 +76,12 @@ if __name__ == '__main__':
     data1 = get_data()
     data = filter_data(data1)
     # Encoding categorical variables using one-hot encoding
-    data = pd.get_dummies(data, columns=['Title'])
+    #data = pd.get_dummies(data, columns=['Title'])
 
     X = data.drop(columns=['HoursPerSem', 'FormIdentificationId']).sort_index(axis=1)  # Features
     y = data['HoursPerSem']  # Target variable
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=69)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=69)
 
     with open('shared_data.pkl', 'wb') as f:
         pickle.dump(X_train, f)
@@ -99,5 +101,3 @@ if __name__ == '__main__':
     print(f"Test RMSE: {test_rmse}")
 
     engine.dispose()
-
-
