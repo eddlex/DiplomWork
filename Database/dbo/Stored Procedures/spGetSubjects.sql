@@ -8,6 +8,10 @@ BEGIN
          ,Outcome
          ,OutcomeTypeId
          ,DepartmentId
+         ,HoursPerSem
+         ,SuggestedHours
     FROM [Subject]
     WHERE (DepartmentId = @DepartmentId) OR @DepartmentId IS NULL
 END
+
+

@@ -7,7 +7,7 @@ using Microsoft.JSInterop;
 
 namespace FrontEnd.Pages;
 
-public partial class Ad
+public partial class AdminPage
 {
     //[Inject]
     //private IAuthorizationService Authorization { get; set; }

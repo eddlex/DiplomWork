@@ -32,11 +32,11 @@ public partial class Subjects
     protected override async Task OnInitializedAsync()
     {
         
-        OutcomeTypes?.Add(new OutcomeType(0, "A"));
-        OutcomeTypes?.Add(new OutcomeType(1, "B"));
-        
-        
-        
+        OutcomeTypes?.Add(new OutcomeType(0, "Գիտելիք"));
+        OutcomeTypes?.Add(new OutcomeType(1, "Կարողություն"));
+        OutcomeTypes?.Add(new OutcomeType(2, "Հմտություն"));
+
+
         if (this.DepartmentService != null &&
             this.SubjectService != null)
         {
@@ -54,10 +54,10 @@ public partial class Subjects
                    Title = e.Title,
                    Outcome = e.Outcome,
                    OutcomeType =  this.OutcomeTypes?.FirstOrDefault(d => d.Id == e.OutcomeTypeId)?.Title,
-                   Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name
-               }));
-               
-               
+                   Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
+                   HoursPerSem = e.HoursPerSem,
+                   SuggestedHours = e.SuggestedHours
+               }));                             
            }                
         } 
     }
@@ -87,6 +87,8 @@ public partial class Subjects
                         Outcome = result.Outcome,
                         OutcomeType = this.OutcomeTypes?.FirstOrDefault(d => d.Id == result.OutcomeTypeId)?.Title,
                         Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
+                        HoursPerSem = result.HoursPerSem,
+                        SuggestedHours = editedRowBl.HoursPerSem
                     });
                 }
             }
@@ -105,8 +107,7 @@ public partial class Subjects
                 this.SubjectBl?.Remove(SubjectBl.FirstOrDefault(row => row?.Id == id));
             }
         }
-    }
-    
+    }   
     
   
     private async Task AddSubject()
@@ -125,7 +126,8 @@ public partial class Subjects
                    Outcome = result.Outcome,
                    OutcomeType = this.OutcomeTypes?.FirstOrDefault(d => d.Id == result.OutcomeTypeId)?.Title,
                    Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
-                   
+                   HoursPerSem = result.HoursPerSem,
+                   SuggestedHours = result.SuggestedHours                   
                });
            }
        }
@@ -155,6 +157,7 @@ public partial class Subjects
             dialog.Outcome = row.Outcome;
             dialog.OutcomeType.SelectedValue = row.OutcomeTypeId;
             dialog.Department.SelectedValue = row.DepartmentId;
+            dialog.HoursPerSem = row.HoursPerSem;
         }
 
         parameters.Add("ObjectType", dialog);
@@ -168,7 +171,9 @@ public partial class Subjects
                 OutcomeTypeId = dialog.OutcomeType.SelectedValue.Value,
                 Outcome = dialog.Outcome,
                 Title = dialog.Title,
-                Id = row?.Id ?? 0
+                Id = row?.Id ?? 0,
+                HoursPerSem = dialog.HoursPerSem,
+                SuggestedHours = row?.SuggestedHours
             };
         }
 

@@ -136,7 +136,5 @@ namespace BackEnd.Services.Services
             var res = (await dbService.QueryAsync<Subject>("spEditSubject", model)).FirstOrDefault();
             return res;
         }
-
-
     }
 }

@@ -9,4 +9,5 @@ public class SubjectDialog
     public string? Outcome { get; set; }
     public Select<OutcomeType>? OutcomeType { get; set; }
     public Select<DepartmentBl>? Department { get; set; }
+    public int? HoursPerSem { get; set; }
 }

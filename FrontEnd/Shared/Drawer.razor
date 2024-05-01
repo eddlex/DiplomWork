@@ -6,8 +6,11 @@
 
 <MudAppBar Elevation="5">
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-    <MudText Typo="Typo.h5" Class="ml-3">ՀԱՊՀ</MudText>
+    <MudText Typo="Typo.h5" Class="ml-3">ՀԱՊՀ</MudText> 
     <MudSpacer />
+    <MudText Typo="Typo.body1" Color="Color.Inherit" Class="mr-2">
+        @userName
+    </MudText>
     <MudIconButton Icon="@Icons.Material.Filled.Language" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => ChangeLanguage())" />
 @*     <MudButton Variant="Variant.Text" @onclick="SetArm" Color="Color.Secondary">Arm</MudButton>
     <MudButton Variant="Variant.Text" @onclick="SetEng" Color="Color.Secondary">Eng</MudButton> *@
@@ -28,26 +31,14 @@
         <MudNavLink Href="/Recipients" Match="NavLinkMatch.Prefix">Մասնակիցներ</MudNavLink>        
         <MudNavLink Href="/Forms" Match="NavLinkMatch.Prefix">Հարցումներ</MudNavLink>
         <MudNavLink Href="/Suggestions" Match="NavLinkMatch.Prefix">Առաջարկություններ</MudNavLink>
-
-        @* <MudNavGroup Title="Surveys" Expanded="false">
-        <MudNavLink Href="/allsurveys" Match="NavLinkMatch.Prefix">All</MudNavLink>
-        <MudNavLink Href="/students" Match="NavLinkMatch.Prefix">Among students</MudNavLink>
-        <MudNavLink Href="/companies" Match="NavLinkMatch.Prefix">Among companies</MudNavLink>
-        <MudNavLink Href="/lecturers" Match="NavLinkMatch.Prefix">Among lecturers</MudNavLink>
-        </MudNavGroup> *@
         <MudNavLink Href="/subjects" Match="NavLinkMatch.Prefix">Առարկաներ</MudNavLink>
         <MudNavLink Href="/Schedule" Match="NavLinkMatch.Prefix">Դասաժամերի առաջարկություններ</MudNavLink>
         <MudNavLink Href="/AdminPage" Match="NavLinkMatch.Prefix">Ուսումնական պլան</MudNavLink>        
-
-        @* <MudNavGroup Title="Settings" Expanded="false">
-            <!-- <MudNavLink Href="/users"  Match="NavLinkMatch.Prefix">Users</MudNavLink> -->
-            <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
-        </MudNavGroup>
-        <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink> *@
     </MudNavMenu>
 </MudDrawer>
 
 @code {
+    public string? userName = "userName";
     bool _drawerOpen = true;
 
     void DrawerToggle()

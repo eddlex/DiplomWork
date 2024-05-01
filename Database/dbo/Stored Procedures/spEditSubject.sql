@@ -3,7 +3,8 @@
     @Title NVARCHAR(200),
     @Outcome NVARCHAR(500),
     @OutcomeTypeId INT,
-    @DepartmentId INT
+    @DepartmentId INT,
+    @HoursPerSem INT
 AS
 BEGIN
     BEGIN TRY
@@ -13,7 +14,8 @@ BEGIN
             SET Title = @Title,
                 Outcome = @Outcome,
                 OutcomeTypeId = @OutcomeTypeId,
-                DepartmentId = @DepartmentId
+                DepartmentId = @DepartmentId,
+                HoursPerSem = @HoursPerSem
             WHERE Id = @Id
         COMMIT
 
@@ -21,7 +23,9 @@ BEGIN
                Title,
                Outcome,
                OutcomeTypeId,
-               DepartmentId
+               DepartmentId,
+               HoursPerSem,
+               SuggestedHours
         FROM Subject WHERE Id = @Id
 
     END TRY
@@ -31,3 +35,5 @@ BEGIN
         THROW 500000, @errorMessage, 1;
     END CATCH;
 END
+go
+

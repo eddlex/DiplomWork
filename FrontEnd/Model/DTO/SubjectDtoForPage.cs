@@ -7,5 +7,6 @@ public class SubjectDtoForPage
     public string? Outcome { get; set; }
     public string? OutcomeType { get; set; }
     public string? Department { get; set; }
-    
+    public int? HoursPerSem { get; set; }
+    public float? SuggestedHours { get; set; }
 }

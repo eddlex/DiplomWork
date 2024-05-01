@@ -7,4 +7,5 @@ public class SubjectPut
     public string? Outcome { get; set; }
     public int OutcomeTypeId { get; set; }
     public int DepartmentId { get; set; }
+    public int? HoursPerSem { get; set; }
 }

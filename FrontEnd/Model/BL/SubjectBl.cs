@@ -10,4 +10,6 @@ public class SubjectBl
     public string? Outcome { get; set; }
     public int OutcomeTypeId { get; set; }
     public int DepartmentId { get; set; }
+    public int? HoursPerSem { get; set; }
+    public float? SuggestedHours { get; set; }
 }

@@ -64,8 +64,10 @@
                         <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
                         <PropertyColumn Property="x => x.Title" Title="Առարկայի անուն" />
                         <PropertyColumn Property="x => x.Outcome" Title="Վերջնարդյունք" />
-                    <PropertyColumn Property="x => x.OutcomeType" Title="Վերջնարդյունքի տիպ" />
+                        <PropertyColumn Property="x => x.OutcomeType" Title="Վերջնարդյունքի տիպ" />
                         <PropertyColumn Property="x => x.Department" Title="Ամբիոն" />
+                        <PropertyColumn Property="x => x.HoursPerSem" Title="Կիսամյակի ժամաքանակ" />
+                        <PropertyColumn Property="x => x.SuggestedHours" Title="Առաջարկվող ժամաքանակ" />
 
                         <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end"
                                         Sortable="false" Filterable="false" StickyRight="true">

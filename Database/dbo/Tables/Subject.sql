@@ -4,6 +4,8 @@
 	[Outcome] NVARCHAR(500),
 	[OutcomeTypeId] INT,
 	[DepartmentId] INT,
-	FOREIGN KEY ([OutcomeTypeId]) REFERENCES OutcomeTypes([Id]),
+	[HoursPerSem] INT NULL, 
+    [SuggestedHours] FLOAT NULL, 
+    FOREIGN KEY ([OutcomeTypeId]) REFERENCES OutcomeTypes([Id]),
 	FOREIGN KEY ([DepartmentId]) REFERENCES Department([Id])
 )
