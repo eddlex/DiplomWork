@@ -83,7 +83,7 @@
                 <ToolBarContent>
                     <MudText Typo="Typo.h4" class="mr-2">Առաջարկություններ</MudText>
                     <MudSpacer />
-                    <MudButton Variant="Variant.Outlined" @onclick="@(() => GetSimilars())" Color="Color.Primary">Բոլոր նմանները</MudButton>
+                    <MudButton Variant="Variant.Outlined" @onclick="@(() => GetSimilars())" Color="Color.Primary">Տեսնել բոլոր նմանները</MudButton>
                 </ToolBarContent>
 
                 <Columns>
@@ -147,7 +147,6 @@
     private bool _isCellEditMode;
     private bool _editTriggerRowClick;
     private int _currentSelectedSuggestionId;
-    private List<string> _events = new();
 
     bool _isEditMode = false;
     bool _readOnly = true;
@@ -165,15 +164,6 @@
         _isEditMode = isEditMode;
     }
 
-    
-    public async Task GetSimilars(int? suggId = null)
-    {
-        if (this.suggestionService != null)
-        {
-            var result = await this.suggestionService.GetSimilars(suggId);
-            similarSuggestions = result.ToList();
-        }
-    }
 
     async Task RowClicked(DataGridRowClickEventArgs<Suggestion> args)
     {

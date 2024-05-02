@@ -138,5 +138,8 @@
     <Build Include="dbo\Stored Procedures\spDelWeight.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteUser.sql" />
     <Build Include="dbo\Stored Procedures\spEditUser.sql" />
+    <Build Include="dbo\Stored Procedures\spGetSuggestions.sql" />
+    <Build Include="dbo\Stored Procedures\spDeleteSuggestion.sql" />
+    <Build Include="dbo\Tables\Suggestion.sql" />
   </ItemGroup>
 </Project>

@@ -80,9 +80,18 @@ public partial class Suggestions
         {
             this.suggestions = await this.suggestionService.GetSuggestions();
         }
+
+        similarSuggestions = new List<Suggestion>();
     }
 
-
+    public async Task GetSimilars(int? suggId = null)
+    {
+        if (this.suggestionService != null)
+        {
+            var result = await this.suggestionService.GetSimilars(suggId);
+            similarSuggestions = result.ToList();
+        }
+    }
 
     private async Task DeleteRow(int id)
     {
@@ -96,6 +105,4 @@ public partial class Suggestions
             }
         }
     }
-
-
 }
