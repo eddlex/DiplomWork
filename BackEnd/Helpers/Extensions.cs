@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using FrontEnd.Helpers;
 
 namespace BackEnd.Helpers
 {
@@ -17,6 +18,35 @@ namespace BackEnd.Helpers
             {
                 return (-1, -1, -1);
             }
+        }
+        
+        private static Os GetOsType()
+        {
+            var os = Environment.OSVersion;
+            switch (os.Platform)
+            {
+                case PlatformID.Win32NT:
+                    return Os.Windows;
+                case PlatformID.Unix:
+                    return Os.UnixLinux;
+                case PlatformID.MacOSX:
+                    return Os.MacOs;
+                default:
+                    return Os.Undefined;
+            }
+        }
+
+        public static string GetPathSlashType()
+        {
+            var platform = GetOsType();
+            return platform switch
+            {
+                Os.Undefined => throw Alert.Create("Platform Error"),
+                Os.UnixLinux => "/",
+                Os.MacOs => "/",
+                Os.Windows => "\\",
+                _ => throw Alert.Create("Platform Error")
+            };
         }
     }
 }

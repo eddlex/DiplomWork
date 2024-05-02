@@ -29,7 +29,7 @@ namespace BackEnd.Services.Services
 
         public string ExecutePythonScript(string scriptName, string arguments="")
         {
-            scriptName = Directory.GetCurrentDirectory().Replace("BackEnd", @"ML\" + scriptName);
+            scriptName = Directory.GetCurrentDirectory().Replace("BackEnd", @"ML" + Extensions.GetPathSlashType() + scriptName);
 
             //string currentPath = Directory.GetCurrentDirectory();
             //string newPath = @"ML\" + scriptName;
