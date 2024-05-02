@@ -81,7 +81,7 @@
     </ToolBarContent> 
 
     <Columns>
-            <PropertyColumn Property="x => x.Suggestion" Title="Առաջարկություն" Sortable="false" Filterable="false" IsEditable="true" Required="false" />
+            <PropertyColumn Property="x => x.Value" Title="Առաջարկություն" Sortable="false" Filterable="false" IsEditable="true" Required="false" />
             <TemplateColumn Hidden="@(_isCellEditMode || _readOnly || _editTriggerRowClick)" CellClass="d-flex justify-end" Sortable="false" Filterable="false" StickyRight="true">
                 <CellTemplate> 
                     <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Small" Color="Color.Error" OnClick="@context.Actions.StartEditingItemAsync"> </MudIconButton> 
