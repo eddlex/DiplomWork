@@ -44,8 +44,6 @@ builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddSingleton<ISnackbar, SnackbarService>();
 builder.Services.AddScoped<HttpClient, HttpClient>();
 
-
-
 builder.Services.AddScoped<IHttpService, HttpService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -56,8 +54,7 @@ builder.Services.AddScoped<IExeptionService, ExeptionService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
 builder.Services.AddScoped<IWeightService, WeightService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
-
-
+builder.Services.AddScoped<ISuggestionService, SuggestionService>();
 builder.Services.AddScoped<IBaseService, FormService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IMailService, MailService>();

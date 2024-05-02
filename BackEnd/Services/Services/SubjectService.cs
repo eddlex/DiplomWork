@@ -31,15 +31,8 @@ namespace BackEnd.Services.Services
         {
             scriptName = Directory.GetCurrentDirectory().Replace("BackEnd", @"ML" + Extensions.GetPathSlashType() + scriptName);
 
-            //string currentPath = Directory.GetCurrentDirectory();
-            //string newPath = @"ML\" + scriptName;
-
-            //string pattern = @"BackEnd.*";
-            //scriptName = Regex.Replace(currentPath, pattern, newPath);
-
             ProcessStartInfo processStartInfo = new ProcessStartInfo();
 
-            //processStartInfo.FileName = "python3";
             processStartInfo.FileName = "python3";
 
             string argumentString = scriptName + " " + arguments;

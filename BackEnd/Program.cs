@@ -31,8 +31,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWeightService, WeightService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<ILogDownloaderService, LogDownloaderService>();
-
-
+builder.Services.AddScoped<ISuggestionService, SuggestionService>();
 
 
 var securityScheme = new OpenApiSecurityScheme()

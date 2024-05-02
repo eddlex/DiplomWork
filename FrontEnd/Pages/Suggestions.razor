@@ -1,0 +1,198 @@
+﻿@page "/Suggestions"
+@using FrontEnd.Helpers;
+@using FrontEnd.Model
+@inject IDialogService DialogService
+@inject HttpClient httpClient
+@inject ISnackbar Snackbar
+@using MudBlazor
+@using System.Threading.Tasks
+@using System.Diagnostics;
+
+<style>
+    body {
+        background-color: black;
+        opacity: 0.8;
+    }
+
+    .custom-elevation {
+        box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.75);
+    }
+
+    .custom-paper {
+        background-color: #651FFF;
+        color: white;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .custom-subheader {
+        color: white;
+        font-size: 20px;
+    }
+
+    .div-left {
+        width: 56.5%;
+        float: left;
+        margin: 1% 0 1% 1%;
+        height: 99vh
+    }
+
+    .div-right {
+        width: 40.5%;
+        float: right;
+        margin: 1% 1% 1% 0;
+        height: 99vh;
+    }
+
+    .card {
+        color: #353535;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+    }
+
+    .progress {
+        position: absolute;
+    }
+</style>
+
+<MudThemeProvider />
+
+<MudLayout style="background-color: #212121; color: white;" Elevation="5">
+    <Drawer></Drawer>
+    <MudMainContent style="background-color: black; color: white;" Elevation="5">
+        <div class="div-left">
+            <MudDataGrid id="left"
+                         T="Suggestion"
+                         Items="@suggestions"
+                         SortMode="SortMode.None"
+                         Filterable="false"
+                         RowClick="@RowClicked"
+                         MultiSelection="false"
+                         ReadOnly="false"
+                         FixedHeader="true"
+                         EditMode="DataGridEditMode.Form"
+                         RowsPerPage="10"
+                         StartedEditingItem="@StartedEditingItem"
+                         CanceledEditingItem="@CanceledEditingItem"
+                         CommittedItemChanges="@CommittedItemChanges"
+                         Bordered="true"
+                         Dense="true"
+                         EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
+                         ColumnResizeMode="ResizeMode.Column"
+                         Style="height:100%">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h4" class="mr-2">Առաջարկություններ</MudText>
+                    <MudSpacer />
+                    <MudButton Variant="Variant.Outlined" @onclick="@(() => GetSimilars())" Color="Color.Primary">Բոլոր նմանները</MudButton>
+                </ToolBarContent>
+
+                <Columns>
+                    <PropertyColumn Property="x => x.Value" Title="Առաջարկություն" Sortable="false" Filterable="false" IsEditable="false" />
+
+                    <TemplateColumn Hidden="false" CellClass="d-flex justify-end"
+                                    Sortable="false" Filterable="false" StickyRight="true">
+                        <CellTemplate>                            
+                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton>
+                        </CellTemplate>
+                    </TemplateColumn>
+                </Columns>
+
+                <PagerContent>
+                    <MudDataGridPager T="Suggestion" DisableRowsPerPage="true" />
+                </PagerContent>
+
+            </MudDataGrid>
+        </div>
+
+        <div id="right" class="div-right">
+             <MudDataGrid id="left"
+                         T="Suggestion"
+                         Items="@similarSuggestions"
+                         SortMode="SortMode.None"
+                         Filterable="false"
+                         RowClick="@RowClicked"
+                         MultiSelection="false"
+                         ReadOnly="false"
+                         FixedHeader="true"
+                         EditMode="DataGridEditMode.Form"
+                         RowsPerPage="10"
+                         StartedEditingItem="@StartedEditingItem"
+                         CanceledEditingItem="@CanceledEditingItem"
+                         CommittedItemChanges="@CommittedItemChanges"
+                         Bordered="true"
+                         Dense="true"
+                         EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
+                         ColumnResizeMode="ResizeMode.Column"
+                         Style="height:100%">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h4" class="mr-2">Նմանություններ</MudText>   
+                </ToolBarContent>
+
+                <Columns>
+                    <PropertyColumn Property="x => x.Value" Title="Առաջարկություն" Sortable="false" Filterable="false" IsEditable="false" />
+                </Columns>
+
+                <PagerContent>
+                    <MudDataGridPager T="Suggestion" DisableRowsPerPage="true" />
+                </PagerContent>
+
+            </MudDataGrid>
+        </div>
+    </MudMainContent>
+</MudLayout>
+@* </div> *@
+
+@code {
+
+    private bool _isCellEditMode;
+    private bool _editTriggerRowClick;
+    private int _currentSelectedSuggestionId;
+    private List<string> _events = new();
+
+    bool _isEditMode = false;
+    bool _readOnly = true;
+
+    void HandleEditMode(bool isEditMode)
+    {
+        if (isEditMode)
+        {
+            _readOnly = false;
+        }
+        else
+        {
+            _readOnly = true;
+        }
+        _isEditMode = isEditMode;
+    }
+
+    
+    public async Task GetSimilars(int? suggId = null)
+    {
+        if (this.suggestionService != null)
+        {
+            var result = await this.suggestionService.GetSimilars(suggId);
+            similarSuggestions = result.ToList();
+        }
+    }
+
+    async Task RowClicked(DataGridRowClickEventArgs<Suggestion> args)
+    {
+        await GetSimilars(args.Item.Id);
+        _currentSelectedSuggestionId = args.Item.Id;
+    }
+
+    void StartedEditingItem(Suggestion item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+
+    void CanceledEditingItem(Suggestion item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+
+    void CommittedItemChanges(Suggestion item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+}
