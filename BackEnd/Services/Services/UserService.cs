@@ -64,7 +64,8 @@ namespace BackEnd.Services.Services
                         new Claim("UserId", userDb.Id.ToString()),
                         new Claim("DepartmentId", userDb.DepartmentId.ToString()),
                         new Claim(ClaimTypes.Role, userDb.RoleId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                        new Claim("UserName", userDb.UserName),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             }),
 
                     Expires = DateTime.UtcNow.AddHours(1),

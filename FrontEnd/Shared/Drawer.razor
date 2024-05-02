@@ -1,4 +1,8 @@
-﻿@* @using Microsoft.Extensions.Localization;
+@using FrontEnd.API
+@using Blazored.SessionStorage
+@using FrontEnd.Helpers
+@using FrontEnd.Model
+@* @using Microsoft.Extensions.Localization;
 @inject IStringLocalizer<Drawer> Localizer
 @inject NavigationManager Navigation
 @using System.Globalization
@@ -38,18 +42,42 @@
 </MudDrawer>
 
 @code {
-    public string? userName = "userName";
+   
     bool _drawerOpen = true;
 
+    
+    [Inject]
+    private  ISessionStorageService SessionStorageService { get; set; }
+    
+        
+    [Inject]
+    private  NavigationManager NavigationManager { get; set; }
+    
+    public string? userName { get; set;}
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var session = await this.SessionStorageService.GetItem("UserSession");
+        if (session is not null)
+        {
+            userName = session.UserName;
+            return;
+        }
+        
+        userName = "";
+    }
+    
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
 
-    private void Logout()
+    private async Task  Logout()
     {
-        // NavigationManager.NavigateTo("/logout");
+         await SessionStorageService.ClearAsync();
+         NavigationManager.NavigateTo("/");
     }
+    
     private void ChangeLanguage()
     {
 
