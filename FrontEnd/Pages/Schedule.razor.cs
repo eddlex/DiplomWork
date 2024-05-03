@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using BackEnd.Models.Input;
 using FrontEnd.Helpers;
 using FrontEnd.Interface;
 using FrontEnd.Model;
@@ -19,44 +20,47 @@ public partial class Schedule
 
     [Inject]
     private IDepartmentService? DepartmentService { get; set; }
-    [Inject]
-    private IBaseService? FormService { get; set; }
+
     [Inject]
     private ISubjectService? SubjectService { get; set; }
 
 
-    private List<FormDto?>? FormDto { get; set; }
-    private List<FormBl?>? FormBl { get; set; }
+    private List<ScheduleDto?>? ScheduleDto { get; set; }
+    private List<ScheduleBl>? ScheduleBl { get; set; }
     private List<DepartmentBl>? Departments { get; set; }
-    private List<RecipientGroup>? RecipientsGroups { get; set; }
+
 
     public List<SubjectBl>? SubjectsBl { get; set; }
     public List<SubjectDto>? SubjectsDto { get; set; } = new();
 
-    #region FormRow
-    private List<FormRowBl>? FormRowBl { get; set; }
+    
+    
+    #region ScheduleRow
+    private List<ScheduleRowBl>? ScheduleRowBl { get; set; }
 
 
-    private async Task GetFormRows(int? id = null)
+    private async Task GetScheduleRows(int? id = null)
     {
-        if (this.FormService != null &&
-            this.SubjectService != null)
+        if (this.SubjectService != null)
         {
-            id ??= this.FormBl?.OrderBy(r => r?.Id).First()?.Id;
-            _currentSelectedFormId = id.Value;
-            var departmentId = this.FormBl?.First(r => r.Id == id).DepartmentId;
+            id ??= this.ScheduleBl?.OrderBy(r => r?.Id).First()?.Id;
+            _currentSelectedScheduleId = id.Value;
+            var departmentId = this.ScheduleBl?.First(r => r.Id == id).DepartmentId;
+            
             this.SubjectsBl = await this.SubjectService.GetSubjects(departmentId.Value);
-            this.FormRowBl = await this.FormService.Get<FormRowBl>(id, "Row") ?? new();
-            selectedSubjects?.Clear();
+            
+            this.ScheduleRowBl = (await this.SubjectService.GetSubjectsScheduleRow(id.Value)) ?? new();
+            
+            selectedRows?.Clear();
             var tmpCount = default(int);
-            foreach (var item in this.FormRowBl)
+            foreach (var item in this.ScheduleRowBl)
             {
                 var subject = this.SubjectsBl?.FirstOrDefault(r => r.Id == item.SubjectId);
                 if (subject != null)
                 {
-                    this.selectedSubjects?.Add(new()
+                    this.selectedRows?.Add(new()
                     {
-                        Id = item.Id,
+                        Id = item.SubjectId,
                         Title = subject.Title,
                         Order = tmpCount++,
                         Outcome = subject.Outcome
@@ -69,7 +73,7 @@ public partial class Schedule
                 this.SubjectsDto?.Clear();
                 foreach (var item in this.SubjectsBl)
                 {
-                    if (!this.FormRowBl.Select(r => r.SubjectId).Contains(item.Id))
+                    if (!this.ScheduleRowBl.Select(r => r.SubjectId).Contains(item.Id))
                     {
                         this.SubjectsDto?.Add(new()
                         {
@@ -111,23 +115,25 @@ public partial class Schedule
     }
 
 
-    private async Task AddFormRow(FormRowBl row)
+    private async Task AddScheduleRow(ScheduleRowBl row)
     {
-        if (this.FormService != null)
+        if (this.SubjectService != null)
         {
-            row = await this.FormService.Add<FormRowBl, FormRowBl>(row, "Row");
+            row = await this.SubjectService.AddSubjectsScheduleRow(row);
         }
     }
 
-    private async Task DeleteFormRow(FormRowBl item)
+    private async Task DeleteScheduleRow(ScheduleRowBl item)
     {
-        if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
+        if (this.SubjectService != null && await DialogService.DeleteConfirmationPopUp())
         {
-            var result = await this.FormService?.Delete<int, FormRowBl>(item, "Row");
+            var result = await this.SubjectService.DelSubjectsScheduleRow(item);
 
+            if (result.HasValue && result.Value)
+            {
+                ScheduleRowBl?.Remove(item);
+            }
 
-            this.FormRowBl?.Remove(FormRowBl?.Find(f => f.Id == result));
-            FormRowBl?.Remove(item);
         }
     }
 
@@ -135,27 +141,27 @@ public partial class Schedule
 
     protected override async Task OnInitializedAsync()
     {
-
-        if (this.FormService != null &&
+        if (
             this.DepartmentService != null &&
-            this.RecipientService != null &&
             this.SubjectService != null)
         {
-            this.FormBl = await this.FormService.Get<FormBl?>();
-            this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
+            //this.FormBl = await this.FormService.Get<FormBl?>();
+          //  this.RecipientsGroups = await this.RecipientService.GetRecipientsGroups();
+          
             this.Departments = await this.DepartmentService.GetDepartments();
-            this.FormDto = new();
+            this.ScheduleDto = new();
+            this.ScheduleBl = await this.SubjectService.GetSubjectsSchedulesCalculations();
 
-            if (this.FormBl is { Count: > 0 })
+            if (this.ScheduleBl is { Count: > 0 })
             {
-                await GetFormRows();
-                this.FormBl?.ForEach(e => this.FormDto.Add(new()
+                await GetScheduleRows();
+                this.ScheduleBl?.ForEach(e => this.ScheduleDto.Add(new()
                 {
                     Id = e.Id,
                     Name = e.Name,
-                    Description = e.Description,
+                    Hours = e.Hours,
+                    Semester = e.Semester,
                     Department = this.Departments?.FirstOrDefault(d => d.Id == e.DepartmentId)?.Name,
-                    Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == e.GroupId)?.Name
                 }));
             }
         }
@@ -163,29 +169,26 @@ public partial class Schedule
 
     private async Task EditRow(int id)
     {
-        if (this.FormService != null)
+        if (this.SubjectService != null)
         {
-            var editedRowBl = this.FormBl?.Find(r => r.Id == id);
-            var editedRowDto = this.FormDto?.Find(r => r?.Id == id);
+            var editedRowBl = this.ScheduleBl?.Find(r => r.Id == id);
+            var editedRowDto = this.ScheduleDto?.Find(r => r?.Id == id);
 
-
-
-            var recipient = await OpenDialog<FormDialog>(editedRowBl);
+            var recipient = await OpenDialog<ScheduleDialog>(editedRowBl);
             if (recipient != default && editedRowBl is not null)
             {
-                var result = await this.FormService.Edit<FormBl, FormBl>(recipient);
+                var result = await this.SubjectService.EditSubjectScheduleCalculation(recipient);
 
-                this.FormDto?.Remove(editedRowDto);
-                this.FormBl?.Remove(editedRowBl);
-                this.FormBl?.Add(result);
-                this.FormDto?.Add(new FormDto()
+                this.ScheduleDto?.Remove(editedRowDto);
+                this.ScheduleBl?.Remove(editedRowBl);
+                this.ScheduleBl?.Add(result);
+                this.ScheduleDto?.Add(new ScheduleDto()
                 {
                     Id = result.Id,
                     Name = result.Name,
-                    Description = result.Description,
+                    Hours = result.Hours,
+                    Semester = result.Semester,
                     Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
-                    Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
-
                 });
             }
         }
@@ -195,34 +198,38 @@ public partial class Schedule
     {
         if (this.RecipientService != null && await DialogService.DeleteConfirmationPopUp())
         {
-            var result = await this.FormService?.Delete<int, FormBl>(FormBl?.Find(r => r.Id == id));
+            var result = await this.SubjectService?.DeleteSubjectScheduleCalculation(ScheduleBl?.Find(r => r.Id == id));
 
-            FormDto?.Remove(FormDto?.FirstOrDefault(row => row?.Id == result));
-            FormBl?.Remove(FormBl?.FirstOrDefault(row => row?.Id == result));
+            if (result.HasValue && result.Value)
+            {
+                ScheduleDto?.Remove(ScheduleDto?.FirstOrDefault(row => row?.Id == id));
+                ScheduleBl?.Remove(ScheduleBl?.FirstOrDefault(row => row?.Id == id));
+            }
+
         }
     }
 
     private async Task AddRow()
     {
-        var smtpBl = await OpenDialog<FormDialog>();
-        if (smtpBl != default && this.FormService != null)
+        var smtpBl = await OpenDialog<ScheduleDialog>();
+        if (smtpBl != default && this.SubjectService != null)
         {
-            var result = await this.FormService.Add<FormBl, FormBl>(smtpBl);
+            var result = await this.SubjectService.AddSubjectScheduleCalculation(smtpBl);
 
-            this.FormBl?.Add(result);
-            this.FormDto?.Add(new()
+            this.ScheduleBl?.Add(result);
+            this.ScheduleDto?.Add(new()
             {
                 Id = result.Id,
                 Department = this.Departments?.FirstOrDefault(d => d.Id == result.DepartmentId)?.Name,
-                Group = this.RecipientsGroups?.FirstOrDefault(d => d.Id == result.GroupId)?.Name,
                 Name = result.Name,
-                Description = result.Description
+                Hours = result.Hours,
+                Semester = result.Semester,
             });
 
         }
     }
 
-    private async Task<FormBl?> OpenDialog<T>(FormBl? row = default)
+    private async Task<ScheduleBl?> OpenDialog<T>(ScheduleBl? row = default)
     {
         var options = new DialogOptions
         {
@@ -233,33 +240,32 @@ public partial class Schedule
 
         var parameters = new DialogParameters<T>();
 
-        var dialog = new FormDialog()
+        var dialog = new ScheduleDialog()
         {
-            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments),
-            Group = new Select<RecipientGroup>("Select Group", "GroupId", this.RecipientsGroups),
+            Department = new Select<DepartmentBl>("Select Department", "DepartmentId", this.Departments), 
         };
 
         if (row is not null)
         {
             dialog.Department.SelectedValue = row.DepartmentId;
-            dialog.Group.SelectedValue = row.GroupId;
-            dialog.Description = row.Description;
+          
+            dialog.Hours = row.Hours;
             dialog.Name = row.Name;
+            dialog.Semester = row.Semester;
         }
 
         parameters.Add("ObjectType", dialog);
 
         var result = await (await DialogService.ShowAsync<DialogComponent<T>>("Add Form", parameters, options)).Result;
         if (!result.Canceled &&
-            dialog.Department.SelectedValue is not null &&
-            dialog.Group.SelectedValue != null)
+            dialog.Department.SelectedValue is not null)
         {
             return new()
             {
                 DepartmentId = dialog.Department.SelectedValue.Value,
-                GroupId = dialog.Group.SelectedValue.Value,
+                Semester = dialog.Semester,
+                Hours = dialog.Hours,
                 Name = dialog.Name,
-                Description = dialog.Description,
                 Id = row?.Id ?? 0
             };
         }

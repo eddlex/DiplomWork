@@ -1,3 +1,4 @@
+using BackEnd.Models.Input;
 using FrontEnd.Interface;
 using FrontEnd.Model;
 using FrontEnd.Model.BL;
@@ -46,6 +47,52 @@ public class SubjectService : BaseService , ISubjectService
         return result.FirstOrDefault();
     }
 
+    
+    
+    
+    public async Task<List<ScheduleBl>> GetSubjectsSchedulesCalculations()
+    {
+        var result = await this.Get<ScheduleBl>(method: "Schedule");
+        return result;
+    }
+    
+    public async Task<ScheduleBl> AddSubjectScheduleCalculation(ScheduleBl model)
+    {
+        var result = await this.Add<ScheduleBl, ScheduleBl>(model, method: "Schedule");
+        return result;
+    }
+
+    public async  Task<ScheduleBl> EditSubjectScheduleCalculation(ScheduleBl model)
+    {
+        var result = await this.Edit<ScheduleBl, ScheduleBl>(model,  "Schedule");
+            return result;
+    }
+
+    public async Task<bool?> DeleteSubjectScheduleCalculation(ScheduleBl model)
+    {
+        var result = await this.Delete<bool, ScheduleBl>(model,  "Schedule");
+        return result;
+    }
+
+    public async Task<List<ScheduleRowBl>> GetSubjectsScheduleRow(int  id)
+    {
+        var result = await this.Get<ScheduleRowBl>(id,  "ScheduleRow");
+        return result;
+    }
+
+    public async Task<ScheduleRowBl> AddSubjectsScheduleRow(ScheduleRowBl model)
+    {
+        var result = await this.Add<ScheduleRowBl, ScheduleRowBl>(model, method: "ScheduleRow");
+        return result;
+    }
+
+    public async Task<bool?> DelSubjectsScheduleRow(ScheduleRowBl model)
+    {
+        var result = await this.Delete<bool?, ScheduleRowBl>(model,  "ScheduleRow");
+        return result;
+    }
+
+  
     //public async Task<List<SubjectOptimized>?> GetOptimizedHours(int? hours = null , List<int> ids = null)
     //{
     //    var result = await this.Get<SubjectOptimized>(hours, ids);

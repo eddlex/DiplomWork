@@ -1,4 +1,5 @@
-﻿using FrontEnd.Model;
+﻿using BackEnd.Models.Input;
+using FrontEnd.Model;
 using FrontEnd.Model.BL;
 
 namespace FrontEnd.Interface;
@@ -14,6 +15,14 @@ public interface ISubjectService
     public Task<bool> EvaluateModel();
 
     public Task<bool> TrainModel();
+
+    public Task<List<ScheduleBl>> GetSubjectsSchedulesCalculations();
+    public Task<ScheduleBl> AddSubjectScheduleCalculation(ScheduleBl model);
+    public Task<ScheduleBl> EditSubjectScheduleCalculation(ScheduleBl model);
+    public Task<bool?> DeleteSubjectScheduleCalculation(ScheduleBl model);
+    public Task<List<ScheduleRowBl>> GetSubjectsScheduleRow(int id);
+    public Task<ScheduleRowBl> AddSubjectsScheduleRow(ScheduleRowBl model);
+    public Task<bool?> DelSubjectsScheduleRow(ScheduleRowBl model);
 
 
 }
