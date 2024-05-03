@@ -9,6 +9,7 @@
 @using MudBlazor
 @using System.Threading.Tasks
 @using System.Diagnostics;
+@using BackEnd.Models.Input
 <style>
     body {
         background-color: black;
@@ -94,8 +95,8 @@
     <MudMainContent style="background-color: black; color: white;" Elevation="5">
         <div class="div-left">
             <MudDataGrid id="left"
-                         T="FormDto"
-                         Items="@FormDto"
+                         T="ScheduleDto"
+                         Items="@ScheduleDto"
                          SortMode="SortMode.None"
                          Filterable="false"
                          RowClick="@RowClicked"
@@ -122,18 +123,22 @@
                 </ToolBarContent>
 
                 <Columns>
-                    <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false" />
-                    <PropertyColumn Property="x => x.Name" Title="Ժամաքանակ" />
+                    <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="true" />
+                    <PropertyColumn Property="x => x.Department" Title="Ամբիոն" />
+                    <PropertyColumn Property="x => x.Semester" Title="Կիսամյա" />
+                    <PropertyColumn Property="x => x.Hours" Title="Ժամաքանակ" />
+                    <PropertyColumn Property="x => x.Name" Title="Անուն" />
 
                     <TemplateColumn Hidden="false" CellClass="d-flex justify-end"
                                     Sortable="false" Filterable="false" StickyRight="true">
                         <CellTemplate>
                             <MudIconButton Icon="@Icons.Material.Filled.AlignVerticalBottom" Size="@Size.Small" Color="Color.Primary"
-                                           > </MudIconButton>
-                            @* <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRow(context.Item.Id))"> </MudIconButton>
-                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton> *@
+                            > </MudIconButton>
+                             <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRow(context.Item.Id))"> </MudIconButton>
+                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton>
                         </CellTemplate>
                     </TemplateColumn>
+                 
                 </Columns>
 
                 <PagerContent>
@@ -151,7 +156,7 @@
                 </h4>
                 <div class="right">
 
-                    <SortableList Group="sharedLists" Items="selectedSubjects" Context="item" OnRemove="DeleteFormRow">
+                    <SortableList Group="sharedLists" Items="selectedRows" Context="item" OnRemove="DeleteFormRow">
                         <SortableItemTemplate>
                             <div class=" card has-border has-background-white">
                                 <p class="is-size-4 p-1 ml-1 mb-0">
@@ -193,7 +198,7 @@
     private bool _editTriggerRowClick;
     public string _searchString;
     private bool _sortNameByLength;
-    private int _currentSelectedFormId;
+    private int _currentSelectedScheduleId;
     private List<string> _events = new();
 
     bool _isEditMode = false;
@@ -215,23 +220,23 @@
 
     #region MyRegion
 
-    async Task RowClicked(DataGridRowClickEventArgs<FormDto> args)
+    async Task RowClicked(DataGridRowClickEventArgs<ScheduleDto> args)
     {
-        await GetFormRows(args.Item.Id);
-        _currentSelectedFormId = args.Item.Id;
+        await GetScheduleRows(args.Item.Id);
+        _currentSelectedScheduleId = args.Item.Id;
     }
 
-    void StartedEditingItem(FormDto item)
-    {
-        System.Text.Json.JsonSerializer.Serialize(item);
-    }
-
-    void CanceledEditingItem(FormDto item)
+    void StartedEditingItem(ScheduleDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
 
-    void CommittedItemChanges(FormDto item)
+    void CanceledEditingItem(ScheduleDto item)
+    {
+        System.Text.Json.JsonSerializer.Serialize(item);
+    }
+
+    void CommittedItemChanges(ScheduleDto item)
     {
         System.Text.Json.JsonSerializer.Serialize(item);
     }
@@ -240,14 +245,14 @@
     void AddItem()
     {
 
-        if (this.FormBl is { Count: > 0 })
-            FormRowBl?.Add(new()
+        if (this.ScheduleDto is { Count: > 0 })
+            ScheduleRowBl?.Add(new()
                 {
-                    FormId = _currentSelectedFormId
+                    SubjectId = _currentSelectedScheduleId
                 });
     }
 
-    void RowClicked(DataGridRowClickEventArgs<FormRowBl> args)
+    void RowClicked(DataGridRowClickEventArgs<ScheduleBl> args)
     {
         System.Text.Json.JsonSerializer.Serialize(args.Item);
     }
@@ -257,29 +262,29 @@
 
     public List<SubjectDto?>? allSubjects => SubjectsDto;
 
-    public List<SubjectDto?>? selectedSubjects = new();
+    public List<SubjectDto?>? selectedRows = new();
 
 
     public void DeleteFormRow((int oldIndex, int newIndex) indices)
     {
-        var item = selectedSubjects?[indices.oldIndex];
+        var item = selectedRows?[indices.oldIndex];
 
         if (item == null)
             return;
 
         allSubjects?.Insert(indices.newIndex, item);
 
-        selectedSubjects?.Remove(selectedSubjects[indices.oldIndex]);
+        selectedRows?.Remove(selectedRows[indices.oldIndex]);
 
-        for (var i = 0; i < selectedSubjects?.Count; ++i)
+        for (var i = 0; i < selectedRows?.Count; ++i)
         {
-            selectedSubjects[i].Order = i;
+            selectedRows[i].Order = i;
         }
 
-        var itemBl = DeleteFormRow(new FormRowBl()
+        var itemBl = DeleteScheduleRow(new ()
             {
                 Id = item.Id,
-                FormId = _currentSelectedFormId,
+                ScheduleId = _currentSelectedScheduleId,
             });
     }
 
@@ -290,19 +295,18 @@
         if (item == null)
             return;
 
-        selectedSubjects?.Insert(indices.newIndex, item);
+        selectedRows?.Insert(indices.newIndex, item);
         allSubjects?.Remove(allSubjects[indices.oldIndex]);
 
-        for (var i = 0; i < selectedSubjects?.Count; ++i)
+        for (var i = 0; i < selectedRows?.Count; ++i)
         {
-            selectedSubjects[i].Order = i;
+            selectedRows[i].Order = i;
         }
 
-        var itemBl = AddFormRow(new FormRowBl()
+        var itemBl = AddScheduleRow(new ()
             {
-                FormId = _currentSelectedFormId,
-                SubjectId = item.Id,
-                Order = item.Order
+                ScheduleId = _currentSelectedScheduleId,
+                SubjectId = item.Id
             });
     }
 }
