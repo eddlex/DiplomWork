@@ -34,7 +34,7 @@ public class SuggestionService : ISuggestionService
 
         ProcessStartInfo processStartInfo = new ProcessStartInfo();
 
-        processStartInfo.FileName = "python";
+        processStartInfo.FileName = "python3";
 
         string argumentString = scriptName + " " + arguments;
         processStartInfo.Arguments = argumentString;
@@ -72,7 +72,7 @@ public class SuggestionService : ISuggestionService
 
         //var similarSentences = JsonConvert.DeserializeObject<Dictionary<int, (int, string)>>(result);
 
-
+      
         var similarSentences = JsonSerializer.Deserialize<Dictionary<int, (int, string)>>(result);
 
         var similarList = new List<Suggestion>();

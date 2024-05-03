@@ -1,4 +1,5 @@
-﻿using BackEnd.Models.Input.Delete;
+﻿using BackEnd.Models.Input;
+using BackEnd.Models.Input.Delete;
 using BackEnd.Models.Input.Post;
 using BackEnd.Models.Input.Put;
 using BackEnd.Models.Output;
@@ -15,5 +16,8 @@ namespace BackEnd.Services.Interfaces
         string ExecutePythonScript(string scriptPath, string arguments);
         Task<List<bool>> TrainModel();
         Task<List<bool>> EvaluateModel();
+        Task<List<Schedule?>> GetSubjectSchedules();
+        Task<Schedule?> AddSubjectSchedules(SchedulePost model);
+        Task<Schedule?> EditSubjectSchedules(SchedulePut model);
     }
 }

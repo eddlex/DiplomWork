@@ -60,7 +60,6 @@
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\User Defined Types\" />
-    <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="dbo\InsertQueries\" />
     <Folder Include="dbo\Tables\" />
   </ItemGroup>
@@ -71,6 +70,7 @@
     <Build Include="dbo\Stored Procedures\spAddRecipient.sql" />
     <Build Include="dbo\Stored Procedures\spAddSmtpConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spAddSubject.sql" />
+    <Build Include="dbo\Stored Procedures\spAddSubjectScheduleCalculation.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteForm.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteFormRow.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteRecipientGroup.sql" />
@@ -84,8 +84,10 @@
     <Build Include="dbo\Stored Procedures\spEditRecipientGroup.sql" />
     <Build Include="dbo\Stored Procedures\spEditSmtpConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spEditSubject.sql" />
+    <Build Include="dbo\Stored Procedures\spEditSubjectScheduleCalculation.sql" />
     <Build Include="dbo\Stored Procedures\spGetFormRows.sql" />
     <Build Include="dbo\Stored Procedures\spGetRatingsView.sql" />
+    <Build Include="dbo\Stored Procedures\spGetSubjectsSchedulesCalculations.sql" />
     <Build Include="dbo\Stored Procedures\spGetSubjects.sql" />
     <Build Include="dbo\Stored Procedures\spGetUsers.sql" />
     <Build Include="dbo\Tables\FormIdentification.sql" />
