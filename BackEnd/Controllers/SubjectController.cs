@@ -6,6 +6,7 @@ using BackEnd.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
+using BackEnd.Models.Input;
 
 namespace BackEnd.Controllers
 {
@@ -19,6 +20,30 @@ namespace BackEnd.Controllers
             this.subjectService = subjectService;
         }
 
+        [Route("Schedule")]
+        [HttpGet]
+        public async Task<ActionResult<List<Schedule>>> Schedule()
+        {
+            return Ok(await this.subjectService.GetSubjectSchedules());
+        }
+        
+        [Route("Schedule")]
+        [HttpPost]
+        public async Task<ActionResult<Schedule>> Schedule(SchedulePost model)
+        {
+            return Ok(await this.subjectService.AddSubjectSchedules(model));
+        }
+        
+        [Route("Schedule")]
+        [HttpPut]
+        public async Task<ActionResult<Schedule>> Schedule(SchedulePut model)
+        {
+            return Ok(await this.subjectService.EditSubjectSchedules(model));
+        }
+        
+        
+        
+        
         [Route("Hour")]
         [HttpGet]
         public async Task<ActionResult<List<SubjectOptimized>>> SubjectHours(int hours, [FromQuery]  List<int> ids)

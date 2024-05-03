@@ -10,6 +10,7 @@ using FrontEnd.Helpers;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using BackEnd.Models.Input;
 
 namespace BackEnd.Services.Services
 {
@@ -127,6 +128,37 @@ namespace BackEnd.Services.Services
         public async Task<Subject?> EditSubject(SubjectPut model)
         {
             var res = (await dbService.QueryAsync<Subject>("spEditSubject", model)).FirstOrDefault();
+            return res;
+        }
+
+
+
+        public async Task<List<Schedule?>> GetSubjectSchedules()
+        {
+            var res = (await dbService.QueryAsync<Schedule>("spGetSubjectsSchedulesCalculations", new
+            {
+                Token.RoleId,
+                Token.DepartmentId
+            })).ToList();
+            return res;
+        }
+        
+        public async Task<Schedule?> AddSubjectSchedules(SchedulePost model)
+        {
+            var res = (await dbService.QueryAsync<Schedule>("spAddSubjectScheduleCalculation", model)).FirstOrDefault();
+
+            if (res == default)
+                Alert.Create(Constants.Error.SomethingWrong);
+            return res;
+        }
+        
+        
+        public async Task<Schedule?> EditSubjectSchedules(SchedulePut model)
+        {
+            var res = (await dbService.QueryAsync<Schedule>("spEditSubjectScheduleCalculation", model)).FirstOrDefault();
+
+            if (res == default)
+                Alert.Create(Constants.Error.SomethingWrong);
             return res;
         }
     }
