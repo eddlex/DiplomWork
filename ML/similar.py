@@ -7,7 +7,7 @@ import json
 import platform
 
 sys.stdout.reconfigure(encoding='utf-8')
-db_config_path = __file__.replace('distance.py', 'DBconn.json') 
+db_config_path = __file__.replace('similar.py', 'DBconn.json') 
 
 try:
     with open(db_config_path, 'r') as config_file:
