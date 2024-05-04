@@ -7,6 +7,6 @@ BEGIN
     DELETE ScheduleRow
     WHERE ScheduleId = @ScheduleId AND SubjectId = @SubjectId
 
-    SELECT 
+    SELECT @@ROWCOUNT
 END
 go
