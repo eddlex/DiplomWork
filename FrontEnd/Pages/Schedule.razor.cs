@@ -115,14 +115,40 @@ public partial class Schedule
     }
     private async Task ScheduleModel(int id)
     {
-        var result = await this.SubjectService?.ScheduleModel(id);
-
-        if (result is not null && result.Count >  0)
-            Snackbar.ShowSuccess(Constants.Success.ModelTrain);
-        else
+        if (this.selectedRows.Exists(r => ScheduleRowBl.Any(l=>l.SubjectId == r.Id && l.CalculatedHours ==-1)))
         {
-            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+            var result = await this.SubjectService?.ScheduleModel(id);
+
+            if (result is not null && result.Count > 0)
+            {
+                Snackbar.ShowSuccess(Constants.Success.ModelTrain);
+                foreach (var row in ScheduleRowBl)
+                {
+                    row.CalculatedHours = result.FirstOrDefault(r => r.SubjectId == row.SubjectId).CalculatedHours;
+                }
+            }
+            else
+            {
+                Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+            }
         }
+        
+        
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            MaxWidth = MaxWidth.Large,
+            Position = DialogPosition.Center,
+        };
+
+        var parameters = new DialogParameters();
+        
+        parameters.Add("Schedule", ScheduleRowBl);
+        parameters.Add("Subject", selectedRows);
+        
+        var s = await (await DialogService.ShowAsync<ScheduleRowsDialog>("Արդյունք", parameters, options)).Result;
+        
+
     }
 
 

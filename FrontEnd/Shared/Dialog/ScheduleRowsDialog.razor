@@ -1,0 +1,58 @@
+﻿@using FrontEnd.Model.BL
+@using FrontEnd.Model.DTO
+<MudDialog>
+    <DialogContent>
+        
+            <MudDataGrid Items="@Data">
+                <Columns>
+                    <PropertyColumn Property="x => x.Name" Title="Առարկայի Անուն" />
+                    <PropertyColumn Property="x => x.OutCome" Title="Վերջնարդյունք" />
+                    <PropertyColumn Property="x => x.Hour" Title="Ժամաքանակ"/>
+                </Columns>
+            </MudDataGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+@code 
+{
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public List<ScheduleRowBl> Schedule { get; set; }
+    
+    [Parameter]
+    public List<SubjectDto> Subject { get; set; }
+    
+    
+    public List<TempRows> Data { get; set; }
+
+    [Parameter] public string ButtonText { get; set; }
+
+    [Parameter] public Color Color { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Data = new List<TempRows>();
+        foreach (var s in Schedule)
+        {
+            var subject = this.Subject.FirstOrDefault(r => r.Id == s.SubjectId);
+            Data.Add(new TempRows()
+            {
+                Hour = s.CalculatedHours,
+                Name = subject.Title,
+                OutCome = subject.Outcome
+            });
+        }
+    }
+    
+    void Cancel() => MudDialog.Cancel();
+
+    public class TempRows
+    {
+        public string? Name { get; set; }
+        public string? OutCome { get; set; }
+        public decimal Hour { get; set; }
+    }
+}

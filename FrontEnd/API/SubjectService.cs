@@ -49,7 +49,7 @@ public class SubjectService : BaseService , ISubjectService
     
     public async Task<List<ScheduleRowBl>> ScheduleModel(int id)
     {
-        var result = await this.Get<ScheduleRowBl>(id,  "Hours");
+        var result = await this.Get<ScheduleRowBl>(id,  "Hour");
         return result;
     }
     

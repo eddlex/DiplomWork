@@ -3,7 +3,7 @@
     Id INT IDENTITY(0, 1) PRIMARY KEY  NOT NULl,
     ScheduleId INT FOREIGN KEY REFERENCES Schedule(Id),
     SubjectId INT FOREIGN KEY REFERENCES  Subject(Id),
-    CalculatedHours DECIMAL NULL,
+    CalculatedHours decimal(4, 1) default (-1),
     CreationDate DATETIME2(7) DEFAULT  GETUTCDATE(),
 )
 

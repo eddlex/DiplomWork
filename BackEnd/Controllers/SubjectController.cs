@@ -70,9 +70,9 @@ namespace BackEnd.Controllers
         
         [Route("Hour")]
         [HttpGet]
-        public async Task<ActionResult<List<SubjectOptimized>>> SubjectHours(int sheduleId)
+        public async Task<ActionResult<List<SubjectOptimized>>> SubjectHours(int id)
         {
-            return Ok(await this.subjectService.GetOptimizedHours(sheduleId));
+            return Ok(await this.subjectService.GetOptimizedHours(id));
         }
 
         [Route("Train")]
