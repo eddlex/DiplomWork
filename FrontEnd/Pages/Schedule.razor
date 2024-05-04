@@ -125,7 +125,7 @@
                 <Columns>
                     <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="true" />
                     <PropertyColumn Property="x => x.Department" Title="Ամբիոն" />
-                    <PropertyColumn Property="x => x.Semester" Title="Կիսամյա" />
+                    <PropertyColumn Property="x => x.Semester" Title="Կիսամյակ" />
                     <PropertyColumn Property="x => x.Hours" Title="Ժամաքանակ" />
                     <PropertyColumn Property="x => x.Name" Title="Անուն" />
 
@@ -142,7 +142,7 @@
                 </Columns>
 
                 <PagerContent>
-                    <MudDataGridPager T="FormDto" DisableRowsPerPage="true" />
+                    <MudDataGridPager T="ScheduleDto" DisableRowsPerPage="true" />
                 </PagerContent>
 
             </MudDataGrid>
