@@ -22,10 +22,10 @@ public class SuggestionService :  BaseService, ISuggestionService
        return suggestions;
     }
     
-    public async Task<List<Suggestion>?> GetSimilars(int? suggId = null)
+    public async Task<List<int>?> GetSimilars(int? suggId = null)
     {
         //var session = await this.GetSession() ?? throw Helpers.Alert.Create(Constants.Error.SessionNotFound);
-        var result = await this.Get<Suggestion>(id: suggId, method: "Similars");
+        var result = await this.Get<int>(id: suggId, method: "Similars");
         return result;
     }
 

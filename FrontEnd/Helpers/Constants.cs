@@ -20,6 +20,7 @@ public static class Constants
         Errors.Add(Error.SubjectNotExist.Code, Error.SubjectNotExist);
         Errors.Add(Error.NotExistAnyWeight.Code, Error.NotExistAnyWeight);
         Errors.Add(Error.CantDeleteWeight.Code, Error.CantDeleteWeight);
+        Errors.Add(Error.SimilarsNotFound.Code, Error.SimilarsNotFound);
 
 
     }
@@ -40,6 +41,7 @@ public static class Constants
         public static readonly Error SubjectNotExist = new Error(nameof(SubjectNotExist), 50012, "Subject Not Exist");
         public static readonly Error NotExistAnyWeight = new Error(nameof(NotExistAnyWeight), 50013, "Not found any weight!");
         public static readonly Error CantDeleteWeight = new Error(nameof(CantDeleteWeight), 50014, "Exists Recipient that uses this weight");
+        public static readonly Error SimilarsNotFound = new Error(nameof(SimilarsNotFound), 50015, "Նմանատիպ տողեր չեն գտնվել");
 
 
 
@@ -62,6 +64,7 @@ public static class Constants
         public static readonly Success FormSubmit = new Success(nameof(FormSubmit), 0, "Form successfully sent");
         public static readonly Success ModelTrain = new Success(nameof(ModelTrain), 0, "Model has been successfully trained");
         public static readonly Success ModelEval = new Success(nameof(ModelEval), 0, "Hours have been successfully evaluated");
+        public static readonly Success QuerySuccess = new Success(nameof(QuerySuccess), 0, "հարցումը հաջողությամբ մշակված է");
 
         public string Text { get; private set; }
         public string UniqueName { get; private set; }

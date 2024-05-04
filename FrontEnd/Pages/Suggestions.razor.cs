@@ -89,8 +89,17 @@ public partial class Suggestions
         if (this.suggestionService != null)
         {
             var result = await this.suggestionService.GetSimilars(suggId);
-            similarSuggestions = result.ToList();
+            if (result is { Count: > 0 })
+            {
+                similarSuggestions = this.suggestions?.Where(s => result.Contains(s.Id)).ToList();
+                Snackbar.ShowSuccess(Constants.Success.QuerySuccess);
+            }
+            else
+            {
+                Alert.Create(Constants.Error.SimilarsNotFound);
+            }
         }
+
     }
 
     private async Task DeleteRow(int id)

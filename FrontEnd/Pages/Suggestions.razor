@@ -110,15 +110,11 @@
                          Items="@similarSuggestions"
                          SortMode="SortMode.None"
                          Filterable="false"
-                         RowClick="@RowClicked"
                          MultiSelection="false"
                          ReadOnly="false"
                          FixedHeader="true"
                          EditMode="DataGridEditMode.Form"
                          RowsPerPage="10"
-                         StartedEditingItem="@StartedEditingItem"
-                         CanceledEditingItem="@CanceledEditingItem"
-                         CommittedItemChanges="@CommittedItemChanges"
                          Bordered="true"
                          Dense="true"
                          EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)"
@@ -127,7 +123,6 @@
                 <ToolBarContent>
                     <MudText Typo="Typo.h4" class="mr-2">Նմանություններ</MudText>   
                 </ToolBarContent>
-
                 <Columns>
                     <PropertyColumn Property="x => x.Value" Title="Առաջարկություն" Sortable="false" Filterable="false" IsEditable="false" />
                 </Columns>
