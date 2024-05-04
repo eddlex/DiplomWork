@@ -91,28 +91,7 @@ public partial class Schedule
         }
     }
 
-    private async Task EvaluateModel()
-    {
-        var result = await this.SubjectService?.EvaluateModel();
 
-        if (result)
-            Snackbar.ShowSuccess(Constants.Success.ModelEval);
-        else
-        {
-            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
-        }
-    }
-    private async Task TrainModel()
-    {
-        var result = await this.SubjectService?.TrainModel();
-
-        if (result)
-            Snackbar.ShowSuccess(Constants.Success.ModelTrain);
-        else
-        {
-            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
-        }
-    }
     private async Task ScheduleModel(int id)
     {
         if (this.selectedRows.Exists(r => ScheduleRowBl.Any(l=>l.SubjectId == r.Id && l.CalculatedHours ==-1)))

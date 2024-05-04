@@ -133,6 +133,29 @@ public partial class Subjects
        }
     }
 
+    private async Task EvaluateModel()
+    {
+        var result = await this.SubjectService?.EvaluateModel();
+
+        if (result)
+            Snackbar.ShowSuccess(Constants.Success.ModelEval);
+        else
+        {
+            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+        }
+    }
+    private async Task TrainModel()
+    {
+        var result = await this.SubjectService?.TrainModel();
+
+        if (result)
+            Snackbar.ShowSuccess(Constants.Success.ModelTrain);
+        else
+        {
+            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+        }
+    }
+
     private async Task<SubjectBl?> OpenDialog(SubjectBl? row = default)
     {
         var options = new DialogOptions 
