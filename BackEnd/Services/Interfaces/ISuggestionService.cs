@@ -5,6 +5,6 @@ namespace BackEnd.Services.Interfaces;
 public interface ISuggestionService
 {
     public Task<List<Suggestion>?> GetSuggestions(); 
-    public Task<List<Suggestion>?> GetSimilars(int? id = null);
+    public Task<List<int>?> GetSimilars(double threshold, int? id);
     public Task<bool> Delete(int id);    
 }

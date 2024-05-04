@@ -9,8 +9,6 @@ using BackEnd.Models.Output;
 using FrontEnd.Helpers;
 using System.Diagnostics;
 using System.Text.Json;
-using System.Text.RegularExpressions;
-using System.Reflection;
 
 namespace BackEnd.Services.Services;
 
@@ -61,35 +59,33 @@ public class SuggestionService : ISuggestionService
         return res;
     }
     
-    public async Task<List<Suggestion>?> GetSimilars(int? suggId = null)
+    public async Task<List<int>?> GetSimilars(double threshold, int? suggId)
     {
         var scriptName = "similar.py";
-        var argumentsString = "";
+        var argumentsString = threshold.ToString();
+
         if (suggId != null)
-        { argumentsString = suggId.ToString();}
+        { argumentsString += " " + suggId.ToString();}
 
         var result = await Task.Run(() => ExecutePythonScript(scriptName, argumentsString));
-
-        //var similarSentences = JsonConvert.DeserializeObject<Dictionary<int, (int, string)>>(result);
-
       
-        var similarSentences = JsonSerializer.Deserialize<Dictionary<int, (int, string)>>(result);
+        var similarSentences = JsonSerializer.Deserialize<List<int>>(result);
 
-        var similarList = new List<Suggestion>();
+        //var similarList = new List<Suggestion>();
 
-        foreach (var kvp in similarSentences)
-        {
-            Suggestion sgg = new Suggestion
-            {
-                Id = kvp.Key,
-                FormIdentificationId = kvp.Value.Item1,
-                Value = kvp.Value.Item2
-            };
+        //foreach (var kvp in similarSentences)
+        //{
+        //    Suggestion sgg = new Suggestion
+        //    {
+        //        Id = kvp.Key,
+        //        FormIdentificationId = kvp.Value.Item1,
+        //        Value = kvp.Value.Item2
+        //    };
 
-            similarList.Add(sgg);
-        }
+        //    similarList.Add(sgg);
+        //}
 
-        return similarList;
+        return similarSentences;
     }
 
     public async Task<bool> Delete(int id)
