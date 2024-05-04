@@ -1,6 +1,8 @@
 ﻿@page "/Subjects"
 @using FrontEnd.Model.DTO
 @inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
 
 <style>
     body {
@@ -55,9 +57,9 @@
                     <ToolBarContent>
                         <MudText Typo="Typo.h4" class="mr-2">Առարկաներ</MudText>
                         <MudIconButton @onclick="AddSubject" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
-                        <MudSpacer />
-                        @* <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
-                        @*               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
+                    <MudSpacer />
+                    <MudButton Variant="Variant.Outlined" @onclick="TrainModel" Color="Color.Primary">Մոդելի ուսուցում</MudButton>
+                    <MudButton Variant="Variant.Outlined" @onclick="EvaluateModel" Color="Color.Primary">Հաշվարկել դասաժամերը</MudButton>
                     </ToolBarContent>
 
                     <Columns>
