@@ -62,7 +62,7 @@ public class SuggestionService : ISuggestionService
     public async Task<List<int>?> GetSimilars(double threshold, int? suggId)
     {
         var scriptName = "similar.py";
-        var argumentsString = threshold.ToString();
+        var argumentsString = threshold.ToString().Replace(",", ".");
 
         if (suggId != null)
         { argumentsString += " " + suggId.ToString();}
@@ -85,7 +85,7 @@ public class SuggestionService : ISuggestionService
         //    similarList.Add(sgg);
         //}
 
-        return similarSentences;
+        return similarSentences ?? new List<int>();
     }
 
     public async Task<bool> Delete(int id)
