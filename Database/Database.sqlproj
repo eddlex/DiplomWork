@@ -71,10 +71,12 @@
     <Build Include="dbo\Stored Procedures\spAddSmtpConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spAddSubject.sql" />
     <Build Include="dbo\Stored Procedures\spAddSubjectScheduleCalculation.sql" />
+    <Build Include="dbo\Stored Procedures\spAddSubjectScheduleRow.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteForm.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteFormRow.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteRecipientGroup.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteSmtpConfiguration.sql" />
+    <Build Include="dbo\Stored Procedures\spDeleteSubjectScheduleRow.sql" />
     <Build Include="dbo\Stored Procedures\spDeletRecipient.sql" />
     <Build Include="dbo\Stored Procedures\spDelSubject.sql" />
     <Build Include="dbo\Stored Procedures\spEditDepartment.sql" />
@@ -87,6 +89,7 @@
     <Build Include="dbo\Stored Procedures\spEditSubjectScheduleCalculation.sql" />
     <Build Include="dbo\Stored Procedures\spGetFormRows.sql" />
     <Build Include="dbo\Stored Procedures\spGetRatingsView.sql" />
+    <Build Include="dbo\Stored Procedures\spGetSubjectScheduleRows.sql" />
     <Build Include="dbo\Stored Procedures\spGetSubjectsSchedulesCalculations.sql" />
     <Build Include="dbo\Stored Procedures\spGetSubjects.sql" />
     <Build Include="dbo\Stored Procedures\spGetUsers.sql" />

@@ -20,6 +20,28 @@ namespace BackEnd.Controllers
             this.subjectService = subjectService;
         }
 
+        [Route("ScheduleRow")]
+        [HttpGet]
+        public async Task<ActionResult<List<ScheduleRow>>> ScheduleRow(int id)
+        {
+            return Ok(await this.subjectService.GetSubjectScheduleRows(id));
+        }
+        
+        [Route("ScheduleRow")]
+        [HttpPost]
+        public async Task<ActionResult<Schedule>> ScheduleRow(ScheduleRowPost model)
+        {
+            return Ok(await this.subjectService.AddSubjectScheduleRow(model));
+        }
+        
+        [Route("ScheduleRow")]
+        [HttpDelete]
+        public async Task<ActionResult<bool>> ScheduleRow(ScheduleRowDelete model)
+        {
+            return Ok(await this.subjectService.DeleteSubjectScheduleRow(model));
+        }
+        
+        
         [Route("Schedule")]
         [HttpGet]
         public async Task<ActionResult<List<Schedule>>> Schedule()
@@ -40,6 +62,8 @@ namespace BackEnd.Controllers
         {
             return Ok(await this.subjectService.EditSubjectSchedules(model));
         }
+        
+        
         
         
         
@@ -66,7 +90,7 @@ namespace BackEnd.Controllers
         }
 
 
-
+        #region Subjects
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<List<Subject>>> Subject(int? id)
@@ -96,5 +120,6 @@ namespace BackEnd.Controllers
             return Ok(await this.subjectService.DeleteSubject(model));
         }
         
+        #endregion
     } 
 }

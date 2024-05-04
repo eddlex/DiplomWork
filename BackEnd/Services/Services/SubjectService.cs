@@ -161,5 +161,32 @@ namespace BackEnd.Services.Services
                 Alert.Create(Constants.Error.SomethingWrong);
             return res;
         }
+
+        
+        public async Task<List<ScheduleRow?>> GetSubjectScheduleRows(int id)
+        {
+            var res = (await dbService.QueryAsync<ScheduleRow>("spGetSubjectScheduleRows", new
+            {
+                Id = id
+            })).ToList();
+            return res;
+        }
+
+        
+        public async Task<ScheduleRow?> AddSubjectScheduleRow(ScheduleRowPost model)
+        {
+            var res = (await dbService.QueryAsync<ScheduleRow>("spAddSubjectScheduleRow", model)).FirstOrDefault();
+            if (res == default)
+                Alert.Create(Constants.Error.SomethingWrong);
+            return res;
+        }
+        
+        public async Task<bool> DeleteSubjectScheduleRow(ScheduleRowDelete model)
+        {
+            var res = (await dbService.QueryAsync<bool?>("spDeleteSubjectScheduleRow", model)).FirstOrDefault();
+            if (!res.HasValue || !res.Value)
+                Alert.Create(Constants.Error.SomethingWrong);
+            return res.Value;
+        }
     }
 }

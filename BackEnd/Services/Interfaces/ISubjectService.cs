@@ -19,5 +19,9 @@ namespace BackEnd.Services.Interfaces
         Task<List<Schedule?>> GetSubjectSchedules();
         Task<Schedule?> AddSubjectSchedules(SchedulePost model);
         Task<Schedule?> EditSubjectSchedules(SchedulePut model);
+        
+        Task<List<ScheduleRow?>> GetSubjectScheduleRows(int id);
+        Task<ScheduleRow?> AddSubjectScheduleRow(ScheduleRowPost id);
+        Task<bool> DeleteSubjectScheduleRow(ScheduleRowDelete model);
     }
 }
