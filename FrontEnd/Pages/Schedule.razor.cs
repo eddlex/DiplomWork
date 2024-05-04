@@ -113,6 +113,17 @@ public partial class Schedule
             Snackbar.ShowExeption(Constants.Error.SomethingWrong);
         }
     }
+    private async Task ScheduleModel(int id)
+    {
+        var result = await this.SubjectService?.ScheduleModel(id);
+
+        if (result is not null && result.Count >  0)
+            Snackbar.ShowSuccess(Constants.Success.ModelTrain);
+        else
+        {
+            Snackbar.ShowExeption(Constants.Error.SomethingWrong);
+        }
+    }
 
 
     private async Task AddScheduleRow(ScheduleRowBl row)

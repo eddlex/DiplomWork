@@ -82,7 +82,7 @@ namespace BackEnd.Services.Services
             var argumentsString = sheduleId.ToString();
             
             var result = await Task.Run(() => ExecutePythonScript(scriptName, argumentsString));
-            var optimizedHoursDict = JsonSerializer.Deserialize<Dictionary<int, double>>(result);
+            var optimizedHoursDict = JsonSerializer.Deserialize<Dictionary<int, decimal>>(result);
 
             var optimizedList = new List<SubjectOptimized>();
 
@@ -90,8 +90,8 @@ namespace BackEnd.Services.Services
             {
                 SubjectOptimized subjectOptimized = new SubjectOptimized
                 {
-                    Id = kvp.Key, 
-                    Hour = kvp.Value 
+                    SubjectId = kvp.Key, 
+                    CalculatedHours = kvp.Value 
                 };
 
                 optimizedList.Add(subjectOptimized);

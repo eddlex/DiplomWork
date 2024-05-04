@@ -15,6 +15,7 @@ public interface ISubjectService
     public Task<bool> EvaluateModel();
 
     public Task<bool> TrainModel();
+    Task<List<ScheduleRowBl>> ScheduleModel(int id);
 
     public Task<List<ScheduleBl>> GetSubjectsSchedulesCalculations();
     public Task<ScheduleBl> AddSubjectScheduleCalculation(ScheduleBl model);

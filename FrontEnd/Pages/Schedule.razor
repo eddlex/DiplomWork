@@ -133,7 +133,7 @@
                                     Sortable="false" Filterable="false" StickyRight="true">
                         <CellTemplate>
                             <MudIconButton Icon="@Icons.Material.Filled.AlignVerticalBottom" Size="@Size.Small" Color="Color.Primary"
-                            > </MudIconButton>
+                            OnClick="@(() => ScheduleModel(context.Item.Id))"> </MudIconButton>
                              <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditRow(context.Item.Id))"> </MudIconButton>
                             <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteRow(context.Item.Id))"> </MudIconButton>
                         </CellTemplate>

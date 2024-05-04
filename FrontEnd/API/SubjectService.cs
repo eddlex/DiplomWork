@@ -46,7 +46,12 @@ public class SubjectService : BaseService , ISubjectService
         var result = await this.Get<bool>(method: "Train");
         return result.FirstOrDefault();
     }
-
+    
+    public async Task<List<ScheduleRowBl>> ScheduleModel(int id)
+    {
+        var result = await this.Get<ScheduleRowBl>(id,  "Hours");
+        return result;
+    }
     
     
     
