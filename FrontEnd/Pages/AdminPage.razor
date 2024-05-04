@@ -1,5 +1,6 @@
 ﻿@page "/AdminPage"
-@using Microsoft.JSInterop.WebAssembly
+
+@using FrontEnd.Model.BL
 @attribute [Authorize(Roles = "0,1,2")]
 <style>
     body {
@@ -23,6 +24,74 @@
     }
 </style>
 
+
+<style>
+
+    .custom-elevation {
+        box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.75);
+    }
+
+    .custom-paper {
+        background-color: #651FFF;
+        color: white;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .custom-subheader {
+        color: white; 
+        font-size: 20px;
+    }
+    .div-left{
+        width: 60%;
+        float:left;
+        margin: 1% 0 1% 1%;
+        height:99vh
+    }
+    .div-right{
+        width: 37%;
+        float:right;
+        margin: 1% 1% 1% 0;
+        height:99vh;
+    }
+    .card
+    {
+        color: #353535;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .right
+    {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      max-height: 40vh;
+      border: 1px solid #b3b3b3;
+      background-color: white;
+      border-radius: 1px;
+    }
+    
+    .right-first
+    {
+       background-color: white;
+       margin: 0 0 1% 0 ;
+       color: black;
+       border-radius: 5px;
+       /* padding-left: 1%; */
+       padding-top: 2%;
+       max-height: 50vh;
+    }
+
+    .right-second {
+        background-color: white;
+        margin: 1% 0 0 0;
+        color: black;
+        border-radius: 5px;
+        /* padding-left: 1%; */
+        padding-top: 2%;
+        max-height: 50vh;
+    }   
+</style>
 <AuthorizeView Roles="0,1,2">
     <Authorized>
         <MudThemeProvider />
@@ -51,6 +120,24 @@
                         @* </ItemRenderer> *@
                     </MudDropContainer>
                 </MudMainContent>
+                
+                <div class="right-second">
+                                    <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
+                                        Առարկաներ
+                                    </h4>
+                                    <div class="right">
+                                        <SortableList Group="sharedLists" OnRemove="AddFormRow" Items="allSubjects" Context="item">
+                                            <SortableItemTemplate>
+                                                <div class="card has-background-white has-border">
+                                                    <p class="is-size-4 p-1 ml-1 mb-0" style="padding-left: 20px;">
+                                                        @(item.Id) . Առարկայի անուն - @item.Title<br>
+                                                                     Վերջնարդյունք - @item.Outcome
+                                                    </p>
+                                                </div>
+                                            </SortableItemTemplate>
+                                        </SortableList>
+                                    </div>
+                                </div>
             </MudLayout>
         </div>
     </Authorized>
@@ -62,6 +149,12 @@
         dropItem.Item.Selector = dropItem.DropzoneIdentifier;
     }
 
+    public List<SubjectBl?> allSubjects => SubjectsBl;
+    
+    
+    
+    
+    
     private List<DropItem> _items = new()
     {
         new DropItem(){ Name = "Subject 1", Selector = "1" },
@@ -76,4 +169,6 @@
         public string Name { get; init; }
         public string Selector { get; set; }
     }
+    
+
 }
