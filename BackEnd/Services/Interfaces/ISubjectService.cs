@@ -12,7 +12,7 @@ namespace BackEnd.Services.Interfaces
         Task<Subject?> AddSubject(SubjectPost model);
         Task<bool?> DeleteSubject(SubjectDelete model);
         Task<Subject?> EditSubject(SubjectPut model);
-        Task<List<SubjectOptimized>> GetOptimizedHours(int hours, List<int> ids);
+        Task<List<SubjectOptimized>> GetOptimizedHours(int sheduleId);
         string ExecutePythonScript(string scriptPath, string arguments);
         Task<List<bool>> TrainModel();
         Task<List<bool>> EvaluateModel();

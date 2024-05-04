@@ -76,13 +76,12 @@ namespace BackEnd.Services.Services
 
         }
 
-        public async Task<List<SubjectOptimized>> GetOptimizedHours(int hours, List<int> ids)
+        public async Task<List<SubjectOptimized>> GetOptimizedHours(int sheduleId)
         {
             var scriptName = "schedule.py";
-            var argumentsString = hours.ToString() + " " + string.Join(" ", ids);
+            var argumentsString = sheduleId.ToString();
             
             var result = await Task.Run(() => ExecutePythonScript(scriptName, argumentsString));
-              //   /Users/eduardordukhanyan/RiderProjects/DiplomWork/BackEnd
             var optimizedHoursDict = JsonSerializer.Deserialize<Dictionary<int, double>>(result);
 
             var optimizedList = new List<SubjectOptimized>();

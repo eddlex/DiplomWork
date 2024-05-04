@@ -22,9 +22,9 @@ namespace BackEnd.Controllers
 
         [Route("Similars")]
         [HttpGet]
-        public async Task<ActionResult<List<Suggestion>>> Similars()
+        public async Task<ActionResult<List<int>>> Similars(double threshold=0.5, int? id=null)
         {
-            return Ok(await this.suggestionService.GetSimilars());
+            return Ok(await this.suggestionService.GetSimilars(threshold:threshold, id:id));
         }
 
 

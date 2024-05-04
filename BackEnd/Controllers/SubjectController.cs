@@ -46,9 +46,9 @@ namespace BackEnd.Controllers
         
         [Route("Hour")]
         [HttpGet]
-        public async Task<ActionResult<List<SubjectOptimized>>> SubjectHours(int hours, [FromQuery]  List<int> ids)
+        public async Task<ActionResult<List<SubjectOptimized>>> SubjectHours(int sheduleId)
         {
-            return Ok(await this.subjectService.GetOptimizedHours(hours, ids));
+            return Ok(await this.subjectService.GetOptimizedHours(sheduleId));
         }
 
         [Route("Train")]
