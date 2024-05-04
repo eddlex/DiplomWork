@@ -58,6 +58,8 @@ builder.Services.AddScoped<ISuggestionService, SuggestionService>();
 builder.Services.AddScoped<IBaseService, FormService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<ISemesterService, SemesterService>();
+
 
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationProvider>();

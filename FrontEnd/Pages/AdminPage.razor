@@ -1,31 +1,20 @@
 ﻿@page "/AdminPage"
 
 @using FrontEnd.Model.BL
+@using FrontEnd.Model.DTO;
+@using FrontEnd.Model;
+@using FrontEnd.Model.Dialog
+@using FrontEnd.Shared.Dialog
+@using FrontEnd.API
+
+@inject IDialogService DialogService
 @attribute [Authorize(Roles = "0,1,2")]
+
 <style>
     body {
         background-color: black;
         opacity: 0.8;
     }
-
-    .custom-elevation {
-        box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.75);
-    }
-
-    .custom-paper {
-        background-color: #651FFF;
-        color: white;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Add 3D box-shadow effect */
-    }
-
-    .custom-subheader {
-        color: white; /* Set your desired text color */
-        font-size: 20px;
-    }
-</style>
-
-
-<style>
 
     .custom-elevation {
         box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.75);
@@ -87,88 +76,177 @@
         margin: 1% 0 0 0;
         color: black;
         border-radius: 5px;
-        /* padding-left: 1%; */
         padding-top: 2%;
         max-height: 50vh;
-    }   
+    }
+    .progress
+    {
+    position:absolute; 
+    }    
 </style>
-<AuthorizeView Roles="0,1,2">
-    <Authorized>
+
+@* <AuthorizeView Roles="0,1,2">
+    <Authorized> *@
         <MudThemeProvider />
         <div class="body">
             <MudLayout style="background-color: #212121; color: white;" Elevation="5">
                 <Drawer></Drawer>
                 <MudMainContent style="background-color: black; color: white;" Elevation="5">
-                    <div style="height: 16px;"></div>
-                    <MudText Typo="Typo.h4" Class="ml-3">Ուսումնական պլան</MudText>
-                    <MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Selector == dropzone)"
-                                      ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
-                        <ChildContent>
-                            @for (int i = 1; i < 9; i++)
-                            {
-                                var dropzone = i.ToString();
-                                <MudPaper Class="ma-4 flex-grow-1 custom-paper" style="background-color: rgba(89,74,226,1); color: white;">
-                                    <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
-                                        <MudListSubheader class="custom-subheader">Կիսամյակ @dropzone</MudListSubheader>
-                                        <MudDropZone T="DropItem" Identifier="@dropzone" Class="flex-grow-1" AllowReorder="true" />
-                                    </MudList>
-                                </MudPaper>
-                            }
-                        </ChildContent>
-                        @* <ItemRenderer> *@
-                        @*     <MudListItem Text="@context.Name" /> *@
-                        @* </ItemRenderer> *@
-                    </MudDropContainer>
-                </MudMainContent>
-                
-                <div class="right-second">
-                                    <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
-                                        Առարկաներ
-                                    </h4>
-                                    <div class="right">
-                                        <SortableList Group="sharedLists" OnRemove="AddFormRow" Items="allSubjects" Context="item">
-                                            <SortableItemTemplate>
-                                                <div class="card has-background-white has-border">
-                                                    <p class="is-size-4 p-1 ml-1 mb-0" style="padding-left: 20px;">
-                                                        @(item.Id) . Առարկայի անուն - @item.Title<br>
-                                                                     Վերջնարդյունք - @item.Outcome
-                                                    </p>
-                                                </div>
-                                            </SortableItemTemplate>
-                                        </SortableList>
-                                    </div>
+            <div class = "div-left">
+                <MudDataGrid id="left"
+                                     T="Semester"
+                                     Items="@semesters"
+                             SortMode="SortMode.None"
+                             Filterable="false"
+                             RowClick="@RowClicked"
+                             MultiSelection="false"
+                             ReadOnly="false"
+                             FixedHeader="true"
+                             EditMode="DataGridEditMode.Form"
+                             RowsPerPage="10"
+                             Bordered="true" 
+                             Dense="true"
+                             ColumnResizeMode="ResizeMode.Column"
+                             Style="height:100%" >
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h4" class="mr-2">Կիսամյականեր</MudText>
+                    </ToolBarContent>
+
+                    <Columns>
+                        <PropertyColumn Property="x => x.Id" Sortable="false" Filterable="false" IsEditable="false"/>
+                        <PropertyColumn Property="x => x.Name" Title="Անուն"/>
+                        <PropertyColumn Property="x => x.Hours" Title="Ժամաքանակ"/>
+
+                        <TemplateColumn Hidden="false" CellClass="d-flex justify-end"
+                                        Sortable="false" Filterable="false" StickyRight="true">
+                            <CellTemplate>
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="@(() => EditSemester(context.Item.Id))"> </MudIconButton>
+                            </CellTemplate>
+
+                        </TemplateColumn>
+                    </Columns>
+
+                    <PagerContent>
+                        <MudDataGridPager T="Semester" DisableRowsPerPage="true" />
+                    </PagerContent>
+
+                </MudDataGrid>
+            </div>
+
+            <div id="right" class="div-right">
+                <div class="right-first">
+                    <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
+                        Ընտրված
+                    </h4>
+                    <div class="right">
+
+                            <SortableList Group="sharedLists" Items="selectedSubjects" Context="item" OnRemove="DeleteSemesterSubject">
+                            <SortableItemTemplate>
+                                <div class=" card has-border has-background-white">
+                                    <p class="is-size-4 p-1 ml-1 mb-0">
+                                        @(item.Order + 1) . Առարկայի անուն - @item.Title<br style="padding-left: 20px;">
+                                                            Վերջնարդյունք - @item.Outcome
+                                    </p>
                                 </div>
-            </MudLayout>
-        </div>
-    </Authorized>
-</AuthorizeView>
+                            </SortableItemTemplate>
+                        </SortableList>
+                    </div>
+                </div>
+
+                <div class="right-second">
+                    <h4 class="mud-typography mud-typography-h4 mr-2" style="padding-left: 2%; padding-bottom: 1%; color:#464646;">
+                        Առարկաներ
+                    </h4>
+                    <div class="right">
+                            <SortableList Group="sharedLists" OnRemove="AddSemesterSubject" Items="allSubjects" Context="item">
+                            <SortableItemTemplate>
+                                <div class="card has-background-white has-border">
+                                    <p class="is-size-4 p-1 ml-1 mb-0" style="padding-left: 20px;">
+                                        @(item.Id) . Առարկայի անուն - @item.Title<br>
+                                                        Վերջնարդյունք - @item.Outcome
+                                    </p>
+                                </div>
+                            </SortableItemTemplate>
+                        </SortableList>
+                    </div>
+                </div>
+            </div>
+        </MudMainContent>                               
+    </MudLayout>
+</div>
+@*     </Authorized>
+</AuthorizeView> *@
 
 @code {
-    private void ItemUpdated(MudItemDropInfo<DropItem> dropItem)
+    private int _currentSelectedSemesterId;
+    public List<Semester> semesters = new List<Semester>();
+    public List<SubjectBl>? SubjectsBl { get; set; }
+    public List<SubjectDto>? SubjectsDto { get; set; } = new();
+
+    public List<SubjectDto?>? allSubjects => SubjectsDto;
+
+    public List<SubjectDto?>? selectedSubjects = new();
+
+
+    async Task RowClicked(DataGridRowClickEventArgs<Semester> args)
     {
-        dropItem.Item.Selector = dropItem.DropzoneIdentifier;
+        // await GetSemesterSubjects(args.Item.Id);
+        // _currentSelectedSemesterId = args.Item.Id;
+        //get current semester subjects for selected list
     }
 
-    public List<SubjectBl?> allSubjects => SubjectsBl;
-    
-    
-    
-    
-    
-    private List<DropItem> _items = new()
+    private async Task EditSemester(int id)
     {
-        new DropItem(){ Name = "Subject 1", Selector = "1" },
-        new DropItem(){ Name = "Subject 2", Selector = "1" },
-        new DropItem(){ Name = "Subject 3", Selector = "1" },
-        new DropItem(){ Name = "Subject 4", Selector = "1" },
-        new DropItem(){ Name = "Subject 5", Selector = "1" },
-    };
+        if (this.SemesterService != null)
+        {
+            var editedRow = this.semesters?.Find(r => r.Id == id);
+            var semester = await OpenDialog(editedRow);
+            if (semester != default && editedRow != null)
+            {
+                var result = await this.SemesterService.EditSemester(semester);
+                if (result != null)
+                {
+                    this.semesters?.Remove(editedRow);
+                    this.semesters?.Add(result);
 
-    public class DropItem
-    {
-        public string Name { get; init; }
-        public string Selector { get; set; }
+                }
+            }
+        }
     }
-    
+
+    private async Task<Semester?> OpenDialog(Semester? row = default)
+    {
+        var options = new DialogOptions
+            {
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Large,
+                Position = DialogPosition.Center,
+            };
+
+        var parameters = new DialogParameters<Semester>();
+
+        var dialog = new SemesterDialog();
+
+        if (row is not null)
+        {
+            dialog.Name = row.Name;
+            dialog.Hours = row.Hours;
+        }
+
+        parameters.Add("ObjectType", dialog);
+
+        var result = await (await DialogService.ShowAsync<DialogComponent<SemesterDialog>>("Խմբագրել", parameters, options)).Result;
+        if (!result.Canceled)
+        {
+            return new Semester()
+                {
+                    Name = dialog.Name,
+                    Hours = dialog.Hours,
+                    Id = row?.Id ?? 0
+                };
+        }
+
+        return default;
+    }
 
 }
